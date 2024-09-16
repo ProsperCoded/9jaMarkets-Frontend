@@ -1,0 +1,3 @@
+[submodule "backend-9ja"]
+	path = backend-9ja
+	url = https://github.com/0biken/backend-9ja.git
