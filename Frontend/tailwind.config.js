@@ -7,8 +7,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        'custom-orange': '#F8912D',
-        'custom-green': '#236C13',
+        'orange': '#F8912D',
+        'green': '#236C13',
+        'hover-green': '#21CA1B',
       }
     }
   },

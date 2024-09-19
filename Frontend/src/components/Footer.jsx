@@ -1,8 +1,13 @@
 import React from 'react'
+import Skyline from '../assets/Skyline.svg'
 
 const Footer = () => {
   return (
-    <div></div>
+    <div>
+      <footer>
+            
+      </footer>
+    </div>
   )
 }
 
