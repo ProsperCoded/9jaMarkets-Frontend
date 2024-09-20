@@ -3,6 +3,8 @@ import Wears_category from '../assets/Wears_category.png';
 import Automobile_category from '../assets/Automobile_category.png';
 import Gadgets_category from '../assets/Gadgets_category.png';
 import Realestate_category from '../assets/Realestate_category.png';
+import Place_AD from '../assets/Place_AD.svg';
+
 
 function ExploreSection() {
   return (
@@ -40,6 +42,7 @@ function ExploreSection() {
         <div className="container mx-auto px-4 py-8">
           <div className="flex overflow-x-scroll no-scrollbar space-x-4">
             <button className="min-w-[160px] w-48 h-48 mr-4 text-white bg-orange rounded-lg shadow">
+            <img src={Place_AD} alt="Place_AD" className="w-15 h-15 items-center" />
               Are you a vendor? <br /> Place an AD
             </button>
             {/* Category Cards */}

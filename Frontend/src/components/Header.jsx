@@ -29,7 +29,7 @@ function Header() {
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo Section */}
         <div className="logo">
-          <img src={logo} alt="9ja Markets" className="h-16" /> {/* Reduced logo height */}
+          <img src={logo} alt="9ja Markets" className="h-10" /> {/* Reduced logo height */}
         </div>
 
         <nav className="flex space-x-4"> {/* Reduced space-x-6 to space-x-4 */}

@@ -1,5 +1,4 @@
 import React from 'react';
-import Skyline from '../assets/Skyline.svg'; 
 import GooglePlay from '../assets/GooglePlay.svg';  
 import AppStore from '../assets/AppStore.svg';  
 
@@ -8,9 +7,6 @@ import AppStore from '../assets/AppStore.svg';
 function Footer() {
   return (
     <>
-    <div className="h-[20px w-[10px flex justify-center items-center">
-      <img src={Skyline} alt="Skyline" className="w-25 h-25 object-cover" />
-    </div>
     <footer className="bg-green text-white">
 
 
