@@ -28,14 +28,17 @@ function Header() {
     >
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo Section */}
-        <div className="logo">
-          <img src={logo} alt="9ja Markets" className="h-10" /> {/* Reduced logo height */}
-        </div>
+        <button>
+          <div className="logo">
+            <img src={logo} alt="9ja Markets" className="h-10" /> {/* Reduced logo height */}
+            <a href="http://9jamarkets.com"></a>
+          </div>
+        </button>
 
         <nav className="flex space-x-4"> {/* Reduced space-x-6 to space-x-4 */}
           <a href="#how-it-works" className="hover:text-orange text-sm">How it Works</a> {/* Reduced font size */}
           <a href="#support" className="hover:text-orange text-sm">Support</a> {/* Reduced font size */}
-          <a href="#markets" className="hover:text-orange text-sm">Markets</a> {/* Reduced font size */}
+          <a href="#markets" className="hover:text-orange text-sm">Markets &rarr;</a> {/* Reduced font size */}
         </nav>
 
         {/* Authentication Links */}
