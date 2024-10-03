@@ -31,7 +31,7 @@ function Header() {
         <button>
           <div className="logo">
             <img src={logo} alt="9ja Markets" className="h-10" /> {/* Reduced logo height */}
-            <a href="http://9jamarkets.com"></a>
+            <a href="http://9jamarkets.com"target="_blank" rel="noopener noreferrer" className="block"></a>
           </div>
         </button>
 

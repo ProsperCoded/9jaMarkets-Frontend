@@ -48,16 +48,29 @@ const malls = [
 ];
 
 function ExploreSection() {
-  // State to handle search input and filtering
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedFilter, setSelectedFilter] = useState('all');
+  const [startIndex, setStartIndex] = useState(0);
 
-  // Function to handle search input
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value.toLowerCase());
   };
 
-  // Filter markets, malls, and categories based on the search query
+  const handleNextClick = () => {
+    if (startIndex + 4 < categories.length) {
+      setStartIndex(startIndex + 4);
+    } else {
+      setStartIndex(0); // Reset to the beginning when at the end
+    }
+  };
+
+  const handlePrevClick = () => {
+    if (startIndex - 4 >= 0) {
+      setStartIndex(startIndex - 4);
+    } else {
+      setStartIndex(categories.length - 4); // Go to the last set if at the beginning
+    }
+  };
+
   const filteredMarkets = markets.filter((market) =>
     market.name.toLowerCase().includes(searchQuery) ||
     market.location.toLowerCase().includes(searchQuery)
@@ -73,84 +86,89 @@ function ExploreSection() {
   );
 
   return (
-<div className="explore-section bg-white py-10">
-  <div className="container mx-auto">
-    {/* Search Bar and Buttons */}
-    <div className="flex items-center justify-between mb-8">
-      <div className="relative w-full max-w-xl">
-        <input
-          type="text"
-          placeholder="Search by state, market, or category..."
-          value={searchQuery}
-          onChange={handleSearchChange}
-          className="w-full pl-10 pr-10 py-2 border rounded-full text-sm placeholder-gray-500"
-        />
-        <span className="absolute inset-y-0 left-0 flex items-center pl-2">
-          {/* Search Icon */}
-        </span>
-        <span className="absolute inset-y-0 right-0 flex items-center pr-2">
-          {/* Filter Icon */}
-        </span>
-      </div>
-      <div className="ml-4 space-x-4">
-        <button className="btn state-btn bg-green text-white px-4 py-1 rounded-full">State</button>
-        <button className="btn market-btn bg-green text-white px-4 py-1 rounded-full">Market</button>
-        <button className="btn category-btn bg-green text-white px-4 py-1 rounded-full">Category</button>
-      </div>
-    </div>
-
-    {/* Categories Section with Swipe */}
-    <div className="flex justify-between items-center mb-8"> 
-      {/* Place Ad Button */}
-      <div>
-        <button className="w-48 h-48 bg-orange text-white rounded-lg hover:shadow-lg hover:scale-105 transition">Place Ad</button>
-      </div>
-      <button className="h-10 w-10 carousel-btn bg-orange text-white rounded-full p-2">&#129136;</button>
-      {/* Categories Carousel */}
-      <div className="flex space-x-4 w-full">
-        {filteredCategories.slice(0, 4).map((category) => (
-          <div key={category.id} className="bg-gray-100 p-4 rounded-lg text-center w-48 h-48">
-            <img src={category.image} alt={category.label} className="h-full w-full object-cover " />
-            <h3 className="text-lg font-semibold mt-2">{category.label}</h3>
-            <button className=" text-green hover:scale-105 transition hover:text-orange">view more</button>
+    <div className="explore-section bg-white py-10">
+      <div className="container mx-auto">
+        {/* Search Bar and Buttons */}
+        <div className="flex items-center justify-between mb-8">
+          <div className="relative w-full max-w-xl">
+            <input
+              type="text"
+              placeholder="Search by state, market, or category..."
+              value={searchQuery}
+              onChange={handleSearchChange}
+              className="w-full pl-10 pr-10 py-2 border rounded-full text-sm placeholder-gray-500"
+            />
+            <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+              {/* Search Icon */}
+            </span>
+            <span className="absolute inset-y-0 right-0 flex items-center pr-2">
+              {/* Filter Icon */}
+            </span>
           </div>
-        ))}
-             <button className="h-10 w-10 carousel-btn bg-orange text-white rounded-full p-2">&#129138;</button>
-       
-      </div>
-
-    </div>
-
-    {/* Markets Section (with clickable items and hover effects) */}
-    <h2 className="text-2xl font-bold mb-4 text-center text-green">Explore Markets</h2>
-    <div className="grid grid-cols-5 gap-4 mb-8">
-      {filteredMarkets.map((market) => (
-        <div key={market.name} className="bg-gray-100 rounded-lg overflow-hidden shadow-lg hover:scale-105 transition">
-          <img src={market.imageUrl} alt={market.name} className="w-full h-48 object-cover cursor-pointer" />
-          <div className="p-4 cursor-pointer">
-            <h3 className="text-lg font-semibold">{market.name}</h3>
-            <p className="text-sm text-gray-600">{market.location}</p>
+          <div className="ml-4 space-x-4">
+            <button className="btn state-btn bg-green text-white px-4 py-1 rounded-full">State</button>
+            <button className="btn market-btn bg-green text-white px-4 py-1 rounded-full">Market</button>
+            <button className="btn category-btn bg-green text-white px-4 py-1 rounded-full">Category</button>
           </div>
         </div>
-      ))}
-    </div>
 
-    {/* Malls Section (with clickable items and hover effects) */}
-    <h2 className="text-2xl font-bold mb-4 text-center text-green">Explore Malls</h2>
-    <div className="grid grid-cols-5 gap-4 mb-8">
-      {filteredMalls.map((mall) => (
-        <div key={mall.name} className="bg-gray-100 rounded-lg overflow-hidden shadow-lg hover:scale-105 transition">
-          <img src={mall.imageUrl} alt={mall.name} className="w-full h-48 object-cover cursor-pointer" />
-          <div className="p-4 cursor-pointer">
-            <h3 className="text-lg font-semibold">{mall.name}</h3>
-            <p className="text-sm text-gray-600">{mall.location}</p>
+        {/* Categories Section with Swipe */}
+        <div className="flex justify-between items-center mb-8 relative">
+          {/* Swipe Left Button */}
+          <button
+            className="absolute left-0 h-10 w-10 carousel-btn bg-orange text-white rounded-full p-2"
+            onClick={handlePrevClick}
+          >
+            &#129136;
+          </button>
+          {/* Categories Carousel */}
+          <div className="flex space-x-4 w-full justify-center">
+            {filteredCategories.slice(startIndex, startIndex + 4).map((category) => (
+              <div key={category.id} className="bg-gray-100 p-4 rounded-lg text-center w-48 h-48">
+                <img src={category.image} alt={category.label} className="h-full w-full object-cover " />
+                <h3 className="text-lg font-semibold mt-2">{category.label}</h3>
+                <button className="text-green hover:scale-105 transition hover:text-orange">View more</button>
+              </div>
+            ))}
           </div>
+          {/* Swipe Right Button */}
+          <button
+            className="absolute right-0 h-10 w-10 carousel-btn bg-orange text-white rounded-full p-2"
+            onClick={handleNextClick}
+          >
+            &#129138;
+          </button>
         </div>
-      ))}
-    </div>
-  </div>
-</div>
 
+        {/* Markets Section (with clickable items and hover effects) */}
+        <h2 className="text-2xl font-bold mb-4 text-center text-green">Explore Markets</h2>
+        <div className="grid grid-cols-5 gap-4 mb-8">
+          {filteredMarkets.map((market) => (
+            <div key={market.name} className="bg-gray-100 rounded-lg overflow-hidden shadow-lg hover:scale-105 transition">
+              <img src={market.imageUrl} alt={market.name} className="w-full h-48 object-cover cursor-pointer" />
+              <div className="p-4 cursor-pointer">
+                <h3 className="text-lg font-semibold">{market.name}</h3>
+                <p className="text-sm text-gray-600">{market.location}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Malls Section (with clickable items and hover effects) */}
+        <h2 className="text-2xl font-bold mb-4 text-center text-green">Explore Malls</h2>
+        <div className="grid grid-cols-5 gap-4 mb-8">
+          {filteredMalls.map((mall) => (
+            <div key={mall.name} className="bg-gray-100 rounded-lg overflow-hidden shadow-lg hover:scale-105 transition">
+              <img src={mall.imageUrl} alt={mall.name} className="w-full h-48 object-cover cursor-pointer" />
+              <div className="p-4 cursor-pointer">
+                <h3 className="text-lg font-semibold">{mall.name}</h3>
+                <p className="text-sm text-gray-600">{mall.location}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
