@@ -88,7 +88,7 @@ function ExploreSection() {
     <div className="explore-section bg-white py-10">
       <div className="container mx-auto">
         {/* Search Bar and Buttons */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-center mb-8">
           <div className="relative w-full max-w-xl">
             <input
               type="text"
@@ -121,17 +121,16 @@ function ExploreSection() {
           {/* Left Swipe Button */}
           <button
             onClick={handlePrevClick}
-            className="h-10 w-10 carousel-btn bg-orange text-white rounded-full p-2 absolute left-[20%] ">
+            className="h-10 w-10 carousel-btn bg-orange text-white rounded-full p-2 absolute left-[17%] ">
             &#129136;
           </button>
 
           {/* Categories Carousel */}
           <div className="flex space-x-4 w-full justify-center">
             {filteredCategories.slice(startIndex, startIndex + itemsPerSlide).map((category) => (
-              <div key={category.id} className="bg-gray-100 p-4 rounded-lg text-center w-48 h-48">
-                <img src={category.image} alt={category.label} className="h-full w-full object-cover" />
-                <h3 className="text-lg font-semibold mt-2">{category.label}</h3>
-                <button className="text-green hover:scale-105 transition hover:text-orange">view more</button>
+              <div key={category.id} className="bg-gray-100 rounded-lg ovewrflow-hidden shadow-lg w-48 h-48">
+                <img src={category.image} alt={category.label} className="w-48 h-40 object-cover cursor-pointer rounded-lg" />
+                <h3 className="text-lg font-semibold text-center">{category.label}</h3>
               </div>
             ))}
           </div>
@@ -139,7 +138,7 @@ function ExploreSection() {
           {/* Right Swipe Button */}
           <button
             onClick={handleNextClick}
-            className="h-10 w-10 carousel-btn bg-orange text-white rounded-full p-2 absolute right-12">
+            className="h-10 w-10 carousel-btn bg-orange text-white rounded-full p-2 absolute right-[2%]">
             &#129138;
           </button>
         </div>
