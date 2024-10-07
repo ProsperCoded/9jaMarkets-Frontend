@@ -48,25 +48,6 @@ function Footer() {
               </li>
             </ul>
           </div>
-          {/* <FaInstagram size={30} /> */}
-          {/* Socials Section */}
-          {/* <div className="flex flex-col items-center mt-8"> */}
-            {/* <h5 className="font-bold text-lg mb-3 text-hover-green">Socials</h5>
-            <div className="flex space-x-4">
-              <a className="text-green hover:text-insta">
-               
-              </a>
-              <a  className="text-green hover:text-blue-600">
-                <FaX size={30} />
-              </a>
-              <a  className="text-green hover:text-blue-600">
-                <FaFacebook size={30} />
-              </a>
-              <a  className="text-green hover:text-blue-600">
-                <FaLinkedin size={30} />
-              </a>
-            </div>
-          </div> */}
         </div>
 
         {/* Copyright */}
