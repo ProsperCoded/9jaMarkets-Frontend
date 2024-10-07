@@ -95,19 +95,19 @@ function ExploreSection() {
               placeholder="Search by state, market, or category..."
               value={searchQuery}
               onChange={handleSearchChange}
-              className="w-full pl-10 pr-10 py-2 border rounded-full text-sm placeholder-gray-500"
+              className="w-full pl-10 pr-10 py-2 border border-green rounded-full text-sm placeholder-gray-500"
             />
-            <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+            <span className="absolute inset-y-0 flex items-center pl-2 left-[1%]">
               {/* Search Icon */}
-            </span>
-            <span className="absolute inset-y-0 right-0 flex items-center pr-2">
-              {/* Filter Icon */}
+              <svg width="20" height="20" viewBox="0 0 66 66" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M64.3578 58.8422L49.6562 44.1406C53.1958 39.4287 55.1066 33.6933 55.1 27.8C55.1 12.7469 42.8531 0.5 27.8 0.5C12.7469 0.5 0.5 12.7469 0.5 27.8C0.5 42.8531 12.7469 55.1 27.8 55.1C33.6933 55.1066 39.4287 53.1958 44.1406 49.6562L58.8422 64.3578C59.5864 65.0231 60.557 65.3782 61.5548 65.3502C62.5526 65.3223 63.5018 64.9135 64.2077 64.2077C64.9135 63.5018 65.3223 62.5526 65.3502 61.5548C65.3782 60.557 65.0231 59.5864 64.3578 58.8422ZM8.3 27.8C8.3 23.9433 9.44366 20.1731 11.5863 16.9664C13.729 13.7596 16.7745 11.2603 20.3377 9.78435C23.9008 8.30844 27.8216 7.92228 31.6043 8.67469C35.3869 9.4271 38.8615 11.2843 41.5886 14.0114C44.3157 16.7385 46.1729 20.2131 46.9253 23.9957C47.6777 27.7784 47.2916 31.6992 45.8157 35.2623C44.3397 38.8255 41.8404 41.871 38.6336 44.0137C35.4269 46.1563 31.6567 47.3 27.8 47.3C22.6302 47.2938 17.6739 45.2374 14.0183 41.5817C10.3627 37.9261 8.3062 32.9698 8.3 27.8Z" fill="#236C13"/>
+              </svg>
             </span>
           </div>
           <div className="ml-4 space-x-4">
             <button className="btn state-btn bg-green text-white hover:bg-hover-green px-4 py-1 rounded-full">State</button>
             <button className="btn market-btn bg-green text-white  hover:bg-hover-green px-4 py-1 rounded-full">Market</button>
-            <button className="btn category-btn bg-green text-white  px-4 py-1 rounded-full">Category</button>
+            <button className="btn category-btn bg-green text-white  hover:bg-hover-green px-4 py-1 rounded-full">Category</button>
           </div>
         </div>
 
@@ -128,7 +128,7 @@ function ExploreSection() {
           {/* Categories Carousel */}
           <div className="flex space-x-4 w-full justify-center">
             {filteredCategories.slice(startIndex, startIndex + itemsPerSlide).map((category) => (
-              <div key={category.id} className="bg-gray-100 rounded-lg ovewrflow-hidden shadow-lg w-48 h-48">
+              <div key={category.id} className="bg-gray-100 rounded-lg ovewrflow-hidden shadow-lg w-48 h-48 hover:scale-105 transition">
                 <img src={category.image} alt={category.label} className="w-48 h-40 object-cover cursor-pointer rounded-lg" />
                 <h3 className="text-lg font-semibold text-center">{category.label}</h3>
               </div>
