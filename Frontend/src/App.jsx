@@ -6,6 +6,7 @@ import ExploreSection from './components/Explore';
 import Footer from './components/Footer';
 import LoginModal from './components/Login';
 import SignUpModal from './components/Signup';
+import MarketPage from './components/Markets';
 
 function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -34,6 +35,8 @@ function App() {
               </>
             } 
           />
+        <Route path="/markets" element= {<MarketPage />} />
+
         </Routes>
         <Footer />
         
