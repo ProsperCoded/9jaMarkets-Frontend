@@ -5,29 +5,30 @@ import Hero from './components/Hero';
 import ExploreSection from './components/Explore';
 import Footer from './components/Footer';
 import LoginModal from './components/Login';
-import SignUpModal from './components/Signup'; // Import the SignUpModal component
+import SignUpModal from './components/Signup';
 
 function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignUpModal, setShowSignUpModal] = useState(false);
 
-  // Open modal functions
+  // Functions to open/close modals
   const openLoginModal = () => setShowLoginModal(true);
-  const openSignUpModal = () => setShowSignUpModal(true);
-
-  // Close modal functions
   const closeLoginModal = () => setShowLoginModal(false);
+  const openSignUpModal = () => {
+    setShowLoginModal(false); // Make sure to close login modal when sign-up is opened
+    setShowSignUpModal(true);
+  };
   const closeSignUpModal = () => setShowSignUpModal(false);
 
   return (
     <Router>
       <div>
-       <Routes>
+        <Routes>
           <Route 
             path="/" 
             element={
               <>
-                <Header openLoginModal={openLoginModal} openSignUpModal={openSignUpModal} />
+                <Header openLoginModal={openLoginModal} />
                 <Hero />
                 <ExploreSection />
               </>
@@ -35,12 +36,14 @@ function App() {
           />
         </Routes>
         <Footer />
-
-        {/* Login Modal */}
-        <LoginModal showModal={showLoginModal} closeModal={closeLoginModal} />
-
-        {/* Sign Up Modal */}
-        <SignUpModal showModal={showSignUpModal} closeModal={closeSignUpModal} />
+        
+        {/* Conditionally Render the Modals */}
+        {showLoginModal && (
+          <LoginModal closeModal={closeLoginModal} openSignUpModal={openSignUpModal} />
+        )}
+        {showSignUpModal && (
+          <SignUpModal closeModal={closeSignUpModal} />
+        )}
       </div>
     </Router>
   );

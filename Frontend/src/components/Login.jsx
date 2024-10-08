@@ -81,7 +81,7 @@ const LoginModal = ({ showModal, closeModal, openSignUpModal}) => {
             </label>
             <a href="/" className="text-sm text-green hover:underline">Forgot Password?</a>
           </div>
-          <button className="w-full bg-green hover:bg-green-700 text-white py-2 rounded-lg shadow-md hover:shadow-lg">
+          <button className="w-full bg-green hover:bg-hover-green text-white py-2 rounded-lg shadow-md hover:shadow-lg">
             Log in
           </button>
         </form>
@@ -110,13 +110,13 @@ const LoginModal = ({ showModal, closeModal, openSignUpModal}) => {
         <div className="text-center">
           <p className="text-sm">
             Don't have an account?{' '}
-            <Link href="/Signup" className="text-green font-medium">Create a new account</Link>
+            <Link href="/Signup" className="text-green font-medium hover:underline">Create a new account</Link>
           </p>
         </div>
         <div className="text-center mt-4">
           <p className="text-xs text-gray-500">
             By continuing you agree to the{' '}
-            <a href="/policy" className="text-green">Policy and Rules</a>
+            <a href="/policy" className="text-gray-700 font-semibold hover:underline">Policy and Rules</a>
           </p>
         </div>
       </div>

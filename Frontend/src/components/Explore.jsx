@@ -58,6 +58,7 @@ function ExploreSection() {
   // Function to handle search input
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value.toLowerCase());
+    setSelectedFilter(selectedFilter)
   };
 
   // Filter markets, malls, and categories based on the search query
