@@ -9,6 +9,7 @@ export default {
       colors: {
         'orange': '#F8912D',
         'green': '#236C13',
+      
         'hover-green': '#21CA1B',
         'site-bg': '#EBEBEB',
       }
