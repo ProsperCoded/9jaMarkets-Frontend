@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import Header2 from './Header2'; // Import Header2 component
+import accountImage from '../assets/how-it-works/post.svg';
 
 const HowItWorks = () => {
   const [activeTab, setActiveTab] = useState('create-account');
@@ -7,7 +9,8 @@ const HowItWorks = () => {
     switch (activeTab) {
       case 'create-account':
         return (
-          <div>
+          <div className='bg-white p-8 rounded-lg'>
+            <img src={accountImage} alt="Create Account" className="mb-4 block mx-auto max-w-full h-auto" />
             <h2 className="text-2xl font-bold mb-4">For Buyers</h2>
             <p className="text-gray-600">Click on the Sign Up button at the top right corner to create an account</p>
             <p className="text-gray-600">Fill in your details, verify your email or phone number, and complete your profile for a personalized shopping experience</p>
@@ -69,52 +72,58 @@ const HowItWorks = () => {
   };
 
   return (
-    <div className="flex bg-gray-100 min-h-screen"> {/* Updated here */}
-      {/* Side Navigation */}
-      <div className="w-1/4 bg-white p-6">
-        <ul>
-          <li
-            className={`cursor-pointer p-3 mb-2 ${activeTab === 'create-account' ? 'bg-indigo-500 text-white' : 'text-gray-900'}`}
-            onClick={() => setActiveTab('create-account')}
-          >
-            Create an Account
-          </li>
-          <li
-            className={`cursor-pointer p-3 mb-2 ${activeTab === 'browse-products' ? 'bg-indigo-500 text-white' : 'text-gray-900'}`}
-            onClick={() => setActiveTab('browse-products')}
-          >
-            Browse and Search for Products
-          </li>
-          <li
-            className={`cursor-pointer p-3 mb-2 ${activeTab === 'connect-vendors' ? 'bg-indigo-500 text-white' : 'text-gray-900'}`}
-            onClick={() => setActiveTab('connect-vendors')}
-          >
-            Connect with Vendors
-          </li>
-          <li
-            className={`cursor-pointer p-3 mb-2 ${activeTab === 'place-ads' ? 'bg-indigo-500 text-white' : 'text-gray-900'}`}
-            onClick={() => setActiveTab('place-ads')}
-          >
-            Place Ads
-          </li>
-          <li
-            className={`cursor-pointer p-3 mb-2 ${activeTab === 'payments' ? 'bg-indigo-500 text-white' : 'text-gray-900'}`}
-            onClick={() => setActiveTab('payments')}
-          >
-            Payments
-          </li>
-          <li
-            className={`cursor-pointer p-3 mb-2 ${activeTab === 'safety-security' ? 'bg-indigo-500 text-white' : 'text-gray-900'}`}
-            onClick={() => setActiveTab('safety-security')}
-          >
-            Safety and Security
-          </li>
-        </ul>
-      </div>
+    <div className="flex flex-col bg-gray-100 min-h-screen">
+      {/* Header */}
+      <Header2 />  {/* Include Header2 here */}
 
-      {/* Content Section */}
-      <div className="w-3/4 bg-gray-300 p-6">
-        {renderContent()}
+      {/* Main content container */}
+      <div className="flex flex-1">
+        {/* Side Navigation */}
+        <div className="w-1/4 bg-white p-6">
+          <ul>
+            <li
+              className={`cursor-pointer p-3 mb-2 ${activeTab === 'create-account' ? 'bg-indigo-500 text-white' : 'text-gray-900'}`}
+              onClick={() => setActiveTab('create-account')}
+            >
+              Create an Account
+            </li>
+            <li
+              className={`cursor-pointer p-3 mb-2 ${activeTab === 'browse-products' ? 'bg-indigo-500 text-white' : 'text-gray-900'}`}
+              onClick={() => setActiveTab('browse-products')}
+            >
+              Browse and Search for Products
+            </li>
+            <li
+              className={`cursor-pointer p-3 mb-2 ${activeTab === 'connect-vendors' ? 'bg-indigo-500 text-white' : 'text-gray-900'}`}
+              onClick={() => setActiveTab('connect-vendors')}
+            >
+              Connect with Vendors
+            </li>
+            <li
+              className={`cursor-pointer p-3 mb-2 ${activeTab === 'place-ads' ? 'bg-indigo-500 text-white' : 'text-gray-900'}`}
+              onClick={() => setActiveTab('place-ads')}
+            >
+              Place Ads
+            </li>
+            <li
+              className={`cursor-pointer p-3 mb-2 ${activeTab === 'payments' ? 'bg-indigo-500 text-white' : 'text-gray-900'}`}
+              onClick={() => setActiveTab('payments')}
+            >
+              Payments
+            </li>
+            <li
+              className={`cursor-pointer p-3 mb-2 ${activeTab === 'safety-security' ? 'bg-indigo-500 text-white' : 'text-gray-900'}`}
+              onClick={() => setActiveTab('safety-security')}
+            >
+              Safety and Security
+            </li>
+          </ul>
+        </div>
+
+        {/* Content Section */}
+        <div className="w-3/4 bg-gray-300 p-6">
+          {renderContent()}
+        </div>
       </div>
     </div>
   );

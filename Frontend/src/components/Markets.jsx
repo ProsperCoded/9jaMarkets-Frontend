@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import logo from '../assets/Logo.svg'; // Adjust path as needed
 import searchIcon from '../assets/search.svg'; // Assuming this is your search icon
 import userIcon from '../assets/Profile.svg'; // Assuming this is your user profile icon
