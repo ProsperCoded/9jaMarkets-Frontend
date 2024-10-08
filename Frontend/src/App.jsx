@@ -19,6 +19,7 @@ function App() {
   const closeLoginModal = () => setShowLoginModal(false);
   
   const openSignUpModal = () => {
+
     setShowLoginModal(false); // Close login modal when opening sign-up
     setShowSignUpModal(true);
   };

@@ -96,7 +96,7 @@ function ExploreSection() {
               placeholder="Search by state, market, or category..."
               value={searchQuery}
               onChange={handleSearchChange}
-              className="w-full pl-10 pr-10 py-2 border border-gray-700 rounded-full text-sm placeholder-gray-500 focus:ring-2 focus:ring-green"
+              className="w-full pl-10 pr-10 py-2 border border-gray-700 rounded-full text-sm placeholder-gray-500 focus:ring2 focus:ring-green"
             />
             <span className="absolute inset-y-0 flex items-center pl-2 left-[1%]">
               {/* Search Icon */}
