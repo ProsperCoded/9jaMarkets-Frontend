@@ -6,6 +6,7 @@ import ExploreSection from './components/Explore';
 import Footer from './components/Footer';
 import LoginModal from './components/Login';
 import SignUpModal from './components/Signup';
+import HowItWorks from './components/how-it-works';
 
 function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -31,9 +32,12 @@ function App() {
                 <Header openLoginModal={openLoginModal} />
                 <Hero />
                 <ExploreSection />
+                
               </>
             } 
           />
+          <Route path="/how-it-works" element={<HowItWorks />} />
+
         </Routes>
         <Footer />
         

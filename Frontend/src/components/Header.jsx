@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import logo from '../assets/Logo.svg';
 import { Link } from 'react-router-dom';
+import HowItWorks from './how-it-works';
 
 function Header({ openLoginModal, openSignUpModal }) {
   const [isScrolled, setIsScrolled] = useState(false);

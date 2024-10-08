@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import logo from '../assets/Logo.svg';
 import googleLogo from '../assets/Google Icon.svg';
 import facebookLogo from '../assets/facebook.png';
 import appleLogo from '../assets/apple.svg';
 import { Link } from 'react-router-dom';
+
 
 const LoginModal = ({ showModal, closeModal, openSignUpModal}) => {
   const [email, setEmail] = useState('');

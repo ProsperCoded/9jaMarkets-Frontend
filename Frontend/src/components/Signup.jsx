@@ -4,6 +4,7 @@ import appleLogo from '../assets/apple.svg';
 import facebookLogo from '../assets/facebook.png';
 import googleLogo from '../assets/Google Icon.svg';
 
+
 const SignUpModal = ({ showModal, closeModal }) => {
   const [formData, setFormData] = useState({
     email: '',
