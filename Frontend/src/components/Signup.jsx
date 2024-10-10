@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import logo from '../assets/Logo.svg'; // Adjust this according to your assets
 
 const SignUpModal = ({ showModal, closeModal }) => {

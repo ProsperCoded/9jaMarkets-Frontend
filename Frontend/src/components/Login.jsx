@@ -3,7 +3,8 @@ import logo from '../assets/Logo.svg';
 import googleLogo from '../assets/Google Icon.svg';
 import facebookLogo from '../assets/facebook.png';
 import appleLogo from '../assets/apple.svg';
-import { Link } from 'react-router-dom';
+
+
 
 const LoginModal = ({ showModal, closeModal, openSignUpModal }) => {
   const [email, setEmail] = useState('');
@@ -110,7 +111,7 @@ const LoginModal = ({ showModal, closeModal, openSignUpModal }) => {
           </a>
         </div>
         <div className="text-center mt-4">
-          <span className="text-sm text-gray-700"> Don't have an account? </span>
+          <span className="text-sm text-gray-700"> Dont have an account? </span>
           <button onClick={() => { closeModal(); openSignUpModal(); }} className="text-green font-semibold hover:underline">
             Sign Up
           </button>

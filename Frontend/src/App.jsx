@@ -49,7 +49,7 @@ function App() {
         closeModal={closeLoginModal} 
         openSignUpModal={openSignUpModal} // Function to open sign-up modal
       />
-      {showSignUpModal && <SignUpModal closeModal={closeSignUpModal} />}
+      {showSignUpModal && <SignUpModal showModal={showSignUpModal} closeModal={closeSignUpModal} />}
     </div>
   );
 }
