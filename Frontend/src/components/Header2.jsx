@@ -7,7 +7,7 @@ const Header2 = () => {
     <div>
       {/* Combined Header */}
       <header className="bg-green text-white top-0 w-full z-10"> {/* Added fixed positioning */}
-        <div className="container mx-auto flex justify-between items-center px-4 py-1">
+        <div className="container mx-auto flex justify-between items-center px-4 py-4">
           {/* Logo */}
           <img src={logo} alt="9ja Markets" className="h-8" />
           {/* User Icons */}
