@@ -5,8 +5,7 @@ import facebookLogo from '../assets/facebook.png';
 import appleLogo from '../assets/apple.svg';
 import { Link } from 'react-router-dom';
 
-
-const LoginModal = ({ showModal, closeModal, openSignUpModal}) => {
+const LoginModal = ({ showModal, closeModal, openSignUpModal }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -14,18 +13,25 @@ const LoginModal = ({ showModal, closeModal, openSignUpModal}) => {
 
   if (!showModal) return null; // Don't render if modal is hidden
 
+  const handleLogin = () => {
+    // Add your login logic here, e.g., API call
+    console.log('Login attempted with:', { email, password, rememberMe });
+    // Close modal after login attempt (if needed)
+    closeModal();
+  };
+
   return (
-    <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center z-50 ">
+    <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center z-50">
       <div className="bg-white rounded-[5%] p-8 w-full max-w-lg relative">
         <button
           onClick={closeModal}
-          className="absolute top-2 right-[6%] text-3xl text-gray-600 hover:text-gray-900 "
+          className="absolute top-2 right-[6%] text-3xl text-gray-600 hover:text-gray-900"
         >
           &times;
         </button>
         <img src={logo} alt="9ja Markets Logo" className="mx-auto mb-4 h-20" />
         <h2 className="text-2xl font-bold text-center text-green mb-4">Hello! Welcome back</h2>
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
             <input
@@ -33,9 +39,8 @@ const LoginModal = ({ showModal, closeModal, openSignUpModal}) => {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={`mt-1 p-2 w-full border rounded-lg ${
-                email ? 'border-green' : 'border-gray-300'
-              }`}
+              className={`mt-1 p-2 w-full border rounded-lg ${email ? 'border-green' : 'border-gray-300'}`}
+              required
             />
           </div>
           <div>
@@ -46,9 +51,8 @@ const LoginModal = ({ showModal, closeModal, openSignUpModal}) => {
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className={`mt-1 p-2 w-full border rounded-lg ${
-                  password ? 'border-green-500' : 'border-gray-300'
-                }`}
+                className={`mt-1 p-2 w-full border rounded-lg ${password ? 'border-green-500' : 'border-gray-300'}`}
+                required
               />
               <button
                 type="button"
@@ -77,12 +81,15 @@ const LoginModal = ({ showModal, closeModal, openSignUpModal}) => {
                 className="mr-2"
                 checked={rememberMe}
                 onChange={() => setRememberMe(!rememberMe)}
-              />{' '}
+              />
               Remember me
             </label>
             <a href="/" className="text-sm text-green hover:underline">Forgot Password?</a>
           </div>
-          <button className="w-full bg-green hover:bg-hover-green text-white py-2 rounded-lg shadow-md hover:shadow-lg">
+          <button 
+            type="submit" 
+            className="w-full bg-green hover:bg-hover-green text-white py-2 rounded-lg shadow-md hover:shadow-lg"
+          >
             Log in
           </button>
         </form>
@@ -91,34 +98,22 @@ const LoginModal = ({ showModal, closeModal, openSignUpModal}) => {
           <span className="px-4 text-sm text-gray-700">Or</span>
           <div className="flex-grow border-t border-gray-300"></div>
         </div>
-        <div className="flex justify-center space-x-16 mt-4">
-          <button className="text-lg">
-            <a href="https://accounts.google.com" target="_blank" rel="noopener noreferrer">
-              <img src={googleLogo} alt="Google Login" className="h-6" />
-            </a>
-          </button>
-          <button className="text-lg">
-            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
-              <img src={facebookLogo} alt="Facebook Login" className="h-6" />
-            </a>
-          </button>
-          <button className="text-lg">
-            <a href="https://appleid.apple.com" target="_blank" rel="noopener noreferrer">
-              <img src={appleLogo} alt="Apple Login" className="h-6" />
-            </a>
-          </button>
-        </div>
-        <div className="text-center">
-          <p className="text-sm">
-            Don't have an account?{' '}
-            <Link to="/Signup" className="text-green font-medium hover:underline">Create a new account</Link>
-          </p>
+        <div className="flex justify-between">
+          <a href="https://accounts.google.com" target="_blank" rel="noopener noreferrer">
+            <img src={googleLogo} alt="Google" className="h-10" />
+          </a>
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+            <img src={facebookLogo} alt="Facebook" className="h-10" />
+          </a>
+          <a href="https://apple.com" target="_blank" rel="noopener noreferrer">
+            <img src={appleLogo} alt="Apple" className="h-10" />
+          </a>
         </div>
         <div className="text-center mt-4">
-          <p className="text-xs text-gray-500">
-            By continuing you agree to the{' '}
-            <a href="/policy" className="text-gray-700 font-semibold hover:underline">Policy and Rules</a>
-          </p>
+          <span className="text-sm text-gray-700"> Don't have an account? </span>
+          <button onClick={() => { closeModal(); openSignUpModal(); }} className="text-green font-semibold hover:underline">
+            Sign Up
+          </button>
         </div>
       </div>
     </div>

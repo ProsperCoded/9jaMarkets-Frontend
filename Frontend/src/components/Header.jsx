@@ -21,12 +21,11 @@ function Header({ openLoginModal, openSignUpModal }) {
       className={`fixed top-0 w-full transition-all duration-300 ${
         isScrolled ? 'bg-black bg-opacity-20 backdrop-blur-md text-white' : 'bg-transparent text-white'
       } z-10`}
-      style={{ padding: '1px 5px' }} // Adjust padding here
+      style={{ padding: '1px 5px' }}
     >
       <div className="container mx-auto flex justify-between items-center p-2 text-3xl font-bold">
-        {/* Logo Section */}
         <div className="flex items-center justify-center">
-          <Link to="/" className="flex items-center"> {/* Make the logo clickable */}
+          <Link to="/" className="flex items-center">
             <img src={logo} alt="9ja Markets" className="h-10" />
           </Link>
           <nav className="flex space-x-4 m-4">
@@ -35,7 +34,6 @@ function Header({ openLoginModal, openSignUpModal }) {
             <Link to="/markets" className="hover:text-orange text-lg">Markets &rarr;</Link>
           </nav>
         </div>
-        {/* Authentication Links */}
         <div className="auth-links space-x-3">
           <button
             onClick={openLoginModal}
