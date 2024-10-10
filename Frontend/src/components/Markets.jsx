@@ -98,10 +98,7 @@ const MarketPage = () => {
       <header className="bg-green text-white py-2">
         <div className="container mx-auto flex justify-between items-center px-4">
           {/* Logo */}
-          
-          <Link to="/" className="flex items-center"> {/* Make the logo clickable */}
-            <img src={logo} alt="9ja Markets" className="h-8" />
-          </Link>
+          <img src={logo} alt="9ja Markets" className="h-8" />
           {/* User Icons */}
           <img src={userIcon} alt="Profile" className="h-8 w-8 rounded-full" />
         </div>
