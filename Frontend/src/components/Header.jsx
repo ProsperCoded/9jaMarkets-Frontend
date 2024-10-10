@@ -1,17 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import logo from '../assets/Logo.svg';
 import { Link } from 'react-router-dom';
-import HowItWorks from './how-it-works';
 
 function Header({ openLoginModal, openSignUpModal }) {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const handleScroll = () => {
-    if (window.scrollY > 50) {
-      setIsScrolled(true);
-    } else {
-      setIsScrolled(false);
-    }
+    setIsScrolled(window.scrollY > 50);
   };
 
   useEffect(() => {
@@ -31,8 +26,9 @@ function Header({ openLoginModal, openSignUpModal }) {
       <div className="container mx-auto flex justify-between items-center p-2 text-3xl font-bold">
         {/* Logo Section */}
         <div className="flex items-center justify-center">
-          <img src={logo} alt="9ja Markets" className="h-10" />
-          <a href="http://9jamarkets.com" target="_blank" rel="noopener noreferrer" className="block cursor-pointer"></a>
+          <Link to="/" className="flex items-center"> {/* Make the logo clickable */}
+            <img src={logo} alt="9ja Markets" className="h-10" />
+          </Link>
           <nav className="flex space-x-4 m-4">
             <Link to="/" className="hover:text-orange text-lg">Home</Link>
             <Link to="/how-it-works" className="hover:text-orange text-lg">How it Works</Link>
@@ -60,4 +56,3 @@ function Header({ openLoginModal, openSignUpModal }) {
 }
 
 export default Header;
-

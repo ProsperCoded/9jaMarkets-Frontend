@@ -111,7 +111,7 @@ const LoginModal = ({ showModal, closeModal, openSignUpModal}) => {
         <div className="text-center">
           <p className="text-sm">
             Don't have an account?{' '}
-            <Link href="/Signup" className="text-green font-medium hover:underline">Create a new account</Link>
+            <Link to="/Signup" className="text-green font-medium hover:underline">Create a new account</Link>
           </p>
         </div>
         <div className="text-center mt-4">

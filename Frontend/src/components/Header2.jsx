@@ -1,5 +1,5 @@
 import logo from '../assets/Logo.svg'; // Adjust path as needed
-
+import { Link } from 'react-router-dom';
 import userIcon from '../assets/Profile.svg'; // Assuming this is your user profile icon
 
 const Header2 = () => {
@@ -9,7 +9,10 @@ const Header2 = () => {
       <header className="bg-green text-white top-0 w-full z-10"> {/* Added fixed positioning */}
         <div className="container mx-auto flex justify-between items-center px-4 py-4">
           {/* Logo */}
-          <img src={logo} alt="9ja Markets" className="h-8" />
+         
+          <Link to="/" className="flex items-center"> {/* Make the logo clickable */}
+            <img src={logo} alt="9ja Markets" className="h-8" />
+          </Link>
           {/* User Icons */}
           <img src={userIcon} alt="Profile" className="h-8 w-8 rounded-full" />
         </div>
