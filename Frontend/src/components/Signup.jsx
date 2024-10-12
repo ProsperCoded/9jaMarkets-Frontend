@@ -1,5 +1,9 @@
-import { useState } from 'react';
-import logo from '../assets/Logo.svg'; // Adjust this according to your assets
+import React, { useState } from 'react';
+import logo from '../assets/Logo.svg';
+import appleLogo from '../assets/apple.svg';
+import facebookLogo from '../assets/facebook.png';
+import googleLogo from '../assets/Google Icon.svg';
+
 
 const SignUpModal = ({ showModal, closeModal }) => {
   const [formData, setFormData] = useState({

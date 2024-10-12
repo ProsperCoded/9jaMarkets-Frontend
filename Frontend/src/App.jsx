@@ -9,6 +9,7 @@ import SignUpModal from './components/Signup'; // Ensure SignUpModal is correctl
 import HowItWorks from './components/how-it-works';
 import MarketPage from './components/Markets';
 
+
 function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignUpModal, setShowSignUpModal] = useState(false);
