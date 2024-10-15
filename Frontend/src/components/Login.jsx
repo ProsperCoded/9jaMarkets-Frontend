@@ -15,7 +15,7 @@ const LoginModal = ({ showModal, closeModal, openSignUpModal}) => {
   if (!showModal) return null; // Don't render if modal is hidden
 
   return (
-    <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center z-50 ">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 ">
       <div className="bg-white rounded-[5%] p-8 w-full max-w-lg relative">
         <button
           onClick={closeModal}
@@ -100,16 +100,10 @@ const LoginModal = ({ showModal, closeModal, openSignUpModal}) => {
             </a>
           </button>
         </div>
-        <div className="text-center">
-          <p className="text-sm">
-            Don't have an account?{' '}
-            <Link href="/Signup" className="text-green font-medium hover:underline">Create a new account</Link>
-          </p>
-        </div>
         <div className="text-center mt-4">
           <span className="text-sm text-gray-700"> Dont have an account? </span>
           <button onClick={() => { closeModal(); openSignUpModal(); }} className="text-green font-semibold hover:underline">
-            Sign Up
+            Create an account
           </button>
         </div>
       </div>

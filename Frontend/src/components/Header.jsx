@@ -23,10 +23,10 @@ function Header({ openLoginModal, openSignUpModal }) {
       } z-10`}
       style={{ padding: '1px 5px' }}
     >
-      <div className="container mx-auto flex justify-between items-center p-2 text-3xl font-bold">
+        <div className="container mx-auto flex justify-between items-center p-2 text-3xl font-bold h-14">
         <div className="flex items-center justify-center">
           <Link to="/" className="flex items-center">
-            <img src={logo} alt="9ja Markets" className="h-10" />
+            <img src={logo} alt="9ja Markets" className="h-8" />
           </Link>
           <nav className="flex space-x-4 m-4">
             <Link to="/" className="hover:text-orange text-lg">Home</Link>
@@ -34,16 +34,16 @@ function Header({ openLoginModal, openSignUpModal }) {
             <Link to="/markets" className="hover:text-orange text-lg">Markets &rarr;</Link>
           </nav>
         </div>
-        <div className="auth-links space-x-3">
+        <div className="auth-links space-x-3 pb-3">
           <button
             onClick={openLoginModal}
-            className="text-white border border-white px-3 py-1 rounded-full hover:bg-white hover:text-green transition text-lg"
+            className="text-white  px-4  rounded-full hover:bg-white hover:text-green transition text-lg"
           >
-            Log in
+            Login
           </button>
-          <button
+          <button 
             onClick={openSignUpModal}
-            className="bg-green text-white px-3 py-1 rounded-full hover:bg-hover-green transition text-lg"
+            className="bg-green text-white px-4  rounded-full hover:bg-hover-green transition text-lg"
           >
             Sign Up
           </button>

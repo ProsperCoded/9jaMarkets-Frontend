@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import logo from '../assets/Logo.svg'; // Adjust path as needed
 import searchIcon from '../assets/search.svg'; // Assuming this is your search icon
-import userIcon from '../assets/Profile.svg'; // Assuming this is your user profile icon
-import { Link } from 'react-router-dom';
+
 
 const states = [
   'Abuja', 'Abia', 'Adamawa', 'Akwa-Ibom', 'Anambra', 'Bauchi', 'Bayelsa', 'Benue',
@@ -94,16 +92,6 @@ const MarketPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Green Header */}
-      <header className="bg-green text-white py-2">
-        <div className="container mx-auto flex justify-between items-center px-4">
-          {/* Logo */}
-          <img src={logo} alt="9ja Markets" className="h-8" />
-          {/* User Icons */}
-          <img src={userIcon} alt="Profile" className="h-8 w-8 rounded-full" />
-        </div>
-      </header>
-
       <header className="bg-white text-green py-2 drop-shadow-sm">
         <div className="container mx-auto flex justify-center items-center px-4">
           {/* Search Bar */}

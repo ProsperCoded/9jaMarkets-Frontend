@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Header2 from './Header2'; // Import Header2 component
 import placeAds from '../assets/how-it-works/post.svg';
 import create from '../assets/how-it-works/create-account.svg'; 
 import browseProductImage from '../assets/how-it-works/Browse.svg';
@@ -15,7 +14,7 @@ const HowItWorks = () => {
       case 'create-account':
         return (
           <div className='bg-white p-4 rounded-lg'>
-            <img src={create} alt="Create Account" className="mb-4 block mx-auto max-w-full h-auto pt-10 px-4 sm:px-20" />
+            <img src={create} alt="Create Account" className="mb-4 block mx-auto pt-10 px-4 sm:px-20" />
             <div className='px-4 sm:px-40 pb-10 sm:pb-40'>
               <h2 className="text-2xl font-bold">For Buyers</h2>
               <p className="text-black font-semibold">Click on the Sign Up button at the top right corner to create an account</p>
@@ -95,11 +94,13 @@ const HowItWorks = () => {
   };
 
   return (
-    <div className="flex flex-col bg-gray-100 min-h-screen">
-      {/* Header */}
-      <Header2 />  {/* Include Header2 here */}
-
-      {/* Main content container */}
+    
+    <div className="flex flex-col bg-gray-100 min-h-screen">  
+    <header className="bg-white text-green py-2 drop-shadow-sm">
+        <div className="container mx-auto flex justify-center items-center px-4">
+         <h2 className='items-center text-green font-semibold text-xl'>How It Works</h2>
+        </div>
+      </header>   
       <div className="flex-1 flex flex-col sm:flex-row">
         {/* Side Navigation */}
         <div className="w-full sm:w-1/4 bg-white p-6">

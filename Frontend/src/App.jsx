@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
+import Header2 from './components/Header2';
 import Hero from './components/Hero';
 import ExploreSection from './components/Explore';
 import Footer from './components/Footer';
@@ -40,8 +41,8 @@ function App() {
       )}
       <Routes>
         <Route path="/" element={<><Hero /><ExploreSection /></>} />
-        <Route path="/how-it-works" element={<HowItWorks />} />
-        <Route path="/markets" element={<MarketPage />} />
+        <Route path="/how-it-works" element={<><Header2 /><HowItWorks /></>} />
+        <Route path="/markets" element={<><Header2 /><MarketPage /></>} />
       </Routes>
       <Footer />
       
@@ -51,6 +52,11 @@ function App() {
         closeModal={closeLoginModal} 
         openSignUpModal={openSignUpModal} // Function to open sign-up modal
       />
+      <SignUpModal
+        showModal={showSignUpModal}
+        closeModal={closeSignUpModal}
+        openLoginModal={openLoginModal}
+        />
       {showSignUpModal && <SignUpModal showModal={showSignUpModal} closeModal={closeSignUpModal} />}
     </div>
   );
