@@ -12,24 +12,17 @@ const SignUpModal = ({ showModal, closeModal }) => {
     confirmPassword: ''
   });
 
-  const [error, setError] = useState('');
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Check if passwords match
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
     console.log('Sign Up Data:', formData);
     // Add your sign-up logic here (like sending data to the backend)
   };
 
-  if (!showModal) return null;
+  if (!showModal) return null; // Don't render if modal is not visible
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -42,10 +35,7 @@ const SignUpModal = ({ showModal, closeModal }) => {
           Welcome to 9ja Markets
         </h2>
 
-        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
-        
         <form onSubmit={handleSubmit}>
-          {/* Form fields go here */}
           <div className="mb-4">
             <label htmlFor="email" className="block text-sm text-gray-600">Email</label>
             <input
@@ -54,14 +44,53 @@ const SignUpModal = ({ showModal, closeModal }) => {
               name="email"
               value={formData.email}
               onChange={handleChange}
+              className="w-full border border-gray-300 rounded-lg p-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green "
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="phone" className="block text-sm text-gray-600">Phone Number</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
               className="w-full border border-gray-300 rounded-lg p-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green"
               required
             />
           </div>
-          {/* Add remaining fields similarly */}
+
+          <div className="mb-4">
+            <label htmlFor="password" className="block text-sm text-gray-600">Create password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className="w-full border border-gray-300 rounded-lg p-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="confirmPassword" className="block text-sm text-gray-600">Confirm password</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              className="w-full border border-gray-300 rounded-lg p-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green"
+              required
+            />
+          </div>
+
           <button
             type="submit"
-            className="w-full bg-green hover:bg-hover-green text-white py-2 rounded-lg shadow-md hover:shadow-lg"
+            className="w-full bg-green text-white py-2 rounded-lg hover:bg-hover-green transition-colors"
           >
             Sign Up
           </button>
@@ -111,4 +140,3 @@ const SignUpModal = ({ showModal, closeModal }) => {
 };
 
 export default SignUpModal;
-
