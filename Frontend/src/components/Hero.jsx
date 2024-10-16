@@ -5,7 +5,7 @@ import logo from '../assets/Logo.svg';
 function Hero() {
   return (
     <div className="relative bg-cover bg-center h-screen" style={{ backgroundImage: `url(${backgroundImage})` }}>
-      <div className="container mx-auto flex flex-col justify-center items-center h-full text-center text-white px-4">
+      <div className="container mx-auto flex flex-col justify-center items-center h-full text-center text-white px-4 pb-20 p-[30%] py-[10%]">
         <div className="logo">
           <img src={logo} alt="9ja Markets" className="h-60" />
         </div>
