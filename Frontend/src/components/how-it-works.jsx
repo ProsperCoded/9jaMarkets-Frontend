@@ -96,11 +96,11 @@ const HowItWorks = () => {
   return (
     
     <div className="flex flex-col bg-gray-100 min-h-screen">  
-    <header className="bg-white text-green py-2 drop-shadow-sm">
+    <div className="bg-white text-green py-2 drop-shadow-sm">
         <div className="container mx-auto flex justify-center items-center px-4">
          <h2 className='items-center text-green font-semibold text-xl'>How It Works</h2>
         </div>
-      </header>   
+      </div>   
       <div className="flex-1 flex flex-col sm:flex-row">
         {/* Side Navigation */}
         <div className="w-full sm:w-1/4 bg-white p-6">

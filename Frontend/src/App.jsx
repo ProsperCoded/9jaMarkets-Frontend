@@ -1,15 +1,15 @@
 import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, useParams } from 'react-router-dom';
 import Header from './components/Header';
 import Header2 from './components/Header2';
-import Hero from './components/Hero';
+import Hero from './components/Hero'; 
 import ExploreSection from './components/Explore';
 import Footer from './components/Footer';
-import LoginModal from './components/Login'; // Ensure LoginModal is correctly implemented
-import SignUpModal from './components/Signup'; // Ensure SignUpModal is correctly implemented
+import LoginModal from './components/Login'; 
+import SignUpModal from './components/Signup'; 
 import HowItWorks from './components/how-it-works';
 import MarketPage from './components/Markets';
-import Advert from './components/Advert';
+import Adverts from './components/Adverts';
 
 
 function App() {
@@ -17,15 +17,18 @@ function App() {
   const [showSignUpModal, setShowSignUpModal] = useState(false);
 
   // Functions to open/close modals
-  const openLoginModal = () => setShowLoginModal(true);
-  const closeLoginModal = () => setShowLoginModal(false);
-  
-  const openSignUpModal = () => {
+  const openLoginModal = () => {
+    setShowSignUpModal(false); // Close sign-up modal when opening login
+    setShowLoginModal(true);
+  };
 
+  const closeLoginModal = () => setShowLoginModal(false);
+
+  const openSignUpModal = () => {
     setShowLoginModal(false); // Close login modal when opening sign-up
     setShowSignUpModal(true);
   };
-  
+
   const closeSignUpModal = () => setShowSignUpModal(false);
 
   // Custom hook to get the current location
@@ -37,15 +40,16 @@ function App() {
       {location.pathname === '/' && (
         <Header 
           openLoginModal={openLoginModal} 
-          openSignUpModal={openSignUpModal} // Pass this prop to Header
+          openSignUpModal={openSignUpModal} 
         />
       )}
+      
       <Routes>
         <Route path="/" element={<><Hero /><ExploreSection /></>} />
         <Route path="/how-it-works" element={<><Header2 /><HowItWorks /></>} />
         <Route path="/markets" element={<><Header2 /><MarketPage /></>} />
-        <Route path='/ad' element={<><Header2 /><Advert/></>}/>
-      
+        <Route path='/ad' element={<><Header2/> <Adverts/></>}/>
+
       </Routes>
       <Footer />
       
@@ -53,15 +57,24 @@ function App() {
       <LoginModal 
         showModal={showLoginModal}
         closeModal={closeLoginModal} 
-        openSignUpModal={openSignUpModal} // Function to open sign-up modal
+        openSignUpModal={openSignUpModal} 
       />
       <SignUpModal
         showModal={showSignUpModal}
         closeModal={closeSignUpModal}
         openLoginModal={openLoginModal}
-        />
-      {showSignUpModal && <SignUpModal showModal={showSignUpModal} closeModal={closeSignUpModal} />}
+      />
     </div>
+  );
+}
+
+// Profile page wrapper to handle subpages
+function ProfilePageWrapper() {
+  const { subpage } = useParams();
+
+  // Load different components based on the subpage parameter
+  return (
+    <Advert subpage={subpage} />
   );
 }
 

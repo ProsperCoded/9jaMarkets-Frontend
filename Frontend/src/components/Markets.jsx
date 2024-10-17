@@ -92,7 +92,7 @@ const MarketPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="bg-white text-green py-2 drop-shadow-sm">
+      <div className="bg-white text-green py-2 drop-shadow-sm">
         <div className="container mx-auto flex justify-center items-center px-4">
           {/* Search Bar */}
           <div className="flex items-center bg-white border border-green text-gray-600 rounded-full px-4 py-2 w-full max-w-md focus:ring-green focus:ring-opacity-50">
@@ -106,7 +106,7 @@ const MarketPage = () => {
             <img src={searchIcon} alt="Search" className="h-5 w-5" />
           </div>
         </div>
-      </header>
+      </div>
 
       {/* Main Layout */}
       <div className="flex flex-grow">
