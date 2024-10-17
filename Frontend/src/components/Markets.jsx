@@ -93,18 +93,34 @@ const MarketPage = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <div className="bg-white text-green py-2 drop-shadow-sm">
-        <div className="container mx-auto flex justify-center items-center px-4">
-          {/* Search Bar */}
-          <div className="flex items-center bg-white border border-green text-gray-600 rounded-full px-4 py-2 w-full max-w-md focus:ring-green focus:ring-opacity-50">
-            <input
-              type="text"
-              placeholder={`Search ${selectedState} markets...`}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full outline-none text-sm px-2"
-            />
-            <img src={searchIcon} alt="Search" className="h-5 w-5" />
+        <div className="container mx-auto flex justify-between items-center px-4">
+          
+          {/* Left Section with Markets and Malls */}
+          <div className='flex items-center space-x-4'>
+            <div className="text-lg font-semibold">
+              Markets
+            </div>
+            <div className="text-lg font-semibold">
+              Malls
+            </div>
           </div>
+          
+          {/* Center Section - Search Bar */}
+          <div className="flex-grow flex justify-center">
+            <div className="flex items-center bg-white border border-green text-gray-600 rounded-full px-4 py-2 w-full max-w-md focus:ring-green focus:ring-opacity-50">
+              <input
+                type="text"
+                placeholder={`Search ${selectedState} markets...`}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full outline-none text-sm px-2"
+              />
+              <img src={searchIcon} alt="Search" className="h-5 w-5" />
+            </div>
+          </div>
+          
+          {/* Empty Right Side (Optional for now) */}
+          <div className='flex items-center space-x-4'></div>
         </div>
       </div>
 
