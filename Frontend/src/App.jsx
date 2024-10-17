@@ -9,6 +9,7 @@ import LoginModal from './components/Login'; // Ensure LoginModal is correctly i
 import SignUpModal from './components/Signup'; // Ensure SignUpModal is correctly implemented
 import HowItWorks from './components/how-it-works';
 import MarketPage from './components/Markets';
+import Advert from './components/Advert';
 
 
 function App() {
@@ -43,6 +44,8 @@ function App() {
         <Route path="/" element={<><Hero /><ExploreSection /></>} />
         <Route path="/how-it-works" element={<><Header2 /><HowItWorks /></>} />
         <Route path="/markets" element={<><Header2 /><MarketPage /></>} />
+        <Route path='/ad' element={<><Header2 /><Advert/></>}/>
+      
       </Routes>
       <Footer />
       
