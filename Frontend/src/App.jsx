@@ -9,8 +9,8 @@ import LoginModal from './components/Login';
 import SignUpModal from './components/Signup'; 
 import HowItWorks from './components/how-it-works';
 import MarketPage from './components/Markets';
+import Profile from './components/Profile';
 import Adverts from './components/Adverts';
-
 
 function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -34,23 +34,29 @@ function App() {
   // Custom hook to get the current location
   const location = useLocation();
 
+  // Check if it's the home page to conditionally render Header
+  const isHomePage = location.pathname === '/';
+
   return (
     <div>
-      {/* Conditionally render the Header based on the route */}
-      {location.pathname === '/' && (
+      {/* Render Header based on the route */}
+      {isHomePage ? (
         <Header 
           openLoginModal={openLoginModal} 
           openSignUpModal={openSignUpModal} 
         />
+      ) : (
+        <Header2 />
       )}
       
       <Routes>
         <Route path="/" element={<><Hero /><ExploreSection /></>} />
-        <Route path="/how-it-works" element={<><Header2 /><HowItWorks /></>} />
-        <Route path="/markets" element={<><Header2 /><MarketPage /></>} />
-        <Route path='/ad' element={<><Header2/> <Adverts/></>}/>
-
+        <Route path="/how-it-works" element={<HowItWorks />} />
+        <Route path="/markets" element={<MarketPage />} />
+        <Route path="/profile/:subpage?" element={<ProfilePageWrapper />} />
+        <Route path='/ad' element={<Adverts />} />
       </Routes>
+
       <Footer />
       
       {/* Modals */}
@@ -74,7 +80,7 @@ function ProfilePageWrapper() {
 
   // Load different components based on the subpage parameter
   return (
-    <Advert subpage={subpage} />
+    <Profile subpage={subpage} />
   );
 }
 

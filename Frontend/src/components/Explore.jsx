@@ -7,6 +7,7 @@ import Furniture_category from '../assets/Furniture_category.png';
 import Food_category from '../assets/Food_category.png';
 import Pharmacy_category from '../assets/Pharmacy_category.png';
 import Sports_category from '../assets/Sports_category.png';
+import { Link } from 'react-router-dom';
 
 // Import images for markets and malls
 import AlabaMarket from '../assets/markets/AlabaMarket.png';
@@ -115,9 +116,15 @@ function ExploreSection() {
         {/* Categories Section with Swipe */}
         <div className="relative flex items-center mb-8">
           {/* Place Ad Button */}
-          <div>
-            <button className="w-48 h-48 bg-orange text-white rounded-lg hover:shadow-lg hover:scale-105 transition">Place Ad</button>
-          </div>
+         
+          <Link to="/ad">
+            <div className="w-48 h-48 bg-orange text-white rounded-lg hover:shadow-lg hover:scale-105 transition flex flex-col justify-center items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-12 h-12 mb-2">
+                <path fillRule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z" clipRule="evenodd" />
+              </svg>
+              <span className="text-2xl font-bold">Place Ad</span>
+            </div>
+          </Link>
 
           {/* Left Swipe Button */}
           <button

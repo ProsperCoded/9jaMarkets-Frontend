@@ -117,6 +117,7 @@ const MarketPage = () => {
               />
               <img src={searchIcon} alt="Search" className="h-5 w-5" />
             </div>
+            
           </div>
           
           {/* Empty Right Side (Optional for now) */}
