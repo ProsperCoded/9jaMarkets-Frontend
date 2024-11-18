@@ -1,79 +1,43 @@
-import React, { useState } from 'react';
-import feedbackIcon from '../assets/Profile.svg'; // Use the correct path to your feedback icon
-
+import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserCircle, faLink } from '@fortawesome/free-solid-svg-icons';
 const Feedback = () => {
   const [feedbackReceived, setFeedbackReceived] = useState([]); // Simulate received feedback
   const [feedbackSent, setFeedbackSent] = useState([]); // Simulate sent feedback
-  const [activeTab, setActiveTab] = useState('received'); // State to manage active tab
 
-  const handleTabClick = (tab) => {
-    setActiveTab(tab);
-  };
-
-  return (
-    <div className="feedback-page bg-white p-6 rounded-md shadow-md">
-      <h2 className="text-xl font-bold mb-4">Feedback</h2>
-      
-      {/* Tabs for Received and Sent Feedback */}
-      <div className="tabs mb-4">
-        <button
-          onClick={() => handleTabClick('received')}
-          className={`mr-2 px-4 py-2 rounded-full ${activeTab === 'received' ? 'bg-green-500 text-white' : 'bg-gray-200'}`}
-        >
-          Received ({feedbackReceived.length})
-        </button>
-        <button
-          onClick={() => handleTabClick('sent')}
-          className={`px-4 py-2 rounded-full ${activeTab === 'sent' ? 'bg-green-500 text-white' : 'bg-gray-200'}`}
-        >
-          Sent ({feedbackSent.length})
-        </button>
-      </div>
-
-      {/* Content based on selected tab */}
-      <div className="feedback-content">
-        {activeTab === 'received' && (
-          <div className="received-feedback">
-            {feedbackReceived.length === 0 ? (
-              <div className="text-center">
-                <img src={feedbackIcon} alt="No feedback" className="mx-auto mb-4" />
-                <p>No feedback yet</p>
-                <p>Copy the link and ask your customers to leave feedback about you</p>
-                <button className="bg-green-500 text-white px-4 py-2 rounded-full mt-4">
-                  Copy link
-                </button>
-              </div>
-            ) : (
-              // Display received feedback list
-              <ul>
-                {feedbackReceived.map((feedback, index) => (
-                  <li key={index} className="border-b py-2">{feedback.message}</li>
-                ))}
-              </ul>
-            )}
+    return (
+      <div className="p-6 bg-white shadow-md rounded-md w-full">
+        <div className="flex justify-between items-center mb-4">
+          {/* Feedback title */}
+          <h1 className="text-2xl font-semibold">Feedback</h1>
+          
+          {/* Feedback status */}
+          <div className="flex space-x-2">
+            <button className="bg-green bg-opacity-20 text-green font-semibold py-1 px-3 rounded-lg">
+              Received (0)
+            </button>
+            <button className="bg-gray-100 text-gray-600 font-semibold py-1 px-3 rounded-lg">
+              Sent (0)
+            </button>
           </div>
-        )}
-
-        {activeTab === 'sent' && (
-          <div className="sent-feedback">
-            {feedbackSent.length === 0 ? (
-              <div className="text-center">
-                <img src={feedbackIcon} alt="No feedback" className="mx-auto mb-4" />
-                <p>No feedback sent yet</p>
-              </div>
-            ) : (
-              // Display sent feedback list
-              <ul>
-                {feedbackSent.map((feedback, index) => (
-                  <li key={index} className="border-b py-2">{feedback.message}</li>
-                ))}
-              </ul>
-            )}
-          </div>
-        )}
+        </div>
+  
+        {/* Icon and Message in Center */}
+        <div className="flex flex-col items-center justify-center h-64 text-center">
+          <FontAwesomeIcon icon={faUserCircle} className="text-gray-400" size="6x" />
+          <p className="mt-4 text-gray-500">No feedback yet</p>
+          <p className="text-gray-500 mb-4">
+            Copy the link and ask your customers to leave feedback about you
+          </p>
+          
+          {/* Copy Link Button */}
+          <button className="bg-green text-white py-2 px-4 rounded-full flex items-center">
+            <FontAwesomeIcon icon={faLink} className="mr-2" /> Copy link
+          </button>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+}
 
-export default Feedback;
+  export default Feedback;
+  

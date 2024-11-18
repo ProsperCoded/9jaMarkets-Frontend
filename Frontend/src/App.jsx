@@ -8,9 +8,11 @@ import Footer from './components/Footer';
 import LoginModal from './components/Login'; 
 import SignUpModal from './components/Signup'; 
 import HowItWorks from './components/how-it-works';
-import MarketPage from './components/Markets';
+import MarketPage from './components/Markets';                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               import MallPage from './components/Malls';
 import Profile from './components/Profile';
 import Adverts from './components/Adverts';
+import Settings from './components/Settings';
+
 
 function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -55,6 +57,7 @@ function App() {
         <Route path="/markets" element={<MarketPage />} />
         <Route path="/profile/:subpage?" element={<ProfilePageWrapper />} />
         <Route path='/ad' element={<Adverts />} />
+        <Route path='/settings/:subpage?' element={<SettingsPageWrapper />} />
       </Routes>
 
       <Footer />
@@ -82,6 +85,14 @@ function ProfilePageWrapper() {
   return (
     <Profile subpage={subpage} />
   );
+}
+
+function SettingsPageWrapper() {
+    const { subpage } = useParams();
+
+  return (
+    <Settings subpage={subpage} />
+  )
 }
 
 // Wrap the App component with Router

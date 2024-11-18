@@ -46,7 +46,7 @@ const MyAdverts = () => {
             </div>
             <div className="flex flex-col items-end">
               <div className="space-x-2 mb-2">
-                <button onClick={() => postAdvert(advert.id)} className="bg-orange-500 text-white px-3 py-1 rounded-md">
+                <button onClick={() => postAdvert(advert.id)} className="bg-orange text-white px-3 py-1 rounded-md">
                   Post AD
                 </button>
                 <button onClick={() => deleteAdvert(advert.id)} className="text-red-600">

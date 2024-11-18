@@ -233,7 +233,7 @@ const [selectedLocation, setSelectedLocation] = useState('Location');
 }
 
 export default Adverts;
-// import React from 'react';
+// import React from 'react'; 
 
 // const Advert = ({ subpage }) => {
 //   let content;
