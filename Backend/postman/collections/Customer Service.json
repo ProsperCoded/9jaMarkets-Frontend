@@ -1,0 +1,815 @@
+{
+	"info": {
+		"_postman_id": "1b5cdd6a-06aa-492d-8969-6fe8269c1996",
+		"name": "Customer Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "27498181-1b5cdd6a-06aa-492d-8969-6fe8269c1996"
+	},
+	"item": [
+		{
+			"name": "Profile - Get",
+			"id": "2aa8b15d-3af5-46cd-9b2f-5a49ed26dbe1",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/customer/profile/:customerId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"customer",
+						"profile",
+						":customerId"
+					],
+					"variable": [
+						{
+							"key": "customerId",
+							"value": "{{customerId}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "cd5ef96d-599b-48cb-b4e8-e3f320e99ea2",
+					"name": "Error - Profile - Get: Unauthorized",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/customer/profile",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customer",
+								"profile"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Resource-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Origin-Agent-Cluster",
+							"value": "?1"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "no-referrer"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-DNS-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "94"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"5e-go5d8JHKxKBBtBOD+ER87JzIAlU\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 10 Sep 2024 10:55:03 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"error\",\n    \"message\": \"User Unauthorized\",\n    \"data\": {\n        \"status\": 401,\n        \"reason\": \"Unauthorized\"\n    }\n}"
+				},
+				{
+					"id": "18bbf09c-6b5e-4a05-9adc-8c599a803382",
+					"name": "Success - Profile - Get",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/customer/profile",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customer",
+								"profile"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Resource-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Origin-Agent-Cluster",
+							"value": "?1"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "no-referrer"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-DNS-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "293"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"125-h2iCj6eC7VTzb9t6ChQj7ir6r98\""
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 12 Sep 2024 06:52:41 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"message\": \"Get Customer Successful\",\n    \"data\": {\n        \"id\": \"2a31b0cf-6b0b-476c-823e-c945bd18c599\",\n        \"email\": \"example6@example.com\",\n        \"firstName\": \"John\",\n        \"lastName\": \"Doe\",\n        \"dateOfBirth\": \"1990-01-01T00:00:00.000Z\",\n        \"emailVerifiedAt\": null,\n        \"displayImage\": null,\n        \"addresses\": [],\n        \"phoneNumbers\": []\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Profile - Update",
+			"id": "6b047bdd-0ba1-4af6-828a-e034a67e49cf",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{//They are all optional\n  \"lastName\": \"Doe\",\n  \"firstName\": \"John\",\n  \"dateOfBirth\": \"1990-01-01\",\n  \"phoneNumbers\": [  //This must be sent in full, the phone Numbers will be set\n    \"1234567890\",\n    \"0987654321\"\n  ],\n  \"addresses\": [\n    {\n        \"name\": \"work\",\n      \"address\": \"123 Main St\",\n      \"city\": \"Anytown\",\n      \"state\": \"Anystate\",\n      \"country\": \"Anycountry\",\n      \"zipCode\": \"12345\",\n      \"postalCode\": \"54321\"\n    },\n    {\n        \"name\": \"home\",\n      \"address\": \"456 Elm St\",\n      \"city\": \"Othertown\",\n      \"state\": \"Otherstate\",\n      \"country\": \"Othercountry\",\n      \"zipCode\": \"67890\",\n      \"postalCode\": \"09876\"\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/customer/profile/:id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"customer",
+						"profile",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{customerId}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "9e34cbc4-3c44-416f-9eaa-c876b6d4b252",
+					"name": "Success - Profile - Update",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{//They are all optional\n  \"lastName\": \"Doe\",\n  \"firstName\": \"John\",\n  \"dateOfBirth\": \"1990-01-01\",\n  \"phoneNumbers\": [  //This must be sent in full, the phone Numbers will be set\n    \"1234567890\",\n    \"0987654321\"\n  ],\n  \"addresses\": [\n    {\n        \"name\": \"work\",\n      \"address\": \"123 Main St\",\n      \"city\": \"Anytown\",\n      \"state\": \"Anystate\",\n      \"country\": \"Anycountry\",\n      \"zipCode\": \"12345\",\n      \"postalCode\": \"54321\"\n    },\n    {\n        \"name\": \"home\",\n      \"address\": \"456 Elm St\",\n      \"city\": \"Othertown\",\n      \"state\": \"Otherstate\",\n      \"country\": \"Othercountry\",\n      \"zipCode\": \"67890\",\n      \"postalCode\": \"09876\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/customer/profile/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customer",
+								"profile",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{customerId}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Resource-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Origin-Agent-Cluster",
+							"value": "?1"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "no-referrer"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-DNS-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "222"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"de-yn4uPRRzIblhAgAg0dHyioevXF8\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 10 Sep 2024 11:33:31 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"message\": \"Update Customer Successful\",\n    \"data\": {\n        \"id\": \"1df1873f-9ca6-4515-8456-9349dfba84ab\",\n        \"firstName\": \"John\",\n        \"lastName\": \"Doe\",\n        \"email\": \"example3@example.com\",\n        \"emailVerifiedAt\": null,\n        \"displayImage\": null\n    }\n}"
+				},
+				{
+					"id": "faa7df73-032b-46a8-87a4-a40b31cebae1",
+					"name": "Error - Profile - Update: Validation",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{//They are all optional\n  \"lastName\": \"Doe\",\n  \"firstName\": \"John\",\n  \"dateOfBirth\": \"1990-01-01\",\n  \"password\": \"7dhbfjxav\",\n  \"phoneNumbers\": [  //This must be sent in full, the phone Numbers will be set\n    \"1234567890\",\n    \"0987654321\"\n  ],\n  \"addresses\": [\n    {\n        \"name\": \"work\",\n      \"address\": \"123 Main St\",\n      \"city\": \"Anytown\",\n      \"state\": \"Anystate\",\n      \"country\": \"Anycountry\",\n      \"zipCode\": \"12345\",\n      \"postalCode\": \"54321\"\n    },\n    {\n        \"name\": \"home\",\n      \"address\": \"456 Elm St\",\n      \"city\": \"Othertown\",\n      \"state\": \"Otherstate\",\n      \"country\": \"Othercountry\",\n      \"zipCode\": \"67890\",\n      \"postalCode\": \"09876\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/customer/profile/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customer",
+								"profile",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{customerId}}"
+								}
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Resource-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Origin-Agent-Cluster",
+							"value": "?1"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "no-referrer"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-DNS-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "220"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"dc-Tv+PJBAladSF8QqxmxqZFR30Jzw\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 10 Sep 2024 11:34:39 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"error\",\n    \"message\": \"Validation Error\",\n    \"data\": {\n        \"status\": 403,\n        \"reason\": \"There was an error with the request body\",\n        \"errorString\": \"property password should not exist\",\n        \"errors\": [\n            \"property password should not exist\"\n        ]\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Profie - Delete",
+			"id": "ce21faaa-9883-4ff8-a8de-2cd4eed4ce8f",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/customer/profile/:id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"customer",
+						"profile",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "d2021e34-0f47-450d-9157-e0e592d1c9c6",
+					"name": "Error - Profie - Delete",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/customer/profile/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customer",
+								"profile",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "73889sh"
+								}
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Resource-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Origin-Agent-Cluster",
+							"value": "?1"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "no-referrer"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-DNS-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "218"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"da-lr/8oFPhi4Fagg/UvL0Jxt3Bm+w\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 10 Sep 2024 11:36:15 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"error\",\n    \"message\": \"Validation Error\",\n    \"data\": {\n        \"status\": 403,\n        \"reason\": \"There was an error with the request parameters\",\n        \"errorString\": \"The Id you provided is invalid\",\n        \"errors\": [\n            \"The Id you provided is invalid\"\n        ]\n    }\n}"
+				},
+				{
+					"id": "19e1bd2a-fd4f-45cf-b7a9-7bcc21d951d0",
+					"name": "Success - Profie - Delete",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/customer/profile/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customer",
+								"profile",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{customerId}}"
+								}
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Resource-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Origin-Agent-Cluster",
+							"value": "?1"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "no-referrer"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-DNS-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"3b-u3zVKGgaLZQQrkxEeuFvh4SpCyw\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 10 Sep 2024 11:36:42 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": []
+				}
+			]
+		},
+		{
+			"name": "Cart - Get",
+			"id": "161d6c1a-5dec-4e11-96c6-404997bb39f8",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/customer/cart/:id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"customer",
+						"cart",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{customerId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{accessToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "5a1d7940-2546-4f48-add0-ece6ed16b501",
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "572baeda-bb17-4c45-80ea-4a9f31e28e59",
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
