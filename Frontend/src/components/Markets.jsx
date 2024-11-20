@@ -323,7 +323,7 @@ const MarketPage = () => {
       {/* Main Layout */}
       <div className="flex ">
         {/* Sidebar: List of States */}
-        <aside className="w-64 bg-white h-full p-4 shadow-lg">
+        <aside className="w-[300px] bg-white h-full p-4 shadow-lg">
           <ul className="space-y-2">
             {states.map((state) => (
               <li

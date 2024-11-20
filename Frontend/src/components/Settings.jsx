@@ -4,7 +4,7 @@ const Settings = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex">
       {/* Sidebar */}
-      <aside className="w-64 bg-white h-screen p-4 shadow-md">
+      <aside className="w-[300px] bg-white h-screen p-4 shadow-md">
         <h2 className="text-xl font-semibold mb-4">Settings</h2>
         <ul className="space-y-4">
           <li><a href="#" className="block py-2 text-gray-700">Personal Profile</a></li>

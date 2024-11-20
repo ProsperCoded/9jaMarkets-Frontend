@@ -17,9 +17,9 @@ const ProSales = () => {
             <div className="h-12 w-12 rounded-full bg-green flex items-center justify-center">
               <FontAwesomeIcon icon={faCheck} className="text-white" />
             </div>
-            <div>
-              <h4 className="font-semibold text-center">Sign Up with 9jaMarkets</h4>
-              <p className="text-sm text-gray-500 text-center">This task has been completed</p>
+            <div className="flex flex-col">
+              <h4 className="font-semibold">Sign Up with 9jaMarkets</h4>
+              <p className="text-sm text-gray-500">This task has been completed</p>
             </div>
           </li>
 
@@ -27,9 +27,9 @@ const ProSales = () => {
             <div className="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center">
               <FontAwesomeIcon icon={faGem} />
             </div>
-            <div>
-              <h4 className="font-semibold text-center">Get Boost Packages</h4>
-              <p className="text-sm text-gray-500 text-center">Personal, VIP, Gold</p>
+            <div className="flex flex-col">
+              <h4 className="font-semibold">Get Boost Packages</h4>
+              <p className="text-sm text-gray-500">Personal, VIP, Gold</p>
             </div>
           </li>
 
@@ -37,9 +37,9 @@ const ProSales = () => {
             <div className="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center">
               <FontAwesomeIcon icon={faUpload} />
             </div>
-            <div>
-              <h4 className="font-semibold text-center">Post AD</h4>
-              <p className="text-sm text-gray-500 text-center">Up to 20 Images</p>
+            <div className="flex flex-col">
+              <h4 className="font-semibold">Post AD</h4>
+              <p className="text-sm text-gray-500">Up to 20 Images</p>
             </div>
           </li>
 
@@ -47,9 +47,9 @@ const ProSales = () => {
             <div className="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center">
               <FontAwesomeIcon icon={faBullhorn} />
             </div>
-            <div>
-              <h4 className="font-semibold text-center">Budget and Bid accordingly</h4>
-              <p className="text-sm text-gray-500 text-center">AD Promotion</p>
+            <div className="flex flex-col">
+              <h4 className="font-semibold">Budget and Bid Accordingly</h4>
+              <p className="text-sm text-gray-500">AD Promotion</p>
             </div>
           </li>
 
@@ -57,9 +57,9 @@ const ProSales = () => {
             <div className="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center">
               <FontAwesomeIcon icon={faChartLine} />
             </div>
-            <div>
-              <h4 className="font-semibold text-center">Watch your business grow</h4>
-              <p className="text-sm text-gray-500 text-center">Increase sales and customer base</p>
+            <div className="flex flex-col">
+              <h4 className="font-semibold">Watch Your Business Grow</h4>
+              <p className="text-sm text-gray-500">Increase sales and customer base</p>
             </div>
           </li>
         </ul>
@@ -69,7 +69,7 @@ const ProSales = () => {
           <button className="bg-green bg-opacity-50 hover:bg-green text-white font-semibold py-2 px-4 rounded">
             Try Pro Features
           </button>
-          <button className="border border-green text-green  hover:bg-green hover:text-white font-semibold py-2 px-4 rounded">
+          <button className="border border-green text-green hover:bg-green hover:text-white font-semibold py-2 px-4 rounded">
             Get Boost Packages
           </button>
         </div>

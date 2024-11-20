@@ -7,7 +7,7 @@ import Feedback from './Feedback';
 import ProSales from './Prosales';
 import Followers from './Followers';
 import Wallet from './Wallet';
-// import Insights from './Insights';
+import Insights from './Insights';
 // import ProSales from './ProSales'; // Assuming you have this
 // import Premium from './Premium';   // Assuming you have this
 
@@ -44,7 +44,7 @@ const Profile = ({ subpage }) => {
   return (
     <div className="flex">
       {/* Sidebar */}
-      <aside className="w-64 bg-white h-screen p-4 shadow-lg">
+      <aside className="w-[300px] bg-white h-screen p-4 shadow-md">
         <div className="flex items-center mb-6">
           {/* Placeholder for profile icon */}
           <div className="bg-green rounded-full h-12 w-12 flex items-center justify-center text-white text-2xl font-semibold">

@@ -56,7 +56,7 @@ function App() {
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/markets" element={<MarketPage />} />
         <Route path="/profile/:subpage?" element={<ProfilePageWrapper />} />
-        <Route path='/ad' element={<Adverts />} />
+        <Route path='/ad/:subpage?' element={<AdvertsPageWrapper />} />
         <Route path='/settings/:subpage?' element={<SettingsPageWrapper />} />
       </Routes>
 
@@ -80,22 +80,24 @@ function App() {
 // Profile page wrapper to handle subpages
 function ProfilePageWrapper() {
   const { subpage } = useParams();
-
-  // Load different components based on the subpage parameter
   return (
     <Profile subpage={subpage} />
   );
 }
-
+function AdvertsPageWrapper() {
+  const { subpage } = useParams();
+  return (
+    <Adverts subpage={subpage} />
+  );
+}
 function SettingsPageWrapper() {
     const { subpage } = useParams();
-
   return (
     <Settings subpage={subpage} />
-  )
+  );
 }
 
-// Wrap the App component with Router
+
 export default function AppWrapper() {
   return (
     <Router>
