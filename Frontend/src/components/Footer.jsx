@@ -5,10 +5,10 @@ function Footer() {
   return (
     <>
       {/* First Footer */}
-      <footer className="bg-green text-white px-10 py-8">
-        <div className="flex justify-between">
+      <footer className="bg-green text-white px-6 py-8">
+        <div className="flex flex-wrap justify-between space-y-6 md:space-y-0">
           {/* Services Section */}
-          <nav className="w-1/5">
+          <nav className="w-full md:w-1/4">
             <h6 className="footer-title text-lg font-semibold mb-4">Services</h6>
             <ul className="space-y-2">
               <li><a className="link link-hover">Branding</a></li>
@@ -19,7 +19,7 @@ function Footer() {
           </nav>
 
           {/* Company Section */}
-          <nav className="w-1/5">
+          <nav className="w-full md:w-1/4">
             <h6 className="footer-title text-lg font-semibold mb-4">Company</h6>
             <ul className="space-y-2">
               <li><a className="link link-hover">About us</a></li>
@@ -30,7 +30,7 @@ function Footer() {
           </nav>
 
           {/* Legal Section */}
-          <nav className="w-1/5">
+          <nav className="w-full md:w-1/4">
             <h6 className="footer-title text-lg font-semibold mb-4">Legal</h6>
             <ul className="space-y-2">
               <li><a className="link link-hover">Terms of use</a></li>
@@ -40,18 +40,18 @@ function Footer() {
           </nav>
 
           {/* Placeholder for Future Sections */}
-          <div className="w-2/5"></div>
+          <div className="hidden md:block md:w-1/4"></div>
         </div>
       </footer>
 
       {/* Second Footer */}
-      <footer className="bg-green text-white border-t border-hover-green px-10 py-4 flex flex-wrap justify-between items-center">
+      <footer className="bg-green text-white border-t border-hover-green px-6 py-4 flex flex-wrap justify-between items-center">
         {/* Company Info */}
-        <aside className="flex items-center space-x-4">
+        <aside className="w-full md:w-auto flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
           <Link to="/" className="flex items-center">
             <img src={logo} alt="9ja Markets" className="h-8" />
           </Link>
-          <p className="text-sm">
+          <p className="text-sm text-center md:text-left">
             9jaMarkets Ltd
             <br />
             Connecting all Nigerian markets since
@@ -59,7 +59,7 @@ function Footer() {
         </aside>
 
         {/* Social Media Links */}
-        <nav className="flex space-x-4">
+        <nav className="w-full md:w-auto flex justify-center md:justify-end space-x-4 mt-4 md:mt-0">
           {/* Twitter Icon */}
           <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
             <svg

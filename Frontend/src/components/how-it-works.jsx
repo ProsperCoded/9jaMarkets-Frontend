@@ -1,68 +1,87 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faSearch, faHandshake, faBullhorn, faWallet, faShieldAlt } from '@fortawesome/free-solid-svg-icons';
-
+import CA from '../assets/how-it-works/create-account.svg';
 const HowItWorks = () => {
   return (
-    <div className="min-h-screen bg-gray-100 flex">
-      {/* Sidebar */}
-      <aside className="bg-green-700 text-white w-64 p-6">
-        <h2 className="text-2xl font-bold mb-4">How it works</h2>
-        <ul className="space-y-4">
-          <li className="hover:bg-green-600 p-2 rounded cursor-pointer">
-            <FontAwesomeIcon icon={faUser} className="mr-2" /> Create an Account
+     <div className="min-h-screen bg-gray-100 flex font-sans">
+      {/* Sidebar Menu */}
+      <aside className="w-1/4 bg-white shadow-md h-screen p-6">
+        <ul className="space-y-6">
+          <li>
+            <a
+              href="#create-account"
+              className="text-gray-800 hover:text-green font-medium border-l-4 border-transparent hover:border-green hover:border-opacity-50 pl-4"
+            >
+              Create an Account
+            </a>
           </li>
-          <li className="hover:bg-green-600 p-2 rounded cursor-pointer">
-            <FontAwesomeIcon icon={faSearch} className="mr-2" /> Browse & Search for Products
+          <li>
+            <a
+              href="#browse-products"
+              className="text-gray-800 hover:text-green font-medium border-l-4 border-transparent hover:border-green hover:border-opacity-50 pl-4"
+            >
+              Browse & Search for Products
+            </a>
           </li>
-          <li className="hover:bg-green-600 p-2 rounded cursor-pointer">
-            <FontAwesomeIcon icon={faHandshake} className="mr-2" /> Connect with Vendors
+          <li>
+            <a
+              href="#connect-vendors"
+              className="text-gray-800 hover:text-green font-medium border-l-4 border-transparent hover:border-green hover:border-opacity-50 pl-4"
+            >
+              Connect with Vendors
+            </a>
           </li>
-          <li className="hover:bg-green-600 p-2 rounded cursor-pointer">
-            <FontAwesomeIcon icon={faBullhorn} className="mr-2" /> Place Ads
+          <li>
+            <a
+              href="#place-ads"
+              className="text-gray-800 hover:text-green font-medium border-l-4 border-transparent hover:border-green hover:border-opacity-50 pl-4"
+            >
+              Place Ads
+            </a>
           </li>
-          <li className="hover:bg-green-600 p-2 rounded cursor-pointer">
-            <FontAwesomeIcon icon={faWallet} className="mr-2" /> Payments
+          <li>
+            <a
+              href="#payments"
+              className="text-gray-800 hover:text-green font-medium border-l-4 border-transparent hover:border-green hover:border-opacity-50 pl-4"
+            >
+              Payments
+            </a>
           </li>
-          <li className="hover:bg-green-600 p-2 rounded cursor-pointer">
-            <FontAwesomeIcon icon={faShieldAlt} className="mr-2" /> Safety and Security
+          <li>
+            <a
+              href="#safety-security"
+              className="text-gray-800 hover:text-green font-medium border-l-4 border-transparent hover:border-green hover:border-opacity-50 pl-4"
+            >
+              Safety and Security
+            </a>
           </li>
         </ul>
-      </aside>
-
+      </aside> 
       {/* Main Content */}
-      <main className="flex-1 p-10">
-        <h1 className="text-3xl font-bold text-green-700 mb-6">How it works</h1>
-        
-        <div className="bg-white shadow-md rounded-md p-6">
-          <div className="flex items-center justify-center mb-6">
-            <img
-              src="https://via.placeholder.com/150"
-              alt="Illustration"
-              className="h-48"
-            />
-          </div>
-
-          <div className="text-lg mb-4">
-            <strong>For Buyers:</strong>
-            <p>
-              Click on the Sign Up button at the top right corner to create an account.
-              Fill in your details, verify your email or phone number, and complete your
-              profile for a personalized shopping experience.
-            </p>
-          </div>
-
-          <hr className="my-4" />
-
-          <div className="text-lg">
-            <strong>For Vendors:</strong>
-            <p>
-              If you’re a vendor, select the Place an Ad button and follow the
-              instructions to create your account. Upload your business details,
-              verify your identity, and you're ready to list products on 9ja Markets.
-            </p>
-          </div>
+      <main className="flex-grow p-10">
+        {/* Image Section */}
+        <div className="flex justify-center mb-12">
+          <img
+            src={CA} // Replace with actual image path
+            alt="Illustration"
+            className="w-1/2 max-w-md"
+          />
         </div>
+
+        {/* Content Sections */}
+        <section id="create-account" className="mb-10 text-center">
+          <h2 className="text-lg font-semibold text-gray-800 mb-4">For Buyers:</h2>
+          <p className="text-gray-600 mb-2">
+            Click on the Sign Up button at the top right corner to create an account. Fill in your details, verify
+            your email or phone number, and complete your profile for a personalized shopping experience.
+          </p>
+          <h2 className="text-lg font-semibold text-gray-800 mb-4">For Vendors:</h2>
+          <p className="text-gray-600">
+            Select the Place an Ad button and follow the instructions to create your account. Upload your business
+            details, verify your identity, and you’re ready to list products on 9ja Markets.
+          </p>
+        </section>
+
+        {/* Additional sections (browse, connect, etc.) can be similarly added here */}
+        
       </main>
     </div>
   );

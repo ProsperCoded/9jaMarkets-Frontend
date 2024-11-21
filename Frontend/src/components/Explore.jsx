@@ -54,129 +54,165 @@ function ExploreSection() {
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [startIndex, setStartIndex] = useState(0);
 
-  const itemsPerSlide = 4;
-  
-  // Function to handle search input
+  const itemsPerSlide = 4; // Default for desktop view
+  const mobileItemsPerSlide = 2; // For mobile view
+
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value.toLowerCase());
-    setSelectedFilter(selectedFilter)
   };
 
-  // Filter markets, malls, and categories based on the search query
-  const filteredMarkets = markets.filter((market) =>
-    market.name.toLowerCase().includes(searchQuery) ||
-    market.location.toLowerCase().includes(searchQuery)
-  );
-
-  const filteredMalls = malls.filter((mall) =>
-    mall.name.toLowerCase().includes(searchQuery) ||
-    mall.location.toLowerCase().includes(searchQuery)
-  );
-
-  const filteredCategories = categories.filter((category) =>
-    category.label.toLowerCase().includes(searchQuery)
-  );
-
-  // Handle left and right button clicks
   const handlePrevClick = () => {
-    setStartIndex((prev) => (prev === 0 ? categories.length - itemsPerSlide : prev - itemsPerSlide));
+    setStartIndex((prev) =>
+      prev === 0 ? categories.length - itemsPerSlide : prev - itemsPerSlide
+    );
   };
 
   const handleNextClick = () => {
-    setStartIndex((prev) => (prev + itemsPerSlide >= categories.length ? 0 : prev + itemsPerSlide));
+    setStartIndex((prev) =>
+      prev + itemsPerSlide >= categories.length ? 0 : prev + itemsPerSlide
+    );
   };
 
   return (
     <div className="explore-section bg-white py-10">
-      <div className="container mx-auto">
-        {/* Search Bar and Buttons */}
-        <div className="flex items-center justify-center mb-8">
-          <div className="relative w-full max-w-xl">
-            <input
-              type="text"
-              placeholder="Search by state, market, or category..."
-              value={searchQuery}
-              onChange={handleSearchChange}
-              className="w-full pl-10 pr-10 py-2 border border-green rounded-full text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green"
-            />
-            <span className="absolute inset-y-0 flex items-center pl-2 left-[1%]">
-              {/* Search Icon */}
-              <svg width="20" height="20" viewBox="0 0 66 66" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M64.3578 58.8422L49.6562 44.1406C53.1958 39.4287 55.1066 33.6933 55.1 27.8C55.1 12.7469 42.8531 0.5 27.8 0.5C12.7469 0.5 0.5 12.7469 0.5 27.8C0.5 42.8531 12.7469 55.1 27.8 55.1C33.6933 55.1066 39.4287 53.1958 44.1406 49.6562L58.8422 64.3578C59.5864 65.0231 60.557 65.3782 61.5548 65.3502C62.5526 65.3223 63.5018 64.9135 64.2077 64.2077C64.9135 63.5018 65.3223 62.5526 65.3502 61.5548C65.3782 60.557 65.0231 59.5864 64.3578 58.8422ZM8.3 27.8C8.3 23.9433 9.44366 20.1731 11.5863 16.9664C13.729 13.7596 16.7745 11.2603 20.3377 9.78435C23.9008 8.30844 27.8216 7.92228 31.6043 8.67469C35.3869 9.4271 38.8615 11.2843 41.5886 14.0114C44.3157 16.7385 46.1729 20.2131 46.9253 23.9957C47.6777 27.7784 47.2916 31.6992 45.8157 35.2623C44.3397 38.8255 41.8404 41.871 38.6336 44.0137C35.4269 46.1563 31.6567 47.3 27.8 47.3C22.6302 47.2938 17.6739 45.2374 14.0183 41.5817C10.3627 37.9261 8.3062 32.9698 8.3 27.8Z" fill="#236C13"/>
-              </svg>
-            </span>
-          </div>
-          <div className="ml-4 space-x-4">
-            <button className="btn state-btn bg-green text-white hover:bg-hover-green px-4 py-1 rounded-full">State</button>
-            <button className="btn market-btn bg-green text-white  hover:bg-hover-green px-4 py-1 rounded-full">Market</button>
-            <button className="btn category-btn bg-green text-white  hover:bg-hover-green px-4 py-1 rounded-full">Category</button>
-          </div>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Search Bar */}
+        <div className="mb-6">
+          <input
+            type="text"
+            placeholder="Search by state, market, or category..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+            className="w-full pl-10 pr-10 py-2 border border-green rounded-full text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green"
+          />
         </div>
 
-        {/* Categories Section with Swipe */}
-        <div className="relative flex items-center mb-8">
-          {/* Place Ad Button */}
-         
-          <Link to="/ad">
-            <div className="w-48 h-48 bg-orange text-white rounded-lg hover:shadow-lg hover:scale-105 transition flex flex-col justify-center items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-12 h-12 mb-2">
-                <path fillRule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z" clipRule="evenodd" />
-              </svg>
-              <span className="text-2xl font-bold">Place Ad</span>
-            </div>
-          </Link>
+        {/* Buttons */}
+        <div className="flex justify-center space-x-4 mb-6">
+          <button className="btn bg-green text-white px-4 py-2 rounded-full text-sm sm:text-base">
+            State
+          </button>
+          <button className="btn bg-green text-white px-4 py-2 rounded-full text-sm sm:text-base">
+            Market
+          </button>
+          <button className="btn bg-green text-white px-4 py-2 rounded-full text-sm sm:text-base">
+            Category
+          </button>
+        </div>
 
-          {/* Left Swipe Button */}
+        {/* Place Ad + Categories Carousel */}
+        <div className="relative flex items-center mb-8">
           <button
             onClick={handlePrevClick}
-            className="h-10 w-10 carousel-btn bg-orange text-white rounded-full p-2 absolute left-[17%] ">
-            &#129136;
+            className="h-8 w-8 bg-orange text-white rounded-full absolute left-2 sm:left-4"
+          >
+            &#8592;
           </button>
+          <div className="flex space-x-4 overflow-x-auto px-4 sm:px-6">
+            {/* Place Ad */}
+            <Link to="/ad">
+              <div className="w-32 sm:w-40 h-32 sm:h-40 bg-orange text-white rounded-lg flex flex-col items-center justify-center shadow-md">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  className="w-8 h-8 mb-2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <span className="text-sm sm:text-base font-bold">Place Ad</span>
+              </div>
+            </Link>
 
-          {/* Categories Carousel */}
-          <div className="flex space-x-4 w-full justify-center">
-            {filteredCategories.slice(startIndex, startIndex + itemsPerSlide).map((category) => (
-              <div key={category.id} className="bg-gray-100 rounded-lg ovewrflow-hidden shadow-lg w-48 h-48 hover:scale-105 transition">
-                <img src={category.image} alt={category.label} className="w-48 h-40 object-cover cursor-pointer rounded-lg" />
-                <h3 className="text-lg font-semibold text-center">{category.label}</h3>
+            {/* Categories */}
+            {categories.slice(startIndex, startIndex + itemsPerSlide).map((category) => (
+              <div
+                key={category.id}
+                className="w-32 sm:w-40 h-32 sm:h-40 bg-gray-100 rounded-lg flex flex-col items-center justify-center shadow-md"
+              >
+                <img
+                  src={category.image}
+                  alt={category.label}
+                  className="w-full h-24 sm:h-28 object-cover rounded-t-lg"
+                />
+                <span className="text-sm sm:text-base font-semibold mt-2">
+                  {category.label}
+                </span>
               </div>
             ))}
           </div>
-
-          {/* Right Swipe Button */}
           <button
             onClick={handleNextClick}
-            className="h-10 w-10 carousel-btn bg-orange text-white rounded-full p-2 absolute right-[2%]">
-            &#129138;
+            className="h-8 w-8 bg-orange text-white rounded-full absolute right-2 sm:right-4"
+          >
+            &#8594;
           </button>
         </div>
 
-        {/* Markets Section (with clickable items and hover effects) */}
-        <h2 className="text-2xl font-bold mb-4 text-center text-green">Explore Markets</h2>
-        <div className="grid grid-cols-5 gap-4 mb-8">
-          {filteredMarkets.map((market) => (
-            <div key={market.name} className="bg-gray-100 rounded-lg overflow-hidden shadow-lg hover:scale-105 transition">
-              <img src={market.imageUrl} alt={market.name} className="w-full h-48 object-cover cursor-pointer" />
-              <div className="p-4 cursor-pointer">
-                <h3 className="text-lg font-semibold">{market.name}</h3>
-                <p className="text-sm text-gray-600">{market.location}</p>
+        {/* Featured Markets Carousel */}
+        <h2 className="text-lg sm:text-xl font-bold mb-4 text-center text-green">
+          Featured Markets
+        </h2>
+        <div className="relative flex items-center mb-8">
+          <button className="h-8 w-8 bg-orange text-white rounded-full absolute left-2 sm:left-4">
+            &#8592;
+          </button>
+          <div className="flex space-x-4 overflow-x-auto px-4 sm:px-6">
+            {markets.map((market) => (
+              <div
+                key={market.name}
+                className="w-40 sm:w-48 h-40 sm:h-48 bg-gray-100 rounded-lg shadow-md flex-shrink-0"
+              >
+                <img
+                  src={market.imageUrl}
+                  alt={market.name}
+                  className="w-full h-24 sm:h-28 object-cover rounded-t-lg"
+                />
+                <div className="p-2">
+                  <h3 className="text-sm sm:text-base font-bold">{market.name}</h3>
+                  <p className="text-xs sm:text-sm text-gray-500">{market.location}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+          <button className="h-8 w-8 bg-orange text-white rounded-full absolute right-2 sm:right-4">
+            &#8594;
+          </button>
         </div>
 
-        {/* Malls Section (with clickable items and hover effects) */}
-        <h2 className="text-2xl font-bold mb-4 text-center text-green">Explore Malls</h2>
-        <div className="grid grid-cols-5 gap-4 mb-8">
-          {filteredMalls.map((mall) => (
-            <div key={mall.name} className="bg-gray-100 rounded-lg overflow-hidden shadow-lg hover:scale-105 transition">
-              <img src={mall.imageUrl} alt={mall.name} className="w-full h-48 object-cover cursor-pointer" />
-              <div className="p-4 cursor-pointer">
-                <h3 className="text-lg font-semibold">{mall.name}</h3>
-                <p className="text-sm text-gray-600">{mall.location}</p>
+        {/* Featured Malls Carousel */}
+        <h2 className="text-lg sm:text-xl font-bold mb-4 text-center text-green">
+          Featured Malls
+        </h2>
+        <div className="relative flex items-center">
+          <button className="h-8 w-8 bg-orange text-white rounded-full absolute left-2 sm:left-4">
+            &#8592;
+          </button>
+          <div className="flex space-x-4 overflow-x-auto px-4 sm:px-6">
+            {malls.map((mall) => (
+              <div
+                key={mall.name}
+                className="w-40 sm:w-48 h-40 sm:h-48 bg-gray-100 rounded-lg shadow-md flex-shrink-0"
+              >
+                <img
+                  src={mall.imageUrl}
+                  alt={mall.name}
+                  className="w-full h-24 sm:h-28 object-cover rounded-t-lg"
+                />
+                <div className="p-2">
+                  <h3 className="text-sm sm:text-base font-bold">{mall.name}</h3>
+                  <p className="text-xs sm:text-sm text-gray-500">{mall.location}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+          <button className="h-8 w-8 bg-orange text-white rounded-full absolute right-2 sm:right-4">
+            &#8594;
+          </button>
         </div>
       </div>
     </div>
