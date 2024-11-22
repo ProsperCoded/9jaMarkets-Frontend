@@ -5,7 +5,7 @@ function Footer() {
   return (
     <>
       {/* First Footer */}
-      <footer className="bg-green text-white px-6 py-8">
+      <footer className="bg-green text-white px-10 py-8">
         <div className="flex flex-wrap justify-between space-y-6 md:space-y-0">
           {/* Services Section */}
           <nav className="w-full md:w-1/4">
@@ -45,7 +45,7 @@ function Footer() {
       </footer>
 
       {/* Second Footer */}
-      <footer className="bg-green text-white border-t border-hover-green px-6 py-4 flex flex-wrap justify-between items-center">
+      <footer className="bg-green text-white border-t border-hover-green px-10 py-4 flex flex-wrap justify-between items-center">
         {/* Company Info */}
         <aside className="w-full md:w-auto flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
           <Link to="/" className="flex items-center">
