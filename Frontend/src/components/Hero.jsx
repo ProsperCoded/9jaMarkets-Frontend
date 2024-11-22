@@ -1,5 +1,5 @@
 import React from 'react';
-import backgroundImage from '../assets/Hero.png'; // Ensure you have a background image in your assets
+import backgroundImage from '../assets/Hero.png'; 
 import logo from '../assets/Logo.svg';
 
 function Hero() {
@@ -8,7 +8,9 @@ function Hero() {
       className="relative bg-cover bg-center h-screen"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
-      <div className="container mx-auto flex flex-col justify-start items-center h-full text-center text-white px-4 md:px-10 lg:px-20 pt-16 md:pt-20 lg:pt-28">
+      <div className="container mx-auto flex flex-col
+                      justify-start items-center h-full text-center
+                      text-white px-4 md:px-10 lg:px-20 pt-16 md:pt-20 lg:pt-24">
         {/* Logo */}
         <div className="logo mb-8">
           <img
@@ -19,7 +21,8 @@ function Hero() {
         </div>
 
         {/* Heading */}
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 
+        leading-tight">
           Discover and Connect with <br /> Nigeria’s Major Markets.
         </h1>
 
