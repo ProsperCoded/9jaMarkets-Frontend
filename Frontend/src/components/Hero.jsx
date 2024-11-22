@@ -8,7 +8,7 @@ function Hero() {
       className="relative bg-cover bg-center h-screen"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
-      <div className="container mx-auto flex flex-col justify-center items-center h-full text-center text-white px-4 md:px-10 lg:px-20">
+      <div className="container mx-auto flex flex-col justify-start items-center h-full text-center text-white px-4 md:px-10 lg:px-20 pt-16 md:pt-20 lg:pt-28">
         {/* Logo */}
         <div className="logo mb-8">
           <img
