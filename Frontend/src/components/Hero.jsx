@@ -26,10 +26,10 @@ function Hero() {
           Discover and Connect with <br /> Nigeria’s Major Markets.
         </h1>
 
-        {/* Positioned Paragraph */}
-        <p className="absolute bottom-0 w-full bg-orange text-base sm:text-lg md:text-xl py-2 text-center font-bold">
+        {/* Positioned Paragraph
+        <p className="w-full sm:text-lg md:text-xl py-2 text-center ">
           Your gateway to the best products from Nigeria’s leading markets.
-        </p>
+        </p> */}
       </div>
     </div>
   );
