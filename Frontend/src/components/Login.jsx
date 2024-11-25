@@ -14,7 +14,7 @@ const LoginModal = ({ showModal, closeModal, openSignUpModal }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 ">
-      <div className="bg-white rounded-[5%] p-8 w-full max-w-lg relative">
+      <div className="bg-white rounded-[5%] p-6 sm:p-8 w-full max-w-md md:max-w-lg lg:max-w-xl relative shadow-lg">
         <button
           onClick={closeModal}
           className="absolute top-2 right-[6%] text-3xl text-gray-600 hover:text-gray-900 "
