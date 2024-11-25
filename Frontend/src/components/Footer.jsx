@@ -9,36 +9,28 @@ function Footer() {
         <div className="flex flex-wrap justify-between space-y-6 md:space-y-0">
           {/* Services Section */}
           <nav className="w-full md:w-1/4">
-            <h6 className="footer-title text-lg font-semibold mb-4">Services</h6>
+            <h6 className="footer-title text-hover-green text-lg font-semibold mb-4">About us</h6>
             <ul className="space-y-2">
-              <li><a className="link link-hover">Branding</a></li>
-              <li><a className="link link-hover">Design</a></li>
-              <li><a className="link link-hover">Marketing</a></li>
-              <li><a className="link link-hover">Advertisement</a></li>
+              <li><a className="link link-hover">About 9ja Market</a></li>
+              <li><a className="link link-hover">Terms & Conditions</a></li>
+              <li><a className="link link-hover">Privacy Policy</a></li>
+              <li><a className="link link-hover">Billing Policy</a></li>
+              <li><a className="link link-hover">Cookie Policy</a></li>
+              <li><a className="link link-hover">Copyright</a></li>
             </ul>
           </nav>
 
           {/* Company Section */}
           <nav className="w-full md:w-1/4">
-            <h6 className="footer-title text-lg font-semibold mb-4">Company</h6>
+            <h6 className="footer-title text-hover-green text-lg font-semibold mb-4">Support</h6>
             <ul className="space-y-2">
-              <li><a className="link link-hover">About us</a></li>
-              <li><a className="link link-hover">Contact</a></li>
-              <li><a className="link link-hover">Jobs</a></li>
-              <li><a className="link link-hover">Press kit</a></li>
+              <li><a className="link link-hover">Safety Tips</a></li>
+              <li><a className="link link-hover">Contact Us</a></li>
+              <li><a className="link link-hover">FAQ</a></li>
+              <li><a className="link link-hover">Place Ads</a></li>
+              <li><a className="link link-hover">Invest</a></li>
             </ul>
           </nav>
-
-          {/* Legal Section */}
-          <nav className="w-full md:w-1/4">
-            <h6 className="footer-title text-lg font-semibold mb-4">Legal</h6>
-            <ul className="space-y-2">
-              <li><a className="link link-hover">Terms of use</a></li>
-              <li><a className="link link-hover">Privacy policy</a></li>
-              <li><a className="link link-hover">Cookie policy</a></li>
-            </ul>
-          </nav>
-
           {/* Placeholder for Future Sections */}
           <div className="hidden md:block md:w-1/4"></div>
         </div>
@@ -54,7 +46,7 @@ function Footer() {
           <p className="text-sm text-center md:text-left">
             9jaMarkets Ltd
             <br />
-            Connecting all Nigerian markets since
+            Connecting all Nigerian markets
           </p>
         </aside>
 
