@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Wears_category from '../assets/Wears_category.png';
 import Automobile_category from '../assets/Automobile_category.png';
 import Gadgets_category from '../assets/Gadgets_category.png';
@@ -21,17 +21,6 @@ import OnitshaMall from '../assets/malls/OnitshaMall.png';
 import AdoBayeroMall from '../assets/malls/AdeBayeroMall.png';
 import JabiLakeMall from '../assets/malls/JabiLakeMall.png';
 
-const categories = [
-  { id: 1, image: Wears_category, label: 'Fashion' },
-  { id: 2, image: Automobile_category, label: 'Automobiles' },
-  { id: 3, image: Gadgets_category, label: 'Phones' },
-  { id: 4, image: Realestate_category, label: 'Real Estate' },
-  { id: 5, image: Furniture_category, label: 'Furniture' },
-  { id: 6, image: Food_category, label: 'Food & Agriculture' },
-  { id: 7, image: Pharmacy_category, label: 'Pharmacies' },
-  { id: 8, image: Sports_category, label: 'Sports & Outdoor' },
-];
-
 const markets = [
   { name: "Alaba Market", location: "Lagos State", imageUrl: AlabaMarket },
   { name: "Bodija Market", location: "Oyo State", imageUrl: BodijaMarket },
@@ -49,46 +38,39 @@ const malls = [
 ];
 
 function ExploreSection() {
-  // State to handle search input and filtering
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedFilter, setSelectedFilter] = useState('all');
-  const [startIndex, setStartIndex] = useState(0);
-
-  const itemsPerSlide = 4; // Default for desktop view
-  const mobileItemsPerSlide = 2; // For mobile view
-
+  
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value.toLowerCase());
   };
 
-  const handlePrevClick = () => {
-    setStartIndex((prev) =>
-      prev === 0 ? categories.length - itemsPerSlide : prev - itemsPerSlide
-    );
-  };
-
-  const handleNextClick = () => {
-    setStartIndex((prev) =>
-      prev + itemsPerSlide >= categories.length ? 0 : prev + itemsPerSlide
-    );
-  };
 
   return (
     <div className="explore-section bg-white py-10">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Search Bar */}
-        <div className="mb-6">
-          <input
-            type="text"
-            placeholder="Search by state, market, or category..."
-            value={searchQuery}
-            onChange={handleSearchChange}
-            className="w-full pl-10 pr-10 py-2 border border-green rounded-full text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green"
-          />
-        </div>
-
-        {/* Buttons */}
-        <div className="flex justify-center space-x-4 mb-6">
+        {/* Search Bar and Buttons */}
+        <div className="mb-6 flex items-center space-x-4">
+          <div className="relative flex-grow">
+            <input
+              type="text"
+              placeholder="Search by state, market, or category..."
+              value={searchQuery}
+              onChange={handleSearchChange}
+              className="w-full pl-10 pr-4 py-2 border border-green rounded-full text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green"
+            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              className="w-5 h-5 absolute left-3 top-2.5 text-gray-500"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10.5 3.75a6.75 6.75 0 1 0 4.247 11.943l5.53 5.53a.75.75 0 0 0 1.06-1.06l-5.53-5.53A6.75 6.75 0 0 0 10.5 3.75ZM5.25 10.5a5.25 5.25 0 1 1 10.5 0 5.25 5.25 0 0 1-10.5 0Z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </div>
           <button className="btn bg-green text-white px-4 py-2 rounded-full text-sm sm:text-base">
             State
           </button>
@@ -102,14 +84,7 @@ function ExploreSection() {
 
         {/* Place Ad + Categories Carousel */}
         <div className="relative flex items-center mb-8">
-          <button
-            onClick={handlePrevClick}
-            className="h-8 w-8 bg-orange text-white rounded-full absolute left-2 sm:left-4"
-          >
-            &#8592;
-          </button>
           <div className="flex space-x-4 overflow-x-auto px-4 sm:px-6">
-            {/* Place Ad */}
             <Link to="/ad">
               <div className="w-32 sm:w-40 h-32 sm:h-40 bg-orange text-white rounded-lg flex flex-col items-center justify-center shadow-md">
                 <svg
@@ -127,93 +102,91 @@ function ExploreSection() {
                 <span className="text-sm sm:text-base font-bold">Place Ad</span>
               </div>
             </Link>
-
-            {/* Categories */}
-            {categories.slice(startIndex, startIndex + itemsPerSlide).map((category) => (
-              <div
-                key={category.id}
-                className="w-32 sm:w-40 h-32 sm:h-40 bg-gray-100 rounded-lg flex flex-col items-center justify-center shadow-md"
-              >
-                <img
-                  src={category.image}
-                  alt={category.label}
-                  className="w-full h-24 sm:h-28 object-cover rounded-t-lg"
-                />
-                <span className="text-sm sm:text-base font-semibold mt-2">
-                  {category.label}
-                </span>
+            <div className="carousel columns-4 flex gap-4 overflow-x-auto scrollbar-hide">
+                <div className="carousel-item w-32 sm:w-40 h-32 sm:h-40 flex-shrink-0">
+                  <img src={Wears_category} alt="Wears" className="w-full h-full rounded-lg shadow-md" />
+                </div>
+                <div className="carousel-item w-32 sm:w-40 h-32 sm:h-40 flex-shrink-0">
+                  <img src={Automobile_category} alt="Automobile" className="w-full h-full rounded-lg shadow-md" />
+                </div>
+                <div className="carousel-item w-32 sm:w-40 h-32 sm:h-40 flex-shrink-0">
+                  <img src={Realestate_category} alt="Real Estate" className="w-full h-full rounded-lg shadow-md" />
+                </div>
+                <div className="carousel-item w-32 sm:w-40 h-32 sm:h-40 flex-shrink-0">
+                  <img src={Furniture_category} alt="Furniture" className="w-full h-full rounded-lg shadow-md" />
+                </div>
+                <div className="carousel-item w-32 sm:w-40 h-32 sm:h-40 flex-shrink-0">
+                  <img src={Pharmacy_category} alt="Pharmacy" className="w-full h-full rounded-lg shadow-md" />
+                </div>
+                <div className="carousel-item w-32 sm:w-40 h-32 sm:h-40 flex-shrink-0">
+                  <img src={Food_category} alt="Food" className="w-full h-full rounded-lg shadow-md" />
+                </div>
+                <div className="carousel-item w-32 sm:w-40 h-32 sm:h-40 flex-shrink-0">
+                  <img src={Gadgets_category} alt="Gadgets" className="w-full h-full rounded-lg shadow-md" />
+                </div>
+                <div className="carousel-item w-32 sm:w-40 h-32 sm:h-40 flex-shrink-0">
+                  <img src={Sports_category} alt="Sports" className="w-full h-full rounded-lg shadow-md" />
+                </div>
               </div>
-            ))}
+
           </div>
-          <button
-            onClick={handleNextClick}
-            className="h-8 w-8 bg-orange text-white rounded-full absolute right-2 sm:right-4"
-          >
-            &#8594;
-          </button>
         </div>
 
+        {/* Markets and Malls Carousel */}
         {/* Featured Markets Carousel */}
-        <h2 className="text-lg sm:text-xl font-bold mb-4 text-center text-green">
-          Featured Markets
-        </h2>
-        <div className="relative flex items-center mb-8">
-          <button className="h-8 w-8 bg-orange text-white rounded-full absolute left-2 sm:left-4">
-            &#8592;
-          </button>
-          <div className="flex space-x-4 overflow-x-auto px-4 sm:px-6">
-            {markets.map((market) => (
-              <div
-                key={market.name}
-                className="w-40 sm:w-48 h-40 sm:h-48 bg-gray-100 rounded-lg shadow-md flex-shrink-0"
-              >
-                <img
-                  src={market.imageUrl}
-                  alt={market.name}
-                  className="w-full h-24 sm:h-28 object-cover rounded-t-lg"
-                />
-                <div className="p-2">
-                  <h3 className="text-sm sm:text-base font-bold">{market.name}</h3>
-                  <p className="text-xs sm:text-sm text-gray-500">{market.location}</p>
+          <h2 className="text-lg sm:text-xl font-bold mb-4 text-center text-green">
+            Featured Markets
+          </h2>
+          <div className="relative mb-8">
+            {/* Carousel */}
+            <div className="flex space-x-4 overflow-x-scroll px-4 sm:px-6 scrollbar-hide">
+              {markets.map((market) => (
+                <div
+                  key={market.name}
+                  className="w-40 sm:w-48 h-40 sm:h-48 bg-gray-100 rounded-lg shadow-md flex-shrink-0 transform transition duration-300 hover:scale-105 hover:shadow-lg"
+                >
+                  <img
+                    src={market.imageUrl}
+                    alt={market.name}
+                    className="w-full h-24 sm:h-28 object-cover rounded-t-lg"
+                  />
+                  <div className="p-2">
+                    <h3 className="text-sm sm:text-base font-bold text-gray-800 group-hover:text-orange">
+                      {market.name}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-gray-500">{market.location}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-          <button className="h-8 w-8 bg-orange text-white rounded-full absolute right-2 sm:right-4">
-            &#8594;
-          </button>
-        </div>
 
-        {/* Featured Malls Carousel */}
-        <h2 className="text-lg sm:text-xl font-bold mb-4 text-center text-green">
-          Featured Malls
-        </h2>
-        <div className="relative flex items-center">
-          <button className="h-8 w-8 bg-orange text-white rounded-full absolute left-2 sm:left-4">
-            &#8592;
-          </button>
-          <div className="flex space-x-4 overflow-x-auto px-4 sm:px-6">
-            {malls.map((mall) => (
-              <div
-                key={mall.name}
-                className="w-40 sm:w-48 h-40 sm:h-48 bg-gray-100 rounded-lg shadow-md flex-shrink-0"
-              >
-                <img
-                  src={mall.imageUrl}
-                  alt={mall.name}
-                  className="w-full h-24 sm:h-28 object-cover rounded-t-lg"
-                />
-                <div className="p-2">
-                  <h3 className="text-sm sm:text-base font-bold">{mall.name}</h3>
-                  <p className="text-xs sm:text-sm text-gray-500">{mall.location}</p>
+          {/* Featured Malls Carousel */}
+          <h2 className="text-lg sm:text-xl font-bold mb-4 text-center text-green">
+            Featured Malls
+          </h2>
+          <div className="relative">
+            {/* Carousel */}
+            <div className="flex space-x-4 overflow-x-scroll px-4 sm:px-6 scrollbar-hide">
+              {malls.map((mall) => (
+                <div
+                  key={mall.name}
+                  className="w-40 sm:w-48 h-40 sm:h-48 bg-gray-100 rounded-lg shadow-md flex-shrink-0 transform transition duration-300 hover:scale-105 hover:shadow-lg"
+                >
+                  <img
+                    src={mall.imageUrl}
+                    alt={mall.name}
+                    className="w-full h-24 sm:h-28 object-cover rounded-t-lg"
+                  />
+                  <div className="p-2">
+                    <h3 className="text-sm sm:text-base font-bold">{mall.name}</h3>
+                    <p className="text-xs sm:text-sm text-gray-500">{mall.location}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-          <button className="h-8 w-8 bg-orange text-white rounded-full absolute right-2 sm:right-4">
-            &#8594;
-          </button>
-        </div>
+
       </div>
     </div>
   );

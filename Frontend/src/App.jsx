@@ -8,7 +8,8 @@ import Footer from './components/Footer';
 import LoginModal from './components/Login'; 
 import SignUpModal from './components/Signup'; 
 import HowItWorks from './components/how-it-works';
-import MarketPage from './components/Markets';                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               import MallPage from './components/Malls';
+import MarketPage from './components/Markets';
+import MallPage from './components/Malls';                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 import Profile from './components/Profile';
 import Adverts from './components/Adverts';
 import Settings from './components/Settings';
@@ -55,6 +56,7 @@ function App() {
         <Route path="/" element={<><Hero /><ExploreSection /></>} />
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/markets" element={<MarketPage />} />
+        <Route path="/malls" element={<MallPage />} />
         <Route path="/profile/:subpage?" element={<ProfilePageWrapper />} />
         <Route path='/ad/:subpage?' element={<AdvertsPageWrapper />} />
         <Route path='/settings/:subpage?' element={<SettingsPageWrapper />} />

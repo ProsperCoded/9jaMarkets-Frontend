@@ -292,10 +292,10 @@ const MarketPage = () => {
         <div className="container mx-auto flex justify-between items-center px-4">
             {/* Left Section with Markets and Malls */}
             <div className='flex items-center space-x-4'>
-              <Link to="/markets" className="text-lg font-semibold">
+              <Link to="/markets" className="text-lg font-bold">
                 Markets
               </Link>
-              <Link to="/malls" className="text-lg font-semibold">
+              <Link to="/malls" className="text-lg font-thin">
                 Malls
               </Link>
             </div>
@@ -349,7 +349,7 @@ const MarketPage = () => {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {filteredMarkets.length > 0 ? (
               filteredMarkets.map((market, index) => (
-                <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
+                <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-lg">
                   <img
                     src={market.img}
                     alt={market.name}

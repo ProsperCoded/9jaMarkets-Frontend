@@ -10,20 +10,26 @@ const states = [
   'Taraba', 'Yobe', 'Zamfara',
 ];
 
-
 const malls = {
-  Abia: [
-    { name: 'Ariaria Mall (Aba)', img: '/path/to/ariaria-mall.png' },
-    { name: 'Umuahia Mall (Umuahia)', img: '/path/to/umuahia-mall.png' },
-
+  Abuja: [
+    { name: 'Agbalata mall Badagry', img: '/path/to/agbalata.png' },
+    { name: 'Alaba International mall', img: '/path/to/alaba-international.png' },
+    { name: 'Ajah mall', img: '/path/to/ajah-mall.png' },
+    { name: 'Aratumi mall', img: '/path/to/aratumi-mall.png' },
+    { name: 'Balogun mall, Lagos Island', img: '/path/to/balogun.png' },
+    { name: 'Bar Beach mall', img: '/path/to/bar-beach-mall.png' },
+    { name: 'Computer Village', img: '/path/to/computer-village.png' },
+    { name: 'Èbúté Èrò mall, Lagos Island', img: '/path/to/ebutero-mall.png' },
+    { name: 'Epe Fish mall', img: '/path/to/epe-fish-mall.png' },
+    { name: 'Iyana-Iba mall', img: '/path/to/iyana-iba-mall.png' },
   ],
 };
 
- const MallPage = () => {
-  const [selectedState, setSelectedState] = useState('Abia');
+const mallPage = () => {
+  const [selectedState, setSelectedState] = useState('Abuja');
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredMalls = malls[selectedState]?.filter((mall) =>
+  const filteredmalls = malls[selectedState]?.filter((mall) =>
     mall.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -31,17 +37,17 @@ const malls = {
     <div className="min-h-screen flex flex-col">
       <div className="bg-white text-green py-2 drop-shadow-sm">
         <div className="container mx-auto flex justify-between items-center px-4">
-            {/* Left Section with Markets and Malls */}
+            {/* Left Section with malls and Malls */}
             <div className='flex items-center space-x-4'>
-              <Link to="/markets" className="text-lg font-semibold">
+              <Link to="/markets" className="text-lg font-thin">
                 Markets
               </Link>
-              <Link to="/malls" className="text-lg font-semibold">
+              <Link to="/malls" className="text-lg font-bold">
                 Malls
               </Link>
             </div>
-
-        {/* Center Section - Search Bar */}
+          
+          {/* Center Section - Search Bar */}
           <div className="flex-grow flex justify-center">
             <div className="flex items-center bg-white border border-green text-gray-600 rounded-full px-4 py-2 w-full max-w-md focus:ring-green focus:ring-opacity-50">
               <input
@@ -61,10 +67,10 @@ const malls = {
         </div>
       </div>
 
-       {/* Main Layout */}
-       <div className="flex ">
+      {/* Main Layout */}
+      <div className="flex ">
         {/* Sidebar: List of States */}
-        <aside className="w-64 bg-white h-full p-4 shadow-lg">
+        <aside className="w-[300px] bg-white h-full p-4 shadow-lg">
           <ul className="space-y-2">
             {states.map((state) => (
               <li
@@ -80,24 +86,24 @@ const malls = {
           </ul>
         </aside>
 
-        {/* Main Content: Markets */}
+        {/* Main Content: malls */}
         <div className="w-full bg-gray-100 p-6">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-bold">{selectedState} State Malls</h2>
+            <h2 className="text-2xl font-bold">{selectedState} State malls</h2>
           </div>
 
-          {/* Market Cards Grid */}
+          {/* mall Cards Grid */}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {  filteredMalls.length > 0 ? (
-              filteredMalls.map((malls, index) => (
-                <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
+            {filteredmalls.length > 0 ? (
+              filteredmalls.map((mall, index) => (
+                <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-lg">
                   <img
-                    src={malls.img}
-                    alt={malls.name}
+                    src={mall.img}
+                    alt={mall.name}
                     className="w-full h-32 object-cover"
                   />
                   <div className="p-4">
-                    <h3 className="text-lg font-semibold">{malls.name}</h3>
+                    <h3 className="text-lg font-semibold">{mall.name}</h3>
                     <a
                       href="#"
                       className="text-green text-sm hover:underline mt-2 block"
@@ -117,4 +123,4 @@ const malls = {
   );
 };
 
-export default MallPage;
+export default mallPage;
