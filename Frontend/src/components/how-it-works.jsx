@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import CA from '../assets/how-it-works/create-account.svg'; // Replace with actual path
 import BrowseImage from '../assets/how-it-works/Browse.svg'; // Add your browse products image
 import ConnectImage from '../assets/how-it-works/connect-with-vendors.svg'; // Add connect image
-import BrowseImage from '../assets/how-it-works/Browse.svg'; // Add your browse products image
+
 
 const HowItWorks = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
