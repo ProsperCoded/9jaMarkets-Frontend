@@ -71,15 +71,23 @@ function ExploreSection() {
               />
             </svg>
           </div>
-          <button className="btn bg-green text-white px-4 py-2 rounded-full text-sm sm:text-base">
-            State
-          </button>
-          <button className="btn bg-green text-white px-4 py-2 rounded-full text-sm sm:text-base">
-            Market
-          </button>
-          <button className="btn bg-green text-white px-4 py-2 rounded-full text-sm sm:text-base">
-            Category
-          </button>
+          <Link to="/market">
+            <button className="btn bg-green text-white px-4 py-2 rounded-full text-sm sm:text-base">
+              State
+            </button>
+          </Link>
+          
+          <Link to="/market">
+            <button className="btn bg-green text-white px-4 py-2 rounded-full text-sm sm:text-base">
+              Market
+            </button>
+          </Link>
+          
+          <Link to="/category">
+            <button className="btn bg-green text-white px-4 py-2 rounded-full text-sm sm:text-base">
+              Category
+            </button>
+          </Link>
         </div>
 
         {/* Place Ad + Categories Carousel */}
