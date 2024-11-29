@@ -82,7 +82,7 @@ function ExploreSection() {
   useEffect(() => {
     const handleResize = () => {
       const isAndroid = window.innerWidth < 600;
-      const isIPad = window.innerWidth > 600 && window.innerWidth < 1024;
+      const isIPad = window.innerWidth >= 600 && window.innerWidth < 1024;
       const isDesktop = window.innerWidth >= 1024 && window.innerWidth < 1440;
       const isExtraLarge = window.innerWidth >= 1440;
 
@@ -147,9 +147,9 @@ function ExploreSection() {
 
         {/* Place Ad + Categories Carousel */}
         <div className="relative flex justify-center items-center mb-8 w-full">
-          <div className="flex md:flex-row flex-col justify-center md:items-center md:space-x-10 sm:px-6 md:px-4 w-full overflow-x-hidden">
+          <div className="flex md:flex-row flex-col justify-center md:items-center md:space-x-10 sm:px-6 md:px-4 w-full overflow-visible">
             <Link to="/ad" className="mb-3 w-auto">
-              <div className="flex md:flex-col justify-center items-center bg-orange shadow-md md:mx-3 mb-1 rounded-xl md:rounded-lg w-full sm:w-40 h-10 sm:h-40 md:h-32 text-white algin-middle">
+              <div className="flex md:flex-col justify-center items-center bg-orange shadow-md md:mx-3 mb-1 rounded-xl md:rounded-lg w-full sm:size-32 h-10 text-white algin-middle">
                 <FontAwesomeIcon
                   icon={faPlus}
                   className="md:m-0 mr-3 mb-1 size-5"
@@ -166,6 +166,7 @@ function ExploreSection() {
                   clickable: true,
                 }}
                 modules={[Pagination]}
+                className="custom-swiper-pagination pb-6"
               >
                 {Object.entries(categories).map(([name, imageUrl]) => (
                   <SwiperSlide key={name}>
@@ -190,7 +191,7 @@ function ExploreSection() {
         </h2>
         <div className="relative mr-auto mb-8 ml-auto xl:max-w-[80%]">
           {/* Carousel */}
-          <div className="flex justify-center space-x-4 px-4 sm:px-6 overflow-x-scroll scrollbar-hide">
+          <div className="flex justify-center space-x-4 px-4 sm:px-6 overflow-visible">
             <Swiper
               slidesPerView={cardNumber}
               spaceBetween={30}
@@ -198,7 +199,7 @@ function ExploreSection() {
                 clickable: true,
               }}
               modules={[Pagination]}
-              className="mySwiper"
+              className="custom-swiper-pagination pb-6"
             >
               {markets.map((market) => (
                 <SwiperSlide key={market.name}>
@@ -229,7 +230,7 @@ function ExploreSection() {
         </h2>
         <div className="relative mr-auto mb-8 ml-auto xl:max-w-[80%]">
           {/* Carousel */}
-          <div className="flex justify-center space-x-4 px-4 sm:px-6">
+          <div className="flex justify-center space-x-4 px-4 sm:px-6 overflow-visible">
             <Swiper
               slidesPerView={cardNumber}
               spaceBetween={30}
@@ -237,7 +238,7 @@ function ExploreSection() {
                 clickable: true,
               }}
               modules={[Pagination]}
-              className="mySwiper"
+              className="custom-swiper-pagination pb-6"
             >
               {malls.map((mall) => (
                 <SwiperSlide key={mall.name}>
