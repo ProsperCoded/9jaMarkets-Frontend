@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Wears_category from "../assets/Wears_category.png";
 import Automobile_category from "../assets/Automobile_category.png";
 import Gadgets_category from "../assets/Gadgets_category.png";
@@ -51,10 +51,7 @@ const markets = [
     imageUrl: OnitshaMarket,
   },
 ];
-const isAndroid = window.innerWidth < 600;
-const isIPad = window.innerWidth > 600 && window.innerWidth < 1024;
-const isDesktop = window.innerWidth >= 1024 && window.innerWidth < 1440;
-const isExtraLarge = window.innerWidth >= 1440;
+
 const malls = [
   { name: "Ikeja City Mall", location: "Lagos State", imageUrl: IkejaMall },
   { name: "Palms Shopping Mall", location: "Oyo State", imageUrl: PalmsMall },
@@ -80,15 +77,36 @@ function ExploreSection() {
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value.toLowerCase());
   };
-  const cardNumber = isExtraLarge
-    ? 5
-    : isDesktop
-    ? 4
-    : isIPad
-    ? 3
-    : isAndroid
-    ? 2
-    : 1;
+  // define a default number of cards to show
+  const [cardNumber, setCardNumber] = useState(1);
+  useEffect(() => {
+    const handleResize = () => {
+      const isAndroid = window.innerWidth < 600;
+      const isIPad = window.innerWidth > 600 && window.innerWidth < 1024;
+      const isDesktop = window.innerWidth >= 1024 && window.innerWidth < 1440;
+      const isExtraLarge = window.innerWidth >= 1440;
+
+      const newCardNumber = isExtraLarge
+        ? 5
+        : isDesktop
+        ? 4
+        : isIPad
+        ? 3
+        : isAndroid
+        ? 2
+        : 1;
+
+      setCardNumber(newCardNumber);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Call handler right away so state gets updated with initial window size
+    handleResize();
+
+    // Remove event listener on cleanup
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   console.log("card number", cardNumber);
   return (
     <div className="bg-white py-10 explore-section">
