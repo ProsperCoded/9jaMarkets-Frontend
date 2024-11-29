@@ -22,7 +22,7 @@ const HowItWorks = () => {
             onClick={() => setSidebarOpen(!sidebarOpen)}
           >
             ☰
-          </button>
+          </button>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
           <h1 className="text-2xl font-bold mx-auto absolute left-0 right-0 text-center">
             How it works
           </h1>
