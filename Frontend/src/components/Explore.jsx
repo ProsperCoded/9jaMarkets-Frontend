@@ -29,6 +29,8 @@ import PalmsMall from "../assets/malls/PalmsMall.png";
 import OnitshaMall from "../assets/malls/OnitshaMall.png";
 import AdoBayeroMall from "../assets/malls/AdeBayeroMall.png";
 import JabiLakeMall from "../assets/malls/JabiLakeMall.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const markets = [
   { name: "Alaba Market", location: "Lagos State", imageUrl: AlabaMarket },
@@ -60,6 +62,17 @@ const malls = [
   { name: "Ado Bayero Mall", location: "Kano State", imageUrl: AdoBayeroMall },
   { name: "Jabi Lake Mall", location: "Abuja", imageUrl: JabiLakeMall },
 ];
+
+const categories = {
+  Wears: Wears_category,
+  Automobile: Automobile_category,
+  Gadgets: Gadgets_category,
+  RealEstate: Realestate_category,
+  Furniture: Furniture_category,
+  Food: Food_category,
+  Pharmacy: Pharmacy_category,
+  Sports: Sports_category,
+};
 
 function ExploreSection() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -115,83 +128,39 @@ function ExploreSection() {
         </div>
 
         {/* Place Ad + Categories Carousel */}
-        <div className="relative flex justify-center items-center mb-8">
-          <div className="flex justify-center space-x-4 px-4 sm:px-6 overflow-x-auto">
-            <Link to="/ad">
-              <div className="flex flex-col justify-center items-center bg-orange shadow-md rounded-lg w-32 sm:w-40 h-32 sm:h-40 text-white">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  className="mb-2 w-8 h-8"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+        <div className="relative flex justify-center items-center mb-8 w-full">
+          <div className="flex md:flex-row flex-col justify-center md:items-center md:space-x-10 sm:px-6 md:px-4 w-full overflow-x-hidden">
+            <Link to="/ad" className="mb-3 w-auto">
+              <div className="flex md:flex-col justify-center items-center bg-orange shadow-md md:mx-3 mb-1 rounded-xl md:rounded-lg w-full sm:w-40 h-10 sm:h-40 md:h-32 text-white algin-middle">
+                <FontAwesomeIcon
+                  icon={faPlus}
+                  className="md:m-0 mr-3 mb-1 size-5"
+                />
                 <span className="font-bold text-sm sm:text-base">Place Ad</span>
               </div>
             </Link>
 
-            <div className="flex gap-4 overflow-x-auto carousel columns-4 scrollbar-hide">
-              <div className="flex-shrink-0 w-32 sm:w-40 h-32 sm:h-40 carousel-item">
-                <img
-                  src={Wears_category}
-                  alt="Wears"
-                  className="shadow-md rounded-lg w-full h-full"
-                />
-              </div>
-              <div className="flex-shrink-0 w-32 sm:w-40 h-32 sm:h-40 carousel-item">
-                <img
-                  src={Automobile_category}
-                  alt="Automobile"
-                  className="shadow-md rounded-lg w-full h-full"
-                />
-              </div>
-              <div className="flex-shrink-0 w-32 sm:w-40 h-32 sm:h-40 carousel-item">
-                <img
-                  src={Realestate_category}
-                  alt="Real Estate"
-                  className="shadow-md rounded-lg w-full h-full"
-                />
-              </div>
-              <div className="flex-shrink-0 w-32 sm:w-40 h-32 sm:h-40 carousel-item">
-                <img
-                  src={Furniture_category}
-                  alt="Furniture"
-                  className="shadow-md rounded-lg w-full h-full"
-                />
-              </div>
-              <div className="flex-shrink-0 w-32 sm:w-40 h-32 sm:h-40 carousel-item">
-                <img
-                  src={Pharmacy_category}
-                  alt="Pharmacy"
-                  className="shadow-md rounded-lg w-full h-full"
-                />
-              </div>
-              <div className="flex-shrink-0 w-32 sm:w-40 h-32 sm:h-40 carousel-item">
-                <img
-                  src={Food_category}
-                  alt="Food"
-                  className="shadow-md rounded-lg w-full h-full"
-                />
-              </div>
-              <div className="flex-shrink-0 w-32 sm:w-40 h-32 sm:h-40 carousel-item">
-                <img
-                  src={Gadgets_category}
-                  alt="Gadgets"
-                  className="shadow-md rounded-lg w-full h-full"
-                />
-              </div>
-              <div className="flex-shrink-0 w-32 sm:w-40 h-32 sm:h-40 carousel-item">
-                <img
-                  src={Sports_category}
-                  alt="Sports"
-                  className="shadow-md rounded-lg w-full h-full"
-                />
-              </div>
+            <div className="m-0 w-auto md:w-[70%]">
+              <Swiper
+                slidesPerView={cardNumber}
+                spaceBetween={30}
+                pagination={{
+                  clickable: true,
+                }}
+                modules={[Pagination]}
+              >
+                {Object.entries(categories).map(([name, imageUrl]) => (
+                  <SwiperSlide key={name}>
+                    <div className="w-40 sm:w-40 md:w-32 h-32 sm:h-40">
+                      <img
+                        src={imageUrl}
+                        alt={name}
+                        className="shadow-md rounded-lg w-full h-full object-cover"
+                      />
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             </div>
           </div>
         </div>
