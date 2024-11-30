@@ -6,13 +6,17 @@ import { HttpStatus } from "../constants/http-status.enum";
 import { NotFoundException } from "../utils/exceptions/not-found.exception";
 
 export class HomeController {
-    index: RequestHandler = (request: Request, response: Response) => {
-        const resObj = new ResponseDto(ResponseStatus.SUCCESS, SuccessMessages.WELCOME_HOME);
-        response.status(HttpStatus.OK).send(resObj);
-    };
+  index: RequestHandler = (request: Request, response: Response) => {
+    console.log("It's works");
+    const resObj = new ResponseDto(
+      ResponseStatus.SUCCESS,
+      SuccessMessages.WELCOME_HOME
+    );
+    response.status(HttpStatus.OK).send(resObj);
+  };
 
-    notFound: RequestHandler = (request: Request, response: Response) => {
-        const notFoundResponse = `Route, ${request.originalUrl} not found. Please check the route and try again.`;
-        throw new NotFoundException(notFoundResponse);
-    }
+  notFound: RequestHandler = (request: Request, response: Response) => {
+    const notFoundResponse = `Route, ${request.originalUrl} not found. Please check the route and try again.`;
+    throw new NotFoundException(notFoundResponse);
+  };
 }

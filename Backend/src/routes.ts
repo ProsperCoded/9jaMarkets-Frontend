@@ -1,11 +1,11 @@
 import { Router } from "express";
 import { HomeController } from "./home/home.controller";
 
-import AuthRouter from './auth/auth.routes';
-import CustomerRouter from './customer/customer.routes';
-import MerchantRouter from './merchant/merchant.routes';
-import MarketRouter from './market/market.routes';
-import ProductRouter from './product/product.routes';
+import AuthRouter from "./auth/auth.routes";
+import CustomerRouter from "./customer/customer.routes";
+import MerchantRouter from "./merchant/merchant.routes";
+import MarketRouter from "./market/market.routes";
+import ProductRouter from "./product/product.routes";
 
 const router = Router();
 
@@ -14,20 +14,18 @@ const home = new HomeController();
 router.get("/", home.index);
 
 // Authentication Module
-router.use('/auth', AuthRouter);
+router.use("/auth", AuthRouter);
 
 // Customer Module
-router.use('/customer', CustomerRouter);
+router.use("/customer", CustomerRouter);
 
 // Merchant Module
-router.use('/merchant', MerchantRouter);
+router.use("/merchant", MerchantRouter);
 
 // Market Moduel
-router.use('/market', MarketRouter);
+router.use("/market", MarketRouter);
 
 // Product Module
-router.use('/product', ProductRouter);
-
-
+router.use("/product", ProductRouter);
 
 export default router;

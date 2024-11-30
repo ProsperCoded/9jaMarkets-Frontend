@@ -1,0 +1,13 @@
+.custom-swiper-pagination .swiper-pagination {
+  bottom: -5px;
+}
+
+/* Change the color of inactive pagination bullets */
+.custom-swiper-pagination .swiper-pagination-bullet {
+  background-color: #21ca1b; /* Inactive color */
+}
+
+/* Change the color of active pagination bullets */
+.custom-swiper-pagination .swiper-pagination-bullet-active {
+  background-color: #21ca1b; /* Active color */
+}
