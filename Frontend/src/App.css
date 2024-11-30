@@ -1,4 +1,3 @@
-/* Optional: Custom CSS for category cards */
 .category-card {
   width: 200px;
   margin-right: 16px;
@@ -12,6 +11,6 @@
 }
 
 .no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
