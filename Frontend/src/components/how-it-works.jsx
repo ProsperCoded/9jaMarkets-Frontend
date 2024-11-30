@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import CA from '../assets/how-it-works/create-account.svg'; // Replace with actual path
 import BrowseImage from '../assets/how-it-works/Browse.svg'; // Add your browse products image
 import ConnectImage from '../assets/how-it-works/connect-with-vendors.svg'; // Add connect image
-
+import post from '../assets/how-it-works/post.svg';
+import creditcard from '../assets/how-it-works/credit-card.svg';
 
 const HowItWorks = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -16,13 +17,7 @@ const HowItWorks = () => {
   return (
     <div className="min-h-screen bg-white font-sans">
       {/* Header */}
-        <header className="bg-white text-green flex items-center justify-between py-4 px-6">
-        <button
-            className="text-green text-3xl lg:hidden relative mr-auto"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-          >
-            ☰
-          </button>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+        <header className="bg-white text-green flex items-center justify-between py-4 px-6">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
           <h1 className="text-2xl font-bold mx-auto absolute left-0 right-0 text-center">
             How it works
           </h1>
@@ -31,64 +26,6 @@ const HowItWorks = () => {
 
       {/* Layout */}
       <div className="flex flex-col lg:flex-row">
-        {/* Sidebar */}
-        <aside
-          className={`${
-            sidebarOpen ? 'block' : 'hidden'
-          } lg:block lg:w-[300px] bg-white text-green py-6 px-4 shadow-md`}
-        >
-          <ul className="space-y-4">
-            <li>
-              <button
-                onClick={() => handleScroll('create-account')}
-                className="block text-left text-green font-semibold hover:text-green hover:opacity-50 p-2 rounded"
-              >
-                Create an Account
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => handleScroll('browse-products')}
-                className="block text-left text-green font-semibold hover:text-green hover:opacity-50 p-2 rounded"
-              >
-                Browse & Search for Products
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => handleScroll('connect-vendors')}
-                className="block text-left text-green font-semibold hover:text-green hover:opacity-50 p-2 rounded"
-              >
-                Connect with Vendors
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => handleScroll('place-ads')}
-                className="block text-left text-green font-semibold hover:text-green hover:opacity-50 p-2 rounded"
-              >
-                Place Ads
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => handleScroll('payments')}
-                className="block text-left text-green font-semibold hover:text-green hover:opacity-50 p-2 rounded"
-              >
-                Payments
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => handleScroll('safety-security')}
-                className="block text-left text-green font-semibold hover:text-green hover:opacity-50 p-2 rounded"
-              >
-                Safety and Security
-              </button>
-            </li>
-          </ul>
-        </aside>
-
         {/* Main Content */}
         <main className="flex-grow p-6 lg:p-10 bg-gray-50">
           {/* Create an Account Section */}
@@ -135,12 +72,22 @@ const HowItWorks = () => {
 
           {/* Additional Sections */}
           <section id="place-ads" className="mb-10">
+          <img
+              src={post}
+              alt="Connect with Vendors"
+              className="w-full max-w-md mx-auto mb-6"
+            />
             <h2 className="text-xl font-bold text-green mb-4">Place Ads</h2>
             <p className="text-gray-600">
               Vendors can easily place ads for their products or services. Upload your details, select a category, and reach customers across Nigeria.
             </p>
           </section>
           <section id="payments" className="mb-10">
+          <img
+              src={creditcard}
+              alt="Connect with Vendors"
+              className="w-full max-w-md mx-auto mb-6"
+            />
             <h2 className="text-xl font-bold text-green mb-4">Payments</h2>
             <p className="text-gray-600">
               Enjoy secure and seamless transactions with multiple payment options.

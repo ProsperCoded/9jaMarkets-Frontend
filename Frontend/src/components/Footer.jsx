@@ -33,38 +33,29 @@ function Footer() {
           </nav>
 
           {/* Apps Section */}
-          <div className="hidden md:block md:w-1/4">
-            <h6 className="footer-title text-hover-green text-lg font-semibold mb-4">Apps</h6>
-            <div className="space-y-4">
-              {/* Google Play Store Card */}
-              <a
-                href="https://play.google.com/store"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center bg-hover-green p-3 rounded-lg text-white hover:opacity-90">
+        <nav className="w-full md:w-1/4">
+          <h6 className="footer-title text-hover-green text-lg font-semibold mb-4">Apps</h6>
+          <ul className="space-y-4">
+            <li>
+              <a href="https://play.google.com" target="_blank" rel="noopener noreferrer">
                 <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
-                  alt="Google Play Store"
-                  className="h-10 w-auto"
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/512px-Google_Play_Store_badge_EN.svg.png"
+                  alt="Get it on Google Play"
+                  className="h-10"
                 />
-                <span className="ml-3 text-sm font-semibold">Get it on Google Play</span>
               </a>
-
-              {/* Apple App Store Card */}
-              <a
-                href="https://www.apple.com/app-store/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center bg-hover-green p-3 rounded-lg text-white hover:opacity-90">
+            </li>
+            <li>
+              <a href="https://apps.apple.com" target="_blank" rel="noopener noreferrer">
                 <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/6/67/App_Store_%28iOS%29_badge.svg"
-                  alt="Apple App Store"
-                  className="h-10 w-auto"
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Download_on_the_App_Store_Badge.svg/512px-Download_on_the_App_Store_Badge.svg.png"
+                  alt="Download on the App Store"
+                  className="h-10"
                 />
-                <span className="ml-3 text-sm font-semibold">Download on the App Store</span>
               </a>
-            </div>
-          </div>
+            </li>
+          </ul>
+        </nav>
         </div>
       </footer>
 
