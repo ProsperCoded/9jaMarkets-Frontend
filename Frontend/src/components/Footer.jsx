@@ -31,8 +31,40 @@ function Footer() {
               <li><a className="link link-hover">Invest</a></li>
             </ul>
           </nav>
-          {/* Placeholder for Future Sections */}
-          <div className="hidden md:block md:w-1/4"></div>
+
+          {/* Apps Section */}
+          <div className="hidden md:block md:w-1/4">
+            <h6 className="footer-title text-hover-green text-lg font-semibold mb-4">Apps</h6>
+            <div className="space-y-4">
+              {/* Google Play Store Card */}
+              <a
+                href="https://play.google.com/store"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center bg-hover-green p-3 rounded-lg text-white hover:opacity-90">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+                  alt="Google Play Store"
+                  className="h-10 w-auto"
+                />
+                <span className="ml-3 text-sm font-semibold">Get it on Google Play</span>
+              </a>
+
+              {/* Apple App Store Card */}
+              <a
+                href="https://www.apple.com/app-store/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center bg-hover-green p-3 rounded-lg text-white hover:opacity-90">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/6/67/App_Store_%28iOS%29_badge.svg"
+                  alt="Apple App Store"
+                  className="h-10 w-auto"
+                />
+                <span className="ml-3 text-sm font-semibold">Download on the App Store</span>
+              </a>
+            </div>
+          </div>
         </div>
       </footer>
 

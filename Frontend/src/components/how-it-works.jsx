@@ -16,17 +16,6 @@ const HowItWorks = () => {
     <div className="bg-white min-h-screen font-sans">
       {/* Header */}
       <header className="flex justify-between items-center bg-white px-6 py-4 text-green">
-        <button
-          className="relative lg:hidden mr-auto text-3xl text-green"
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-        >
-          ☰
-        </button>
-        <h1 className="right-0 left-0 absolute mx-auto font-bold text-2xl text-center">
-          How it works
-        </h1>
-      </header>
-
       {/* Layout */}
       <div className="flex lg:flex-row flex-col">
         {/* Sidebar */}

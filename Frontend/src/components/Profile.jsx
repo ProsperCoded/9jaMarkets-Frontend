@@ -1,20 +1,42 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAd, faCommentAlt, faChartLine, faBriefcase, faGem, faWallet, faUsers, faHeadset, faQuestionCircle, faCog } from '@fortawesome/free-solid-svg-icons';
+import {
+  faAd,
+  faCommentAlt,
+  faChartLine,
+  faBriefcase,
+  faGem,
+  faWallet,
+  faUsers,
+  faHeadset,
+  faQuestionCircle,
+  faCog,
+} from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 import MyAdverts from './Myadverts';
 import Feedback from './Feedback';
 import ProSales from './Prosales';
 import Followers from './Followers';
 import Wallet from './Wallet';
+import DefaultProfileContent from './DefaultProfileContent';
 import Insights from './Insights';
-// import ProSales from './ProSales'; // Assuming you have this
-// import Premium from './Premium';   // Assuming you have this
 
 const Profile = ({ subpage }) => {
+  const navItems = [
+    { label: 'My Adverts', icon: faAd, to: '/profile/my-adverts' },
+    { label: 'Feedback', icon: faCommentAlt, to: '/profile/feedback' },
+    { label: 'Insights', icon: faChartLine, to: '/profile/insights' },
+    { label: 'Pro Sales', icon: faBriefcase, to: '/profile/pro-sales' },
+    { label: 'Premium', icon: faGem, to: '/profile/premium' },
+    { label: 'Wallet', icon: faWallet, to: '/profile/wallet' },
+    { label: 'Followers', icon: faUsers, to: '/profile/followers' },
+    { label: 'Customer Care', icon: faHeadset, to: '/profile/customer-care' },
+    { label: 'FAQ', icon: faQuestionCircle, to: '/profile/faq' },
+    { label: 'Settings', icon: faCog, to: '/settings' },
+  ];
+
   let content;
 
-  // Dynamically load subpage content based on URL param
   switch (subpage) {
     case 'my-adverts':
       content = <MyAdverts />;
@@ -29,7 +51,7 @@ const Profile = ({ subpage }) => {
       content = <ProSales />;
       break;
     case 'premium':
-      content = <Premium />;
+      content = <div>Premium Content</div>; // Placeholder
       break;
     case 'followers':
       content = <Followers />;
@@ -38,111 +60,47 @@ const Profile = ({ subpage }) => {
       content = <Wallet />;
       break;
     default:
-      content = <div>Please select a section from the sidebar.</div>;
+      content = <DefaultProfileContent />;
   }
 
   return (
-    <div className="flex">
+    <div className="flex min-h-screen bg-gray-50">
       {/* Sidebar */}
-      <aside className="w-[300px] bg-white h-screen p-4 shadow-md">
-        <div className="flex items-center mb-6">
-          {/* Placeholder for profile icon */}
-          <div className="bg-green rounded-full h-12 w-12 flex items-center justify-center text-white text-2xl font-semibold">
-            U
-          </div>
-          <div className="ml-4">
-            <h2 className="text-xl font-bold">Your Full Name</h2>
-            <p className="text-gray-500">+123-456-7890</p>
+      <aside className="hidden lg:block w-64 bg-white shadow-md">
+        <div className="p-6 border-b">
+          <div className="flex items-center">
+            <div className="bg-green-500 rounded-full h-12 w-12 flex items-center justify-center text-white text-2xl font-semibold">
+              U
+            </div>
+            <div className="ml-4">
+              <h2 className="text-xl font-bold">Your Full Name</h2>
+              <p className="text-gray-500">+123-456-7890</p>
+            </div>
           </div>
         </div>
-        <nav className="space-y-6">
-        <NavLink
-          to="/profile/my-adverts"
-          className={({ isActive }) =>
-            isActive ? "flex items-center text-green font-semibold" : "flex items-center text-gray-700"
-          }
-          >
-            <FontAwesomeIcon icon={faAd} className="mr-3" /> My Adverts
-          </NavLink>
-          <NavLink
-            to="/profile/feedback"
-            className={({ isActive }) =>
-              isActive ? "flex items-center text-green font-semibold" : "flex items-center text-gray-700"
-            }
-          >
-            <FontAwesomeIcon icon={faCommentAlt} className="mr-3" /> Feedback
-          </NavLink>
-          <NavLink
-            to="/profile/insights"
-            className={({ isActive }) =>
-              isActive ? "flex items-center text-green font-semibold" : "flex items-center text-gray-700"
-            }
-          >
-            <FontAwesomeIcon icon={faChartLine} className="mr-3" /> Insights
-          </NavLink>
-          <NavLink
-            to="/profile/pro-sales"
-            className={({ isActive }) =>
-              isActive ? "flex items-center text-green font-semibold" : "flex items-center text-gray-700"
-            }
-          >
-            <FontAwesomeIcon icon={faBriefcase} className="mr-3" /> Pro Sales
-          </NavLink>
-          <NavLink
-            to="/profile/premium"
-            className={({ isActive }) =>
-              isActive ? "flex items-center text-green font-semibold" : "flex items-center text-gray-700"
-            }
-          >
-            <FontAwesomeIcon icon={faGem} className="mr-3" /> Premium
-          </NavLink>
-          <NavLink
-            to="/profile/wallet"
-            className={({ isActive }) =>
-              isActive ? "flex items-center text-green font-semibold" : "flex items-center text-gray-700"
-            }
-          >
-            <FontAwesomeIcon icon={faWallet} className="mr-3" /> Wallet
-          </NavLink>
-          <NavLink
-            to="/profile/followers"
-            className={({ isActive }) =>
-              isActive ? "flex items-center text-green font-semibold" : "flex items-center text-gray-700"
-            }
-          >
-            <FontAwesomeIcon icon={faUsers} className="mr-3" /> Followers
-          </NavLink>
-          <NavLink
-            to="/profile/customer-care"
-            className={({ isActive }) =>
-              isActive ? "flex items-center text-green font-semibold" : "flex items-center text-gray-700"
-            }
-          >
-            <FontAwesomeIcon icon={faHeadset} className="mr-3" /> Customer Care
-          </NavLink>
-          <NavLink
-            to="/profile/faq"
-            className={({ isActive }) =>
-              isActive ? "flex items-center text-green font-semibold" : "flex items-center text-gray-700"
-            }
-          >
-            <FontAwesomeIcon icon={faQuestionCircle} className="mr-3" /> FAQ
-          </NavLink>
-          <NavLink
-            to="/settings"
-            className={({ isActive }) =>
-              isActive ? "flex items-center text-green font-semibold" : "flex items-center text-gray-700"
-            }
-          >
-            <FontAwesomeIcon icon={faCog} className="mr-3" /> Settings
-          </NavLink>
-
+        <nav className="p-4 space-y-4">
+          {navItems.map((item) => (
+            <NavLink
+              key={item.label}
+              to={item.to}
+              className={({ isActive }) =>
+                `flex items-center space-x-3 p-2 rounded-md ${
+                  isActive ? 'bg-green-100 text-green-600' : 'text-gray-700'
+                }`
+              }
+            >
+              <FontAwesomeIcon icon={item.icon} className="w-5 h-5" />
+              <span>{item.label}</span>
+            </NavLink>
+          ))}
         </nav>
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-8 bg-gray-50">
-        {content}
+      <main className="flex-1 p-6">
+        <div className="max-w-4xl mx-auto bg-white shadow rounded-md p-6">
+          {content}
+        </div>
       </main>
     </div>
   );

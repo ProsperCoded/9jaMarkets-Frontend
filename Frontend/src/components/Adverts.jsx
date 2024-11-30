@@ -2,7 +2,7 @@ import React from 'react';
 
 const Advert = () => {
   return (
-    <div className="p-6 bg-gray-50 min-h-screen flex flex-col items-center">
+    <div>
       {/* Page Title */}
       <h1 className="text-2xl font-bold text-green mb-6">Advert</h1>
 

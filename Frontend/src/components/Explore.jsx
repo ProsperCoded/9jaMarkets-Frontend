@@ -132,17 +132,25 @@ function ExploreSection() {
                 d="M10.5 3.75a6.75 6.75 0 1 0 4.247 11.943l5.53 5.53a.75.75 0 0 0 1.06-1.06l-5.53-5.53A6.75 6.75 0 0 0 10.5 3.75ZM5.25 10.5a5.25 5.25 0 1 1 10.5 0 5.25 5.25 0 0 1-10.5 0Z"
                 clipRule="evenodd"
               />
-            </svg>
-          </div>
-          <button className="bg-green px-4 py-2 rounded-full text-sm text-white sm:text-base btn">
-            State
-          </button>
-          <button className="bg-green px-4 py-2 rounded-full text-sm text-white sm:text-base btn">
-            Market
-          </button>
-          <button className="bg-green px-4 py-2 rounded-full text-sm text-white sm:text-base btn">
-            Category
-          </button>
+            </>
+          <Link to="/market">
+            <button className="btn bg-green text-white px-4 py-2 rounded-full text-sm sm:text-base">
+              State
+            </button>
+          </Link>
+          
+          <Link to="/market">
+            <button className="btn bg-green text-white px-4 py-2 rounded-full text-sm sm:text-base">
+              Market
+            </button>
+          </Link>
+          
+          <Link to="/category">
+            <button className="btn bg-green text-white px-4 py-2 rounded-full text-sm sm:text-base">
+              Category
+            </button>
+          </Link>
+
         </div>
 
         {/* Place Ad + Categories Carousel */}
