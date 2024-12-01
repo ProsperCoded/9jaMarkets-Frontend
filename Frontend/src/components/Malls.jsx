@@ -1,83 +1,120 @@
-import { useState } from 'react';
-import searchIcon from '../assets/search.svg'; // Assuming this is your search icon
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import searchIcon from "../assets/search.svg"; // Assuming this is your search icon
+import { Link } from "react-router-dom";
 
 const states = [
-  'Abuja', 'Abia', 'Adamawa', 'Akwa-Ibom', 'Anambra', 'Bauchi', 'Bayelsa', 'Benue',
-  'Borno', 'Cross-River', 'Delta', 'Ebonyi', 'Edo', 'Ekiti', 'Enugu',  'FCT', 'Gombe',
-  'Imo', 'Jigawa', 'Kaduna', 'Kano', 'Katsina', 'Kebbi', 'Kogi', 'Kwara',
-  'Lagos', 'Nasarawa', 'Niger', 'Ogun', 'Ondo', 'Osun', 'Oyo', 'Plateau', 'Rivers', 'Sokoto',
-  'Taraba', 'Yobe', 'Zamfara',
+  "Abuja",
+  "Abia",
+  "Adamawa",
+  "Akwa-Ibom",
+  "Anambra",
+  "Bauchi",
+  "Bayelsa",
+  "Benue",
+  "Borno",
+  "Cross-River",
+  "Delta",
+  "Ebonyi",
+  "Edo",
+  "Ekiti",
+  "Enugu",
+  "FCT",
+  "Gombe",
+  "Imo",
+  "Jigawa",
+  "Kaduna",
+  "Kano",
+  "Katsina",
+  "Kebbi",
+  "Kogi",
+  "Kwara",
+  "Lagos",
+  "Nasarawa",
+  "Niger",
+  "Ogun",
+  "Ondo",
+  "Osun",
+  "Oyo",
+  "Plateau",
+  "Rivers",
+  "Sokoto",
+  "Taraba",
+  "Yobe",
+  "Zamfara",
 ];
 
 const malls = {
   Abuja: [
-    { name: 'Agbalata mall Badagry', img: '/path/to/agbalata.png' },
-    { name: 'Alaba International mall', img: '/path/to/alaba-international.png' },
-    { name: 'Ajah mall', img: '/path/to/ajah-mall.png' },
-    { name: 'Aratumi mall', img: '/path/to/aratumi-mall.png' },
-    { name: 'Balogun mall, Lagos Island', img: '/path/to/balogun.png' },
-    { name: 'Bar Beach mall', img: '/path/to/bar-beach-mall.png' },
-    { name: 'Computer Village', img: '/path/to/computer-village.png' },
-    { name: 'Èbúté Èrò mall, Lagos Island', img: '/path/to/ebutero-mall.png' },
-    { name: 'Epe Fish mall', img: '/path/to/epe-fish-mall.png' },
-    { name: 'Iyana-Iba mall', img: '/path/to/iyana-iba-mall.png' },
+    { name: "Agbalata mall Badagry", img: "/path/to/agbalata.jpg" },
+    {
+      name: "Alaba International mall",
+      img: "/path/to/alaba-international.jpg",
+    },
+    { name: "Ajah mall", img: "/path/to/ajah-mall.jpg" },
+    { name: "Aratumi mall", img: "/path/to/aratumi-mall.jpg" },
+    { name: "Balogun mall, Lagos Island", img: "/path/to/balogun.jpg" },
+    { name: "Bar Beach mall", img: "/path/to/bar-beach-mall.jpg" },
+    { name: "Computer Village", img: "/path/to/computer-village.jpg" },
+    { name: "Èbúté Èrò mall, Lagos Island", img: "/path/to/ebutero-mall.jpg" },
+    { name: "Epe Fish mall", img: "/path/to/epe-fish-mall.jpg" },
+    { name: "Iyana-Iba mall", img: "/path/to/iyana-iba-mall.jpg" },
   ],
 };
 
 const mallPage = () => {
-  const [selectedState, setSelectedState] = useState('Abuja');
-  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedState, setSelectedState] = useState("Abuja");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const filteredmalls = malls[selectedState]?.filter((mall) =>
     mall.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="bg-white text-green py-2 drop-shadow-sm">
-        <div className="container mx-auto flex justify-between items-center px-4">
-            {/* Left Section with malls and Malls */}
-            <div className='flex items-center space-x-4'>
-              <Link to="/markets" className="text-lg font-thin">
-                Markets
-              </Link>
-              <Link to="/malls" className="text-lg font-bold">
-                Malls
-              </Link>
-            </div>
-          
+    <div className="flex flex-col min-h-screen">
+      <div className="bg-white drop-shadow-sm py-2 text-green">
+        <div className="flex justify-between items-center mx-auto px-4 container">
+          {/* Left Section with malls and Malls */}
+          <div className="flex items-center space-x-4">
+            <Link to="/markets" className="font-thin text-lg">
+              Markets
+            </Link>
+            <Link to="/malls" className="font-bold text-lg">
+              Malls
+            </Link>
+          </div>
+
           {/* Center Section - Search Bar */}
-          <div className="flex-grow flex justify-center">
-            <div className="flex items-center bg-white border border-green text-gray-600 rounded-full px-4 py-2 w-full max-w-md focus:ring-green focus:ring-opacity-50">
+          <div className="flex flex-grow justify-center">
+            <div className="flex items-center border-green bg-white focus:ring-opacity-50 px-4 py-2 border rounded-full focus:ring-green w-full max-w-md text-gray-600">
               <input
                 type="text"
                 placeholder={`Search ${selectedState} malls...`}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full outline-none text-sm px-2"
+                className="px-2 w-full text-sm outline-none"
               />
-              <img src={searchIcon} alt="Search" className="h-5 w-5" />
+              <img src={searchIcon} alt="Search" className="w-5 h-5" />
             </div>
-            
           </div>
-          
+
           {/* Empty Right Side (Optional for now) */}
-          <div className='flex items-center space-x-4'></div>
+          <div className="flex items-center space-x-4"></div>
         </div>
       </div>
 
       {/* Main Layout */}
-      <div className="flex ">
+      <div className="flex">
         {/* Sidebar: List of States */}
-        <aside className="w-[300px] bg-white h-full p-4 shadow-lg">
+        <aside className="bg-white shadow-lg p-4 w-[300px] h-full">
           <ul className="space-y-2">
             {states.map((state) => (
               <li
                 key={state}
                 onClick={() => setSelectedState(state)}
                 className={`cursor-pointer p-2 ${
-                  selectedState === state ? 'bg-green text-white' : 'text-gray-800'
+                  selectedState === state
+                    ? "bg-green text-white"
+                    : "text-gray-800"
                 } hover:bg-green hover:opacity-75 hover:text-white rounded-lg focus:font-semibold`}
               >
                 {state}
@@ -87,26 +124,29 @@ const mallPage = () => {
         </aside>
 
         {/* Main Content: malls */}
-        <div className="w-full bg-gray-100 p-6">
+        <div className="bg-gray-100 p-6 w-full">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-bold">{selectedState} State malls</h2>
+            <h2 className="font-bold text-2xl">{selectedState} State malls</h2>
           </div>
 
           {/* mall Cards Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="gap-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {filteredmalls.length > 0 ? (
               filteredmalls.map((mall, index) => (
-                <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-lg">
+                <div
+                  key={index}
+                  className="bg-white shadow-md hover:shadow-lg rounded-lg transform transition duration-300 overflow-hidden hover:scale-105"
+                >
                   <img
                     src={mall.img}
                     alt={mall.name}
                     className="w-full h-32 object-cover"
                   />
                   <div className="p-4">
-                    <h3 className="text-lg font-semibold">{mall.name}</h3>
+                    <h3 className="font-semibold text-lg">{mall.name}</h3>
                     <a
                       href="#"
-                      className="text-green text-sm hover:underline mt-2 block"
+                      className="block mt-2 text-green text-sm hover:underline"
                     >
                       View more
                     </a>

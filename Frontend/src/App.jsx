@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { createContext, useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -20,6 +20,25 @@ import Profile from "./components/Profile";
 import Adverts from "./components/Adverts";
 import Settings from "./components/Settings";
 
+// Contexts
+export const USER_PROFILE_CONTEXT = createContext({
+  userProfile: null,
+  setUserProfile: () => {},
+});
+function ContextWrapper({ children }) {
+  const [userProfile, setUserProfile] = useState(null);
+  return (
+    <>
+      <USER_PROFILE_CONTEXT.Provider
+        value={{ userProfile: userProfile, setUserProfile: setUserProfile }}
+      >
+        {children}
+      </USER_PROFILE_CONTEXT.Provider>
+    </>
+  );
+}
+
+// set up and routes
 function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignUpModal, setShowSignUpModal] = useState(false);
@@ -47,47 +66,49 @@ function App() {
 
   return (
     <div>
-      {/* Render Header based on the route */}
-      {isHomePage ? (
-        <Header
-          openLoginModal={openLoginModal}
+      <ContextWrapper>
+        {/* Render Header based on the route */}
+        {isHomePage ? (
+          <Header
+            openLoginModal={openLoginModal}
+            openSignUpModal={openSignUpModal}
+          />
+        ) : (
+          <Header2 />
+        )}
+
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <Hero />
+                <ExploreSection />
+              </>
+            }
+          />
+          <Route path="/how-it-works" element={<HowItWorks />} />
+          <Route path="/markets" element={<MarketPage />} />
+          <Route path="/malls" element={<MallPage />} />
+          <Route path="/profile/:subpage?" element={<ProfilePageWrapper />} />
+          <Route path="/ad/:subpage?" element={<AdvertsPageWrapper />} />
+          <Route path="/settings/:subpage?" element={<SettingsPageWrapper />} />
+        </Routes>
+
+        <Footer />
+
+        {/* Modals */}
+        <LoginModal
+          showModal={showLoginModal}
+          closeModal={closeLoginModal}
           openSignUpModal={openSignUpModal}
         />
-      ) : (
-        <Header2 />
-      )}
-
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <Hero />
-              <ExploreSection />
-            </>
-          }
+        <SignUpModal
+          showModal={showSignUpModal}
+          closeModal={closeSignUpModal}
+          openLoginModal={openLoginModal}
         />
-        <Route path="/how-it-works" element={<HowItWorks />} />
-        <Route path="/markets" element={<MarketPage />} />
-        <Route path="/malls" element={<MallPage />} />
-        <Route path="/profile/:subpage?" element={<ProfilePageWrapper />} />
-        <Route path="/ad/:subpage?" element={<AdvertsPageWrapper />} />
-        <Route path="/settings/:subpage?" element={<SettingsPageWrapper />} />
-      </Routes>
-
-      <Footer />
-
-      {/* Modals */}
-      <LoginModal
-        showModal={showLoginModal}
-        closeModal={closeLoginModal}
-        openSignUpModal={openSignUpModal}
-      />
-      <SignUpModal
-        showModal={showSignUpModal}
-        closeModal={closeSignUpModal}
-        openLoginModal={openLoginModal}
-      />
+      </ContextWrapper>
     </div>
   );
 }
