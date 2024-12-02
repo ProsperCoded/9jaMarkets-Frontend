@@ -140,6 +140,7 @@ const mallPage = () => {
                   <img
                     src={mall.img}
                     alt={mall.name}
+                    lazy
                     className="w-full h-32 object-cover"
                   />
                   <div className="p-4">

@@ -210,6 +210,7 @@ function ExploreSection() {
                       src={imageUrl}
                       alt={name}
                       className="shadow-md rounded-lg w-full h-full object-cover"
+                      lazy
                     />
                   </div>
                 </SwiperSlide>
@@ -243,6 +244,7 @@ function ExploreSection() {
                     src={market.imageUrl}
                     alt={market.name}
                     className="rounded-t-lg w-full h-24 sm:h-28 object-cover"
+                    lazy
                   />
                   <div className="p-2">
                     <h3 className="group-hover:text-orange font-bold text-gray-800 text-sm sm:text-base">
@@ -282,6 +284,7 @@ function ExploreSection() {
                     src={mall.imageUrl}
                     alt={mall.name}
                     className="rounded-t-lg w-full h-24 sm:h-28 object-cover"
+                    lazy
                   />
                   <div className="p-2">
                     <h3 className="font-bold text-sm sm:text-base">

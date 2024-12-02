@@ -45,7 +45,7 @@ const LoginModal = ({ showModal, closeModal, openSignUpModal }) => {
         >
           &times;
         </button>
-        <img src={logo} alt="9ja Markets Logo" className="mx-auto mb-4 h-20" />
+        <img src={logo} alt="9ja Markets Logo" className="mx-auto mb-4 h-20" lazy/>
         <h2 className="mb-4 font-bold text-2xl text-center text-green">
           Hello! Welcome back
         </h2>
