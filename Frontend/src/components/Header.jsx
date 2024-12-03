@@ -3,10 +3,16 @@ import logo from "../assets/Logo.svg";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { useContext } from "react";
+import { USER_PROFILE_CONTEXT } from "../contexts";
+import { UserAvatar } from "../componets-utils/UserAvatar";
+// import { Avatar } from "../componets-utils/Avatar";
+import { Avatar } from "antd";
 
 function Header({ openLoginModal, openSignUpModal }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { userProfile } = useContext(USER_PROFILE_CONTEXT);
 
   // Handle scroll behavior
   const handleScroll = () => {
@@ -38,50 +44,60 @@ function Header({ openLoginModal, openSignUpModal }) {
           : "bg-transparent text-white"
       } z-20`}
     >
-      <div className="container mx-auto flex justify-between items-center px-6 py-3">
+      <div className="flex justify-between items-center mx-auto px-6 py-3 container">
         {/* Logo */}
         <Link to="/" className="flex items-center">
           <img src={logo} alt="9ja Markets" className="h-8" />
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-6 ml-6 text-lg">
-          <Link to="/" className="hover:text-orange">Home</Link>
-          <Link to="/how-it-works" className="hover:text-orange">How it Works</Link>
-          <Link to="/markets" className="hover:text-orange">Markets &rarr;</Link>
+        <nav className="md:flex space-x-6 hidden ml-6 text-lg">
+          <Link to="/" className="hover:text-orange">
+            Home
+          </Link>
+          <Link to="/how-it-works" className="hover:text-orange">
+            How it Works
+          </Link>
+          <Link to="/markets" className="hover:text-orange">
+            Markets &rarr;
+          </Link>
         </nav>
-
-        {/* Desktop Auth Buttons */}
-        <div className="hidden md:flex space-x-3 ml-auto">
-          <button
-            onClick={openLoginModal}
-            className="text-white px-4 py-1 border border-white rounded-full hover:bg-white hover:text-green transition"
-          >
-            Login
-          </button>
-          <button
-            onClick={openSignUpModal}
-            className="bg-green text-white px-4 py-1 rounded-full hover:bg-hover-green transition"
-          >
-            Sign Up
-          </button>
-        </div>
+        {userProfile ? (
+          <div className="ml-auto">
+            <UserAvatar />
+          </div>
+        ) : (
+          <div className="md:flex space-x-3 hidden ml-auto">
+            <button
+              onClick={openLoginModal}
+              className="border-white hover:bg-white px-4 py-1 border rounded-full text-white hover:text-green transition"
+            >
+              Login
+            </button>
+            <button
+              onClick={openSignUpModal}
+              className="bg-green hover:bg-hover-green px-4 py-1 rounded-full text-white transition"
+            >
+              Sign Up
+            </button>
+          </div>
+        )}
 
         {/* Mobile Hamburger Menu */}
-        <div
-          className="md:hidden text-white"
-          onClick={toggleMenu}>
-          <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} className="h-6 w-6" />
+        <div className="md:hidden text-white" onClick={toggleMenu}>
+          <FontAwesomeIcon
+            icon={isMenuOpen ? faTimes : faBars}
+            className="w-6 h-6"
+          />
         </div>
 
         {/* Mobile Side Panel */}
         {isMenuOpen && (
-          <div className="fixed inset-0 z-30 ">
-            <div className="absolute right-0 top-0 bg-black bg-opacity-20 backdrop-blur-md w-1/2 h-full p-6 text-lg space-y-6 overflow-y-auto text-white">
+          <div className="z-30 fixed inset-0">
+            <div className="top-0 right-0 absolute space-y-6 bg-black bg-opacity-20 backdrop-blur-md p-6 w-1/2 h-full text-lg text-white overflow-y-auto">
               {/* Close Button */}
               <div className="flex justify-end">
                 <svg
-                  xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
@@ -98,37 +114,54 @@ function Header({ openLoginModal, openSignUpModal }) {
               </div>
               {/* Nav Links */}
               <div className="space-y-4">
-                <Link to="/" onClick={toggleMenu} className="block hover:text-orange">
+                <Link
+                  to="/"
+                  onClick={toggleMenu}
+                  className="block hover:text-orange"
+                >
                   Home
                 </Link>
-                <Link to="/how-it-works" onClick={toggleMenu} className="block hover:text-orange">
+                <Link
+                  to="/how-it-works"
+                  onClick={toggleMenu}
+                  className="block hover:text-orange"
+                >
                   How it Works
                 </Link>
-                <Link to="/markets" onClick={toggleMenu} className="block hover:text-orange">
+                <Link
+                  to="/markets"
+                  onClick={toggleMenu}
+                  className="block hover:text-orange"
+                >
                   Markets
                 </Link>
               </div>
+              {/* <Avatar label="ddd" /> */}
               {/* Auth Buttons */}
-              <div className="absolute bottom-6 left-6 right-6 space-y-4">
-                <button
-                  onClick={() => {
-                    toggleMenu();
-                    openLoginModal();
-                  }}
-                  className="w-full text-center py-1 border border-white text-white rounded-full hover:bg-white hover:text-green transition"
-                >
-                  Login
-                </button>
-                <button
-                  onClick={() => {
-                    toggleMenu();
-                    openSignUpModal();
-                  }}
-                  className="w-full text-center py-1 bg-green text-white rounded-full hover:bg-hover-green transition"
-                >
-                  Sign Up
-                </button>
-              </div>
+              {userProfile ? (
+                <UserAvatar />
+              ) : (
+                <div className="right-6 bottom-6 left-6 absolute space-y-4">
+                  <button
+                    onClick={() => {
+                      toggleMenu();
+                      openLoginModal();
+                    }}
+                    className="border-white hover:bg-white py-1 border rounded-full w-full text-center text-white hover:text-green transition"
+                  >
+                    Login
+                  </button>
+                  <button
+                    onClick={() => {
+                      toggleMenu();
+                      openSignUpModal();
+                    }}
+                    className="bg-green hover:bg-hover-green py-1 rounded-full w-full text-center text-white transition"
+                  >
+                    Sign Up
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         )}

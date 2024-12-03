@@ -1,4 +1,4 @@
-import { API_BASE_URL } from "../src/config";
+import { API_BASE_URL } from "../../src/config";
 export async function signUpApi(
   payload,
   errorLogger = () => {},
@@ -46,9 +46,9 @@ export async function loginApi(
   return loginData.data;
 }
 
-export async function getProfile(
-  accessToken,
+export async function getProfileApi(
   userId,
+  accessToken,
   errorLogger = () => {},
   successLogger = () => {}
 ) {
@@ -65,4 +65,41 @@ export async function getProfile(
   }
   successLogger(userProfileData.message);
   return userProfileData.data;
+}
+
+export async function refreshTokenApi(
+  refreshToken,
+  errorLogger = () => {},
+  successLogger = () => {}
+) {
+  const url = new URL("auth/customer/refresh-token", API_BASE_URL);
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({ refreshToken }),
+  });
+  const responseData = await response.json();
+  if (!response.ok) {
+    errorLogger(responseData.message);
+    return;
+  }
+  return responseData.data;
+}
+export async function logoutApi(refreshToken, errorLogger = () => {}) {
+  const url = new URL("auth/customer/logout", API_BASE_URL);
+  const response = await fetch(url, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({ refreshToken }),
+  });
+  const responseData = await response.json();
+  if (!response.ok) {
+    errorLogger(responseData.message);
+    return;
+  }
+  return responseData.message;
 }

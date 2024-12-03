@@ -3,8 +3,8 @@ import logo from "../assets/Logo.svg";
 import googleLogo from "../assets/Google Icon.svg";
 import facebookLogo from "../assets/facebook.png";
 import appleLogo from "../assets/apple.svg";
-import { USER_PROFILE_CONTEXT } from "../App";
-import { getProfile, loginApi, signUpApi } from "../../libs/api";
+import { USER_PROFILE_CONTEXT } from "../contexts.js";
+import { getProfileApi, loginApi, signUpApi } from "../../libs/user/authApi.js";
 import { storeAuth } from "../../libs/util";
 import Loading from "../componets-utils/Loading.jsx";
 import { useEffect } from "react";
@@ -50,7 +50,7 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
 
   const handleSignUp = async (e) => {
     // Handle sign up logic here
-    setLoading(true);
+
     e.preventDefault();
     if (password !== confirmPassword) {
       setError("Passwords do not match");
@@ -71,7 +71,7 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
       console.error(error);
       setError(error);
     };
-    const signUp = signUpApi(formData, (error) => {
+    const signUp = await signUpApi(formData, (error) => {
       console.error(error);
       setError(error);
     });
@@ -80,10 +80,9 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
     const loginData = await loginApi({ email, password }, errorLogger);
     if (!loginData) return;
     const { accessToken, refreshToken, id: userId } = loginData;
-    storeAuth(accessToken, refreshToken);
-    const userProfile = await getProfile(accessToken, userId, errorLogger);
+    storeAuth(userId, accessToken, refreshToken);
+    const userProfile = await getProfileApi(userId, accessToken, errorLogger);
     if (!userProfile) return;
-    console.log({ userProfile });
     setUserProfile(userProfile);
     closeModal();
   };
@@ -108,8 +107,10 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
         <form
           className="space-y-4"
           onSubmit={async (e) => {
-            await handleSignUp(e);
-            setLoading(false);
+            setLoading(true);
+            await handleSignUp(e).then(() => {
+              setLoading(false);
+            });
           }}
         >
           <div className="flex justify-between gap-2 wrap">
