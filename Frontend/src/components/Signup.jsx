@@ -3,7 +3,7 @@ import logo from "../assets/Logo.svg";
 import googleLogo from "../assets/Google Icon.svg";
 import facebookLogo from "../assets/facebook.png";
 import appleLogo from "../assets/apple.svg";
-import { USER_PROFILE_CONTEXT } from "../contexts.js";
+import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "../contexts.js";
 import { getProfileApi, loginApi, signUpApi } from "../../libs/user/authApi.js";
 import { storeAuth } from "../../libs/util";
 import Loading from "../componets-utils/Loading.jsx";
@@ -21,6 +21,7 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const modalRef = useRef(null);
+  const messageApi = useContext(MESSAGE_API_CONTEXT);
   useEffect(() => {
     if (modalRef.current & showModal) modalRef.current.focus();
     if (showModal) {
@@ -84,6 +85,7 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
     const userProfile = await getProfileApi(userId, accessToken, errorLogger);
     if (!userProfile) return;
     setUserProfile(userProfile);
+    messageApi.success("SignUp Successful");
     closeModal();
   };
 
