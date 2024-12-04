@@ -1,5 +1,9 @@
 import { createContext, useState } from "react";
-import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "./contexts";
+import {
+  LOGOUT_MODAL_CONTEXT,
+  MESSAGE_API_CONTEXT,
+  USER_PROFILE_CONTEXT,
+} from "./contexts";
 import {
   BrowserRouter as Router,
   Routes,
@@ -26,6 +30,7 @@ import InitializeApp from "./InitializeApp";
 import { message } from "antd";
 import Products from "./components/Product";
 import "./App.css";
+import Logout from "./componets-utils/LogoutModal";
 // userProfile Type
 // {
 //   "addresses": [],
@@ -50,16 +55,20 @@ import "./App.css";
 function ContextWrapper({ children }) {
   const [userProfile, setUserProfile] = useState(null);
   const [messageApi, contextHolder] = message.useMessage();
+  const [logoutModal, setLogoutModal] = useState(false);
   useEffect(() => {
     console.log(userProfile);
   }, [userProfile]);
   return (
     <>
       <USER_PROFILE_CONTEXT.Provider value={{ userProfile, setUserProfile }}>
-        {contextHolder}
-        <MESSAGE_API_CONTEXT.Provider value={messageApi}>
-          {children}
-        </MESSAGE_API_CONTEXT.Provider>
+        <LOGOUT_MODAL_CONTEXT.Provider value={{ logoutModal, setLogoutModal }}>
+          <Logout isModalOpen={logoutModal} />
+          {contextHolder}
+          <MESSAGE_API_CONTEXT.Provider value={messageApi}>
+            {children}
+          </MESSAGE_API_CONTEXT.Provider>
+        </LOGOUT_MODAL_CONTEXT.Provider>
       </USER_PROFILE_CONTEXT.Provider>
     </>
   );

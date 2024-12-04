@@ -10,3 +10,7 @@ export const MESSAGE_API_CONTEXT = createContext({
   info: (content) => {},
   warning: (content) => {},
 });
+export const LOGOUT_MODAL_CONTEXT = createContext({
+  logoutModal: false,
+  setLogoutModal: () => {},
+});
