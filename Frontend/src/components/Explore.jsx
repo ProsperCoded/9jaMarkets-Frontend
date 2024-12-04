@@ -33,8 +33,12 @@ import JabiLakeMall from "../assets/malls/JabiLakeMall.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Select from "./../componets-utils/Select";
+import { useMemo } from "react";
+import { MALLS, MARKETS } from "../config";
 // import { Select } from "shadcn";
-const markets = [
+const allMarkets = Object.values(MARKETS).flat();
+const allMalls = Object.values(MALLS).flat();
+const featuredMarkets = [
   { name: "Alaba Market", location: "Lagos State", imageUrl: AlabaMarket },
   { name: "Bodija Market", location: "Oyo State", imageUrl: BodijaMarket },
   {
@@ -54,7 +58,7 @@ const markets = [
   },
 ];
 
-const malls = [
+const featuredMalls = [
   { name: "Ikeja City Mall", location: "Lagos State", imageUrl: IkejaMall },
   { name: "Palms Shopping Mall", location: "Oyo State", imageUrl: PalmsMall },
   { name: "Onitsha Mall", location: "Anambra State", imageUrl: OnitshaMall },
@@ -119,6 +123,24 @@ function ExploreSection() {
   }, []);
   const [selected, setSelected] = useState(0);
   const options = ["go to", "state", "markets", "category"];
+  const marketsData = useMemo(() => {
+    if (!searchQuery) return featuredMarkets;
+
+    const filteredData = allMarkets
+      .filter((market) => market.name.toLowerCase().includes(searchQuery))
+      // limit
+      .slice(0, 20);
+    return filteredData;
+  }, [searchQuery]);
+  const mallsData = useMemo(() => {
+    if (!searchQuery) return featuredMalls;
+
+    const filteredData = allMalls
+      .filter((mall) => mall.name.toLowerCase().includes(searchQuery))
+      // limit
+      .slice(0, 20);
+    return filteredData;
+  }, [searchQuery]);
   return (
     <div className="bg-white py-10 explore-section">
       <div className="mx-auto px-4 sm:px-6 lg:px-8 text-center container">
@@ -237,7 +259,7 @@ function ExploreSection() {
             modules={[Pagination]}
             className="custom-swiper-pagination pb-6"
           >
-            {markets.map((market) => (
+            {marketsData.map((market) => (
               <SwiperSlide key={market.name}>
                 <div className="flex-shrink-0 bg-gray-100 shadow-md hover:shadow-lg rounded-lg w-auto sm:w-48 h-40 sm:h-48 transform transition duration-300 hover:scale-105 overflow-visible">
                   <img
@@ -277,7 +299,7 @@ function ExploreSection() {
             modules={[Pagination]}
             className="custom-swiper-pagination pb-6"
           >
-            {malls.map((mall) => (
+            {mallsData.map((mall) => (
               <SwiperSlide key={mall.name}>
                 <div className="flex-shrink-0 bg-gray-100 shadow-md hover:shadow-lg rounded-lg w-40 sm:w-48 h-40 sm:h-48 transform transition duration-300 hover:scale-105">
                   <img

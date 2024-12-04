@@ -3,9 +3,12 @@ import logo from "../assets/Logo.svg";
 import googleLogo from "../assets/Google Icon.svg";
 import facebookLogo from "../assets/facebook.png";
 import appleLogo from "../assets/apple.svg";
-import { loginApi } from "../../libs/api";
-import { USER_PROFILE_CONTEXT } from "../App";
+import { loginApi } from "../../libs/user/authApi";
+import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "../contexts";
 import Loading from "../componets-utils/Loading";
+import { getProfileApi } from "../../libs/user/authApi";
+import { storeAuth } from "../../libs/util";
+import { message } from "antd";
 const LoginModal = ({ showModal, closeModal, openSignUpModal }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,27 +16,25 @@ const LoginModal = ({ showModal, closeModal, openSignUpModal }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const messageApi = useContext(MESSAGE_API_CONTEXT);
   const { setUserProfile } = useContext(USER_PROFILE_CONTEXT);
   if (!showModal) return null; // Don't render if modal is hidden
-  const handleSubmit = async () => {
+  const handleLogin = async () => {
     // Handle form submission
     setLoading(true);
+    const errorLogger = (error) => {
+      console.error(error);
+      setError(error);
+    };
     const payload = { email, password };
-    const loginData = await loginApi(
-      payload,
-      (err) => {
-        console.error(err);
-        setError(err);
-      },
-      console.log
-    );
+    const loginData = await loginApi(payload, errorLogger);
     if (!loginData) return;
     const { accessToken, refreshToken, id: userId } = loginData;
-    storeAuth(accessToken, refreshToken);
-    const userProfile_ = await getProfile(accessToken, userId, errorLogger);
+    storeAuth(userId, accessToken, refreshToken, rememberMe);
+    const userProfile_ = await getProfileApi(userId, accessToken, errorLogger);
     if (!userProfile_) return;
-    console.log({ userProfile_ });
     setUserProfile(userProfile_);
+    messageApi.success("You are logged In");
     closeModal();
   };
   return (
@@ -45,16 +46,22 @@ const LoginModal = ({ showModal, closeModal, openSignUpModal }) => {
         >
           &times;
         </button>
-        <img src={logo} alt="9ja Markets Logo" className="mx-auto mb-4 h-20" lazy/>
+        <img
+          src={logo}
+          alt="9ja Markets Logo"
+          className="mx-auto mb-4 h-20"
+          lazy="true"
+        />
         <h2 className="mb-4 font-bold text-2xl text-center text-green">
           Hello! Welcome back
         </h2>
         <form
           className="space-y-4"
-          onSubmit={async (e) => {
+          onSubmit={(e) => {
             e.preventDefault();
-            await handleSubmit();
-            setLoading(false);
+            handleLogin().then(() => {
+              setLoading(false);
+            });
           }}
         >
           <div>
