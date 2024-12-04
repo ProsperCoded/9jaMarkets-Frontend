@@ -68,10 +68,7 @@ const Header2 = () => {
               <FontAwesomeIcon icon={faBell} className="w-6 h-6" />
             </Link>
             <Link to={"/profile"}>
-              <div className="flex items-center space-x-2">
-                <UserAvatar />
-                <span>{userProfile.firstName}</span>
-              </div>
+              <UserAvatar showName={true} />
             </Link>
           </div>
 
