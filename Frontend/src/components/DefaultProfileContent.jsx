@@ -21,15 +21,14 @@ ChartJS.register(
   Legend
 );
 
-
 // Stats Component
 const Stats = ({ stats }) => (
   <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
     {[
-      { title: "Total Sales", value: stats.totalSales, color: "green" },
+      { title: "Total Sales", value: stats.totalSales, color: "orange-500" },
       { title: "Orders", value: stats.orders, color: "blue" },
-      { title: "Expenses", value: stats.expenses, color: "red" },
-      { title: "Profit", value: stats.profit, color: "yellow" },
+      { title: "Expenses", value: stats.expenses, color: "red-500" },
+      { title: "Profit", value: stats.profit, color: "green-600" },
     ].map((stat, idx) => (
       <div
         key={idx}
@@ -49,17 +48,20 @@ const SalesAnalysisChart = ({ salesAnalysis }) => {
     datasets: [
       {
         label: "Total Sales",
-        backgroundColor: "#3B82F6",
+        backgroundColor: "#F8912D",
+        borderRadius: 10,
         data: salesAnalysis.map((item) => item.sales),
       },
       {
         label: "Expenses",
-        backgroundColor: "#F87171",
+        backgroundColor: "#FF3D00",
+        borderRadius: 10,
         data: salesAnalysis.map((item) => item.expenses),
       },
       {
         label: "Profit",
-        backgroundColor: "#10B981",
+        backgroundColor: "#236C13",
+        borderRadius: 10,
         data: salesAnalysis.map((item) => item.profit),
       },
     ],
@@ -68,7 +70,9 @@ const SalesAnalysisChart = ({ salesAnalysis }) => {
   return (
     <div className="bg-white p-5 rounded shadow">
       <h3 className="text-lg font-semibold mb-4">Sales Analysis</h3>
-      <Bar data={barData} />
+      <div style={{ width: "100%", height: "300px" }}>
+        <Bar data={barData} options={{ maintainAspectRatio: false }} />
+      </div>
     </div>
   );
 };
@@ -84,22 +88,24 @@ const OrderStatusChart = ({ orderStatus }) => {
           orderStatus.pending,
           orderStatus.cancelled,
         ],
-        backgroundColor: ["#10B981", "#FBBF24", "#EF4444"],
+        backgroundColor: ["#236C13", "#F8912D", "#FF3D00"],
       },
     ],
   };
 
   return (
-    <div className="bg-white p-5 rounded shadow">
+    <div className="bg-white p-5 rounded shadow flex flex-col items-center">
       <h3 className="text-lg font-semibold mb-4">Order Status</h3>
-      <Doughnut data={doughnutData} />
+      <div style={{ width: "300px", height: "300px" }}>
+        <Doughnut data={doughnutData} />
+      </div>
     </div>
   );
 };
 
 // Recent Orders Component
 const RecentOrders = ({ recentOrders }) => (
-  <div className="bg-white p-5 rounded shadow">
+  <div className="bg-white p-5 rounded shadow overflow-x-auto">
     <h3 className="text-lg font-semibold mb-4">Recent Orders</h3>
     <table className="table-auto w-full">
       <thead>
@@ -182,18 +188,18 @@ const DefaultProfileContent = () => {
     ],
   });
 
-  return (  
-      <main>
-        <Stats stats={stats} />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-          <SalesAnalysisChart salesAnalysis={stats.salesAnalysis} />
-          <OrderStatusChart orderStatus={stats.orderStatus} />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-          <RecentOrders recentOrders={stats.recentOrders} />
-          <TopProducts topProducts={stats.topProducts} />
-        </div>
-      </main>
+  return (
+    <main>
+      <Stats stats={stats} />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+        <SalesAnalysisChart salesAnalysis={stats.salesAnalysis} />
+        <OrderStatusChart orderStatus={stats.orderStatus} />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+        <RecentOrders recentOrders={stats.recentOrders} />
+        <TopProducts topProducts={stats.topProducts} />
+      </div>
+    </main>
   );
 };
 
