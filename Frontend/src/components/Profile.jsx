@@ -4,7 +4,7 @@ import {
   faHome,
   faList,
   faCartShopping,
-  faChat,
+  faMessage,
   faGem,
   faWallet,
   faUsers,
@@ -75,7 +75,7 @@ const Profile = () => {
                 to="/messages"
                 className="flex items-center space-x-3 p-2 rounded-lg hover:bg-green hover:text-white"
               >
-                <FontAwesomeIcon icon={faChat} />
+                <FontAwesomeIcon icon={faMessage} />
                 <span>Messages</span>
               </Link>
             </li>

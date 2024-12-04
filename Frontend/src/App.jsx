@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { createContext, useState } from "react";
+import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "./contexts";
 import {
   BrowserRouter as Router,
   Routes,
@@ -19,7 +20,67 @@ import MallPage from "./components/Malls";
 import Profile from "./components/Profile";
 import Adverts from "./components/Adverts";
 import Settings from "./components/Settings";
+import { useEffect } from "react";
+import { ConfigProvider } from "antd";
+import InitializeApp from "./InitializeApp";
+import { message } from "antd";
+// userProfile Type
+// {
+//   "addresses": [],
+//   "dateOfBirth": null,
+//   "displayImage": null,
+//   "email": "john.doe@example.com",
+//   "emailVerifiedAt": null,
+//   "firstName": "John",
+//   "googleId": null,
+//   "id": "076447dc-2e03-4515-b585-effc03b41fa8",
+//   "lastName": "Doe",
+//   "phoneNumbers": [
+//     {
+//       // Add phone number details here
+//     },
+//     {
+//       // Add phone number details here
+//     }
+//   ]
+// }
 
+function ContextWrapper({ children }) {
+  const [userProfile, setUserProfile] = useState(null);
+  const [messageApi, contextHolder] = message.useMessage();
+  useEffect(() => {
+    console.log(userProfile);
+  }, [userProfile]);
+  return (
+    <>
+      <USER_PROFILE_CONTEXT.Provider value={{ userProfile, setUserProfile }}>
+        {contextHolder}
+        <MESSAGE_API_CONTEXT.Provider value={messageApi}>
+          {children}
+        </MESSAGE_API_CONTEXT.Provider>
+      </USER_PROFILE_CONTEXT.Provider>
+    </>
+  );
+}
+function AntDesignConfig({ children }) {
+  return (
+    <ConfigProvider
+      theme={{
+        token: {
+          // Seed Token
+          colorPrimary: "#21CA1B",
+
+          // Alias Token
+          colorBgContainer: "#EBEBEB",
+        },
+        components: {},
+      }}
+    >
+      {children}
+    </ConfigProvider>
+  );
+}
+// set up and routes
 function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignUpModal, setShowSignUpModal] = useState(false);
@@ -46,48 +107,59 @@ function App() {
   const isHomePage = location.pathname === "/";
 
   return (
-    <div>
-      {/* Render Header based on the route */}
-      {isHomePage ? (
-        <Header
-          openLoginModal={openLoginModal}
-          openSignUpModal={openSignUpModal}
-        />
-      ) : (
-        <Header2 />
-      )}
+    <div className="app">
+      <AntDesignConfig>
+        <ContextWrapper>
+          <InitializeApp>
+            {/* Render Header based on the route */}
+            {isHomePage ? (
+              <Header
+                openLoginModal={openLoginModal}
+                openSignUpModal={openSignUpModal}
+              />
+            ) : (
+              <Header2 />
+            )}
 
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <Hero />
-              <ExploreSection />
-            </>
-          }
-        />
-        <Route path="/how-it-works" element={<HowItWorks />} />
-        <Route path="/markets" element={<MarketPage />} />
-        <Route path="/malls" element={<MallPage />} />
-        <Route path="/profile/:subpage?" element={<ProfilePageWrapper />} />
-        <Route path="/ad/:subpage?" element={<AdvertsPageWrapper />} />
-        <Route path="/settings/:subpage?" element={<SettingsPageWrapper />} />
-      </Routes>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <>
+                    <Hero />
+                    <ExploreSection />
+                  </>
+                }
+              />
+              <Route path="/how-it-works" element={<HowItWorks />} />
+              <Route path="/markets" element={<MarketPage />} />
+              <Route path="/malls" element={<MallPage />} />
+              <Route
+                path="/profile/:subpage?"
+                element={<ProfilePageWrapper />}
+              />
+              <Route path="/ad/:subpage?" element={<AdvertsPageWrapper />} />
+              <Route
+                path="/settings/:subpage?"
+                element={<SettingsPageWrapper />}
+              />
+            </Routes>
+            <Footer />
 
-      <Footer />
-
-      {/* Modals */}
-      <LoginModal
-        showModal={showLoginModal}
-        closeModal={closeLoginModal}
-        openSignUpModal={openSignUpModal}
-      />
-      <SignUpModal
-        showModal={showSignUpModal}
-        closeModal={closeSignUpModal}
-        openLoginModal={openLoginModal}
-      />
+            {/* Modals */}
+            <LoginModal
+              showModal={showLoginModal}
+              closeModal={closeLoginModal}
+              openSignUpModal={openSignUpModal}
+            />
+            <SignUpModal
+              showModal={showSignUpModal}
+              closeModal={closeSignUpModal}
+              openLoginModal={openLoginModal}
+            />
+          </InitializeApp>
+        </ContextWrapper>
+      </AntDesignConfig>
     </div>
   );
 }
