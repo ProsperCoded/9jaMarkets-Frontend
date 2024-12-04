@@ -2,6 +2,7 @@ import { useState } from 'react';
 import searchIcon from '../assets/search.svg'; // Assuming this is your search icon
 import { Link } from 'react-router-dom';
 
+
 const states = [
   'Abuja', 'Abia', 'Adamawa', 'Akwa-Ibom', 'Anambra', 'Bauchi', 'Bayelsa', 'Benue',
   'Borno', 'Cross-River', 'Delta', 'Ebonyi', 'Edo', 'Ekiti', 'Enugu',  'FCT', 'Gombe',
@@ -236,7 +237,7 @@ const markets = {
     
     Lagos: [
       { name: 'Agbalata Market Badagry', img: '/path/to/agbalata.png' },
-      { name: 'Alaba International Market', img: '/path/to/alaba-international.png' },
+      { name: 'Alaba International Market ', img:'../assets/markets/AlabaMarket.png' },
       { name: 'Ajah Market', img: '/path/to/ajah-market.png' },
       { name: 'Aratumi Market', img: '/path/to/aratumi-market.png' },
       { name: 'Balogun Market, Lagos Island', img: '/path/to/balogun.png' },
@@ -312,9 +313,7 @@ const MarketPage = () => {
               />
               <img src={searchIcon} alt="Search" className="h-5 w-5" />
             </div>
-            
           </div>
-          
           {/* Empty Right Side (Optional for now) */}
           <div className='flex items-center space-x-4'></div>
         </div>

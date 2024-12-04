@@ -1,106 +1,118 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faAd,
-  faCommentAlt,
-  faChartLine,
-  faBriefcase,
+  faHome,
+  faList,
+  faCartShopping,
+  faChat,
   faGem,
   faWallet,
   faUsers,
-  faHeadset,
-  faQuestionCircle,
-  faCog,
+  faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import { NavLink } from 'react-router-dom';
-import MyAdverts from './Myadverts';
-import Feedback from './Feedback';
-import ProSales from './Prosales';
-import Followers from './Followers';
-import Wallet from './Wallet';
+import { Link } from 'react-router-dom';
 import DefaultProfileContent from './DefaultProfileContent';
-import Insights from './Insights';
 
-const Profile = ({ subpage }) => {
-  const navItems = [
-    { label: 'My Adverts', icon: faAd, to: '/profile/my-adverts' },
-    { label: 'Feedback', icon: faCommentAlt, to: '/profile/feedback' },
-    { label: 'Insights', icon: faChartLine, to: '/profile/insights' },
-    { label: 'Pro Sales', icon: faBriefcase, to: '/profile/pro-sales' },
-    { label: 'Premium', icon: faGem, to: '/profile/premium' },
-    { label: 'Wallet', icon: faWallet, to: '/profile/wallet' },
-    { label: 'Followers', icon: faUsers, to: '/profile/followers' },
-    { label: 'Customer Care', icon: faHeadset, to: '/profile/customer-care' },
-    { label: 'FAQ', icon: faQuestionCircle, to: '/profile/faq' },
-    { label: 'Settings', icon: faCog, to: '/settings' },
-  ];
-
-  let content;
-
-  switch (subpage) {
-    case 'my-adverts':
-      content = <MyAdverts />;
-      break;
-    case 'feedback':
-      content = <Feedback />;
-      break;
-    case 'insights':
-      content = <Insights />;
-      break;
-    case 'pro-sales':
-      content = <ProSales />;
-      break;
-    case 'premium':
-      content = <div>Premium Content</div>; // Placeholder
-      break;
-    case 'followers':
-      content = <Followers />;
-      break;
-    case 'wallet':
-      content = <Wallet />;
-      break;
-    default:
-      content = <DefaultProfileContent />;
-  }
-
+const Profile = () => {
   return (
     <div className="flex min-h-screen bg-gray-50">
       {/* Sidebar */}
-      <aside className="hidden lg:block w-64 bg-white shadow-md">
-        <div className="p-6 border-b">
-          <div className="flex items-center">
-            <div className="bg-green-500 rounded-full h-12 w-12 flex items-center justify-center text-white text-2xl font-semibold">
-              U
-            </div>
-            <div className="ml-4">
-              <h2 className="text-xl font-bold">Your Full Name</h2>
-              <p className="text-gray-500">+123-456-7890</p>
-            </div>
+      <aside className="bg-white text-black w-[300px] shadow-lg p-5">
+        {/* Profile Section */}
+        <div className="flex items-center mb-8 pt-8">
+          <img
+            src="https://via.placeholder.com/50"
+            alt="profile"
+            className="rounded-full h-12 w-12"
+          />
+          <div className="ml-3">
+            <h2 className="text-lg font-semibold">Achonu Chioma</h2>
+            <p className="text-sm">+123-456-7890</p>
           </div>
         </div>
-        <nav className="p-4 space-y-4">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.label}
-              to={item.to}
-              className={({ isActive }) =>
-                `flex items-center space-x-3 p-2 rounded-md ${
-                  isActive ? 'bg-green-100 text-green-600' : 'text-gray-700'
-                }`
-              }
-            >
-              <FontAwesomeIcon icon={item.icon} className="w-5 h-5" />
-              <span>{item.label}</span>
-            </NavLink>
-          ))}
+
+        {/* Navigation Links */}
+        <nav>
+          <ul className="space-y-4">
+            <li>
+              <Link
+                to="/dashboard"
+                className="flex items-center space-x-3 p-2 rounded-lg hover:bg-green hover:text-white"
+              >
+                <FontAwesomeIcon icon={faHome} />
+                <span>Dashboard</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/product"
+                className="flex items-center space-x-3 p-2 rounded-lg hover:bg-green hover:text-white"
+              >
+                <FontAwesomeIcon icon={faList} />
+                <span>Products</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/orders"
+                className="flex items-center space-x-3 p-2 rounded-lg hover:bg-green hover:text-white"
+              >
+                <FontAwesomeIcon icon={faCartShopping} />
+                <span>Orders</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/customers"
+                className="flex items-center space-x-3 p-2 rounded-lg hover:bg-green hover:text-white"
+              >
+                <FontAwesomeIcon icon={faUsers} />
+                <span>Customers</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/messages"
+                className="flex items-center space-x-3 p-2 rounded-lg hover:bg-green hover:text-white"
+              >
+                <FontAwesomeIcon icon={faChat} />
+                <span>Messages</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/wallet"
+                className="flex items-center space-x-3 p-2 rounded-lg hover:bg-green hover:text-white"
+              >
+                <FontAwesomeIcon icon={faWallet} />
+                <span>Wallet</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/premium"
+                className="flex items-center space-x-3 p-2 rounded-lg hover:bg-green hover:text-white"
+              >
+                <FontAwesomeIcon icon={faGem} />
+                <span>Premium</span>
+              </Link>
+            </li>
+            <li className="pt-10">
+              <Link
+                to="/logout"
+                className="flex items-center space-x-3 p-2 pt-25 rounded-lg text-red-500 hover:bg-red-100 hover:text-red-700"
+              >
+                <FontAwesomeIcon icon={faSignOutAlt} />
+                <span>Logout</span>
+              </Link>
+            </li>
+          </ul>
         </nav>
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-6">
-        <div className="max-w-4xl mx-auto bg-white shadow rounded-md p-6">
-          {content}
-        </div>
+      <main className="flex-1 p-6 ">
+          <DefaultProfileContent />
       </main>
     </div>
   );
