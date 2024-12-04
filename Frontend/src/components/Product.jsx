@@ -27,9 +27,15 @@ export default function Product() {
   };
 
   const handleFiles = (files) => {
-    const newImages = files.map((file) => ({
+    const validFiles = files.filter((file) => file.size <= 5 * 1024 * 1024); // 5MB in bytes
+    if (validFiles.length < files.length) {
+      alert(
+        "Some files were not uploaded because they exceed the 5MB size limit."
+      );
+    }
+    const newImages = validFiles.map((file) => ({
       name: file.name,
-      size: `${(file.size / 1024).toFixed(1)}mb`,
+      size: `${(file.size / 1024).toFixed(1)}kb`,
       url: URL.createObjectURL(file),
     }));
     setSelectedImages([...selectedImages, ...newImages]);
@@ -77,7 +83,7 @@ export default function Product() {
                 <p className="text-muted-foreground text-sm">or</p>
                 <Button
                   variant="outline"
-                  className="bg-green-600 hover:bg-green-700 text-white"
+                  className="bg-green hover:bg-hover-green text-white"
                   onClick={handleUploadClick}
                 >
                   Upload from computer
@@ -127,7 +133,7 @@ export default function Product() {
               </div>
             )}
 
-            <div className="flex items-center gap-2 border-orange-200 bg-orange-50 p-4 border rounded-lg text-orange-800 text-sm">
+            <div className="flex items-center gap-2 bg-red bg-red-50 p-4 border border-red-200 rounded-lg text-red-800 text-sm">
               <span>Images should be less than 5mb (.png or .jpg formats)</span>
             </div>
 
@@ -179,6 +185,14 @@ export default function Product() {
                   placeholder="Describe your product briefly here"
                   className="min-h-[150px]"
                 />
+              </div>
+              <div className="flex justify-center gap-5 mt-10">
+                <Button className="border-green bg-transparent hover:bg-hover-green px-6 border rounded-full text-green hover:text-white">
+                  Cancel
+                </Button>
+                <Button className="bg-green hover:bg-hover-green px-6 rounded-full text-white">
+                  Add Product
+                </Button>
               </div>
             </div>
           </div>

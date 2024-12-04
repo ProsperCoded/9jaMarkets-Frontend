@@ -1,3 +1,10 @@
+/* define variables */
+.app {
+  --color-hover-green: "#21CA1B";
+  --color-green: "#236C13"
+  --color-orange:"#F8912D";
+  --site-bg:"#EBEBEB"
+}
 .category-card {
   width: 200px;
   margin-right: 16px;

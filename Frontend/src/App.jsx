@@ -24,7 +24,8 @@ import { useEffect } from "react";
 import { ConfigProvider } from "antd";
 import InitializeApp from "./InitializeApp";
 import { message } from "antd";
-import Products from "./components/Products";
+import Products from "./components/Product";
+import "./App.css";
 // userProfile Type
 // {
 //   "addresses": [],
@@ -139,15 +140,6 @@ function App() {
                 path="/profile/:subpage?"
                 element={<ProfilePageWrapper />}
               />
-              <Route path="/ad/:subpage?" element={<AdvertsPageWrapper />} />
-              <Route
-                path="/settings/:subpage?"
-                element={<SettingsPageWrapper />}
-              />
-              <Route
-                path="/product/:subpage?"
-                element={<ProductsPageWrapper />}
-              />
             </Routes>
             <Footer />
 
@@ -173,18 +165,6 @@ function App() {
 function ProfilePageWrapper() {
   const { subpage } = useParams();
   return <Profile subpage={subpage} />;
-}
-function AdvertsPageWrapper() {
-  const { subpage } = useParams();
-  return <Adverts subpage={subpage} />;
-}
-function SettingsPageWrapper() {
-  const { subpage } = useParams();
-  return <Settings subpage={subpage} />;
-}
-function ProductsPageWrapper() {
-  const { subpage } = useParams();
-  return <Products subpage={subpage} />;
 }
 
 export default function AppWrapper() {

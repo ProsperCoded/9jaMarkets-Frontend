@@ -67,7 +67,7 @@ const Header2 = () => {
             >
               <FontAwesomeIcon icon={faBell} className="w-6 h-6" />
             </Link>
-            <Link to={"/profile"}>
+            <Link to={"/profile/dashboard"}>
               <UserAvatar showName={true} />
             </Link>
           </div>
