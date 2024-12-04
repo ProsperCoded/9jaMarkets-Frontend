@@ -5,7 +5,7 @@ import { message } from "antd";
 import { logoutApi } from "../../libs/user/authApi";
 import { getAuth, deleteAuth } from "../../libs/util";
 import { useNavigate } from "react-router-dom";
-export function UserAvatar() {
+export function UserAvatar({ showName }) {
   const messageApi = useContext(MESSAGE_API_CONTEXT);
   const { userProfile, setUserProfile } = useContext(USER_PROFILE_CONTEXT);
   const navigate = useNavigate();
@@ -61,6 +61,11 @@ export function UserAvatar() {
             >
               <span className="font-semibold">{userProfile.firstName[0]}</span>
             </Avatar>
+            {showName && (
+              <span className="ml-2 font-semibold algin-middle">
+                {userProfile.firstName}
+              </span>
+            )}
           </div>
         </Popover>
       </span>
