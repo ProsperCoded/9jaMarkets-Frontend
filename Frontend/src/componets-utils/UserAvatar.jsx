@@ -1,5 +1,9 @@
 import React, { useContext } from "react";
-import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "../contexts";
+import {
+  LOGOUT_MODAL_CONTEXT,
+  MESSAGE_API_CONTEXT,
+  USER_PROFILE_CONTEXT,
+} from "../contexts";
 import { Avatar, Popover } from "antd";
 
 import { useNavigate } from "react-router-dom";
@@ -7,14 +11,14 @@ import { LogOut } from "lucide-react";
 export function UserAvatar({ showName }) {
   const { userProfile, setUserProfile } = useContext(USER_PROFILE_CONTEXT);
   const navigate = useNavigate();
-  const [logoutModal, setLogoutModal] = React.useState(false);
+  const { setLogoutOpen } = useContext(LOGOUT_MODAL_CONTEXT);
   const options = (
     <div>
       <ul className="space-y-2 mx-2 px-2 min-w-[10ch]">
         <li
           className="hover:font-semibold hover:text-green transition-colors cursor-pointer select-none"
           onClick={() => {
-            setLogoutModal(true);
+            setLogoutOpen(true);
           }}
         >
           Sign out

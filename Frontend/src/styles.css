@@ -11,3 +11,8 @@
 .custom-swiper-pagination .swiper-pagination-bullet-active {
   background-color: #21ca1b; /* Active color */
 }
+
+.cancel-button {
+  @apply bg-gray-200 text-gray-700 border-none;
+  @apply hover:text-stone-900 !important;
+}

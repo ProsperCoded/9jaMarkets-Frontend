@@ -12,5 +12,5 @@ export const MESSAGE_API_CONTEXT = createContext({
 });
 export const LOGOUT_MODAL_CONTEXT = createContext({
   logoutModal: false,
-  setLogoutModal: () => {},
+  setLogoutOpen: () => {},
 });

@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import DefaultProfileContent from "./DefaultProfileContent";
 import Product from "./Product";
 import { useContext } from "react";
-import { USER_PROFILE_CONTEXT } from "@/contexts";
+import { USER_PROFILE_CONTEXT, LOGOUT_MODAL_CONTEXT } from "@/contexts";
 import { useNavigate } from "react-router-dom";
 import { Avatar } from "antd";
 const SUB_PAGES = {
@@ -23,6 +23,7 @@ const SUB_PAGES = {
 };
 const Profile = ({ subpage }) => {
   const { userProfile } = useContext(USER_PROFILE_CONTEXT);
+  const { setLogoutOpen } = useContext(LOGOUT_MODAL_CONTEXT);
   const navigate = useNavigate();
   if (!userProfile) {
     navigate("/");
@@ -38,11 +39,6 @@ const Profile = ({ subpage }) => {
             style={{ backgroundColor: "#236C13", verticalAlign: "middle" }}
             size="large"
           >
-            {/* <img
-              src="https://via.placeholder.com/50"
-              alt="profile"
-              className="rounded-full w-12 h-12"
-            /> */}
             <span className="font-semibold">{userProfile.firstName[0]}</span>
           </Avatar>
           <div className="ml-3">
@@ -144,13 +140,15 @@ const Profile = ({ subpage }) => {
               </Link>
             </li>
             <li className="pt-10">
-              <Link
-                to="/logout"
-                className="flex items-center space-x-3 hover:bg-red-100 p-2 pt-25 rounded-lg text-red-500 hover:text-red-700"
+              <div
+                onClick={() => {
+                  setLogoutOpen(true);
+                }}
+                className="flex items-center space-x-3 hover:bg-red-100 p-2 pt-25 rounded-lg text-red-500 hover:text-red-700 cursor-pointer"
               >
                 <FontAwesomeIcon icon={faSignOutAlt} />
                 <span>Logout</span>
-              </Link>
+              </div>
             </li>
           </ul>
         </nav>

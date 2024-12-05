@@ -55,20 +55,20 @@ import Logout from "./componets-utils/LogoutModal";
 function ContextWrapper({ children }) {
   const [userProfile, setUserProfile] = useState(null);
   const [messageApi, contextHolder] = message.useMessage();
-  const [logoutModal, setLogoutModal] = useState(false);
+  const [logoutOpen, setLogoutOpen] = useState(false);
   useEffect(() => {
     console.log(userProfile);
   }, [userProfile]);
   return (
     <>
       <USER_PROFILE_CONTEXT.Provider value={{ userProfile, setUserProfile }}>
-        <LOGOUT_MODAL_CONTEXT.Provider value={{ logoutModal, setLogoutModal }}>
-          <Logout isModalOpen={logoutModal} />
-          {contextHolder}
-          <MESSAGE_API_CONTEXT.Provider value={messageApi}>
+        <MESSAGE_API_CONTEXT.Provider value={messageApi}>
+          <LOGOUT_MODAL_CONTEXT.Provider value={{ logoutOpen, setLogoutOpen }}>
+            <Logout logoutOpen={logoutOpen} setLogoutOpen={setLogoutOpen} />
+            {contextHolder}
             {children}
-          </MESSAGE_API_CONTEXT.Provider>
-        </LOGOUT_MODAL_CONTEXT.Provider>
+          </LOGOUT_MODAL_CONTEXT.Provider>
+        </MESSAGE_API_CONTEXT.Provider>
       </USER_PROFILE_CONTEXT.Provider>
     </>
   );
