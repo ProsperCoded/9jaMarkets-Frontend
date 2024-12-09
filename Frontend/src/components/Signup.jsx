@@ -97,19 +97,19 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
       ref={modalRef}
       tabIndex={0}
     >
-      <div className="relative bg-white shadow-lg p-4 sm:p-8 rounded-[5%] w-[90%] max-w-md md:max-w-lg lg:max-w-xl">
+      <div className="relative bg-white shadow-lg px-4 sm:px-8 p-3 rounded-[5%] w-[90%] max-w-md md:max-w-lg lg:max-w-xl">
         <button
           onClick={closeModal}
-          className="top-2 right-4 absolute text-3xl text-gray-600 hover:text-gray-900"
+          className="top-2 right-4 absolute text-4xl text-gray-600 lg:text-3xl hover:text-gray-900"
         >
           &times;
         </button>
         <img
           src={logo}
           alt="9ja Markets Logo"
-          className="mx-auto mb-2 h-10 md:h-20"
+          className="mx-auto mb-2 h-10 md:h-14 lg:h-20"
         />
-        <h2 className="mb-2 font-bold text-base text-center text-green md:text-2xl">
+        <h2 className="mb-2 font-bold text-base text-center text-green lg:text-xl">
           Welcome to 9ja Markets
         </h2>
         <form
@@ -334,12 +334,12 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
             )}
           </button>
         </form>
-        <div className="md:flex items-center hidden my-4 text-center">
+        <div className="lg:flex items-center hidden my-2 text-center">
           <div className="flex-grow border-gray-300 border-t"></div>
           <span className="px-4 text-gray-700 text-sm">Or</span>
           <div className="flex-grow border-gray-300 border-t"></div>
         </div>
-        <p className="mt-2 md:mt-4 text-center text-sm md:text-base">
+        <p className="mt-2 text-center text-sm md:text-base">
           Already have an account?{" "}
           <button onClick={openLoginModal} className="font-bold text-green">
             Login
