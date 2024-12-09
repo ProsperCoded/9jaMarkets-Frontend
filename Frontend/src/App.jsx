@@ -22,14 +22,12 @@ import HowItWorks from "./components/how-it-works";
 import MarketPage from "./components/Markets";
 import MallPage from "./components/Malls";
 import Profile from "./components/Profile";
-import Adverts from "./components/Adverts";
-import Settings from "./components/Settings";
 import { useEffect } from "react";
 import { ConfigProvider } from "antd";
 import InitializeApp from "./InitializeApp";
 import { message } from "antd";
-import Products from "./components/Product";
 import "./App.css";
+import GoogleSigninRedirect from "./componets-utils/GoogleSigninRedirect";
 import Logout from "./componets-utils/LogoutModal";
 // userProfile Type
 // {
@@ -148,6 +146,11 @@ function App() {
               <Route
                 path="/profile/:subpage?"
                 element={<ProfilePageWrapper />}
+              />
+              {/* Google signup */}
+              <Route
+                path="/api/v1/auth/google/callback"
+                element={<GoogleSigninRedirect />}
               />
             </Routes>
             <Footer />

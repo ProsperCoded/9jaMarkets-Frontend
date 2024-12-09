@@ -8,6 +8,7 @@ import { getProfileApi, loginApi, signUpApi } from "../../libs/user/authApi.js";
 import { storeAuth } from "../../libs/util";
 import Loading from "../componets-utils/Loading.jsx";
 import { useEffect } from "react";
+import { API_BASE_URL, GOOGLE_URL } from "@/config";
 const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -40,7 +41,8 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
     };
   }, [showModal]);
   // userP
-  const { userProfile, setUserProfile } = useContext(USER_PROFILE_CONTEXT);
+  const { setUserProfile } = useContext(USER_PROFILE_CONTEXT);
+
   if (!showModal) return null; // Don't render if modal is hidden
 
   const isStrongPassword = (password) => {
@@ -341,11 +343,7 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
         </p>
         <div className="flex justify-center space-x-16 mt-4">
           <button className="text-lg">
-            <a
-              href="https://accounts.google.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href={GOOGLE_URL} target="_blank">
               <img src={googleLogo} alt="Google Login" className="h-6" />
             </a>
           </button>

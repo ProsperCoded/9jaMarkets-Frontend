@@ -1,11 +1,10 @@
 export const API_BASE_URL =
   "https://safe-lindsy-obiken-415ef84b.koyeb.app/api/v1/";
+export const GOOGLE_URL = `${API_BASE_URL}auth/customer/google`;
 // 3 Days for access token
 export const ACCESS_TOKEN_DURATION = 3;
 // 14 Days for refresh token
 export const REFRESH_TOKEN_DURATION = 14;
-
-
 
 export const MARKETS = {
   Abia: [
@@ -156,7 +155,7 @@ export const MARKETS = {
     { name: "Koluama Market", img: "/path/to/koluama.jpg" },
     { name: "Lobia Market", img: "/path/to/lobia.jpg" },
     { name: "Nembe-Bassey Market", img: "/path/to/nembe-bassey.jpg" },
-    
+
     { name: "Nembe Main Market", img: "/path/to/nembe-main.jpg" },
     { name: "Ogboinbiri Market", img: "/path/to/ogboinbiri.jpg" },
     { name: "Odioma Market", img: "/path/to/odioma.jpg" },

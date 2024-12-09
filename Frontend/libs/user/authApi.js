@@ -103,3 +103,24 @@ export async function logoutApi(refreshToken, errorLogger = () => {}) {
   }
   return responseData.message;
 }
+export async function exchangeTokenApi(
+  exchangeToken,
+  errorLogger = () => {},
+  successLogger = () => {}
+) {
+  const url = new URL("auth/customer/exchange-token", API_BASE_URL);
+  url.searchParams.append("token", exchangeToken);
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  });
+  const responseData = await response.json();
+  if (!response.ok) {
+    errorLogger(responseData.message);
+    return;
+  }
+  successLogger(responseData.message);
+  return responseData.data;
+}
