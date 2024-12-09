@@ -1,9 +1,5 @@
-import { createContext, useState } from "react";
-import {
-  LOGOUT_MODAL_CONTEXT,
-  MESSAGE_API_CONTEXT,
-  USER_PROFILE_CONTEXT,
-} from "./contexts";
+import { useState } from "react";
+import { ContextWrapper } from "./contexts";
 import {
   BrowserRouter as Router,
   Routes,
@@ -22,55 +18,13 @@ import HowItWorks from "./components/how-it-works";
 import MarketPage from "./components/Markets";
 import MallPage from "./components/Malls";
 import Profile from "./components/Profile";
-import { useEffect } from "react";
+
 import { ConfigProvider } from "antd";
 import InitializeApp from "./InitializeApp";
-import { message } from "antd";
+
 import "./App.css";
 import GoogleSigninRedirect from "./componets-utils/GoogleSigninRedirect";
-import Logout from "./componets-utils/LogoutModal";
-// userProfile Type
-// {
-//   "addresses": [],
-//   "dateOfBirth": null,
-//   "displayImage": null,
-//   "email": "john.doe@example.com",
-//   "emailVerifiedAt": null,
-//   "firstName": "John",
-//   "googleId": null,
-//   "id": "076447dc-2e03-4515-b585-effc03b41fa8",
-//   "lastName": "Doe",
-//   "phoneNumbers": [
-//     {
-//       // Add phone number details here
-//     },
-//     {
-//       // Add phone number details here
-//     }
-//   ]
-// }
 
-function ContextWrapper({ children }) {
-  const [userProfile, setUserProfile] = useState(null);
-  const [messageApi, contextHolder] = message.useMessage();
-  const [logoutOpen, setLogoutOpen] = useState(false);
-  useEffect(() => {
-    console.log(userProfile);
-  }, [userProfile]);
-  return (
-    <>
-      <USER_PROFILE_CONTEXT.Provider value={{ userProfile, setUserProfile }}>
-        <MESSAGE_API_CONTEXT.Provider value={messageApi}>
-          <LOGOUT_MODAL_CONTEXT.Provider value={{ logoutOpen, setLogoutOpen }}>
-            <Logout logoutOpen={logoutOpen} setLogoutOpen={setLogoutOpen} />
-            {contextHolder}
-            {children}
-          </LOGOUT_MODAL_CONTEXT.Provider>
-        </MESSAGE_API_CONTEXT.Provider>
-      </USER_PROFILE_CONTEXT.Provider>
-    </>
-  );
-}
 function AntDesignConfig({ children }) {
   return (
     <ConfigProvider

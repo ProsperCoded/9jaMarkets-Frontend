@@ -3,7 +3,7 @@ import logo from "../assets/Logo.svg";
 import googleLogo from "../assets/Google Icon.svg";
 import facebookLogo from "../assets/facebook.png";
 import appleLogo from "../assets/apple.svg";
-import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "../contexts.js";
+import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "../contexts";
 import { getProfileApi, loginApi, signUpApi } from "../../libs/user/authApi.js";
 import { storeAuth } from "../../libs/util";
 import Loading from "../componets-utils/Loading.jsx";
