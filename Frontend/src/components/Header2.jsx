@@ -13,19 +13,6 @@ import { UserAvatar } from "../componets-utils/UserAvatar";
 
 const Header2 = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [profile, setProfile] = useState({ name: "", image: "" });
-  const { userProfile } = useContext(USER_PROFILE_CONTEXT);
-  // Fetch profile data from backend
-  useEffect(() => {
-    // Fetch from your backend API here and set the profile state
-    // Example API call (replace with your actual API endpoint):
-    // fetch('/api/profile').then(response => response.json()).then(data => setProfile(data));
-
-    setProfile({
-      name: "Achonu Chioma", // Replace with dynamic name
-      image: "/path/to/profile-image.jpg", // Replace with dynamic image URL
-    });
-  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -67,7 +54,7 @@ const Header2 = () => {
             >
               <FontAwesomeIcon icon={faBell} className="w-6 h-6" />
             </Link>
-            <Link to={"/profile"}>
+            <Link to={"/profile/dashboard"}>
               <UserAvatar showName={true} />
             </Link>
           </div>

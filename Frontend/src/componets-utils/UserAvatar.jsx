@@ -1,35 +1,25 @@
 import React, { useContext } from "react";
-import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "../contexts";
+import {
+  LOGOUT_MODAL_CONTEXT,
+  MESSAGE_API_CONTEXT,
+  USER_PROFILE_CONTEXT,
+} from "../contexts";
 import { Avatar, Popover } from "antd";
-import { message } from "antd";
-import { logoutApi } from "../../libs/user/authApi";
-import { getAuth, deleteAuth } from "../../libs/util";
+
 import { useNavigate } from "react-router-dom";
+import { LogOut } from "lucide-react";
 export function UserAvatar({ showName }) {
-  const messageApi = useContext(MESSAGE_API_CONTEXT);
   const { userProfile, setUserProfile } = useContext(USER_PROFILE_CONTEXT);
   const navigate = useNavigate();
-  async function logoutHandler() {
-    const { refreshToken } = getAuth();
-    if (refreshToken) {
-      const logoutMessage = await logoutApi(refreshToken, (error) => {
-        if (error) {
-          messageApi.error("An error occurred while logging out");
-        }
-      });
-    }
-    deleteAuth();
-    setUserProfile(null);
-
-    messageApi.success("Logged out successfully");
-  }
-
+  const { setLogoutOpen } = useContext(LOGOUT_MODAL_CONTEXT);
   const options = (
     <div>
       <ul className="space-y-2 mx-2 px-2 min-w-[10ch]">
         <li
           className="hover:font-semibold hover:text-green transition-colors cursor-pointer select-none"
-          onClick={logoutHandler}
+          onClick={() => {
+            setLogoutOpen(true);
+          }}
         >
           Sign out
         </li>
@@ -61,6 +51,7 @@ export function UserAvatar({ showName }) {
             >
               <span className="font-semibold">{userProfile.firstName[0]}</span>
             </Avatar>
+
             {showName && (
               <span className="ml-2 font-semibold algin-middle">
                 {userProfile.firstName}

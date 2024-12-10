@@ -3,11 +3,12 @@ import logo from "../assets/Logo.svg";
 import googleLogo from "../assets/Google Icon.svg";
 import facebookLogo from "../assets/facebook.png";
 import appleLogo from "../assets/apple.svg";
-import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "../contexts.js";
+import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "../contexts";
 import { getProfileApi, loginApi, signUpApi } from "../../libs/user/authApi.js";
 import { storeAuth } from "../../libs/util";
 import Loading from "../componets-utils/Loading.jsx";
 import { useEffect } from "react";
+import { API_BASE_URL, GOOGLE_URL } from "@/config";
 const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -40,7 +41,8 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
     };
   }, [showModal]);
   // userP
-  const { userProfile, setUserProfile } = useContext(USER_PROFILE_CONTEXT);
+  const { setUserProfile } = useContext(USER_PROFILE_CONTEXT);
+
   if (!showModal) return null; // Don't render if modal is hidden
 
   const isStrongPassword = (password) => {
@@ -95,15 +97,19 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
       ref={modalRef}
       tabIndex={0}
     >
-      <div className="relative bg-white shadow-lg p-6 sm:p-8 rounded-[5%] w-full max-w-md md:max-w-lg lg:max-w-xl">
+      <div className="relative bg-white shadow-lg px-4 sm:px-8 p-3 rounded-[5%] w-[90%] max-w-md md:max-w-lg lg:max-w-xl">
         <button
           onClick={closeModal}
-          className="top-2 right-4 absolute text-3xl text-gray-600 hover:text-gray-900"
+          className="top-2 right-4 absolute text-4xl text-gray-600 lg:text-3xl hover:text-gray-900"
         >
           &times;
         </button>
-        <img src={logo} alt="9ja Markets Logo" className="mx-auto mb-2 h-20" />
-        <h2 className="mb-2 font-bold text-2xl text-center text-green">
+        <img
+          src={logo}
+          alt="9ja Markets Logo"
+          className="mx-auto mb-2 h-10 md:h-14 lg:h-20"
+        />
+        <h2 className="mb-2 font-bold text-base text-center text-green lg:text-xl">
           Welcome to 9ja Markets
         </h2>
         <form
@@ -328,24 +334,20 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
             )}
           </button>
         </form>
-        <div className="flex items-center my-4 text-center">
+        <div className="lg:flex items-center hidden my-2 text-center">
           <div className="flex-grow border-gray-300 border-t"></div>
           <span className="px-4 text-gray-700 text-sm">Or</span>
           <div className="flex-grow border-gray-300 border-t"></div>
         </div>
-        <p className="mt-4 text-center">
+        <p className="mt-2 text-center text-sm md:text-base">
           Already have an account?{" "}
           <button onClick={openLoginModal} className="font-bold text-green">
             Login
           </button>
         </p>
-        <div className="flex justify-center space-x-16 mt-4">
+        <div className="flex justify-center space-x-16 mt-2 md:mt-3">
           <button className="text-lg">
-            <a
-              href="https://accounts.google.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href={GOOGLE_URL} target="_blank">
               <img src={googleLogo} alt="Google Login" className="h-6" />
             </a>
           </button>

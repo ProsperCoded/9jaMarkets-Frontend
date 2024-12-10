@@ -1,5 +1,5 @@
-import { createContext, useState } from "react";
-import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "./contexts";
+import { useState } from "react";
+import { ContextWrapper } from "./contexts";
 import {
   BrowserRouter as Router,
   Routes,
@@ -18,51 +18,13 @@ import HowItWorks from "./components/how-it-works";
 import MarketPage from "./components/Markets";
 import MallPage from "./components/Malls";
 import Profile from "./components/Profile";
-import Adverts from "./components/Adverts";
-import Settings from "./components/Settings";
-import { useEffect } from "react";
+
 import { ConfigProvider } from "antd";
 import InitializeApp from "./InitializeApp";
-import { message } from "antd";
-import Products from "./components/Products";
-// userProfile Type
-// {
-//   "addresses": [],
-//   "dateOfBirth": null,
-//   "displayImage": null,
-//   "email": "john.doe@example.com",
-//   "emailVerifiedAt": null,
-//   "firstName": "John",
-//   "googleId": null,
-//   "id": "076447dc-2e03-4515-b585-effc03b41fa8",
-//   "lastName": "Doe",
-//   "phoneNumbers": [
-//     {
-//       // Add phone number details here
-//     },
-//     {
-//       // Add phone number details here
-//     }
-//   ]
-// }
 
-function ContextWrapper({ children }) {
-  const [userProfile, setUserProfile] = useState(null);
-  const [messageApi, contextHolder] = message.useMessage();
-  useEffect(() => {
-    console.log(userProfile);
-  }, [userProfile]);
-  return (
-    <>
-      <USER_PROFILE_CONTEXT.Provider value={{ userProfile, setUserProfile }}>
-        {contextHolder}
-        <MESSAGE_API_CONTEXT.Provider value={messageApi}>
-          {children}
-        </MESSAGE_API_CONTEXT.Provider>
-      </USER_PROFILE_CONTEXT.Provider>
-    </>
-  );
-}
+import "./App.css";
+import GoogleSigninRedirect from "./componets-utils/GoogleSigninRedirect";
+
 function AntDesignConfig({ children }) {
   return (
     <ConfigProvider
@@ -139,14 +101,10 @@ function App() {
                 path="/profile/:subpage?"
                 element={<ProfilePageWrapper />}
               />
-              <Route path="/ad/:subpage?" element={<AdvertsPageWrapper />} />
+              {/* Google signup */}
               <Route
-                path="/settings/:subpage?"
-                element={<SettingsPageWrapper />}
-              />
-              <Route
-                path="/product/:subpage?"
-                element={<ProductsPageWrapper />}
+                path="/api/v1/auth/google/callback"
+                element={<GoogleSigninRedirect />}
               />
             </Routes>
             <Footer />
@@ -173,18 +131,6 @@ function App() {
 function ProfilePageWrapper() {
   const { subpage } = useParams();
   return <Profile subpage={subpage} />;
-}
-function AdvertsPageWrapper() {
-  const { subpage } = useParams();
-  return <Adverts subpage={subpage} />;
-}
-function SettingsPageWrapper() {
-  const { subpage } = useParams();
-  return <Settings subpage={subpage} />;
-}
-function ProductsPageWrapper() {
-  const { subpage } = useParams();
-  return <Products subpage={subpage} />;
 }
 
 export default function AppWrapper() {

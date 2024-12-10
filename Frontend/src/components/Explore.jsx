@@ -99,7 +99,6 @@ function ExploreSection() {
       const isDesktop = window.innerWidth >= 1024 && window.innerWidth < 1440;
       const isExtraLarge = window.innerWidth >= 1440;
       setScreenProperties({ isMobile, isIPad, isDesktop, isExtraLarge });
-      console.log({ isMobile, isIPad, isDesktop, isExtraLarge });
       const newCardNumber = isExtraLarge
         ? 5
         : isDesktop
@@ -324,5 +323,5 @@ function ExploreSection() {
       </div>
     </div>
   );
-};
+}
 export default ExploreSection;
