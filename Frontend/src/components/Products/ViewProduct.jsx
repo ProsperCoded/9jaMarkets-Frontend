@@ -43,7 +43,7 @@ const products = [
 export default function ViewProducts() {
   return (
     <div className="py-6 container">
-      <div className="gap-2 grid grid-cols-2 grid-flow-row">
+      <div className="flex flex-col gap-2 lg:grid grid-cols-2 grid-flow-row">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

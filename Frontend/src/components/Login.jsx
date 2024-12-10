@@ -8,8 +8,11 @@ import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "../contexts";
 import Loading from "../componets-utils/Loading";
 import { getProfileApi } from "../../libs/user/authApi";
 import { storeAuth } from "../../libs/util";
-import { message } from "antd";
-const LoginModal = ({ showModal, closeModal, openSignUpModal }) => {
+import { LOGIN_MODAL_CONTEXT, SIGNUP_MODAL_CONTEXT } from "../contexts";
+
+const LoginModal = () => {
+  const { loginOpen, setLoginOpen } = useContext(LOGIN_MODAL_CONTEXT);
+  const { setSignupOpen } = useContext(SIGNUP_MODAL_CONTEXT);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
@@ -18,7 +21,7 @@ const LoginModal = ({ showModal, closeModal, openSignUpModal }) => {
   const [loading, setLoading] = useState(false);
   const messageApi = useContext(MESSAGE_API_CONTEXT);
   const { setUserProfile } = useContext(USER_PROFILE_CONTEXT);
-  if (!showModal) return null; // Don't render if modal is hidden
+  if (!loginOpen) return null; // Don't render if modal is hidden
   const handleLogin = async () => {
     // Handle form submission
     setLoading(true);
@@ -35,13 +38,13 @@ const LoginModal = ({ showModal, closeModal, openSignUpModal }) => {
     if (!userProfile_) return;
     setUserProfile(userProfile_);
     messageApi.success("You are logged In");
-    closeModal();
+    setLoginOpen(false);
   };
   return (
     <div className="z-50 fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
       <div className="relative bg-white shadow-lg p-6 sm:p-8 rounded-[5%] w-full max-w-md md:max-w-lg lg:max-w-xl">
         <button
-          onClick={closeModal}
+          onClick={() => setLoginOpen(false)}
           className="top-2 right-[6%] absolute text-3xl text-gray-600 hover:text-gray-900"
         >
           &times;
@@ -204,8 +207,8 @@ const LoginModal = ({ showModal, closeModal, openSignUpModal }) => {
           <span className="text-gray-700 text-sm"> Dont have an account? </span>
           <button
             onClick={() => {
-              closeModal();
-              openSignUpModal();
+              setLoginOpen(false);
+              setSignupOpen(true);
             }}
             className="font-semibold text-green hover:underline"
           >

@@ -1,17 +1,20 @@
 import React, { useContext } from "react";
 import {
   LOGOUT_MODAL_CONTEXT,
-  MESSAGE_API_CONTEXT,
   USER_PROFILE_CONTEXT,
+  LOGIN_MODAL_CONTEXT,
+  SIGNUP_MODAL_CONTEXT,
 } from "../contexts";
 import { Avatar, Popover } from "antd";
 
 import { useNavigate } from "react-router-dom";
 import { LogOut } from "lucide-react";
-export function UserAvatar({ showName }) {
-  const { userProfile, setUserProfile } = useContext(USER_PROFILE_CONTEXT);
-  const navigate = useNavigate();
+export function UserAvatar({ showName, auth }) {
+  const { userProfile } = useContext(USER_PROFILE_CONTEXT);
+  const { setSignupOpen } = useContext(SIGNUP_MODAL_CONTEXT);
+  const { setLoginOpen } = useContext(LOGIN_MODAL_CONTEXT);
   const { setLogoutOpen } = useContext(LOGOUT_MODAL_CONTEXT);
+  const navigate = useNavigate();
   const options = (
     <div>
       <ul className="space-y-2 mx-2 px-2 min-w-[10ch]">
@@ -34,32 +37,61 @@ export function UserAvatar({ showName }) {
       </ul>
     </div>
   );
-  return (
-    userProfile && (
-      <span>
-        <Popover
-          placement="bottom"
-          content={options}
-          style={{ backgroundColor: "#EBEBEB" }}
-          mouseEnterDelay={0.3}
-          mouseLeaveDelay={0.5}
-        >
-          <div className="cursor-pointer">
+  return userProfile ? (
+    <span>
+      <Popover
+        placement="bottom"
+        content={options}
+        style={{ backgroundColor: "#EBEBEB" }}
+        mouseEnterDelay={0.3}
+        mouseLeaveDelay={0.5}
+      >
+        <div className="cursor-pointer">
+          {showName ? (
+            <div className="flex items-center bg-white px-3 py-2 rounded-full">
+              <Avatar
+                style={{ backgroundColor: "#21CA1B", verticalAlign: "middle" }}
+                size="medium"
+              >
+                <span className="font-semibold">
+                  {userProfile.firstName[0]}
+                </span>
+              </Avatar>
+              <span className="ml-2 font-semibold text-green algin-middle">
+                {userProfile.firstName}
+              </span>
+            </div>
+          ) : (
             <Avatar
               style={{ backgroundColor: "#21CA1B", verticalAlign: "middle" }}
               size="medium"
             >
               <span className="font-semibold">{userProfile.firstName[0]}</span>
             </Avatar>
-
-            {showName && (
-              <span className="ml-2 font-semibold algin-middle">
-                {userProfile.firstName}
-              </span>
-            )}
-          </div>
-        </Popover>
-      </span>
+          )}
+        </div>
+      </Popover>
+    </span>
+  ) : (
+    auth && (
+      <div className="flex md:flex-row flex-col gap-3 ml-auto">
+        <button
+          onClick={() => {
+            setLoginOpen(true);
+          }}
+          className="border-white hover:bg-white px-4 py-1 border rounded-full text-white hover:text-green transition"
+        >
+          Login
+        </button>
+        <button
+          onClick={() => {
+            setSignupOpen(true);
+          }}
+          className="bg-green hover:bg-hover-green px-4 py-1 rounded-full text-white transition"
+        >
+          Sign Up
+        </button>
+      </div>
     )
   );
 }
