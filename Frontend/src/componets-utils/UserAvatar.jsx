@@ -48,7 +48,7 @@ export function UserAvatar({ showName, auth }) {
       >
         <div className="cursor-pointer">
           {showName ? (
-            <div className="flex items-center bg-white px-3 py-2 rounded-full">
+            <div className="flex items-center bg-white px-2 py-1.5 rounded-full">
               <Avatar
                 style={{ backgroundColor: "#21CA1B", verticalAlign: "middle" }}
                 size="medium"
