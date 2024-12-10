@@ -76,16 +76,18 @@ export function UserAvatar({ showName, auth }) {
     auth && (
       <div className="flex md:flex-row flex-col gap-3 ml-auto">
         <button
-          onClick={() => {
+          onClick={(e) => {
             setLoginOpen(true);
+            e.stopPropagation();
           }}
           className="border-white hover:bg-white px-4 py-1 border rounded-full text-white hover:text-green transition"
         >
           Login
         </button>
         <button
-          onClick={() => {
+          onClick={(e) => {
             setSignupOpen(true);
+            e.stopPropagation();
           }}
           className="bg-green hover:bg-hover-green px-4 py-1 rounded-full text-white transition"
         >

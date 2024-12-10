@@ -76,7 +76,7 @@ function Header() {
         {/* Mobile Side Panel */}
         {isMenuOpen && (
           <div className="z-30 fixed inset-0">
-            <div className="top-0 right-0 absolute bg-black bg-opacity-20 backdrop-blur-md p-6 w-1/2 h-full text-lg text-white overflow-y-auto">
+            <div className="top-0 right-0 absolute grid grid-rows-[auto_1fr_auto] bg-black bg-opacity-20 backdrop-blur-md p-6 w-1/2 h-full text-lg text-white overflow-y-auto">
               {/* Close Button */}
               <div className="flex justify-end">
                 <svg
@@ -95,7 +95,7 @@ function Header() {
                 </svg>
               </div>
               {/* Nav Links */}
-              <div className="space-y-4">
+              <div className="align-top justify-start space-y-4">
                 <Link
                   to="/"
                   onClick={toggleMenu}
