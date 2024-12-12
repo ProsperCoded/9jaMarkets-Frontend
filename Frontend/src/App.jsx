@@ -12,8 +12,7 @@ import Header2 from "./components/Header2";
 import Hero from "./components/Hero";
 import ExploreSection from "./components/Explore";
 import Footer from "./components/Footer";
-import LoginModal from "./components/Login";
-import SignUpModal from "./components/Signup";
+
 import HowItWorks from "./components/how-it-works";
 import MarketPage from "./components/Markets";
 import MallPage from "./components/Malls";
@@ -45,24 +44,6 @@ function AntDesignConfig({ children }) {
 }
 // set up and routes
 function App() {
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showSignUpModal, setShowSignUpModal] = useState(false);
-
-  // Functions to open/close modals
-  const openLoginModal = () => {
-    setShowSignUpModal(false); // Close sign-up modal when opening login
-    setShowLoginModal(true);
-  };
-
-  const closeLoginModal = () => setShowLoginModal(false);
-
-  const openSignUpModal = () => {
-    setShowLoginModal(false); // Close login modal when opening sign-up
-    setShowSignUpModal(true);
-  };
-
-  const closeSignUpModal = () => setShowSignUpModal(false);
-
   // Custom hook to get the current location
   const location = useLocation();
 
@@ -75,14 +56,7 @@ function App() {
         <ContextWrapper>
           <InitializeApp>
             {/* Render Header based on the route */}
-            {isHomePage ? (
-              <Header
-                openLoginModal={openLoginModal}
-                openSignUpModal={openSignUpModal}
-              />
-            ) : (
-              <Header2 />
-            )}
+            {isHomePage ? <Header /> : <Header2 />}
 
             <Routes>
               <Route
@@ -108,18 +82,6 @@ function App() {
               />
             </Routes>
             <Footer />
-
-            {/* Modals */}
-            <LoginModal
-              showModal={showLoginModal}
-              closeModal={closeLoginModal}
-              openSignUpModal={openSignUpModal}
-            />
-            <SignUpModal
-              showModal={showSignUpModal}
-              closeModal={closeSignUpModal}
-              openLoginModal={openLoginModal}
-            />
           </InitializeApp>
         </ContextWrapper>
       </AntDesignConfig>

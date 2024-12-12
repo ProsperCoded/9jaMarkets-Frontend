@@ -10,10 +10,11 @@ import {
 import logo from "../assets/Logo.svg";
 import { USER_PROFILE_CONTEXT } from "../contexts";
 import { UserAvatar } from "../componets-utils/UserAvatar";
+import { useNavigate } from "react-router-dom";
 
 const Header2 = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const navigate = useNavigate();
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
     document.body.style.overflow = isMenuOpen ? "auto" : "hidden";
@@ -54,9 +55,13 @@ const Header2 = () => {
             >
               <FontAwesomeIcon icon={faBell} className="w-6 h-6" />
             </Link>
-            <Link to={"/profile/dashboard"}>
-              <UserAvatar showName={true} />
-            </Link>
+            <div
+              onClick={() => {
+                navigate("/profile/dashboard");
+              }}
+            >
+              <UserAvatar showName={true} auth={true} />
+            </div>
           </div>
 
           {/* Mobile Burger Menu */}
@@ -71,35 +76,52 @@ const Header2 = () => {
 
       {/* Mobile Side Panel (Only Nav Links) */}
       {isMenuOpen && (
-        <div className="z-30 fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm">
-          <div className="top-0 right-0 absolute space-y-6 bg-black bg-opacity-20 backdrop-blur-md p-6 w-1/2 h-full text-lg text-white overflow-y-auto">
-            <button
-              className="top-4 right-4 absolute text-white"
-              onClick={toggleMenu}
-            >
-              <FontAwesomeIcon icon={faTimes} className="w-6 h-6" />
-            </button>
-            <Link
-              to="/"
-              className="block hover:text-orange"
-              onClick={toggleMenu}
-            >
-              Home
-            </Link>
-            <Link
-              to="/how-it-works"
-              className="block hover:text-orange"
-              onClick={toggleMenu}
-            >
-              How it Works
-            </Link>
-            <Link
-              to="/markets"
-              className="block hover:text-orange"
-              onClick={toggleMenu}
-            >
-              Markets
-            </Link>
+        <div className="z-30 fixed inset-0">
+          <div className="top-0 right-0 absolute grid grid-rows-[auto_1fr_auto] bg-black bg-opacity-20 backdrop-blur-md p-6 w-1/2 h-full text-lg text-white overflow-y-auto">
+            {/* Close Button */}
+            <div className="flex justify-end">
+              <svg
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6 cursor-pointer"
+                onClick={toggleMenu}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </div>
+            {/* Nav Links */}
+            <div className="align-top justify-start space-y-4">
+              <Link
+                to="/"
+                onClick={toggleMenu}
+                className="block hover:text-orange"
+              >
+                Home
+              </Link>
+              <Link
+                to="/how-it-works"
+                onClick={toggleMenu}
+                className="block hover:text-orange"
+              >
+                How it Works
+              </Link>
+              <Link
+                to="/markets"
+                onClick={toggleMenu}
+                className="block hover:text-orange"
+              >
+                Markets
+              </Link>
+            </div>
+            <div className="mt-auto">
+              <UserAvatar showName={true} auth={true} />
+            </div>
           </div>
         </div>
       )}

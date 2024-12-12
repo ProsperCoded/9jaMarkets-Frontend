@@ -8,8 +8,9 @@ import { getProfileApi, loginApi, signUpApi } from "../../libs/user/authApi.js";
 import { storeAuth } from "../../libs/util";
 import Loading from "../componets-utils/Loading.jsx";
 import { useEffect } from "react";
-import { API_BASE_URL, GOOGLE_URL } from "@/config";
-const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
+import { GOOGLE_URL } from "@/config";
+import { LOGIN_MODAL_CONTEXT, SIGNUP_MODAL_CONTEXT } from "../contexts";
+const Signup = () => {
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -23,14 +24,16 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
   const [loading, setLoading] = useState(false);
   const modalRef = useRef(null);
   const messageApi = useContext(MESSAGE_API_CONTEXT);
+  const { signupOpen, setSignupOpen } = useContext(SIGNUP_MODAL_CONTEXT);
+  const { setLoginOpen } = useContext(LOGIN_MODAL_CONTEXT);
   useEffect(() => {
-    if (modalRef.current & showModal) modalRef.current.focus();
-    if (showModal) {
+    if (modalRef.current & signupOpen) modalRef.current.focus();
+    if (signupOpen) {
       document.body.style.overflow = "hidden";
       modalRef.current.addEventListener("keypress", (e) => {
         console.log(e.key);
         if (e.key === "Escape") {
-          closeModal();
+          setSignupOpen(false);
         }
       });
     } else {
@@ -39,11 +42,11 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
     return () => {
       document.body.style.overflow = "auto";
     };
-  }, [showModal]);
+  }, [signupOpen]);
   // userP
   const { setUserProfile } = useContext(USER_PROFILE_CONTEXT);
 
-  if (!showModal) return null; // Don't render if modal is hidden
+  if (!signupOpen) return null; // Don't render if modal is hidden
 
   const isStrongPassword = (password) => {
     return RegExp(
@@ -88,7 +91,7 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
     if (!userProfile) return;
     setUserProfile(userProfile);
     messageApi.success("SignUp Successful");
-    closeModal();
+    setSignupOpen(false);
   };
 
   return (
@@ -99,7 +102,7 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
     >
       <div className="relative bg-white shadow-lg px-4 sm:px-8 p-3 rounded-[5%] w-[90%] max-w-md md:max-w-lg lg:max-w-xl">
         <button
-          onClick={closeModal}
+          onClick={() => setSignupOpen(false)}
           className="top-2 right-4 absolute text-4xl text-gray-600 lg:text-3xl hover:text-gray-900"
         >
           &times;
@@ -198,7 +201,7 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
               </label>
               <input
                 type="text"
-                id="phone"
+                id="phone2"
                 min={10}
                 max={11}
                 value={phone2}
@@ -341,7 +344,10 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
         </div>
         <p className="mt-2 text-center text-sm md:text-base">
           Already have an account?{" "}
-          <button onClick={openLoginModal} className="font-bold text-green">
+          <button
+            onClick={() => setLoginOpen(true)}
+            className="font-bold text-green"
+          >
             Login
           </button>
         </p>
@@ -381,4 +387,4 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
   );
 };
 
-export default SignUpModal;
+export default Signup;
