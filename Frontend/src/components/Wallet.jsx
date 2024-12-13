@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 // import axios from 'axios';
 
 const Wallet = () => {
@@ -20,9 +20,24 @@ const Wallet = () => {
             resolve({
               data: {
                 transactions: [
-                  { id: 1, date: '2024-11-18', amount: -500, description: 'Ad Placement' },
-                  { id: 2, date: '2024-11-15', amount: 2000, description: 'Wallet Recharge' },
-                  { id: 3, date: '2024-11-10', amount: -1000, description: 'Premium Subscription' },
+                  {
+                    id: 1,
+                    date: "2024-11-18",
+                    amount: -500,
+                    description: "Ad Placement",
+                  },
+                  {
+                    id: 2,
+                    date: "2024-11-15",
+                    amount: 2000,
+                    description: "Wallet Recharge",
+                  },
+                  {
+                    id: 3,
+                    date: "2024-11-10",
+                    amount: -1000,
+                    description: "Premium Subscription",
+                  },
                 ],
               },
             });
@@ -32,7 +47,7 @@ const Wallet = () => {
         setBalance(1500); // Simulated balance
         setRecentTransactions(transactionsResponse.data.transactions); // Update transactions
       } catch (err) {
-        setError('Failed to load wallet data. Please try again.');
+        setError("Failed to load wallet data. Please try again.");
       } finally {
         setLoading(false); // End loading
       }
@@ -42,49 +57,66 @@ const Wallet = () => {
   }, []); // Empty dependency array means this runs only once on component mount
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="bg-gray-50 p-6 min-h-screen">
       {/* Wallet Balance Card */}
-      <div className="w-full max-w-3xl p-6 bg-white rounded-lg shadow-md">
+      <div className="bg-white shadow-md p-6 rounded-lg w-full max-w-3xl">
         {loading ? (
-          <div className="text-center text-gray-600">Loading wallet balance...</div>
+          <div className="text-center text-gray-600">
+            Loading wallet balance...
+          </div>
         ) : error ? (
           <div className="text-center text-red-600">{error}</div>
         ) : (
           <>
-            <h2 className="text-4xl font-bold text-gray-800 text-center mb-4">₦{balance}</h2>
+            <h2 className="mb-4 font-bold text-4xl text-center text-gray-800">
+              ₦{balance}
+            </h2>
             <p className="text-center text-gray-600">
-              Your wallet content can be used to purchase premium services and place ads on 9jaMarkets.
+              Your wallet content can be used to purchase premium services and
+              place ads on 9jaMarkets.
             </p>
-            <button className="w-full mt-6 px-4 py-2 bg-Primary text-white font-medium rounded-lg shadow hover:bg-green-500">
+            <button className="bg-Primary hover:bg-green-500 shadow mt-6 px-4 py-2 rounded-lg w-full font-medium text-white">
               Recharge
             </button>
-            <p className="mt-4 text-center text-sm text-gray-500">
-              Want to reach a wider audience?{' '}
+            <p className="mt-4 text-center text-gray-500 text-sm">
+              Want to reach a wider audience?{" "}
               <a href="/profile/premium" className="text-Primary underline">
                 Subscribe to our Premium Model
               </a>
             </p>
           </>
         )}
-        <h3 className="text-2xl font-semibold text-gray-800 mb-4">Recent Transactions</h3>
+        <h3 className="mb-4 font-semibold text-2xl text-gray-800">
+          Recent Transactions
+        </h3>
         {loading ? (
-          <div className="text-center text-gray-600">Loading transactions...</div>
+          <div className="text-center text-gray-600">
+            Loading transactions...
+          </div>
         ) : recentTransactions.length === 0 ? (
-          <div className="text-center text-gray-600">No recent transactions found.</div>
+          <div className="text-center text-gray-600">
+            No recent transactions found.
+          </div>
         ) : (
           <ul className="divide-y divide-gray-200">
             {recentTransactions.map((transaction) => (
-              <li key={transaction.id} className="py-4 flex justify-between items-center">
+              <li
+                key={transaction.id}
+                className="flex justify-between items-center py-4"
+              >
                 <div>
-                  <p className="text-gray-800 font-medium">{transaction.description}</p>
-                  <p className="text-sm text-gray-500">{transaction.date}</p>
+                  <p className="font-medium text-gray-800">
+                    {transaction.description}
+                  </p>
+                  <p className="text-gray-500 text-sm">{transaction.date}</p>
                 </div>
                 <p
                   className={`font-semibold ${
-                    transaction.amount < 0 ? 'text-red-600' : 'text-green-600'
+                    transaction.amount < 0 ? "text-red-600" : "text-Primary-600"
                   }`}
                 >
-                  {transaction.amount < 0 ? '-' : '+'}₦{Math.abs(transaction.amount)}
+                  {transaction.amount < 0 ? "-" : "+"}₦
+                  {Math.abs(transaction.amount)}
                 </p>
               </li>
             ))}

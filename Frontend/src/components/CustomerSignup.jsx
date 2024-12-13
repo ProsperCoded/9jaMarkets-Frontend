@@ -10,7 +10,7 @@ import Loading from "../componets-utils/Loading.jsx";
 import { useEffect } from "react";
 import { GOOGLE_URL } from "@/config";
 import { LOGIN_MODAL_CONTEXT, SIGNUP_MODAL_CONTEXT } from "../contexts";
-const Signup = () => {
+const CustomerSignup = () => {
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -138,7 +138,7 @@ const Signup = () => {
                 id="firstName"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
-                className="border-gray-300 p-2 border rounded-lg focus:ring-Primary w-full focus:outline-none focus:ring-2"
+                className="border-gray-300 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
               />
             </div>
             <div>
@@ -154,7 +154,7 @@ const Signup = () => {
                 id="lastName"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
-                className="border-gray-300 p-2 border rounded-lg focus:ring-Primary w-full focus:outline-none focus:ring-2"
+                className="border-gray-300 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
               />
             </div>
           </div>
@@ -171,7 +171,7 @@ const Signup = () => {
               value={email}
               required
               onChange={(e) => setEmail(e.target.value)}
-              className="border-gray-300 p-2 border rounded-lg focus:ring-Primary w-full focus:outline-none focus:ring-2"
+              className="border-gray-300 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
             />
           </div>
           <div className="flex justify-between gap-2 wrap">
@@ -189,7 +189,7 @@ const Signup = () => {
                 max={11}
                 value={phone1}
                 onChange={(e) => setPhone1(e.target.value)}
-                className="border-gray-300 mt-1 p-2 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-Primary"
+                className="border-gray-300 mt-1 p-2 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-green"
               />
             </div>
             <div>
@@ -206,7 +206,7 @@ const Signup = () => {
                 max={11}
                 value={phone2}
                 onChange={(e) => setPhone2(e.target.value)}
-                className="border-gray-300 mt-1 p-2 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-Primary"
+                className="border-gray-300 mt-1 p-2 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-green"
               />
             </div>
           </div>
@@ -225,11 +225,10 @@ const Signup = () => {
                 value={password}
                 required
                 onChange={(e) => setPassword(e.target.value)}
-                className={`mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-Primary ${
+                className={`mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-green ${
                   password ? "border-green-500" : "border-gray-300"
                 }`}
               />
-
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
@@ -279,7 +278,7 @@ const Signup = () => {
                 id="confirmPassword"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className={`mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-Primary ${
+                className={`mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-green ${
                   confirmPassword ? "border-green-500" : "border-gray-300"
                 }`}
               />
@@ -326,7 +325,7 @@ const Signup = () => {
           )}
           <button
             type="submit"
-            className="bg-Primary p-2 rounded-lg w-full text-white"
+            className="bg-green p-2 rounded-lg w-full text-white"
           >
             {loading ? (
               <>
@@ -388,4 +387,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default CustomerSignup;

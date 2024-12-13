@@ -63,7 +63,7 @@ export default function AddProduct() {
       >
         <div className="flex flex-col items-center gap-2">
           <div className="flex justify-center items-center bg-green-50 rounded-full w-12 h-12">
-            <Upload className="w-6 h-6 text-green-600" />
+            <Upload className="w-6 h-6 text-Primary-600" />
           </div>
           <p>Drag and drop an image(s) here</p>
           <p className="text-muted-foreground text-sm">or</p>
@@ -171,7 +171,7 @@ export default function AddProduct() {
           />
         </div>
         <div className="flex justify-center gap-5 mt-10">
-          <Button className="border-green bg-transparent hover:bg-hover-green px-6 border rounded-full text-green hover:text-white">
+          <Button className="border-green bg-transparent hover:bg-hover-green px-6 border rounded-full text-Primary hover:text-white">
             Cancel
           </Button>
           <Button className="bg-green hover:bg-hover-green px-6 rounded-full text-white">

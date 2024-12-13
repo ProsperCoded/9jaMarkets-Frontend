@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import LoginModal from "./components/Login";
-import Signup from "./components/Signup";
+import Signup from "./components/CustomerSignup";
 import Logout from "./componets-utils/LogoutModal";
 import { message } from "antd";
 import { useEffect, useState } from "react";
