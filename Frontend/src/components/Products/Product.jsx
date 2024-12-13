@@ -6,7 +6,7 @@ import { Edit, Trash2 } from "lucide-react";
 export function ProductCard({ product }) {
   return (
     <Card className="flex items-center gap-3 p-3">
-      <div className="relative rounded-md w-1/3 w-16 h-16 overflow-hidden shrink-0">
+      <div className="relative rounded-md w-1/3 h-16 overflow-hidden shrink-0">
         <img src={product.image} alt={product.name} className="object-cover" />
       </div>
       <div className="flex-1">
