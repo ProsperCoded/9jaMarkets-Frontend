@@ -32,7 +32,7 @@ const MarketPage = () => {
 
   return (
     <div className="relative flex flex-col min-h-screen">
-      <div className="bg-white drop-shadow-sm py-2 text-green">
+      <div className="bg-white drop-shadow-sm py-2 text-Primary">
         <div className="flex justify-between items-center mx-auto px-4 container">
           {/* Left Section with Markets and Malls */}
           <div className="md:flex items-center space-x-4 hidden">
@@ -105,7 +105,7 @@ const MarketPage = () => {
                   setBottomNavVisible((prev) => !prev);
                 }}
               >
-                <ChevronDown size={35} strokeWidth={2} className="text-green" />
+                <ChevronDown size={35} strokeWidth={2} className="text-Primary" />
               </div>
             </div>
             <div className="relative pt-14 md:pt-2 h-full md:max-h-screen overflow-y-auto">

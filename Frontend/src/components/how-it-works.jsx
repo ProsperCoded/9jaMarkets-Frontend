@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import CA from '../assets/how-it-works/create-account.svg'; // Replace with actual path
-import BrowseImage from '../assets/how-it-works/Browse.svg'; // Add your browse products image
-import ConnectImage from '../assets/how-it-works/connect-with-vendors.svg'; // Add connect image
-
+import React, { useState } from "react";
+import CA from "../assets/how-it-works/create-account.svg"; // Replace with actual path
+import BrowseImage from "../assets/how-it-works/Browse.svg"; // Add your browse products image
+import ConnectImage from "../assets/how-it-works/connect-with-vendors.svg"; // Add connect image
 
 const HowItWorks = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -16,72 +15,71 @@ const HowItWorks = () => {
   return (
     <div className="bg-white min-h-screen font-sans">
       {/* Header */}
-        <header className="bg-white text-green flex items-center justify-between py-4 px-6">
+      <header className="flex justify-between items-center bg-white px-6 py-4 text-Primary">
         <button
-            className="text-green text-3xl lg:hidden relative mr-auto"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-          >
-            ☰
-          </button>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
-          <h1 className="text-2xl font-bold mx-auto absolute left-0 right-0 text-center">
-            How it works
-          </h1>
-        </header>
-
+          className="relative lg:hidden mr-auto text-3xl text-Primary"
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+        >
+          ☰
+        </button>
+        <h1 className="right-0 left-0 absolute mx-auto font-bold text-2xl text-center">
+          How it works
+        </h1>
+      </header>
 
       {/* Layout */}
-      <div className="flex flex-col lg:flex-row">
+      <div className="flex lg:flex-row flex-col">
         {/* Sidebar */}
         <aside
           className={`${
-            sidebarOpen ? 'block' : 'hidden'
-          } lg:block lg:w-[300px] bg-white text-green py-6 px-4 shadow-md`}
+            sidebarOpen ? "block" : "hidden"
+          } lg:block lg:w-[300px] bg-white text-Primary py-6 px-4 shadow-md`}
         >
           <ul className="space-y-4">
             <li>
               <button
-                onClick={() => handleScroll('create-account')}
-                className="block text-left text-green font-semibold hover:text-green hover:opacity-50 p-2 rounded"
+                onClick={() => handleScroll("create-account")}
+                className="block hover:opacity-50 p-2 rounded font-semibold text-left text-Primary hover:text-P2"
               >
                 Create an Account
               </button>
             </li>
             <li>
               <button
-                onClick={() => handleScroll('browse-products')}
-                className="block text-left text-green font-semibold hover:text-green hover:opacity-50 p-2 rounded"
+                onClick={() => handleScroll("browse-products")}
+                className="block hover:opacity-50 p-2 rounded font-semibold text-left text-Primary hover:text-P2"
               >
                 Browse & Search for Products
               </button>
             </li>
             <li>
               <button
-                onClick={() => handleScroll('connect-vendors')}
-                className="block text-left text-green font-semibold hover:text-green hover:opacity-50 p-2 rounded"
+                onClick={() => handleScroll("connect-vendors")}
+                className="block hover:opacity-50 p-2 rounded font-semibold text-left text-Primary hover:text-P2"
               >
                 Connect with Vendors
               </button>
             </li>
             <li>
               <button
-                onClick={() => handleScroll('place-ads')}
-                className="block text-left text-green font-semibold hover:text-green hover:opacity-50 p-2 rounded"
+                onClick={() => handleScroll("place-ads")}
+                className="block hover:opacity-50 p-2 rounded font-semibold text-left text-Primary hover:text-Primary"
               >
                 Place Ads
               </button>
             </li>
             <li>
               <button
-                onClick={() => handleScroll('payments')}
-                className="block text-left text-green font-semibold hover:text-green hover:opacity-50 p-2 rounded"
+                onClick={() => handleScroll("payments")}
+                className="block hover:opacity-50 p-2 rounded font-semibold text-left text-Primary hover:text-Primary"
               >
                 Payments
               </button>
             </li>
             <li>
               <button
-                onClick={() => handleScroll('safety-security')}
-                className="block text-left text-green font-semibold hover:text-green hover:opacity-50 p-2 rounded"
+                onClick={() => handleScroll("safety-security")}
+                className="block hover:opacity-50 p-2 rounded font-semibold text-left text-Primary hover:text-Primary"
               >
                 Safety and Security
               </button>
@@ -98,7 +96,7 @@ const HowItWorks = () => {
               alt="Create an Account"
               className="mx-auto mb-6 w-full max-w-md"
             />
-            <h2 className="mb-4 font-bold text-green text-xl">
+            <h2 className="mb-4 font-bold text-Primary text-xl">
               Create an Account
             </h2>
             <p className="text-gray-600">
@@ -122,7 +120,7 @@ const HowItWorks = () => {
               alt="Browse & Search for Products"
               className="mx-auto mb-6 w-full max-w-md"
             />
-            <h2 className="mb-4 font-bold text-green text-xl">
+            <h2 className="mb-4 font-bold text-Primary text-xl">
               Browse & Search for Products
             </h2>
             <p className="text-gray-600">
@@ -138,7 +136,7 @@ const HowItWorks = () => {
               alt="Connect with Vendors"
               className="mx-auto mb-6 w-full max-w-md"
             />
-            <h2 className="mb-4 font-bold text-green text-xl">
+            <h2 className="mb-4 font-bold text-Primary text-xl">
               Connect with Vendors
             </h2>
             <p className="text-gray-600">
@@ -149,7 +147,7 @@ const HowItWorks = () => {
 
           {/* Additional Sections */}
           <section id="place-ads" className="mb-10">
-            <h2 className="text-xl font-bold text-green mb-4">Place Ads</h2>
+            <h2 className="mb-4 font-bold text-Primary text-xl">Place Ads</h2>
             <p className="text-gray-600">
               Vendors can easily place ads for their products or services.
               Upload your details, select a category, and reach customers across
@@ -157,14 +155,14 @@ const HowItWorks = () => {
             </p>
           </section>
           <section id="payments" className="mb-10">
-            <h2 className="text-xl font-bold text-green mb-4">Payments</h2>
+            <h2 className="mb-4 font-bold text-Primary text-xl">Payments</h2>
             <p className="text-gray-600">
               Enjoy secure and seamless transactions with multiple payment
               options.
             </p>
           </section>
           <section id="safety-security" className="mb-10">
-            <h2 className="mb-4 font-bold text-green text-xl">
+            <h2 className="mb-4 font-bold text-Primary text-xl">
               Safety and Security
             </h2>
             <p className="text-gray-600">

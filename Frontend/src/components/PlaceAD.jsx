@@ -51,25 +51,28 @@ const PlaceAd = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
+    <div className="bg-gray-100 p-6 min-h-screen">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
-        <button className="text-green-600 hover:underline">← Back</button>
-        <h1 className="text-xl font-semibold">Place an Advert</h1>
-        <button className="text-green-600 hover:underline">Clear</button>
+        <button className="text-Primary-600 hover:underline">← Back</button>
+        <h1 className="font-semibold text-xl">Place an Advert</h1>
+        <button className="text-Primary-600 hover:underline">Clear</button>
       </div>
 
       {/* Form */}
-      <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-md p-6 space-y-6">
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-6 bg-white shadow-md p-6 rounded-md"
+      >
         {/* Input Fields */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="gap-4 grid grid-cols-2">
           <input
             type="text"
             name="title"
             placeholder="Title"
             value={formData.title}
             onChange={handleInputChange}
-            className="border border-gray-300 rounded-md p-2 w-full"
+            className="border-gray-300 p-2 border rounded-md w-full"
           />
           <input
             type="text"
@@ -77,13 +80,13 @@ const PlaceAd = () => {
             placeholder="Brand"
             value={formData.brand}
             onChange={handleInputChange}
-            className="border border-gray-300 rounded-md p-2 w-full"
+            className="border-gray-300 p-2 border rounded-md w-full"
           />
           <select
             name="condition"
             value={formData.condition}
             onChange={handleInputChange}
-            className="border border-gray-300 rounded-md p-2 w-full"
+            className="border-gray-300 p-2 border rounded-md w-full"
           >
             <option value="">Condition</option>
             <option value="New">New</option>
@@ -94,7 +97,7 @@ const PlaceAd = () => {
             placeholder="Description"
             value={formData.description}
             onChange={handleInputChange}
-            className="border border-gray-300 rounded-md p-2 w-full col-span-2"
+            className="border-gray-300 col-span-2 p-2 border rounded-md w-full"
           />
           <input
             type="number"
@@ -102,7 +105,7 @@ const PlaceAd = () => {
             placeholder="Price"
             value={formData.price}
             onChange={handleInputChange}
-            className="border border-gray-300 rounded-md p-2 w-full"
+            className="border-gray-300 p-2 border rounded-md w-full"
           />
           <input
             type="number"
@@ -110,7 +113,7 @@ const PlaceAd = () => {
             placeholder="Add Bulk Price"
             value={formData.bulkPrice}
             onChange={handleInputChange}
-            className="border border-gray-300 rounded-md p-2 w-full"
+            className="border-gray-300 p-2 border rounded-md w-full"
           />
         </div>
 
@@ -152,14 +155,14 @@ const PlaceAd = () => {
         </div>
 
         {/* Contact Info */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="gap-4 grid grid-cols-2">
           <input
             type="text"
             name="phoneNumber"
             placeholder="Phone Number"
             value={formData.phoneNumber}
             onChange={handleInputChange}
-            className="border border-gray-300 rounded-md p-2 w-full"
+            className="border-gray-300 p-2 border rounded-md w-full"
           />
           <input
             type="text"
@@ -167,7 +170,7 @@ const PlaceAd = () => {
             placeholder="Name"
             value={formData.name}
             onChange={handleInputChange}
-            className="border border-gray-300 rounded-md p-2 w-full"
+            className="border-gray-300 p-2 border rounded-md w-full"
           />
         </div>
 
@@ -194,7 +197,7 @@ const PlaceAd = () => {
 
         {/* Promotion Options */}
         <div className="bg-gray-100 p-4 rounded-md">
-          <h3 className="font-semibold mb-4">Promote your advert</h3>
+          <h3 className="mb-4 font-semibold">Promote your advert</h3>
           <div className="space-y-4">
             <label>
               <input
@@ -232,7 +235,7 @@ const PlaceAd = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-green-600 text-white font-semibold py-2 px-4 rounded-md"
+          className="bg-green-600 px-4 py-2 rounded-md w-full font-semibold text-white"
         >
           Post Advert
         </button>
