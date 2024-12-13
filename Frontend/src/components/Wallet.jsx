@@ -55,12 +55,12 @@ const Wallet = () => {
             <p className="text-center text-gray-600">
               Your wallet content can be used to purchase premium services and place ads on 9jaMarkets.
             </p>
-            <button className="w-full mt-6 px-4 py-2 bg-green text-white font-medium rounded-lg shadow hover:bg-green-500">
+            <button className="w-full mt-6 px-4 py-2 bg-Primary text-white font-medium rounded-lg shadow hover:bg-green-500">
               Recharge
             </button>
             <p className="mt-4 text-center text-sm text-gray-500">
               Want to reach a wider audience?{' '}
-              <a href="/profile/premium" className="text-green underline">
+              <a href="/profile/premium" className="text-Primary underline">
                 Subscribe to our Premium Model
               </a>
             </p>

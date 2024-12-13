@@ -16,7 +16,7 @@ export function UserAvatar({ showName }) {
     <div>
       <ul className="space-y-2 mx-2 px-2 min-w-[10ch]">
         <li
-          className="hover:font-semibold hover:text-green transition-colors cursor-pointer select-none"
+          className="hover:font-semibold hover:text-Primary transition-colors cursor-pointer select-none"
           onClick={() => {
             setLogoutOpen(true);
           }}
@@ -24,7 +24,7 @@ export function UserAvatar({ showName }) {
           Sign out
         </li>
         <li
-          className="hover:font-semibold hover:text-green transition-colors cursor-pointer select-none"
+          className="hover:font-semibold hover:text-Primary transition-colors cursor-pointer select-none"
           onClick={() => {
             navigate("/profile");
           }}

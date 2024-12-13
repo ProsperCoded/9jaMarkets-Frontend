@@ -52,7 +52,7 @@ const LoginModal = ({ showModal, closeModal, openSignUpModal }) => {
           className="mx-auto mb-4 h-20"
           lazy="true"
         />
-        <h2 className="mb-4 font-bold text-2xl text-center text-green">
+        <h2 className="mb-4 font-bold text-2xl text-center text-Primary">
           Hello! Welcome back
         </h2>
         <form
@@ -76,8 +76,8 @@ const LoginModal = ({ showModal, closeModal, openSignUpModal }) => {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={`mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-green ${
-                email ? "border-green" : "border-gray-300"
+              className={`mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-Primary ${
+                email ? "border-Primary" : "border-gray-300"
               }`}
             />
           </div>
@@ -94,7 +94,7 @@ const LoginModal = ({ showModal, closeModal, openSignUpModal }) => {
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className={`mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-green ${
+                className={`mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-Primary ${
                   password ? "border-green-500" : "border-gray-300"
                 }`}
               />
@@ -144,7 +144,7 @@ const LoginModal = ({ showModal, closeModal, openSignUpModal }) => {
               />
               Remember me
             </label>
-            <a href="/" className="text-green text-sm hover:underline">
+            <a href="/" className="text-Primary text-sm hover:underline">
               Forgot Password?
             </a>
           </div>
@@ -155,7 +155,7 @@ const LoginModal = ({ showModal, closeModal, openSignUpModal }) => {
           )}
           <button
             type="submit"
-            className="bg-green hover:bg-hover-green shadow-md hover:shadow-lg py-2 rounded-lg w-full text-white"
+            className="bg-Primary hover:bg-hover-Primary shadow-md hover:shadow-lg py-2 rounded-lg w-full text-white"
           >
             {loading ? (
               <>
@@ -207,7 +207,7 @@ const LoginModal = ({ showModal, closeModal, openSignUpModal }) => {
               closeModal();
               openSignUpModal();
             }}
-            className="font-semibold text-green hover:underline"
+            className="font-semibold text-Primary hover:underline"
           >
             Create an account
           </button>

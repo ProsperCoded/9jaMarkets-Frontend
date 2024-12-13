@@ -1,3 +1,14 @@
+/**
+ * The main navigation bar of the application, containing the logo, navigation
+ * links, icons, and profile picture. On mobile devices, the navigation links
+ * are hidden and can be accessed by clicking the burger menu icon on the right
+ * side of the header. The navigation links will slide in from the right when
+ * the icon is clicked.
+ *
+ * @param {Function} openLoginModal - Function to open the login modal.
+ * @param {Function} openSignUpModal - Function to open the sign up modal.
+ * @returns {ReactElement} The header element.
+ */
 import { useState, useEffect } from "react";
 import logo from "../assets/Logo.svg";
 import { Link } from "react-router-dom";
@@ -8,6 +19,7 @@ import { USER_PROFILE_CONTEXT } from "../contexts";
 import { UserAvatar } from "../componets-utils/UserAvatar";
 // import { Avatar } from "../componets-utils/Avatar";
 import { Avatar } from "antd";
+
 
 function Header({ openLoginModal, openSignUpModal }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -70,13 +82,13 @@ function Header({ openLoginModal, openSignUpModal }) {
           <div className="md:flex space-x-3 hidden ml-auto">
             <button
               onClick={openLoginModal}
-              className="border-white hover:bg-white px-4 py-1 border rounded-full text-white hover:text-green transition"
+              className="border-white hover:bg-white px-4 py-1 border rounded-full text-white hover:text-Primary transition"
             >
               Login
             </button>
             <button
               onClick={openSignUpModal}
-              className="bg-green hover:bg-hover-green px-4 py-1 rounded-full text-white transition"
+              className="bg-Primary hover:bg-P2 px-4 py-1 rounded-full text-white transition"
             >
               Sign Up
             </button>
@@ -147,7 +159,7 @@ function Header({ openLoginModal, openSignUpModal }) {
                       toggleMenu();
                       openLoginModal();
                     }}
-                    className="border-white hover:bg-white py-1 border rounded-full w-full text-center text-white hover:text-green transition"
+                    className="border-white hover:bg-white py-1 border rounded-full w-full text-center text-white hover:text-Primary transition"
                   >
                     Login
                   </button>
@@ -156,7 +168,7 @@ function Header({ openLoginModal, openSignUpModal }) {
                       toggleMenu();
                       openSignUpModal();
                     }}
-                    className="bg-green hover:bg-hover-green py-1 rounded-full w-full text-center text-white transition"
+                    className="bg-Primary hover:bg-P2 py-1 rounded-full w-full text-center text-white transition"
                   >
                     Sign Up
                   </button>

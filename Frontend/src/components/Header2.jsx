@@ -1,3 +1,10 @@
+/**
+ * The top navigation bar of the application, containing the logo, navigation
+ * links, icons, and profile picture. On mobile devices, the navigation links
+ * are hidden and can be accessed by clicking the burger menu icon on the right
+ * side of the header. The navigation links will slide in from the right when
+ * the icon is clicked.
+ */
 import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,6 +18,7 @@ import logo from "../assets/Logo.svg";
 import { USER_PROFILE_CONTEXT } from "../contexts";
 import { UserAvatar } from "../componets-utils/UserAvatar";
 
+
 const Header2 = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -20,7 +28,7 @@ const Header2 = () => {
   };
 
   return (
-    <header className="top-0 z-20 bg-green shadow px-4 w-full text-white">
+    <header className="top-0 z-20 bg-Primary shadow px-4 w-full text-white">
       <div className="flex justify-between items-center mx-auto p-2 h-14 container">
         {/* Logo and Nav */}
         <div className="flex items-center">

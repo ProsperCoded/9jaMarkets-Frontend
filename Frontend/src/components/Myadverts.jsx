@@ -28,7 +28,7 @@ const MyAdverts = () => {
     <div className="bg-white shadow-md p-5 rounded-lg">
       <div className="flex justify-between items-center mb-5">
         <h2 className="font-semibold text-xl">My Adverts</h2>
-        <div className="flex items-center space-x-2 text-green-700">
+        <div className="flex items-center space-x-2 text-Primary-700">
           <span className="flex items-center">
             <i className="mr-1 ri-draft-line"></i> 1 Draft
           </span>

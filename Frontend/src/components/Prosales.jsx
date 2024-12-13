@@ -14,7 +14,7 @@ const ProSales = () => {
         {/* ProSales Task List */}
         <ul className="space-y-6 mb-8">
           <li className="flex items-center space-x-4">
-            <div className="h-12 w-12 rounded-full bg-green flex items-center justify-center">
+            <div className="h-12 w-12 rounded-full bg-Primary flex items-center justify-center">
               <FontAwesomeIcon icon={faCheck} className="text-white" />
             </div>
             <div className="flex flex-col">
@@ -66,10 +66,10 @@ const ProSales = () => {
 
         {/* Buttons */}
         <div className="flex space-x-4">
-          <button className="bg-green bg-opacity-50 hover:bg-green text-white font-semibold py-2 px-4 rounded">
+          <button className="bg-Primary bg-opacity-50 hover:bg-Primary text-white font-semibold py-2 px-4 rounded">
             Try Pro Features
           </button>
-          <button className="border border-green text-green hover:bg-green hover:text-white font-semibold py-2 px-4 rounded">
+          <button className="border border-Primary text-Primary hover:bg-Primary hover:text-white font-semibold py-2 px-4 rounded">
             Get Boost Packages
           </button>
         </div>

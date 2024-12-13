@@ -2,7 +2,7 @@ export default function Select({ options, selected, setSelected }) {
   return (
     <div className="inline-block relative w-full max-w-24">
       <select
-        className="block border-green hover:border-gray-500 bg-white shadow focus:shadow-outline px-4 py-2 pr-8 border rounded-xl w-full leading-tight appearance-none focus:outline-none"
+        className="block border-Primary hover:border-gray-500 bg-white shadow focus:shadow-outline px-4 py-2 pr-8 border rounded-xl w-full leading-tight appearance-none focus:outline-none"
         value={options[selected]}
         onChange={(e) => setSelected(e.target.value)}
       >

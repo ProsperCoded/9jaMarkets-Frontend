@@ -1,8 +1,21 @@
+/**
+ * MarketPage
+ *
+ * This component renders a page that displays a list of markets by state
+ * and a search bar to filter markets by name. The component also contains
+ * a sidebar that displays a list of all states, and an area to display the
+ * markets. The component uses the MARKETS and STATES constants from the
+ * ../config.js file to get the list of markets and states.
+ *
+ * @returns {React.ReactElement} The MarketPage component
+ */
+
 import { useState } from "react";
 import searchIcon from "../assets/search.svg"; // Assuming this is your search icon
 import { Link } from "react-router-dom";
 import { MARKETS } from "../config";
 import { STATES } from "../config";
+
 const MarketPage = () => {
   const [selectedState, setSelectedState] = useState("Abia");
   const [searchTerm, setSearchTerm] = useState("");
@@ -13,7 +26,7 @@ const MarketPage = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="bg-white drop-shadow-sm py-2 text-green">
+      <div className="bg-white drop-shadow-sm py-2 text-Primary">
         <div className="flex justify-between items-center mx-auto px-4 container">
           {/* Left Section with Markets and Malls */}
           <div className="flex items-center space-x-4">
@@ -27,7 +40,7 @@ const MarketPage = () => {
 
           {/* Center Section - Search Bar */}
           <div className="flex flex-grow justify-center">
-            <div className="flex items-center border-green bg-white focus:ring-opacity-50 px-4 py-2 border rounded-full focus:ring-green w-full max-w-md text-gray-600">
+            <div className="flex items-center border-Primary bg-white focus:ring-opacity-50 px-4 py-2 border rounded-full focus:ring-Primary w-full max-w-md text-gray-600">
               <input
                 type="text"
                 placeholder={`Search ${selectedState} markets...`}
@@ -55,9 +68,9 @@ const MarketPage = () => {
                 onClick={() => setSelectedState(state)}
                 className={`cursor-pointer p-2 ${
                   selectedState === state
-                    ? "bg-green text-white"
+                    ? "bg-Primary text-white"
                     : "text-gray-800"
-                } hover:bg-green hover:opacity-75 hover:text-white rounded-lg focus:font-semibold`}
+                } hover:bg-P2 hover:opacity-75 hover:text-white rounded-lg focus:font-semibold`}
               >
                 {state}
               </li>
@@ -77,7 +90,7 @@ const MarketPage = () => {
           <div className="gap-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {filteredMarkets.length > 0 ? (
               filteredMarkets.map((market, index) => (
-                <div
+                <Link to= '/marketplace'
                   key={index}
                   className="bg-white shadow-md hover:shadow-lg rounded-lg transform transition duration-300 overflow-hidden hover:scale-105"
                 >
@@ -89,13 +102,12 @@ const MarketPage = () => {
                   <div className="p-4">
                     <h3 className="font-semibold text-lg">{market.name}</h3>
                     <a
-                      href="#"
-                      className="block mt-2 text-green text-sm hover:underline"
+                      className="block mt-2 text-Primary text-sm hover:underline"
                     >
                       View more
                     </a>
                   </div>
-                </div>
+                </Link>
               ))
             ) : (
               <p>No markets found for "{searchTerm}"</p>

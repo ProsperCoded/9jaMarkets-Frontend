@@ -24,6 +24,7 @@ import InitializeApp from "./InitializeApp";
 
 import "./App.css";
 import GoogleSigninRedirect from "./componets-utils/GoogleSigninRedirect";
+import Marketplace from "./components/Marketplace";
 
 function AntDesignConfig({ children }) {
   return (
@@ -97,6 +98,7 @@ function App() {
               <Route path="/how-it-works" element={<HowItWorks />} />
               <Route path="/markets" element={<MarketPage />} />
               <Route path="/malls" element={<MallPage />} />
+              <Route path="/marketplace" element={<Marketplace />} />
               <Route
                 path="/profile/:subpage?"
                 element={<ProfilePageWrapper />}

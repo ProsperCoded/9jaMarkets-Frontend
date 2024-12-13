@@ -3,11 +3,14 @@ export default {
   darkMode: ["class"],
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    fontFamily: {
+      stylish: ["'Playfair Display'", "serif"],
+    },
     extend: {
       colors: {
         orange: "#F8912D",
-        green: "#236C13",
-        "hover-green": "#21CA1B",
+        Primary: "#236C13",
+        P2: "#21CA1B",
         "site-bg": "#EBEBEB",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",

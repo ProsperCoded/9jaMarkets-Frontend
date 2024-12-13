@@ -109,7 +109,7 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
           alt="9ja Markets Logo"
           className="mx-auto mb-2 h-10 md:h-14 lg:h-20"
         />
-        <h2 className="mb-2 font-bold text-base text-center text-green lg:text-xl">
+        <h2 className="mb-2 font-bold text-base text-center text-Primary lg:text-xl">
           Welcome to 9ja Markets
         </h2>
         <form
@@ -135,7 +135,7 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
                 id="firstName"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
-                className="border-gray-300 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+                className="border-gray-300 p-2 border rounded-lg focus:ring-Primary w-full focus:outline-none focus:ring-2"
               />
             </div>
             <div>
@@ -151,7 +151,7 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
                 id="lastName"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
-                className="border-gray-300 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+                className="border-gray-300 p-2 border rounded-lg focus:ring-Primary w-full focus:outline-none focus:ring-2"
               />
             </div>
           </div>
@@ -168,7 +168,7 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
               value={email}
               required
               onChange={(e) => setEmail(e.target.value)}
-              className="border-gray-300 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+              className="border-gray-300 p-2 border rounded-lg focus:ring-Primary w-full focus:outline-none focus:ring-2"
             />
           </div>
           <div className="flex justify-between gap-2 wrap">
@@ -186,7 +186,7 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
                 max={11}
                 value={phone1}
                 onChange={(e) => setPhone1(e.target.value)}
-                className="border-gray-300 mt-1 p-2 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-green"
+                className="border-gray-300 mt-1 p-2 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-Primary"
               />
             </div>
             <div>
@@ -203,7 +203,7 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
                 max={11}
                 value={phone2}
                 onChange={(e) => setPhone2(e.target.value)}
-                className="border-gray-300 mt-1 p-2 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-green"
+                className="border-gray-300 mt-1 p-2 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-Primary"
               />
             </div>
           </div>
@@ -222,10 +222,11 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
                 value={password}
                 required
                 onChange={(e) => setPassword(e.target.value)}
-                className={`mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-green ${
+                className={`mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-Primary ${
                   password ? "border-green-500" : "border-gray-300"
                 }`}
               />
+
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
@@ -275,7 +276,7 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
                 id="confirmPassword"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className={`mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-green ${
+                className={`mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-Primary ${
                   confirmPassword ? "border-green-500" : "border-gray-300"
                 }`}
               />
@@ -322,7 +323,7 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
           )}
           <button
             type="submit"
-            className="bg-green p-2 rounded-lg w-full text-white"
+            className="bg-Primary p-2 rounded-lg w-full text-white"
           >
             {loading ? (
               <>
@@ -341,7 +342,7 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
         </div>
         <p className="mt-2 text-center text-sm md:text-base">
           Already have an account?{" "}
-          <button onClick={openLoginModal} className="font-bold text-green">
+          <button onClick={openLoginModal} className="font-bold text-Primary">
             Login
           </button>
         </p>
@@ -372,7 +373,7 @@ const SignUpModal = ({ showModal, closeModal, openLoginModal }) => {
         </div>
         <p className="mt-4 text-center text-gray-600 text-xs">
           By continuing you agree to the{" "}
-          <a href="/" className="font-bold text-green">
+          <a href="/" className="font-bold text-Primary">
             Policy and Rules
           </a>
         </p>

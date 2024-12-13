@@ -13,7 +13,7 @@ const Feedback = () => {
           
           {/* Feedback status */}
           <div className="flex space-x-2">
-            <button className="bg-green bg-opacity-20 text-green font-semibold py-1 px-3 rounded-lg">
+            <button className="bg-Primary bg-opacity-20 text-Primary font-semibold py-1 px-3 rounded-lg">
               Received (0)
             </button>
             <button className="bg-gray-100 text-gray-600 font-semibold py-1 px-3 rounded-lg">
@@ -31,7 +31,7 @@ const Feedback = () => {
           </p>
           
           {/* Copy Link Button */}
-          <button className="bg-green text-white py-2 px-4 rounded-full flex items-center">
+          <button className="bg-Primary text-white py-2 px-4 rounded-full flex items-center">
             <FontAwesomeIcon icon={faLink} className="mr-2" /> Copy link
           </button>
         </div>

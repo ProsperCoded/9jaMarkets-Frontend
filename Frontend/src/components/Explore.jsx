@@ -1,3 +1,15 @@
+/**
+ * ExploreSection
+ * 
+ * This component renders the explore page with a search bar at the top and 
+ * a carousel of featured markets and malls below it. The search bar is connected
+ * to the state and filters the data based on the user input. The component also
+ * renders a link to place an ad and a button to navigate to the state page.
+ * The component is responsive and the number of cards in the carousel changes
+ * based on the screen size.
+ * 
+ * @returns {JSX.Element} the explore page component
+ */
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Wears_category from "../assets/Wears_category.jpg";
@@ -77,6 +89,7 @@ const categories = {
   Sports: Sports_category,
 };
 
+
 function ExploreSection() {
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -151,7 +164,7 @@ function ExploreSection() {
               placeholder="Search by state, market, or category..."
               value={searchQuery}
               onChange={handleSearchChange}
-              className="border-green py-2 pr-4 pl-10 border rounded-full focus:ring-2 focus:ring-green w-full text-sm placeholder-gray-500 focus:outline-none flex-grow"
+              className="border-Primary py-2 pr-4 pl-10 border rounded-full focus:ring-2 focus:ring-Primary w-full text-sm placeholder-gray-500 focus:outline-none flex-grow"
             />
             <svg
               fill="currentColor"
@@ -179,19 +192,19 @@ function ExploreSection() {
             ) : (
               <>
                 <Link to="/state">
-                  <button className="bg-green px-4 py-2 rounded-full text-sm text-white sm:text-base btn">
+                  <button className="bg-Primary px-4 py-2 rounded-full text-sm text-white sm:text-base btn">
                     State
                   </button>
                 </Link>
 
                 <Link to="/markets">
-                  <button className="bg-green px-4 py-2 rounded-full text-sm text-white sm:text-base btn">
+                  <button className="bg-Primary px-4 py-2 rounded-full text-sm text-white sm:text-base btn">
                     Market
                   </button>
                 </Link>
 
                 <Link to="/category">
-                  <button className="bg-green px-4 py-2 rounded-full text-sm text-white sm:text-base btn">
+                  <button className="bg-Primary px-4 py-2 rounded-full text-sm text-white sm:text-base btn">
                     Category
                   </button>
                 </Link>
@@ -243,7 +256,7 @@ function ExploreSection() {
 
       {/* Markets and Malls Carousel */}
       {/* Featured Markets Carousel */}
-      <h2 className="mb-4 font-bold text-center text-green text-lg sm:text-xl">
+      <h2 className="mb-4 font-bold text-center text-Primary text-lg sm:text-xl">
         Featured Markets
       </h2>
       <div className="relative mr-auto mb-8 ml-auto xl:max-w-[80%]">
@@ -283,7 +296,7 @@ function ExploreSection() {
       </div>
 
       {/* Featured Malls Carousel */}
-      <h2 className="mb-4 font-bold text-center text-green text-lg sm:text-xl">
+      <h2 className="mb-4 font-bold text-center text-Primary text-lg sm:text-xl">
         Featured Malls
       </h2>
       <div className="relative mr-auto mb-8 ml-auto xl:max-w-[80%]">

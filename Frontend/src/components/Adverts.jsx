@@ -4,7 +4,7 @@ const Advert = () => {
   return (
     <div>
       {/* Page Title */}
-      <h1 className="text-2xl font-bold text-green mb-6">Advert</h1>
+      <h1 className="text-2xl font-bold text-Primary mb-6">Advert</h1>
 
       {/* Content Section */}
       <div className="w-full max-w-4xl p-8 bg-white shadow-md rounded-md">
@@ -15,8 +15,8 @@ const Advert = () => {
         {/* Advert Options */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Place a New Advert */}
-          <div className="p-4 border border-green  hover:text-white rounded-lg hover:bg-green hover:opacity-50">
-            <h3 className="text-xl font-semibold text-green mb-2">
+          <div className="p-4 border border-Primary  hover:text-white rounded-lg hover:bg-Primary hover:opacity-50">
+            <h3 className="text-xl font-semibold text-Primary mb-2">
               Place a New Advert
             </h3>
             <p className="text-gray-500 mb-4">
@@ -24,7 +24,7 @@ const Advert = () => {
             </p>
             <a
               href="/place-ad"
-              className="inline-block bg-green text-white font-medium py-2 px-4 rounded-lg hover:bg-hover-green"
+              className="inline-block bg-Primary text-white font-medium py-2 px-4 rounded-lg hover:bg-hover-Primary"
             >
               Start Now
             </a>

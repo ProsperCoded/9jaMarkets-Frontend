@@ -5,11 +5,11 @@ function Footer() {
   return (
     <>
       {/* First Footer */}
-      <footer className="bg-green text-white px-10 py-8">
+      <footer className="bg-Primary text-white px-10 py-8">
         <div className="flex flex-wrap justify-between space-y-6 md:space-y-0">
           {/* Services Section */}
           <nav className="w-full md:w-1/4">
-            <h6 className="footer-title text-hover-green text-lg font-semibold mb-4">About us</h6>
+            <h6 className="footer-title text-P2 text-lg font-semibold mb-4">About us</h6>
             <ul className="space-y-2">
               <li><a className="link link-hover">About 9ja Market</a></li>
               <li><a className="link link-hover">Terms & Conditions</a></li>
@@ -22,7 +22,7 @@ function Footer() {
 
           {/* Company Section */}
           <nav className="w-full md:w-1/4">
-            <h6 className="footer-title text-hover-green text-lg font-semibold mb-4">Support</h6>
+            <h6 className="footer-title text-P2 text-lg font-semibold mb-4">Support</h6>
             <ul className="space-y-2">
               <li><a className="link link-hover">Safety Tips</a></li>
               <li><a className="link link-hover">Contact Us</a></li>
@@ -34,7 +34,7 @@ function Footer() {
 
           {/* Apps Section */}
         <nav className="w-full md:w-1/4">
-          <h6 className="footer-title text-hover-green text-lg font-semibold mb-4">Apps</h6>
+          <h6 className="footer-title text-P2 text-lg font-semibold mb-4">Apps</h6>
           <ul className="space-y-4">
             <li>
               <a href="https://play.google.com" target="_blank" rel="noopener noreferrer">
@@ -60,7 +60,7 @@ function Footer() {
       </footer>
 
       {/* Second Footer */}
-      <footer className="bg-green text-white border-t border-hover-green px-10 py-4 flex flex-wrap justify-between items-center">
+      <footer className="bg-Primary text-white border-t border-hover-Primary px-10 py-4 flex flex-wrap justify-between items-center">
         {/* Company Info */}
         <aside className="w-full md:w-auto flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
           <Link to="/" className="flex items-center">

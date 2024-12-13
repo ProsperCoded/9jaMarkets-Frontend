@@ -53,7 +53,7 @@ const Profile = ({ subpage }) => {
             <li>
               <Link
                 to="/profile/dashboard"
-                className="flex items-center space-x-3 hover:bg-green p-2 rounded-lg hover:text-white"
+                className="flex items-center space-x-3 hover:bg-Primary p-2 rounded-lg hover:text-white"
                 style={
                   subpage === "dashboard"
                     ? {
@@ -69,7 +69,7 @@ const Profile = ({ subpage }) => {
             <li>
               <Link
                 to="/profile/product"
-                className="flex items-center space-x-3 hover:bg-green p-2 rounded-lg hover:text-white"
+                className="flex items-center space-x-3 hover:bg-Primary p-2 rounded-lg hover:text-white"
                 style={
                   subpage === "product"
                     ? {
@@ -85,7 +85,7 @@ const Profile = ({ subpage }) => {
             <li>
               <Link
                 to="/orders"
-                className="flex items-center space-x-3 hover:bg-green p-2 rounded-lg hover:text-white"
+                className="flex items-center space-x-3 hover:bg-Primary p-2 rounded-lg hover:text-white"
               >
                 <FontAwesomeIcon icon={faCartShopping} />
                 <span>Orders</span>
@@ -94,7 +94,7 @@ const Profile = ({ subpage }) => {
             <li>
               <Link
                 to="/customers"
-                className="flex items-center space-x-3 hover:bg-green p-2 rounded-lg hover:text-white"
+                className="flex items-center space-x-3 hover:bg-Primary p-2 rounded-lg hover:text-white"
               >
                 <FontAwesomeIcon icon={faUsers} />
                 <span>Customers</span>
@@ -103,7 +103,7 @@ const Profile = ({ subpage }) => {
             <li>
               <Link
                 to="/messages"
-                className="flex items-center space-x-3 hover:bg-green p-2 rounded-lg hover:text-white"
+                className="flex items-center space-x-3 hover:bg-Primary p-2 rounded-lg hover:text-white"
               >
                 <FontAwesomeIcon icon={faMessage} />
                 <span>Messages</span>
@@ -112,7 +112,7 @@ const Profile = ({ subpage }) => {
             <li>
               <Link
                 to="/wallet"
-                className="flex items-center space-x-3 hover:bg-green p-2 rounded-lg hover:text-white"
+                className="flex items-center space-x-3 hover:bg-Primary p-2 rounded-lg hover:text-white"
               >
                 <FontAwesomeIcon icon={faWallet} />
                 <span>Wallet</span>
@@ -121,7 +121,7 @@ const Profile = ({ subpage }) => {
             <li>
               <Link
                 to="/premium"
-                className="flex items-center space-x-3 hover:bg-green p-2 rounded-lg hover:text-white"
+                className="flex items-center space-x-3 hover:bg-Primary p-2 rounded-lg hover:text-white"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

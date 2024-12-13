@@ -43,10 +43,10 @@ const Followers = () => {
         {/* Page Header */}
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-bold text-gray-800 flex items-center">
-            <FontAwesomeIcon icon={faUsers} className="text-green mr-2" /> Followers
+            <FontAwesomeIcon icon={faUsers} className="text-Primary mr-2" /> Followers
           </h2>
           <div>
-            <button className="px-4 py-2 bg-green text-white rounded-lg mr-2 hover:bg-hover-green">
+            <button className="px-4 py-2 bg-Primary text-white rounded-lg mr-2 hover:bg-P2">
               My Followers
             </button>
             <button className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300">
@@ -59,7 +59,7 @@ const Followers = () => {
         <div className="relative mb-4">
           <input
             type="text"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-Primary"
             placeholder="Type a name"
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
@@ -85,11 +85,11 @@ const Followers = () => {
                 <div className="flex items-center">
                   <FontAwesomeIcon
                     icon={faUserCircle}
-                    className="text-green text-3xl mr-4"
+                    className="text-Primary text-3xl mr-4"
                   />
                   <span className="text-gray-800 font-medium">{follower.name}</span>
                 </div>
-                <button className="text-green hover:underline">
+                <button className="text-Primary hover:underline">
                   <FontAwesomeIcon icon={faArrowRight} className="mr-2" />
                   View Profile
                 </button>
