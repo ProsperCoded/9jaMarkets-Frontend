@@ -4,7 +4,7 @@ const Advert = () => {
   return (
     <div>
       {/* Page Title */}
-      <h1 className="text-2xl font-bold text-Primary mb-6">Advert</h1>
+      <h1 id="ad" className="text-2xl font-bold text-Primary mb-6">Advert</h1>
 
       {/* Content Section */}
       <div className="w-full max-w-4xl p-8 bg-white shadow-md rounded-md">
