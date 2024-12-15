@@ -3,14 +3,22 @@ import logo from "../assets/Logo.svg";
 import googleLogo from "../assets/Google Icon.svg";
 import facebookLogo from "../assets/facebook.png";
 import appleLogo from "../assets/apple.svg";
-import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "../contexts";
-import { getProfileApi, loginApi, signUpApi } from "../../libs/user/authApi.js";
+import {
+  MERCHANT_SIGNUP_MODAL_CONTEXT,
+  MESSAGE_API_CONTEXT,
+  USER_PROFILE_CONTEXT,
+} from "../contexts";
+import {
+  getMerchantProfileApi,
+  loginMerchantApi,
+  signupMerchantApi,
+} from "../../libs/user/authApi.js";
 import { storeAuth } from "../../libs/util";
 import Loading from "../componets-utils/Loading.jsx";
 import { useEffect } from "react";
 import { GOOGLE_URL } from "@/config";
 import { LOGIN_MODAL_CONTEXT, SIGNUP_MODAL_CONTEXT } from "../contexts";
-const Signup = () => {
+const MerchantSignup = () => {
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -22,9 +30,25 @@ const Signup = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [brandName, setBrandName] = useState("");
+  const [merchantCategories, setMerchantCategories] = useState([]);
+  const [marketName, setMarketName] = useState("");
+  const [addresses, setAddresses] = useState([
+    {
+      address: "",
+      name: "",
+      city: "",
+      state: "",
+      zipCode: "",
+      country: "",
+    },
+  ]);
   const modalRef = useRef(null);
   const messageApi = useContext(MESSAGE_API_CONTEXT);
-  const { signupOpen, setSignupOpen } = useContext(SIGNUP_MODAL_CONTEXT);
+  const {
+    merchantSignupOpen: signupOpen,
+    setMerchantSignupOpen: setSignupOpen,
+  } = useContext(MERCHANT_SIGNUP_MODAL_CONTEXT);
   const { setLoginOpen } = useContext(LOGIN_MODAL_CONTEXT);
   useEffect(() => {
     if (modalRef.current & signupOpen) modalRef.current.focus();
@@ -54,6 +78,37 @@ const Signup = () => {
     ).test(password);
   };
 
+  const handleAddAddress = () => {
+    setAddresses([
+      ...addresses,
+      {
+        address: "",
+        name: "",
+        city: "",
+        state: "",
+        zipCode: "",
+        country: "",
+      },
+    ]);
+  };
+
+  const handleAddressChange = (index, field, value) => {
+    const updatedAddresses = [...addresses];
+    updatedAddresses[index][field] = value;
+    setAddresses(updatedAddresses);
+  };
+
+  const handleMerchantCategoriesChange = (e) => {
+    const { options } = e.target;
+    const selectedCategories = [];
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].selected) {
+        selectedCategories.push(options[i].value);
+      }
+    }
+    setMerchantCategories(selectedCategories);
+  };
+
   const handleSignUp = async (e) => {
     // Handle sign up logic here
 
@@ -72,22 +127,30 @@ const Signup = () => {
       email,
       phoneNumbers: [phone1, phone2],
       password,
+      brandName,
+      merchantCategories,
+      marketName,
+      addresses,
     };
     const errorLogger = (error) => {
       console.error(error);
       setError(error);
     };
-    const signUp = await signUpApi(formData, (error) => {
+    const signUp = await signupMerchantApi(formData, (error) => {
       console.error(error);
       setError(error);
     });
 
     if (!signUp) return;
-    const loginData = await loginApi({ email, password }, errorLogger);
+    const loginData = await loginMerchantApi({ email, password }, errorLogger);
     if (!loginData) return;
     const { accessToken, refreshToken, id: userId } = loginData;
     storeAuth(userId, accessToken, refreshToken);
-    const userProfile = await getProfileApi(userId, accessToken, errorLogger);
+    const userProfile = await getMerchantProfileApi(
+      userId,
+      accessToken,
+      errorLogger
+    );
     if (!userProfile) return;
     setUserProfile(userProfile);
     messageApi.success("SignUp Successful");
@@ -96,7 +159,7 @@ const Signup = () => {
 
   return (
     <div
-      className="z-50 fixed inset-0 flex justify-center items-center bg-black bg-opacity-50"
+      className="z-50 absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 overflow-auto"
       ref={modalRef}
       tabIndex={0}
     >
@@ -210,7 +273,133 @@ const Signup = () => {
               />
             </div>
           </div>
-
+          <div>
+            <label
+              htmlFor="brandName"
+              className="block font-medium text-gray-700 text-sm"
+            >
+              Brand Name
+            </label>
+            <input
+              type="text"
+              id="brandName"
+              value={brandName}
+              onChange={(e) => setBrandName(e.target.value)}
+              className="border-gray-300 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+              required
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="marketName"
+              className="block font-medium text-gray-700 text-sm"
+            >
+              Market Name
+            </label>
+            <input
+              type="text"
+              id="marketName"
+              value={marketName}
+              onChange={(e) => setMarketName(e.target.value)}
+              className="border-gray-300 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+              required
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="merchantCategories"
+              className="block font-medium text-gray-700 text-sm"
+            >
+              Merchant Categories
+            </label>
+            <select
+              id="merchantCategories"
+              multiple
+              value={merchantCategories}
+              onChange={handleMerchantCategoriesChange}
+              className="border-gray-300 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+              required
+            >
+              <option value="CLOTHING">Clothing</option>
+              <option value="GROCERY">Grocery</option>
+              {/* Add more categories as needed */}
+            </select>
+          </div>
+          {addresses.map((address, index) => (
+            <div key={index} className="mb-2 p-2 border rounded-lg">
+              <h4 className="font-medium text-gray-700 text-sm">
+                Address {index + 1}
+              </h4>
+              <input
+                type="text"
+                placeholder="Address"
+                value={address.address}
+                onChange={(e) =>
+                  handleAddressChange(index, "address", e.target.value)
+                }
+                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+                required
+              />
+              <input
+                type="text"
+                placeholder="Name"
+                value={address.name}
+                onChange={(e) =>
+                  handleAddressChange(index, "name", e.target.value)
+                }
+                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+                required
+              />
+              {/* ...other address fields (city, state, zipCode, country)... */}
+              <input
+                type="text"
+                placeholder="City"
+                value={address.city}
+                onChange={(e) =>
+                  handleAddressChange(index, "city", e.target.value)
+                }
+                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+                required
+              />
+              <input
+                type="text"
+                placeholder="State"
+                value={address.state}
+                onChange={(e) =>
+                  handleAddressChange(index, "state", e.target.value)
+                }
+                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+                required
+              />
+              <input
+                type="text"
+                placeholder="Zip Code"
+                value={address.zipCode}
+                onChange={(e) =>
+                  handleAddressChange(index, "zipCode", e.target.value)
+                }
+                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+                required
+              />
+              <input
+                type="text"
+                placeholder="Country"
+                value={address.country}
+                onChange={(e) =>
+                  handleAddressChange(index, "country", e.target.value)
+                }
+                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+                required
+              />
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={handleAddAddress}
+            className="bg-gray-200 mt-2 p-2 rounded-lg w-full text-gray-700"
+          >
+            Add Another Address
+          </button>
           <div>
             <label
               htmlFor="password"
@@ -387,4 +576,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default MerchantSignup;

@@ -1,11 +1,11 @@
 import React from "react";
+import { Trash } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
   faList,
   faCartShopping,
   faMessage,
-  faGem,
   faWallet,
   faUsers,
   faSignOutAlt,
@@ -14,7 +14,11 @@ import { Link } from "react-router-dom";
 import DefaultProfileContent from "./DefaultProfileContent";
 import ProductPage from "./Products/ProductPage";
 import { useContext } from "react";
-import { USER_PROFILE_CONTEXT, LOGOUT_MODAL_CONTEXT } from "@/contexts";
+import {
+  USER_PROFILE_CONTEXT,
+  LOGOUT_MODAL_CONTEXT,
+  MERCHANT_SIGNUP_MODAL_CONTEXT,
+} from "@/contexts";
 import { useNavigate } from "react-router-dom";
 import { Avatar } from "antd";
 const SUB_PAGES = {
@@ -24,6 +28,7 @@ const SUB_PAGES = {
 const Profile = ({ subpage }) => {
   const { userProfile } = useContext(USER_PROFILE_CONTEXT);
   const { setLogoutOpen } = useContext(LOGOUT_MODAL_CONTEXT);
+  const { setMerchantSignupOpen } = useContext(MERCHANT_SIGNUP_MODAL_CONTEXT);
   const navigate = useNavigate();
   if (!userProfile) {
     navigate("/");
@@ -46,7 +51,14 @@ const Profile = ({ subpage }) => {
             <p className="text-sm">{userProfile.phoneNumbers[0].number}</p>
           </div>
         </div>
-
+        <div
+          className="p-2 pl-3 cursor-pointer"
+          onClick={() => {
+            setMerchantSignupOpen(true);
+          }}
+        >
+          Merchant Options
+        </div>
         {/* Navigation Links */}
         <nav>
           <ul className="space-y-4">
@@ -140,6 +152,12 @@ const Profile = ({ subpage }) => {
               </Link>
             </li>
             <li className="pt-10">
+              <div>
+                <h3 className="flex items-center space-x-3 hover:bg-red-100 p-2 pt-25 rounded-lg text-red-500 hover:text-red-700 cursor-pointer">
+                  <Trash className="mr-1" size={20} />
+                  Delete Account
+                </h3>
+              </div>
               <div
                 onClick={() => {
                   setLogoutOpen(true);

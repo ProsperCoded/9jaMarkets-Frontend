@@ -14,12 +14,12 @@ function Hero() {
           <img
             src={logo}
             alt="9ja Markets"
-            className="mx-auto h-24 sm:h-36 md:h-48 lg:h-56"
+            className="mx-auto mt-[-15%] h-24 sm:h-36 md:h-48 lg:h-56"
           />
         </div>
 
         {/* Heading */}
-        <h1 className="mb-4 font-bold text-2xl sm:text-3xl md:text-5xl lg:text-6xl leading-tight">
+        <h1 className="mt-[10%] mb-4 font-bold text-2xl sm:text-3xl md:text-5xl lg:text-6xl leading-tight">
           Discover and Connect with <br /> Nigeria’s Major Markets.
         </h1>
 
