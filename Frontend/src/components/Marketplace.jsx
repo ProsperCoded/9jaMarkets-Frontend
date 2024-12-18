@@ -74,7 +74,7 @@ const Marketplace = () => {
         <img
           src={ComputerVillage}
           alt="Computer Village"
-          className="top-0 left-0 absolute w-full h-full object-cover"
+          className="top-0 left-0 absolute w-full h-full market-image object-cover"
         />
         <div className="top-0 left-0 absolute bg-green-900 bg-opacity-50 w-full h-full"></div>
         <div className="relative flex flex-col justify-center items-center h-full text-center text-white">

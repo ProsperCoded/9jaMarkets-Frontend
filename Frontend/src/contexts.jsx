@@ -71,7 +71,6 @@ export function ContextWrapper({ children }) {
                   {children}
                   <LoginModal />
                   <Signup />
-                  <MerchantSignup />
                 </LOGOUT_MODAL_CONTEXT.Provider>
               </SIGNUP_MODAL_CONTEXT.Provider>
             </LOGIN_MODAL_CONTEXT.Provider>

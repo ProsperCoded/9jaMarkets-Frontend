@@ -3,11 +3,7 @@ import logo from "../assets/Logo.svg";
 import googleLogo from "../assets/Google Icon.svg";
 import facebookLogo from "../assets/facebook.png";
 import appleLogo from "../assets/apple.svg";
-import {
-  MERCHANT_SIGNUP_MODAL_CONTEXT,
-  MESSAGE_API_CONTEXT,
-  USER_PROFILE_CONTEXT,
-} from "../contexts";
+import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "../contexts";
 import {
   getMerchantProfileApi,
   loginMerchantApi,
@@ -15,13 +11,10 @@ import {
 } from "../../libs/user/authApi.js";
 import { storeAuth } from "../../libs/util";
 import Loading from "../componets-utils/Loading.jsx";
-import { useEffect } from "react";
 import { GOOGLE_URL } from "@/config";
-import { LOGIN_MODAL_CONTEXT, SIGNUP_MODAL_CONTEXT } from "../contexts";
+import { LOGIN_MODAL_CONTEXT } from "../contexts";
 const MerchantSignup = () => {
   const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [phone1, setPhone1] = useState("");
   const [phone2, setPhone2] = useState("");
   const [password, setPassword] = useState("");
@@ -45,32 +38,10 @@ const MerchantSignup = () => {
   ]);
   const modalRef = useRef(null);
   const messageApi = useContext(MESSAGE_API_CONTEXT);
-  const {
-    merchantSignupOpen: signupOpen,
-    setMerchantSignupOpen: setSignupOpen,
-  } = useContext(MERCHANT_SIGNUP_MODAL_CONTEXT);
   const { setLoginOpen } = useContext(LOGIN_MODAL_CONTEXT);
-  useEffect(() => {
-    if (modalRef.current & signupOpen) modalRef.current.focus();
-    if (signupOpen) {
-      document.body.style.overflow = "hidden";
-      modalRef.current.addEventListener("keypress", (e) => {
-        console.log(e.key);
-        if (e.key === "Escape") {
-          setSignupOpen(false);
-        }
-      });
-    } else {
-      document.body.style.overflow = "auto";
-    }
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [signupOpen]);
+
   // userP
   const { setUserProfile } = useContext(USER_PROFILE_CONTEXT);
-
-  if (!signupOpen) return null; // Don't render if modal is hidden
 
   const isStrongPassword = (password) => {
     return RegExp(
@@ -113,6 +84,9 @@ const MerchantSignup = () => {
     // Handle sign up logic here
 
     e.preventDefault();
+    if (addresses.length === 0) {
+      setError("At least one address is required");
+    }
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       return;
@@ -122,8 +96,6 @@ const MerchantSignup = () => {
       return;
     }
     const formData = {
-      firstName,
-      lastName,
       email,
       phoneNumbers: [phone1, phone2],
       password,
@@ -154,22 +126,16 @@ const MerchantSignup = () => {
     if (!userProfile) return;
     setUserProfile(userProfile);
     messageApi.success("SignUp Successful");
-    setSignupOpen(false);
+    // TODO Redirect instead
   };
 
   return (
     <div
-      className="z-50 absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 overflow-auto"
+      className="flex justify-center items-center bg-white overflow-auto"
       ref={modalRef}
       tabIndex={0}
     >
-      <div className="relative bg-white shadow-lg px-4 sm:px-8 p-3 rounded-[5%] w-[90%] max-w-md md:max-w-lg lg:max-w-xl">
-        <button
-          onClick={() => setSignupOpen(false)}
-          className="top-2 right-4 absolute text-4xl text-gray-600 lg:text-3xl hover:text-gray-900"
-        >
-          &times;
-        </button>
+      <div className="relative p-4 w-full max-w-screen-md">
         <img
           src={logo}
           alt="9ja Markets Logo"
@@ -187,40 +153,6 @@ const MerchantSignup = () => {
             });
           }}
         >
-          <div className="flex justify-between gap-2 wrap">
-            <div>
-              <label
-                htmlFor="firstName"
-                className="block font-medium text-gray-700 text-sm"
-              >
-                First Name
-              </label>
-              <input
-                type="text"
-                required
-                id="firstName"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                className="border-gray-300 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="lastName"
-                className="block font-medium text-gray-700 text-sm"
-              >
-                Last Name
-              </label>
-              <input
-                type="text"
-                required
-                id="lastName"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                className="border-gray-300 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
-              />
-            </div>
-          </div>
           <div>
             <label
               htmlFor="email"
@@ -314,10 +246,9 @@ const MerchantSignup = () => {
             </label>
             <select
               id="merchantCategories"
-              multiple
               value={merchantCategories}
               onChange={handleMerchantCategoriesChange}
-              className="border-gray-300 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+              className="border-gray-300 px-4 py-2 border rounded-md w-full"
               required
             >
               <option value="CLOTHING">Clothing</option>

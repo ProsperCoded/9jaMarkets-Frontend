@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Zen+Tokyo+Zoo&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Zen+Tokyo+Zoo&display=swap'); */
 /* define variables */
 .app {
   --color-hover-green: "#21CA1B";
@@ -27,8 +27,11 @@
   font-weight: 400;
   font-style: normal;
 }
+.market-image{
+  /* filter: contrast(1.5); */
+  filter:saturate(2) contrast(1.3) sepia(0.2) brightness(1.5);
+}
 .otto {
-  color: white;
   text-shadow: 0 1px 0 #ccc,
                0 2px 0 #c9c9c9,
                0 3px 0 #bbb,
