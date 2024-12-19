@@ -51,7 +51,7 @@ const PlaceAd = () => {
   };
 
   return (
-    <div className="bg-gray-100 p-6 min-h-screen">
+    <div id="place-ad" className="bg-gray-100 p-6 min-h-screen">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <button className="text-Primary-600 hover:underline">← Back</button>

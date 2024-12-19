@@ -12,11 +12,12 @@ import Header2 from "./components/Header2";
 import Hero from "./components/Hero";
 import ExploreSection from "./components/Explore";
 import Footer from "./components/Footer";
-
+import Adverts from "./components/Adverts";
 import HowItWorks from "./components/how-it-works";
 import MarketPage from "./components/Markets";
 import MallPage from "./components/Malls";
 import Profile from "./components/Profile";
+import PlaceAD from "./components/PlaceAD"
 
 import { ConfigProvider } from "antd";
 import InitializeApp from "./InitializeApp";
@@ -75,6 +76,9 @@ function App() {
               <Route path="/malls" element={<MallPage />} />
               <Route path="/marketplace" element={<Marketplace />} />
               <Route path="/merchant-signup" element={<MerchantSignup />} />
+              <Route path="/ad" element={<Adverts />} />
+              <Route path="/place-ad" element={<PlaceAD />} />
+
               <Route
                 path="/profile/:subpage?"
                 element={<ProfilePageWrapper />}
