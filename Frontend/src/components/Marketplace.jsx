@@ -108,38 +108,43 @@ const Marketplace = () => {
         </div>
 
         <div className="flex-grow bg-white rounded-2xl py-10 shadow-md ml-6 mt-8 mb-8 mr-6 p-6 pb-20">
-            <h3 className="font-bold text-xl">{selectedCategory}</h3>
-            {/* Gray Line */}
-            <div className="mt-6 border-t-2 border-gray-200"></div>
-            {/* Product Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
-              {products.map((product, index) => (
-                <div
-                  key={index}
-                  className="bg-white rounded-2xl shadow-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-xl"
-                >
-                  {/* Product Image */}
+          <h3 className="font-bold text-xl">{selectedCategory}</h3>
+          {/* Gray Line */}
+          <div className="mt-6 border-t-2 border-gray-200"></div>
+          {/* Product Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+            {products.map((product, index) => (
+              <div
+                key={index}
+                className="relative group bg-white rounded-2xl shadow-lg transform transition-all duration-500 hover:scale-105 hover:shadow-2xl"
+              >
+                {/* Product Image with Zoom and Overlay */}
+                <div className="relative w-full h-40 overflow-hidden rounded-t-2xl">
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-40 object-cover rounded-t-2xl"
+                    className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110"
                   />
-                  {/* Product Details */}
-                  <div className="flex justify-between items-center p-4">
-                    <div>
-                      <h4 className="text-sm text-gray-800">{product.name}</h4>
-                      <p className="text-Primary font-thin mt-2">
-                        ₦{product.price.toLocaleString()}
-                      </p>
-                    </div>
-                    <button className="bg-Primary bg-opacity-20 text-Primary py-3 px-4 rounded-full hover:bg-opacity-30">
-                      <FontAwesomeIcon icon={faCartShopping} className="w-5 h-5" />
-                    </button>
-                  </div>
+                  <div className="absolute inset-0 bg-black bg-opacity-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </div>
-              ))}
-            </div>
-        </div>  
+
+                {/* Product Details */}
+                <div className="flex justify-between items-center p-4 transform transition-all duration-500 group-hover:translate-y-2">
+                  <div>
+                    <h4 className="text-sm text-gray-800 font-bold">{product.name}</h4>
+                    <p className="text-Primary font-semibold mt-2">
+                      ₦{product.price.toLocaleString()}
+                    </p>
+                  </div>
+                  {/* Button with Fade-in Effect */}
+                  <button className="bg-Primary bg-opacity-20 text-Primary py-3 px-4 rounded-full opacity-0 group-hover:opacity-100 hover:bg-opacity-30 transition-all duration-500">
+                    <FontAwesomeIcon icon={faCartShopping} className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
