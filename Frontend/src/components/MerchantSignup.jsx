@@ -4,16 +4,17 @@ import googleLogo from "../assets/Google Icon.svg";
 import facebookLogo from "../assets/facebook.png";
 import appleLogo from "../assets/apple.svg";
 import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "../contexts";
-import { getProfileApi, loginApi, signUpApi } from "../../libs/user/authApi.js";
+import {
+  getMerchantProfileApi,
+  loginMerchantApi,
+  signupMerchantApi,
+} from "../../libs/user/authApi.js";
 import { storeAuth } from "../../libs/util";
 import Loading from "../componets-utils/Loading.jsx";
-import { useEffect } from "react";
 import { GOOGLE_URL } from "@/config";
-import { LOGIN_MODAL_CONTEXT, SIGNUP_MODAL_CONTEXT } from "../contexts";
-const Signup = () => {
+import { LOGIN_MODAL_CONTEXT } from "../contexts";
+const MerchantSignup = () => {
   const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [phone1, setPhone1] = useState("");
   const [phone2, setPhone2] = useState("");
   const [password, setPassword] = useState("");
@@ -22,31 +23,25 @@ const Signup = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [brandName, setBrandName] = useState("");
+  const [merchantCategories, setMerchantCategories] = useState([]);
+  const [marketName, setMarketName] = useState("");
+  const [addresses, setAddresses] = useState([
+    {
+      address: "",
+      name: "",
+      city: "",
+      state: "",
+      zipCode: "",
+      country: "",
+    },
+  ]);
   const modalRef = useRef(null);
   const messageApi = useContext(MESSAGE_API_CONTEXT);
-  const { signupOpen, setSignupOpen } = useContext(SIGNUP_MODAL_CONTEXT);
   const { setLoginOpen } = useContext(LOGIN_MODAL_CONTEXT);
-  useEffect(() => {
-    if (modalRef.current & signupOpen) modalRef.current.focus();
-    if (signupOpen) {
-      document.body.style.overflow = "hidden";
-      modalRef.current.addEventListener("keypress", (e) => {
-        console.log(e.key);
-        if (e.key === "Escape") {
-          setSignupOpen(false);
-        }
-      });
-    } else {
-      document.body.style.overflow = "auto";
-    }
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [signupOpen]);
+
   // userP
   const { setUserProfile } = useContext(USER_PROFILE_CONTEXT);
-
-  if (!signupOpen) return null; // Don't render if modal is hidden
 
   const isStrongPassword = (password) => {
     return RegExp(
@@ -54,10 +49,44 @@ const Signup = () => {
     ).test(password);
   };
 
+  const handleAddAddress = () => {
+    setAddresses([
+      ...addresses,
+      {
+        address: "",
+        name: "",
+        city: "",
+        state: "",
+        zipCode: "",
+        country: "",
+      },
+    ]);
+  };
+
+  const handleAddressChange = (index, field, value) => {
+    const updatedAddresses = [...addresses];
+    updatedAddresses[index][field] = value;
+    setAddresses(updatedAddresses);
+  };
+
+  const handleMerchantCategoriesChange = (e) => {
+    const { options } = e.target;
+    const selectedCategories = [];
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].selected) {
+        selectedCategories.push(options[i].value);
+      }
+    }
+    setMerchantCategories(selectedCategories);
+  };
+
   const handleSignUp = async (e) => {
     // Handle sign up logic here
 
     e.preventDefault();
+    if (addresses.length === 0) {
+      setError("At least one address is required");
+    }
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       return;
@@ -67,46 +96,46 @@ const Signup = () => {
       return;
     }
     const formData = {
-      firstName,
-      lastName,
       email,
       phoneNumbers: [phone1, phone2],
       password,
+      brandName,
+      merchantCategories,
+      marketName,
+      addresses,
     };
     const errorLogger = (error) => {
       console.error(error);
       setError(error);
     };
-    const signUp = await signUpApi(formData, (error) => {
+    const signUp = await signupMerchantApi(formData, (error) => {
       console.error(error);
       setError(error);
     });
 
     if (!signUp) return;
-    const loginData = await loginApi({ email, password }, errorLogger);
+    const loginData = await loginMerchantApi({ email, password }, errorLogger);
     if (!loginData) return;
     const { accessToken, refreshToken, id: userId } = loginData;
     storeAuth(userId, accessToken, refreshToken);
-    const userProfile = await getProfileApi(userId, accessToken, errorLogger);
+    const userProfile = await getMerchantProfileApi(
+      userId,
+      accessToken,
+      errorLogger
+    );
     if (!userProfile) return;
     setUserProfile(userProfile);
     messageApi.success("SignUp Successful");
-    setSignupOpen(false);
+    // TODO Redirect instead
   };
 
   return (
     <div
-      className="z-50 fixed inset-0 flex justify-center items-center bg-black bg-opacity-50"
+      className="flex justify-center items-center bg-white overflow-auto"
       ref={modalRef}
       tabIndex={0}
     >
-      <div className="relative bg-white shadow-lg px-4 sm:px-8 p-3 rounded-[5%] w-[90%] max-w-md md:max-w-lg lg:max-w-xl">
-        <button
-          onClick={() => setSignupOpen(false)}
-          className="top-2 right-4 absolute text-4xl text-gray-600 lg:text-3xl hover:text-gray-900"
-        >
-          &times;
-        </button>
+      <div className="relative p-4 w-full max-w-screen-md">
         <img
           src={logo}
           alt="9ja Markets Logo"
@@ -124,40 +153,6 @@ const Signup = () => {
             });
           }}
         >
-          <div className="flex justify-between gap-2 wrap">
-            <div>
-              <label
-                htmlFor="firstName"
-                className="block font-medium text-gray-700 text-sm"
-              >
-                First Name
-              </label>
-              <input
-                type="text"
-                required
-                id="firstName"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                className="border-gray-300 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="lastName"
-                className="block font-medium text-gray-700 text-sm"
-              >
-                Last Name
-              </label>
-              <input
-                type="text"
-                required
-                id="lastName"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                className="border-gray-300 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
-              />
-            </div>
-          </div>
           <div>
             <label
               htmlFor="email"
@@ -210,7 +205,132 @@ const Signup = () => {
               />
             </div>
           </div>
-
+          <div>
+            <label
+              htmlFor="brandName"
+              className="block font-medium text-gray-700 text-sm"
+            >
+              Brand Name
+            </label>
+            <input
+              type="text"
+              id="brandName"
+              value={brandName}
+              onChange={(e) => setBrandName(e.target.value)}
+              className="border-gray-300 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+              required
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="marketName"
+              className="block font-medium text-gray-700 text-sm"
+            >
+              Market Name
+            </label>
+            <input
+              type="text"
+              id="marketName"
+              value={marketName}
+              onChange={(e) => setMarketName(e.target.value)}
+              className="border-gray-300 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+              required
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="merchantCategories"
+              className="block font-medium text-gray-700 text-sm"
+            >
+              Merchant Categories
+            </label>
+            <select
+              id="merchantCategories"
+              value={merchantCategories}
+              onChange={handleMerchantCategoriesChange}
+              className="border-gray-300 px-4 py-2 border rounded-md w-full"
+              required
+            >
+              <option value="CLOTHING">Clothing</option>
+              <option value="GROCERY">Grocery</option>
+              {/* Add more categories as needed */}
+            </select>
+          </div>
+          {addresses.map((address, index) => (
+            <div key={index} className="mb-2 p-2 border rounded-lg">
+              <h4 className="font-medium text-gray-700 text-sm">
+                Address {index + 1}
+              </h4>
+              <input
+                type="text"
+                placeholder="Address"
+                value={address.address}
+                onChange={(e) =>
+                  handleAddressChange(index, "address", e.target.value)
+                }
+                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+                required
+              />
+              <input
+                type="text"
+                placeholder="Name"
+                value={address.name}
+                onChange={(e) =>
+                  handleAddressChange(index, "name", e.target.value)
+                }
+                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+                required
+              />
+              {/* ...other address fields (city, state, zipCode, country)... */}
+              <input
+                type="text"
+                placeholder="City"
+                value={address.city}
+                onChange={(e) =>
+                  handleAddressChange(index, "city", e.target.value)
+                }
+                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+                required
+              />
+              <input
+                type="text"
+                placeholder="State"
+                value={address.state}
+                onChange={(e) =>
+                  handleAddressChange(index, "state", e.target.value)
+                }
+                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+                required
+              />
+              <input
+                type="text"
+                placeholder="Zip Code"
+                value={address.zipCode}
+                onChange={(e) =>
+                  handleAddressChange(index, "zipCode", e.target.value)
+                }
+                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+                required
+              />
+              <input
+                type="text"
+                placeholder="Country"
+                value={address.country}
+                onChange={(e) =>
+                  handleAddressChange(index, "country", e.target.value)
+                }
+                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+                required
+              />
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={handleAddAddress}
+            className="bg-gray-200 mt-2 p-2 rounded-lg w-full text-gray-700"
+          >
+            Add Another Address
+          </button>
           <div>
             <label
               htmlFor="password"
@@ -387,4 +507,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default MerchantSignup;

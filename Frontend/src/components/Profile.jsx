@@ -1,11 +1,17 @@
 import React from "react";
+import { Trash, ChevronsUpDown, Store } from "lucide-react";
+import { Button } from "./ui/button";
+import {
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from "./ui/collapsible";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
   faList,
   faCartShopping,
   faMessage,
-  faGem,
   faWallet,
   faUsers,
   faSignOutAlt,
@@ -17,10 +23,53 @@ import { useContext } from "react";
 import { USER_PROFILE_CONTEXT, LOGOUT_MODAL_CONTEXT } from "@/contexts";
 import { useNavigate } from "react-router-dom";
 import { Avatar } from "antd";
+import { useState } from "react";
 const SUB_PAGES = {
   dashboard: <DefaultProfileContent />,
   product: <ProductPage />,
 };
+function MerchantOptions() {
+  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  return (
+    <div className="my-4 pl-1 cursor-pointer select-none">
+      <Collapsible
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        className="space-y-2 w-auto max-w-full"
+      >
+        <div
+          className="flex justify-between items-center space-x-4 hover:bg-Primary p-1 rounded-md hover:text-white"
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
+        >
+          {/* <div className="flex gap-1">
+          </div> */}
+          <div className="flex items-center gap-2">
+            <Store />
+            <h4 className="font-semibold">Merchant Options</h4>
+          </div>
+          <CollapsibleTrigger asChild>
+            <Button variant="ghost" size="sm" className="p-0 w-9">
+              <ChevronsUpDown className="w-4 h-4" />
+            </Button>
+          </CollapsibleTrigger>
+        </div>
+        <CollapsibleContent className="space-y-2 pl-2">
+          <div
+            className="hover:bg-Primary px-3 py-2 border rounded-md font-mono text-sm hover:text-white transition-colors"
+            onClick={() => {
+              navigate("/merchant-signup");
+            }}
+          >
+            Sign up as Merchant
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
+    </div>
+  );
+}
 const Profile = ({ subpage }) => {
   const { userProfile } = useContext(USER_PROFILE_CONTEXT);
   const { setLogoutOpen } = useContext(LOGOUT_MODAL_CONTEXT);
@@ -29,6 +78,10 @@ const Profile = ({ subpage }) => {
     navigate("/");
     return;
   }
+  const styleSelected = {
+    backgroundColor: "#236C13",
+    fontWeight: 600,
+  };
   return (
     <div className="flex bg-gray-50 min-h-screen">
       {/* Sidebar */}
@@ -47,6 +100,8 @@ const Profile = ({ subpage }) => {
           </div>
         </div>
 
+        <MerchantOptions />
+        {/* <Link to="/merchant-signup">Merchant Options</Link> */}
         {/* Navigation Links */}
         <nav>
           <ul className="space-y-4">
@@ -54,13 +109,7 @@ const Profile = ({ subpage }) => {
               <Link
                 to="/profile/dashboard"
                 className="flex items-center space-x-3 hover:bg-Primary p-2 rounded-lg hover:text-white"
-                style={
-                  subpage === "dashboard"
-                    ? {
-                        backgroundColor: "#236C13",
-                      }
-                    : {}
-                }
+                style={subpage === "dashboard" ? styleSelected : {}}
               >
                 <FontAwesomeIcon icon={faHome} />
                 <span>Dashboard</span>
@@ -70,13 +119,7 @@ const Profile = ({ subpage }) => {
               <Link
                 to="/profile/product"
                 className="flex items-center space-x-3 hover:bg-Primary p-2 rounded-lg hover:text-white"
-                style={
-                  subpage === "product"
-                    ? {
-                        backgroundColor: "#236C13",
-                      }
-                    : {}
-                }
+                style={subpage === "product" ? styleSelected : {}}
               >
                 <FontAwesomeIcon icon={faList} />
                 <span>Products</span>
@@ -86,6 +129,7 @@ const Profile = ({ subpage }) => {
               <Link
                 to="/orders"
                 className="flex items-center space-x-3 hover:bg-Primary p-2 rounded-lg hover:text-white"
+                style={subpage === "product" ? styleSelected : {}}
               >
                 <FontAwesomeIcon icon={faCartShopping} />
                 <span>Orders</span>
@@ -95,6 +139,7 @@ const Profile = ({ subpage }) => {
               <Link
                 to="/customers"
                 className="flex items-center space-x-3 hover:bg-Primary p-2 rounded-lg hover:text-white"
+                style={subpage === "product" ? styleSelected : {}}
               >
                 <FontAwesomeIcon icon={faUsers} />
                 <span>Customers</span>
@@ -104,6 +149,7 @@ const Profile = ({ subpage }) => {
               <Link
                 to="/messages"
                 className="flex items-center space-x-3 hover:bg-Primary p-2 rounded-lg hover:text-white"
+                style={subpage === "product" ? styleSelected : {}}
               >
                 <FontAwesomeIcon icon={faMessage} />
                 <span>Messages</span>
@@ -113,6 +159,7 @@ const Profile = ({ subpage }) => {
               <Link
                 to="/wallet"
                 className="flex items-center space-x-3 hover:bg-Primary p-2 rounded-lg hover:text-white"
+                style={subpage === "product" ? styleSelected : {}}
               >
                 <FontAwesomeIcon icon={faWallet} />
                 <span>Wallet</span>
@@ -122,6 +169,7 @@ const Profile = ({ subpage }) => {
               <Link
                 to="/premium"
                 className="flex items-center space-x-3 hover:bg-Primary p-2 rounded-lg hover:text-white"
+                style={subpage === "product" ? styleSelected : {}}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -140,6 +188,12 @@ const Profile = ({ subpage }) => {
               </Link>
             </li>
             <li className="pt-10">
+              <div>
+                <h3 className="flex items-center space-x-3 hover:bg-red-100 p-2 pt-25 rounded-lg text-red-500 hover:text-red-700 cursor-pointer">
+                  <Trash className="mr-1" size={20} />
+                  Delete Account
+                </h3>
+              </div>
               <div
                 onClick={() => {
                   setLogoutOpen(true);

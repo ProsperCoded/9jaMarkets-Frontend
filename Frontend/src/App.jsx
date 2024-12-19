@@ -25,6 +25,7 @@ import InitializeApp from "./InitializeApp";
 import "./App.css";
 import GoogleSigninRedirect from "./componets-utils/GoogleSigninRedirect";
 import Marketplace from "./components/Marketplace";
+import MerchantSignup from "./components/MerchantSignup";
 
 function AntDesignConfig({ children }) {
   return (
@@ -74,8 +75,10 @@ function App() {
               <Route path="/markets" element={<MarketPage />} />
               <Route path="/malls" element={<MallPage />} />
               <Route path="/marketplace" element={<Marketplace />} />
+              <Route path="/merchant-signup" element={<MerchantSignup />} />
               <Route path="/ad" element={<Adverts />} />
               <Route path="/place-ad" element={<PlaceAD />} />
+
               <Route
                 path="/profile/:subpage?"
                 element={<ProfilePageWrapper />}

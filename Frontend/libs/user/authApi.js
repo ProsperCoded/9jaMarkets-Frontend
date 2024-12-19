@@ -124,3 +124,59 @@ export async function exchangeTokenApi(
   successLogger(responseData.message);
   return responseData.data;
 }
+
+export async function signupMerchantApi(
+  payload,
+  errorLogger = () => {},
+  successLogger = () => {}
+) {
+  const url = new URL("auth/merchant/signup", API_BASE_URL);
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+  const responseData = await response.json();
+  if (!response.ok) {
+    errorLogger(responseData.message);
+    return;
+  }
+  successLogger(responseData.message);
+  return responseData;
+}
+
+export async function loginMerchantApi() {
+  const url = new URL("auth/merchant/login", API_BASE_URL);
+  const loginResponse = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+  const loginData = await loginResponse.json();
+  if (!loginResponse.ok) {
+    errorLogger(loginData.message);
+    console.error(loginData.message); // logservice
+    return;
+  }
+  successLogger(loginData.message);
+  return loginData.data;
+}
+export async function getMerchantProfileApi(accessToken, userId) {
+  const url = new URL(`merchant/profile/${userId}`, API_BASE_URL);
+  const userProfile = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  const userProfileData = await userProfile.json();
+  if (!userProfile.ok) {
+    errorLogger(userProfileData.message);
+    return;
+  }
+  successLogger(userProfileData.message);
+  return userProfileData.data;
+}

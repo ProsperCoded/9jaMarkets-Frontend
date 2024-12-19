@@ -5,6 +5,7 @@ export default {
   theme: {
     fontFamily: {
       stylish: ["'Playfair Display'", "serif"],
+      "zen-tokyo-zoo": ["Zen Tokyo Zoo"],
     },
     extend: {
       colors: {
