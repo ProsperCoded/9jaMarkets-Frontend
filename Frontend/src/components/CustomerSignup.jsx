@@ -292,12 +292,7 @@ const CustomerSignup = () => {
               >
                 {showConfirmPassword ? (
                   // Open eye icon for showing confirm password
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="#236C13"
-                    className="size-5"
-                  >
+                  <svg viewBox="0 0 24 24" fill="#236C13" className="size-5">
                     <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
                     <path
                       fillRule="evenodd"
@@ -386,7 +381,7 @@ const CustomerSignup = () => {
               navigate("/merchant-signup");
               setSignupOpen(false);
             }}
-            className="font-bold text-Primary"
+            className="font-bold text-Primary cursor-pointer"
           >
             Create Merchant Account
           </button>

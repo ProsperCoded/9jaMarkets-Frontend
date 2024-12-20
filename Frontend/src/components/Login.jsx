@@ -9,7 +9,7 @@ import Loading from "../componets-utils/Loading";
 import { getProfileApi } from "../lib/user/authApi";
 import { storeAuth } from "../lib/util";
 import { LOGIN_MODAL_CONTEXT, SIGNUP_MODAL_CONTEXT } from "../contexts";
-
+import { GOOGLE_URL } from "@/config";
 const LoginModal = () => {
   const { loginOpen, setLoginOpen } = useContext(LOGIN_MODAL_CONTEXT);
   const { setSignupOpen } = useContext(SIGNUP_MODAL_CONTEXT);
@@ -176,11 +176,7 @@ const LoginModal = () => {
         </div>
         <div className="flex justify-center space-x-16 mt-4">
           <button className="text-lg">
-            <a
-              href="https://accounts.google.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href={GOOGLE_URL} rel="noopener noreferrer">
               <img src={googleLogo} alt="Google Login" className="h-6" />
             </a>
           </button>
