@@ -1,4 +1,4 @@
-import { REFRESH_TOKEN_DURATION, ACCESS_TOKEN_DURATION } from "../src/config";
+import { REFRESH_TOKEN_DURATION, ACCESS_TOKEN_DURATION } from "../config";
 import Cookies from "js-cookie";
 
 export function storeAuth(

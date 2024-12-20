@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { USER_PROFILE_CONTEXT } from "./contexts";
-import { getProfileApi } from "../libs/user/authApi";
-import { getAuth, storeAuth } from "../libs/util";
-import { refreshTokenApi } from "../libs/user/authApi";
+import { getProfileApi } from "./lib/user/authApi";
+import { getAuth, storeAuth } from "./lib/util";
+import { refreshTokenApi } from "./lib/user/authApi";
 function InitializeApp({ children }) {
   const { userProfile, setUserProfile } = useContext(USER_PROFILE_CONTEXT);
   const errorLogger = (message) => console.error(message);

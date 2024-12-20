@@ -89,7 +89,7 @@ export function UserAvatar({ showName, auth }) {
             setSignupOpen(true);
             e.stopPropagation();
           }}
-          className="bg-green hover:bg-hover-green px-4 py-1 rounded-full text-white transition"
+          className="bg-Primary hover:bg-P2 px-4 py-1 rounded-full text-white transition"
         >
           Sign Up
         </button>

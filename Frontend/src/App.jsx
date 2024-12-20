@@ -17,7 +17,7 @@ import HowItWorks from "./components/how-it-works";
 import MarketPage from "./components/Markets";
 import MallPage from "./components/Malls";
 import Profile from "./components/Profile";
-import PlaceAD from "./components/PlaceAD"
+import PlaceAD from "./components/PlaceAD";
 
 import { ConfigProvider } from "antd";
 import InitializeApp from "./InitializeApp";
@@ -84,10 +84,7 @@ function App() {
                 element={<ProfilePageWrapper />}
               />
               {/* Google signup */}
-              <Route
-                path="/api/v1/auth/google/callback"
-                element={<GoogleSigninRedirect />}
-              />
+              <Route path="/auth" element={<GoogleSigninRedirect />} />
             </Routes>
             <Footer />
           </InitializeApp>

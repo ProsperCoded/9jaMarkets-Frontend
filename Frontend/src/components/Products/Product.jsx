@@ -25,10 +25,7 @@ export function ProductCard({ product }) {
             <Trash2 className="w-4 h-4" />
             <span className="sr-only">Delete</span>
           </Button>
-          <Button
-            size="sm"
-            className="bg-green hover:bg-hover-green rounded-full h-6"
-          >
+          <Button size="sm" className="bg-Primary hover:bg-P2 rounded-full h-6">
             <Plus />
             Run as Ad
           </Button>

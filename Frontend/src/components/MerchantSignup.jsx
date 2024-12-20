@@ -8,8 +8,8 @@ import {
   getMerchantProfileApi,
   loginMerchantApi,
   signupMerchantApi,
-} from "../../libs/user/authApi.js";
-import { storeAuth } from "../../libs/util";
+} from "../lib/user/authApi.js";
+import { storeAuth } from "../lib/util";
 import Loading from "../componets-utils/Loading.jsx";
 import { GOOGLE_URL } from "@/config";
 import { LOGIN_MODAL_CONTEXT } from "../contexts";
@@ -142,7 +142,7 @@ const MerchantSignup = () => {
           className="mx-auto mb-2 h-10 md:h-14 lg:h-20"
         />
         <h2 className="mb-2 font-bold text-base text-center text-Primary lg:text-xl">
-          Welcome to 9ja Markets
+          Join the 9ja Markets Family and Start Selling Today!
         </h2>
         <form
           className="space-y-4"
@@ -468,7 +468,7 @@ const MerchantSignup = () => {
             onClick={() => setLoginOpen(true)}
             className="font-bold text-Primary"
           >
-            Login
+            Login as Merchant
           </button>
         </p>
         <div className="flex justify-center space-x-16 mt-2 md:mt-3">

@@ -3,11 +3,11 @@ import logo from "../assets/Logo.svg";
 import googleLogo from "../assets/Google Icon.svg";
 import facebookLogo from "../assets/facebook.png";
 import appleLogo from "../assets/apple.svg";
-import { loginApi } from "../../libs/user/authApi";
+import { loginApi } from "../lib/user/authApi";
 import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "../contexts";
 import Loading from "../componets-utils/Loading";
-import { getProfileApi } from "../../libs/user/authApi";
-import { storeAuth } from "../../libs/util";
+import { getProfileApi } from "../lib/user/authApi";
+import { storeAuth } from "../lib/util";
 import { LOGIN_MODAL_CONTEXT, SIGNUP_MODAL_CONTEXT } from "../contexts";
 
 const LoginModal = () => {
@@ -37,7 +37,7 @@ const LoginModal = () => {
     const userProfile_ = await getProfileApi(userId, accessToken, errorLogger);
     if (!userProfile_) return;
     setUserProfile(userProfile_);
-    messageApi.success("You are logged In");
+    messageApi.success("Login successful");
     setLoginOpen(false);
   };
   return (
