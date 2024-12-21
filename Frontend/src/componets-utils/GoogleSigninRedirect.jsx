@@ -2,7 +2,11 @@ import React, { useEffect } from "react";
 import { useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "../contexts";
-import { exchangeTokenApi, getProfileApi, loginApi } from "../lib/user/authApi";
+import {
+  exchangeTokenApi,
+  getCustomerProfileApi,
+  loginApi,
+} from "../lib/user/authApi";
 import { useNavigate } from "react-router-dom";
 import { storeAuth } from "../lib/util";
 import { ArrowLeft } from "lucide-react";
@@ -27,7 +31,7 @@ const GoogleSigninRedirect = () => {
       });
       if (!data) return;
       storeAuth(data.id, data.accessToken, data.refreshToken, true);
-      const userProfile_ = await getProfileApi(
+      const userProfile_ = await getCustomerProfileApi(
         data.id,
         data.accessToken,
         errorLogger

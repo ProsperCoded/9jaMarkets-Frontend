@@ -4,7 +4,11 @@ import googleLogo from "../assets/Google Icon.svg";
 import facebookLogo from "../assets/facebook.png";
 import appleLogo from "../assets/apple.svg";
 import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "../contexts";
-import { getProfileApi, loginApi, signUpApi } from "../lib/user/authApi.js";
+import {
+  getCustomerProfileApi,
+  loginApi,
+  signUpApi,
+} from "../lib/user/authApi.js";
 import { storeAuth } from "../lib/util";
 import Loading from "../componets-utils/Loading.jsx";
 import { useEffect } from "react";
@@ -89,7 +93,11 @@ const CustomerSignup = () => {
     if (!loginData) return;
     const { accessToken, refreshToken, id: userId } = loginData;
     storeAuth(userId, accessToken, refreshToken);
-    const userProfile = await getProfileApi(userId, accessToken, errorLogger);
+    const userProfile = await getCustomerProfileApi(
+      userId,
+      accessToken,
+      errorLogger
+    );
     if (!userProfile) return;
     setUserProfile(userProfile);
     messageApi.success("SignUp Successful");
@@ -140,7 +148,7 @@ const CustomerSignup = () => {
                 id="firstName"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
-                className="border-gray-300 p-2 border rounded-lg focus:ring-Primary w-full focus:outline-none focus:ring-2"
+                className="border-gray-300 p-2 border rounded-lg focus:ring-Primary focus:ring-2 w-full focus:outline-none"
               />
             </div>
             <div>
@@ -156,7 +164,7 @@ const CustomerSignup = () => {
                 id="lastName"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
-                className="border-gray-300 p-2 border rounded-lg focus:ring-Primary w-full focus:outline-none focus:ring-2"
+                className="border-gray-300 p-2 border rounded-lg focus:ring-Primary focus:ring-2 w-full focus:outline-none"
               />
             </div>
           </div>
@@ -173,7 +181,7 @@ const CustomerSignup = () => {
               value={email}
               required
               onChange={(e) => setEmail(e.target.value)}
-              className="border-gray-300 p-2 border rounded-lg focus:ring-Primary w-full focus:outline-none focus:ring-2"
+              className="border-gray-300 p-2 border rounded-lg focus:ring-Primary focus:ring-2 w-full focus:outline-none"
             />
           </div>
           <div className="flex justify-between gap-2 wrap">
@@ -191,7 +199,7 @@ const CustomerSignup = () => {
                 max={11}
                 value={phone1}
                 onChange={(e) => setPhone1(e.target.value)}
-                className="border-gray-300 mt-1 p-2 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-Primary"
+                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-Primary w-full focus:outline-none"
               />
             </div>
             <div>
@@ -208,7 +216,7 @@ const CustomerSignup = () => {
                 max={11}
                 value={phone2}
                 onChange={(e) => setPhone2(e.target.value)}
-                className="border-gray-300 mt-1 p-2 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-Primary"
+                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-Primary w-full focus:outline-none"
               />
             </div>
           </div>

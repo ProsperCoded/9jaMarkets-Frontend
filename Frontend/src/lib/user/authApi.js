@@ -46,7 +46,7 @@ export async function loginApi(
   return loginData.data;
 }
 
-export async function getProfileApi(
+export async function getCustomerProfileApi(
   userId,
   accessToken,
   errorLogger = () => {},
@@ -69,10 +69,10 @@ export async function getProfileApi(
 
 export async function refreshTokenApi(
   refreshToken,
-  errorLogger = () => {},
-  successLogger = () => {}
+  endpoint,
+  errorLogger = () => {}
 ) {
-  const url = new URL("auth/customer/refresh-token", API_BASE_URL);
+  const url = new URL(endpoint, API_BASE_URL);
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -86,6 +86,20 @@ export async function refreshTokenApi(
     return;
   }
   return responseData.data;
+}
+export async function refreshCustomerTokenApi(
+  refreshToken,
+  errorLogger = () => {}
+) {
+  let endpoint = "auth/customer/refresh-token";
+  return refreshTokenApi(refreshToken, endpoint, errorLogger);
+}
+export async function refreshMerchantTokenApi(
+  refreshToken,
+  errorLogger = () => {}
+) {
+  let endpoint = "auth/merchant/refresh-token";
+  return refreshTokenApi(refreshToken, endpoint, errorLogger);
 }
 export async function logoutApi(refreshToken, errorLogger = () => {}) {
   const url = new URL("auth/customer/logout", API_BASE_URL);
@@ -144,10 +158,15 @@ export async function signupMerchantApi(
     return;
   }
   successLogger(responseData.message);
+  console.log({ responseData });
   return responseData;
 }
 
-export async function loginMerchantApi() {
+export async function loginMerchantApi(
+  payload,
+  errorLogger = () => {},
+  successLogger = () => {}
+) {
   const url = new URL("auth/merchant/login", API_BASE_URL);
   const loginResponse = await fetch(url, {
     method: "POST",
@@ -165,8 +184,13 @@ export async function loginMerchantApi() {
   successLogger(loginData.message);
   return loginData.data;
 }
-export async function getMerchantProfileApi(accessToken, userId) {
-  const url = new URL(`merchant/profile/${userId}`, API_BASE_URL);
+export async function getMerchantProfileApi(
+  userId,
+  accessToken,
+  errorLogger = () => {},
+  successLogger = () => {}
+) {
+  const url = new URL(`merchant/${userId}`, API_BASE_URL);
   const userProfile = await fetch(url, {
     headers: {
       Authorization: `Bearer ${accessToken}`,

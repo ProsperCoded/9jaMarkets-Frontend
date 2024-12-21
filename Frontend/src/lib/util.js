@@ -5,9 +5,12 @@ export function storeAuth(
   userId,
   accessToken,
   refreshToken,
+  userType = "customer",
   rememberMe = true
 ) {
   Cookies.set("userId", userId, { expires: ACCESS_TOKEN_DURATION });
+  // Usertype can be 'customer' or 'merchant'
+  localStorage.setItem("userType", userType);
   if (rememberMe) {
     Cookies.set("accessToken", accessToken, { expires: ACCESS_TOKEN_DURATION });
     Cookies.set("refreshToken", refreshToken, {
@@ -24,8 +27,9 @@ export function storeAuth(
 export function getAuth() {
   const userId = Cookies.get("userId");
   const accessToken = Cookies.get("accessToken");
+  const userType = localStorage.getItem("userType");
   const refreshToken = Cookies.get("refreshToken");
-  return { userId, accessToken, refreshToken };
+  return { userId, accessToken, refreshToken, userType };
 }
 export function deleteAuth() {
   Cookies.remove("userId");

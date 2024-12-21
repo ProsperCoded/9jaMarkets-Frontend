@@ -6,7 +6,7 @@ import appleLogo from "../assets/apple.svg";
 import { loginApi } from "../lib/user/authApi";
 import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "../contexts";
 import Loading from "../componets-utils/Loading";
-import { getProfileApi } from "../lib/user/authApi";
+import { getCustomerProfileApi } from "../lib/user/authApi";
 import { storeAuth } from "../lib/util";
 import { LOGIN_MODAL_CONTEXT, SIGNUP_MODAL_CONTEXT } from "../contexts";
 import { GOOGLE_URL } from "@/config";
@@ -34,7 +34,11 @@ const LoginModal = () => {
     if (!loginData) return;
     const { accessToken, refreshToken, id: userId } = loginData;
     storeAuth(userId, accessToken, refreshToken, rememberMe);
-    const userProfile_ = await getProfileApi(userId, accessToken, errorLogger);
+    const userProfile_ = await getCustomerProfileApi(
+      userId,
+      accessToken,
+      errorLogger
+    );
     if (!userProfile_) return;
     setUserProfile(userProfile_);
     messageApi.success("Login successful");

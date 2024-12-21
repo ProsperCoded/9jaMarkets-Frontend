@@ -15,6 +15,7 @@ export function UserAvatar({ showName, auth }) {
   const { setLoginOpen } = useContext(LOGIN_MODAL_CONTEXT);
   const { setLogoutOpen } = useContext(LOGOUT_MODAL_CONTEXT);
   const navigate = useNavigate();
+  const name = userProfile && (userProfile.firstName || userProfile.brandName);
   const options = (
     <div>
       <ul className="space-y-2 mx-2 px-2 min-w-[10ch]">
@@ -53,12 +54,10 @@ export function UserAvatar({ showName, auth }) {
                 style={{ backgroundColor: "#21CA1B", verticalAlign: "middle" }}
                 size="medium"
               >
-                <span className="font-semibold">
-                  {userProfile.firstName[0]}
-                </span>
+                <span className="font-semibold">{name[0]}</span>
               </Avatar>
               <span className="ml-2 font-semibold text-Primary algin-middle">
-                {userProfile.firstName}
+                {name}
               </span>
             </div>
           ) : (
@@ -66,7 +65,7 @@ export function UserAvatar({ showName, auth }) {
               style={{ backgroundColor: "#21CA1B", verticalAlign: "middle" }}
               size="medium"
             >
-              <span className="font-semibold">{userProfile.firstName[0]}</span>
+              <span className="font-semibold">{name[0]}</span>
             </Avatar>
           )}
         </div>
