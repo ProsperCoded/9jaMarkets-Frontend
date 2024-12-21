@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Button, Modal } from "antd";
 import { MessageCircleWarning } from "lucide-react";
-import { logoutApi } from "../lib/user/authApi";
+import { logoutCustomer, logoutMerchant } from "../lib/user/authApi";
 import { getAuth, deleteAuth } from "../lib/util";
 import { MESSAGE_API_CONTEXT } from "@/contexts";
 import { USER_PROFILE_CONTEXT } from "@/contexts";
@@ -9,13 +9,21 @@ const Logout = ({ logoutOpen, setLogoutOpen }) => {
   const messageApi = useContext(MESSAGE_API_CONTEXT);
   const { setUserProfile } = useContext(USER_PROFILE_CONTEXT);
   async function logoutHandler() {
-    const { refreshToken } = getAuth();
+    const { refreshToken, userType } = getAuth();
     if (refreshToken) {
-      const logoutMessage = await logoutApi(refreshToken, (error) => {
-        if (error) {
-          messageApi.error("An error occurred while logging out");
-        }
-      });
+      if (userType === "customer") {
+        await logoutCustomer(refreshToken, (error) => {
+          if (error) {
+            messageApi.error("An error occurred while logging out");
+          }
+        });
+      } else if (userType === "merchant") {
+        await logoutMerchant(refreshToken, (error) => {
+          if (error) {
+            messageApi.error("An error occurred while logging out");
+          }
+        });
+      }
     }
     deleteAuth();
     setUserProfile(null);

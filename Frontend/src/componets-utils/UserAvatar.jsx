@@ -8,14 +8,17 @@ import {
 import { Avatar, Popover } from "antd";
 
 import { useNavigate } from "react-router-dom";
-import { LogOut } from "lucide-react";
+import { useEffect } from "react";
 export function UserAvatar({ showName, auth }) {
   const { userProfile } = useContext(USER_PROFILE_CONTEXT);
   const { setSignupOpen } = useContext(SIGNUP_MODAL_CONTEXT);
   const { setLoginOpen } = useContext(LOGIN_MODAL_CONTEXT);
   const { setLogoutOpen } = useContext(LOGOUT_MODAL_CONTEXT);
   const navigate = useNavigate();
-  const name = userProfile && (userProfile.firstName || userProfile.brandName);
+  useEffect(() => {
+    console.log("user Profile changed", userProfile);
+  }, [userProfile]);
+  let name = userProfile && (userProfile.firstName || userProfile.brandName);
   const options = (
     <div>
       <ul className="space-y-2 mx-2 px-2 min-w-[10ch]">

@@ -129,7 +129,7 @@ const Profile = ({ subpage }) => {
               <Link
                 to="/orders"
                 className="flex items-center space-x-3 hover:bg-Primary p-2 rounded-lg hover:text-white"
-                style={subpage === "product" ? styleSelected : {}}
+                style={subpage === "orders" ? styleSelected : {}}
               >
                 <FontAwesomeIcon icon={faCartShopping} />
                 <span>Orders</span>
@@ -139,7 +139,7 @@ const Profile = ({ subpage }) => {
               <Link
                 to="/customers"
                 className="flex items-center space-x-3 hover:bg-Primary p-2 rounded-lg hover:text-white"
-                style={subpage === "product" ? styleSelected : {}}
+                style={subpage === "customers" ? styleSelected : {}}
               >
                 <FontAwesomeIcon icon={faUsers} />
                 <span>Customers</span>
@@ -149,7 +149,7 @@ const Profile = ({ subpage }) => {
               <Link
                 to="/messages"
                 className="flex items-center space-x-3 hover:bg-Primary p-2 rounded-lg hover:text-white"
-                style={subpage === "product" ? styleSelected : {}}
+                style={subpage === "messages" ? styleSelected : {}}
               >
                 <FontAwesomeIcon icon={faMessage} />
                 <span>Messages</span>
@@ -159,7 +159,7 @@ const Profile = ({ subpage }) => {
               <Link
                 to="/wallet"
                 className="flex items-center space-x-3 hover:bg-Primary p-2 rounded-lg hover:text-white"
-                style={subpage === "product" ? styleSelected : {}}
+                style={subpage === "wallet" ? styleSelected : {}}
               >
                 <FontAwesomeIcon icon={faWallet} />
                 <span>Wallet</span>
@@ -169,7 +169,7 @@ const Profile = ({ subpage }) => {
               <Link
                 to="/premium"
                 className="flex items-center space-x-3 hover:bg-Primary p-2 rounded-lg hover:text-white"
-                style={subpage === "product" ? styleSelected : {}}
+                style={subpage === "premium" ? styleSelected : {}}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -188,12 +188,6 @@ const Profile = ({ subpage }) => {
               </Link>
             </li>
             <li className="pt-10">
-              <div>
-                <h3 className="flex items-center space-x-3 hover:bg-red-100 p-2 pt-25 rounded-lg text-red-500 hover:text-red-700 cursor-pointer">
-                  <Trash className="mr-1" size={20} />
-                  Delete Account
-                </h3>
-              </div>
               <div
                 onClick={() => {
                   setLogoutOpen(true);
@@ -202,6 +196,12 @@ const Profile = ({ subpage }) => {
               >
                 <FontAwesomeIcon icon={faSignOutAlt} />
                 <span>Logout</span>
+              </div>
+              <div>
+                <h3 className="flex items-center space-x-3 hover:bg-red-100 p-2 pt-25 rounded-lg text-red-500 hover:text-red-700 cursor-pointer">
+                  <Trash className="mr-1" size={20} />
+                  Delete Account
+                </h3>
               </div>
             </li>
           </ul>

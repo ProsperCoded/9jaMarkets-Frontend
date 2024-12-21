@@ -3,11 +3,15 @@ import logo from "../assets/Logo.svg";
 import googleLogo from "../assets/Google Icon.svg";
 import facebookLogo from "../assets/facebook.png";
 import appleLogo from "../assets/apple.svg";
-import { loginApi } from "../lib/user/authApi";
+import {
+  getMerchantProfileApi,
+  loginCustomerApi,
+  loginMerchantApi,
+} from "../lib/user/authApi";
 import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "../contexts";
 import Loading from "../componets-utils/Loading";
 import { getCustomerProfileApi } from "../lib/user/authApi";
-import { storeAuth } from "../lib/util";
+import { storeAuth, getAuth } from "../lib/util";
 import { LOGIN_MODAL_CONTEXT, SIGNUP_MODAL_CONTEXT } from "../contexts";
 import { GOOGLE_URL } from "@/config";
 const LoginModal = () => {
@@ -21,6 +25,10 @@ const LoginModal = () => {
   const [loading, setLoading] = useState(false);
   const messageApi = useContext(MESSAGE_API_CONTEXT);
   const { setUserProfile } = useContext(USER_PROFILE_CONTEXT);
+  const { userType } = getAuth();
+  const [loginAsMerchant, setLoginAsMerchant] = useState(
+    userType === "merchant" || loginOpen === "merchant"
+  );
   if (!loginOpen) return null; // Don't render if modal is hidden
   const handleLogin = async () => {
     // Handle form submission
@@ -30,17 +38,31 @@ const LoginModal = () => {
       setError(error);
     };
     const payload = { email, password };
-    const loginData = await loginApi(payload, errorLogger);
-    if (!loginData) return;
-    const { accessToken, refreshToken, id: userId } = loginData;
-    storeAuth(userId, accessToken, refreshToken, rememberMe);
-    const userProfile_ = await getCustomerProfileApi(
-      userId,
-      accessToken,
-      errorLogger
-    );
-    if (!userProfile_) return;
-    setUserProfile(userProfile_);
+    if (!loginAsMerchant) {
+      const loginData = await loginCustomerApi(payload, errorLogger);
+      if (!loginData) return;
+      const { accessToken, refreshToken, id: userId } = loginData;
+      storeAuth(userId, accessToken, refreshToken, "customer", rememberMe);
+      const userProfile_ = await getCustomerProfileApi(
+        userId,
+        accessToken,
+        errorLogger
+      );
+      if (!userProfile_) return;
+      setUserProfile(userProfile_);
+    } else if (loginAsMerchant) {
+      const loginData = await loginMerchantApi(payload, errorLogger);
+      if (!loginData) return;
+      const { accessToken, refreshToken, id: userId } = loginData;
+      storeAuth(userId, accessToken, refreshToken, "merchant", rememberMe);
+      const userProfile_ = await getMerchantProfileApi(
+        userId,
+        accessToken,
+        errorLogger
+      );
+      if (!userProfile_) return;
+      setUserProfile(userProfile_);
+    }
     messageApi.success("Login successful");
     setLoginOpen(false);
   };
@@ -154,6 +176,17 @@ const LoginModal = () => {
             <a href="/" className="text-Primary text-sm hover:underline">
               Forgot Password?
             </a>
+          </div>
+          <div className="flex justify-between items-center">
+            <label className="flex items-center">
+              <input
+                type="checkbox"
+                className="mr-2"
+                checked={loginAsMerchant}
+                onChange={() => setLoginAsMerchant((prev) => !prev)}
+              />
+              Login as Merchant
+            </label>
           </div>
           {error && (
             <p className="font-semibold text-center text-red-500 text-sm">

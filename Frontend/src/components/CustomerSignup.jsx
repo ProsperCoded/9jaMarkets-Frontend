@@ -6,7 +6,7 @@ import appleLogo from "../assets/apple.svg";
 import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "../contexts";
 import {
   getCustomerProfileApi,
-  loginApi,
+  loginCustomerApi,
   signUpApi,
 } from "../lib/user/authApi.js";
 import { storeAuth } from "../lib/util";
@@ -89,7 +89,7 @@ const CustomerSignup = () => {
     });
 
     if (!signUp) return;
-    const loginData = await loginApi({ email, password }, errorLogger);
+    const loginData = await loginCustomerApi({ email, password }, errorLogger);
     if (!loginData) return;
     const { accessToken, refreshToken, id: userId } = loginData;
     storeAuth(userId, accessToken, refreshToken);
