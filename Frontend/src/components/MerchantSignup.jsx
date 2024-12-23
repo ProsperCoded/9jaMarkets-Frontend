@@ -27,7 +27,7 @@ const MerchantSignup = () => {
   const [loading, setLoading] = useState(false);
   const [brandName, setBrandName] = useState("");
   const [merchantCategories, setMerchantCategories] = useState([]);
-  const [marketName, setMarketName] = useState("");
+  const [marketName, setMarketName] = useState("Friends Market");
   const [addresses, setAddresses] = useState([
     {
       address: "",
