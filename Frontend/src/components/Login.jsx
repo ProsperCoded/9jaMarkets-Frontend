@@ -14,6 +14,7 @@ import { getCustomerProfileApi } from "../lib/user/authApi";
 import { storeAuth, getAuth } from "../lib/util";
 import { LOGIN_MODAL_CONTEXT, SIGNUP_MODAL_CONTEXT } from "../contexts";
 import { GOOGLE_URL } from "@/config";
+import { useEffect } from "react";
 const LoginModal = () => {
   const { loginOpen, setLoginOpen } = useContext(LOGIN_MODAL_CONTEXT);
   const { setSignupOpen } = useContext(SIGNUP_MODAL_CONTEXT);
@@ -29,7 +30,13 @@ const LoginModal = () => {
   const [loginAsMerchant, setLoginAsMerchant] = useState(
     userType === "merchant" || loginOpen === "merchant"
   );
+
+  useEffect(() => {
+    if (loginOpen === "merchant") setLoginAsMerchant(true);
+  }, [loginOpen]);
+
   if (!loginOpen) return null; // Don't render if modal is hidden
+
   const handleLogin = async () => {
     // Handle form submission
     setLoading(true);
