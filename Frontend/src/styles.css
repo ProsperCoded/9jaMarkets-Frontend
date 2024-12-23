@@ -13,7 +13,7 @@
 }
 
 .cancel-button {
-  @apply bg-gray-200 text-gray-700 border-none;
+  @apply bg-gray-200 hover:bg-gray-50 border-none text-gray-700;
   @apply hover:text-stone-900 !important;
 }
 

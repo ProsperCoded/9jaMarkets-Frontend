@@ -4,11 +4,8 @@ import googleLogo from "../assets/Google Icon.svg";
 import facebookLogo from "../assets/facebook.png";
 import appleLogo from "../assets/apple.svg";
 import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "../contexts";
-import {
-  getMerchantProfileApi,
-  loginMerchantApi,
-  signupMerchantApi,
-} from "../lib/user/authApi.js";
+import { getMerchantProfileApi } from "../lib/api/serviceApi";
+import { loginMerchantApi, signupMerchantApi } from "../lib/api/authApi.js";
 import { storeAuth } from "../lib/util";
 import Loading from "../componets-utils/Loading.jsx";
 import { GOOGLE_URL } from "@/config";

@@ -2,14 +2,11 @@ import React, { useEffect } from "react";
 import { useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "../contexts";
+import { getCustomerProfileApi } from "../lib/api/serviceApi";
 import {
-  exchangeTokenApi,
   exchangeTokenCustomerApi,
   exchangeTokenMerchantApi,
-  getCustomerProfileApi,
-  loginCustomerApi,
-  loginMerchantApi,
-} from "../lib/user/authApi";
+} from "../lib/api/authApi";
 import { useNavigate } from "react-router-dom";
 import { storeAuth } from "../lib/util";
 import { ArrowLeft } from "lucide-react";

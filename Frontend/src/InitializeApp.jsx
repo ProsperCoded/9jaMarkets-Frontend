@@ -1,11 +1,11 @@
 import { useContext, useEffect } from "react";
 import { USER_PROFILE_CONTEXT } from "./contexts";
+import { getMerchantProfileApi } from "./lib/api/serviceApi";
+import { getCustomerProfileApi } from "./lib/api/serviceApi";
 import {
-  getMerchantProfileApi,
-  getCustomerProfileApi,
   refreshCustomerTokenApi,
   refreshMerchantTokenApi,
-} from "./lib/user/authApi";
+} from "./lib/api/authApi";
 import { getAuth, storeAuth } from "./lib/util";
 function InitializeApp({ children }) {
   const { userProfile, setUserProfile } = useContext(USER_PROFILE_CONTEXT);

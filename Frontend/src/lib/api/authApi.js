@@ -55,27 +55,6 @@ export async function loginMerchantApi(payload, errorLogger, successLogger) {
   return loginApi(payload, endpoint, errorLogger, successLogger);
 }
 
-export async function getCustomerProfileApi(
-  userId,
-  accessToken,
-  errorLogger = () => {},
-  successLogger = () => {}
-) {
-  const url = new URL(`customer/profile/${userId}`, API_BASE_URL);
-  const userProfile = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-  const userProfileData = await userProfile.json();
-  if (!userProfile.ok) {
-    errorLogger(userProfileData.message);
-    return;
-  }
-  successLogger(userProfileData.message);
-  return userProfileData.data;
-}
-
 export async function refreshTokenApi(
   refreshToken,
   endpoint,
@@ -200,24 +179,22 @@ export async function signupMerchantApi(
   console.log({ responseData });
   return responseData;
 }
-
-export async function getMerchantProfileApi(
-  userId,
-  accessToken,
-  errorLogger = () => {},
-  successLogger = () => {}
+export async function sendVerificationCustomerEmailApi(
+  email,
+  errorLogger = () => {}
 ) {
-  const url = new URL(`merchant/${userId}`, API_BASE_URL);
-  const userProfile = await fetch(url, {
+  const url = new URL("auth/customer/email-verification", API_BASE_URL);
+  const response = await fetch(url, {
+    method: "POST",
     headers: {
-      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
     },
+    body: JSON.stringify({ email }),
   });
-  const userProfileData = await userProfile.json();
-  if (!userProfile.ok) {
-    errorLogger(userProfileData.message);
+  const responseData = await response.json();
+  if (!response.ok) {
+    errorLogger(responseData.message);
     return;
   }
-  successLogger(userProfileData.message);
-  return userProfileData.data;
+  return responseData.message;
 }

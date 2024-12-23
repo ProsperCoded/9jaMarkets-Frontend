@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Button, Modal } from "antd";
 import { MessageCircleWarning } from "lucide-react";
-import { logoutCustomer, logoutMerchant } from "../lib/user/authApi";
+import { logoutCustomer, logoutMerchant } from "../lib/api/authApi";
 import { getAuth, deleteAuth } from "../lib/util";
 import { MESSAGE_API_CONTEXT } from "@/contexts";
 import { USER_PROFILE_CONTEXT } from "@/contexts";

@@ -7,34 +7,34 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { Card } from "./ui/card";
 import { MapPin } from "lucide-react";
-import { USER_PROFILE_CONTEXT } from "@/contexts";
-
-const initialProfile = {
-  email: "example3@example.com",
-  password: "StrongPassword123!",
-  firstName: "John",
-  lastName: "Doe",
-  dateOfBirth: "1990-01-01",
-  phoneNumbers: ["123-456-7890"],
-  addresses: [
-    {
-      address: "123 Main St",
-      city: "Anytown",
-      state: "CA",
-      country: "USA",
-      zipCode: "12345",
-    },
-  ],
-};
+import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "@/contexts";
+import { updateCustomerProfileApi } from "@/lib/api/serviceApi";
+import { Popconfirm } from "antd";
+import { ConfigProvider } from "antd";
+import OTPModal from "@/componets-utils/OTPModal";
+import { sendVerificationCustomerEmailApi } from "@/lib/api/authApi";
 
 export default function EditProfile() {
-  // const [profile, setProfile] = useState(initialProfile);
+  const messageApi = useContext(MESSAGE_API_CONTEXT);
   const { userProfile: profile, setUserProfile: setProfile } =
     useContext(USER_PROFILE_CONTEXT);
+  const errorLogger = (message) => {
+    messageApi.error("Failed to update the field ");
+    console.error(message);
+  };
   const handleUpdate = async (field, value) => {
     // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setProfile((prev) => ({ ...prev, [field]: value }));
+    const payload = { [field]: value };
+    const updatedData = await updateCustomerProfileApi(
+      payload,
+      errorLogger,
+      (msg) => {
+        console.log(`Updated ${field} successfully`, msg);
+      }
+    );
+    if (!updatedData) return;
+    console.log({ updatedData });
+    setProfile(updatedData);
   };
 
   const handleAddAddress = () => {
@@ -77,7 +77,7 @@ export default function EditProfile() {
           <div className="gap-4 grid">
             <h2 className="font-semibold text-xl">Personal Information</h2>
             <div className="gap-4 grid bg-card shadow p-4 rounded-lg">
-              <ProfileField
+              <EmailField
                 label="Email"
                 value={profile.email}
                 onUpdate={(value) => handleUpdate("email", value)}
@@ -109,13 +109,23 @@ export default function EditProfile() {
                 <ProfileField
                   label="Phone 1"
                   value={profile.phoneNumbers[0].number}
-                  onUpdate={(value) => handleUpdate("firstName", value)}
+                  onUpdate={(value) =>
+                    handleUpdate("phoneNumbers", [
+                      value,
+                      profile.phoneNumbers[1].number,
+                    ])
+                  }
                   required
                 />
                 <ProfileField
                   label="Phone 2"
                   value={profile.phoneNumbers[1].number}
-                  onUpdate={(value) => handleUpdate("lastName", value)}
+                  onUpdate={(value) =>
+                    handleUpdate("phoneNumbers", [
+                      profile.phoneNumbers[0].number,
+                      value,
+                    ])
+                  }
                   required
                 />
               </div>
@@ -159,6 +169,128 @@ export default function EditProfile() {
   );
 }
 
+export function EmailField({
+  label,
+  value,
+  onUpdate,
+  type = "text",
+  required = false,
+  className,
+}) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editValue, setEditValue] = useState(value);
+  const [isLoading, setIsLoading] = useState(false);
+  const [confirmedOTP, setConfirmedOTP] = useState(false);
+  const [OTPModalOpen, setOTPMOdalOpen] = useState(false);
+  const messageApi = useContext(MESSAGE_API_CONTEXT);
+  const errorLogger = (message) => {
+    messageApi.error("Failed to update the field ");
+    console.error(message);
+  };
+  // const [popConfirmOpen, setPopConfirmOpen] = useState(false);
+  const sendVerification = async () => {
+    const email = value;
+    const response = await sendVerificationCustomerEmailApi(email, errorLogger);
+    if (response) {
+      console.log(response);
+      messageApi.success("Email Verification Sent");
+      // setConfirmedOTP(true);
+      setOTPMOdalOpen(true);
+    }
+  };
+  const handleUpdate = async () => {
+    if (!editValue && required) return;
+
+    setIsLoading(true);
+    try {
+      await onUpdate(editValue);
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Failed to update:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className={cn("flex flex-col space-y-2", className)}>
+      <OTPModal open={OTPModalOpen} setOpen={(open) => setOTPMOdalOpen(open)} />
+      <div className="flex justify-between items-center">
+        <label className="font-medium text-muted-foreground text-sm">
+          {label}
+        </label>
+        {!isEditing ? (
+          <ConfigProvider
+            theme={{
+              components: {
+                Popconfirm: {},
+              },
+            }}
+          >
+            <Popconfirm
+              title="Are you sure you want to change your email?"
+              description="New Email will Serve as New Identification "
+              onConfirm={() => sendVerification()}
+              // onCancel={() => setPopConfirmOpen(false)}
+              // open={popConfirmOpen}
+              okText="Change Email"
+              okButtonProps={{ danger: true }}
+              cancelButtonProps={{ type: "primary" }}
+              cancelText="Cancel"
+            >
+              <Button
+                variant="ghost"
+                size="icon"
+                className="w-8 h-8"
+                onClick={() => {
+                  // setPopConfirmOpen(true);
+                }}
+              >
+                <Pencil className="w-4 h-4 text-[#F8912D]" />
+              </Button>
+            </Popconfirm>
+          </ConfigProvider>
+        ) : (
+          <div className="flex space-x-1">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleUpdate}
+              disabled={isLoading}
+              className="w-8 h-8"
+            >
+              <Check className="w-4 h-4 text-[#21CA1B]" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => {
+                setIsEditing(false);
+                setEditValue(value);
+              }}
+              disabled={isLoading}
+              className="w-8 h-8"
+            >
+              <X className="w-4 h-4 text-destructive" />
+            </Button>
+          </div>
+        )}
+      </div>
+      {isEditing ? (
+        <Input
+          type={type}
+          value={editValue}
+          onChange={(e) => setEditValue(e.target.value)}
+          className="border-[#236C13] focus-visible:ring-[#21CA1B]"
+          required={required}
+          disabled={isLoading}
+        />
+      ) : (
+        <p className="text-foreground">{value}</p>
+      )}
+    </div>
+  );
+}
 export function ProfileField({
   label,
   value,

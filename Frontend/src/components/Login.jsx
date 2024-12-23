@@ -3,14 +3,11 @@ import logo from "../assets/Logo.svg";
 import googleLogo from "../assets/Google Icon.svg";
 import facebookLogo from "../assets/facebook.png";
 import appleLogo from "../assets/apple.svg";
-import {
-  getMerchantProfileApi,
-  loginCustomerApi,
-  loginMerchantApi,
-} from "../lib/user/authApi";
+import { getMerchantProfileApi } from "../lib/api/serviceApi";
+import { loginCustomerApi, loginMerchantApi } from "../lib/api/authApi";
 import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "../contexts";
 import Loading from "../componets-utils/Loading";
-import { getCustomerProfileApi } from "../lib/user/authApi";
+import { getCustomerProfileApi } from "../lib/api/serviceApi";
 import { storeAuth, getAuth } from "../lib/util";
 import { LOGIN_MODAL_CONTEXT, SIGNUP_MODAL_CONTEXT } from "../contexts";
 import { GOOGLE_URL } from "@/config";

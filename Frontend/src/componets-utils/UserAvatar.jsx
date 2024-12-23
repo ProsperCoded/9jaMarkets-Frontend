@@ -42,7 +42,12 @@ export function UserAvatar({ showName, auth }) {
     </div>
   );
   return userProfile ? (
-    <span>
+    <span
+      onDoubleClick={() => {
+        navigate("/profile");
+      }}
+      className="select-none"
+    >
       <Popover
         placement="bottom"
         content={options}
