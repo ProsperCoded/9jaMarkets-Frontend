@@ -5,6 +5,7 @@ import Logout from "./componets-utils/LogoutModal";
 import MerchantSignup from "./components/MerchantSignup";
 import { message } from "antd";
 import { useEffect, useState } from "react";
+import { getAuth } from "./lib/util";
 // Contexts
 export const USER_PROFILE_CONTEXT = createContext({
   userProfile: null,
@@ -48,7 +49,20 @@ export function ContextWrapper({ children }) {
     console.log(userProfile);
   }, [userProfile]);
   return (
-    <USER_PROFILE_CONTEXT.Provider value={{ userProfile, setUserProfile }}>
+    <USER_PROFILE_CONTEXT.Provider
+      value={{
+        userProfile,
+        setUserProfile: (newProfile) => {
+          // if newProfile is null, logout as expected
+          if (!newProfile) {
+            setUserProfile(null);
+            return;
+          }
+          const { userType } = getAuth();
+          setUserProfile({ ...newProfile, userType });
+        },
+      }}
+    >
       <MERCHANT_PROFILE_CONTEXT.Provider
         value={{ merchantProfile, setMerchantProfile }}
       >

@@ -1,4 +1,4 @@
-import { API_BASE_URL } from "../../src/config";
+import { API_BASE_URL } from "../../config";
 export async function signUpApi(
   payload,
   errorLogger = () => {},
@@ -25,10 +25,11 @@ export async function signUpApi(
 }
 export async function loginApi(
   payload,
+  endpoint,
   errorLogger = () => {},
   successLogger = () => {}
 ) {
-  const url = new URL("auth/customer/login", API_BASE_URL);
+  const url = new URL(endpoint, API_BASE_URL);
   const loginResponse = await fetch(url, {
     method: "POST",
     headers: {
@@ -45,34 +46,21 @@ export async function loginApi(
   successLogger(loginData.message);
   return loginData.data;
 }
-
-export async function getProfileApi(
-  userId,
-  accessToken,
-  errorLogger = () => {},
-  successLogger = () => {}
-) {
-  const url = new URL(`customer/profile/${userId}`, API_BASE_URL);
-  const userProfile = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-  const userProfileData = await userProfile.json();
-  if (!userProfile.ok) {
-    errorLogger(userProfileData.message);
-    return;
-  }
-  successLogger(userProfileData.message);
-  return userProfileData.data;
+export async function loginCustomerApi(payload, errorLogger, successLogger) {
+  const endpoint = "auth/customer/login";
+  return loginApi(payload, endpoint, errorLogger, successLogger);
+}
+export async function loginMerchantApi(payload, errorLogger, successLogger) {
+  const endpoint = "auth/merchant/login";
+  return loginApi(payload, endpoint, errorLogger, successLogger);
 }
 
 export async function refreshTokenApi(
   refreshToken,
-  errorLogger = () => {},
-  successLogger = () => {}
+  endpoint,
+  errorLogger = () => {}
 ) {
-  const url = new URL("auth/customer/refresh-token", API_BASE_URL);
+  const url = new URL(endpoint, API_BASE_URL);
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -87,8 +75,27 @@ export async function refreshTokenApi(
   }
   return responseData.data;
 }
-export async function logoutApi(refreshToken, errorLogger = () => {}) {
-  const url = new URL("auth/customer/logout", API_BASE_URL);
+export async function refreshCustomerTokenApi(
+  refreshToken,
+  errorLogger = () => {}
+) {
+  let endpoint = "auth/customer/refresh-token";
+  return refreshTokenApi(refreshToken, endpoint, errorLogger);
+}
+export async function refreshMerchantTokenApi(
+  refreshToken,
+  errorLogger = () => {}
+) {
+  let endpoint = "auth/merchant/refresh-token";
+  return refreshTokenApi(refreshToken, endpoint, errorLogger);
+}
+
+export async function logoutApi(
+  refreshToken,
+  endpoint,
+  errorLogger = () => {}
+) {
+  const url = new URL(endpoint, API_BASE_URL);
   const response = await fetch(url, {
     method: "DELETE",
     headers: {
@@ -103,12 +110,21 @@ export async function logoutApi(refreshToken, errorLogger = () => {}) {
   }
   return responseData.message;
 }
+export async function logoutCustomer(refreshToken, errorLogger = () => {}) {
+  const endpoint = "auth/customer/logout";
+  return logoutApi(refreshToken, endpoint, errorLogger);
+}
+export async function logoutMerchant(refreshToken, errorLogger = () => {}) {
+  const endpoint = "auth/merchant/logout";
+  return logoutApi(refreshToken, endpoint, errorLogger);
+}
 export async function exchangeTokenApi(
   exchangeToken,
+  endpoint,
   errorLogger = () => {},
   successLogger = () => {}
 ) {
-  const url = new URL("auth/customer/exchange-token", API_BASE_URL);
+  const url = new URL(endpoint, API_BASE_URL);
   url.searchParams.append("token", exchangeToken);
   const response = await fetch(url, {
     method: "GET",
@@ -123,6 +139,22 @@ export async function exchangeTokenApi(
   }
   successLogger(responseData.message);
   return responseData.data;
+}
+export async function exchangeTokenCustomerApi(
+  exchangeToken,
+  errorLogger,
+  successLogger
+) {
+  const endpoint = "auth/customer/exchange-token";
+  return exchangeTokenApi(exchangeToken, endpoint, errorLogger, successLogger);
+}
+export async function exchangeTokenMerchantApi(
+  exchangeToken,
+  errorLogger,
+  successLogger
+) {
+  const endpoint = "auth/merchant/exchange-token";
+  return exchangeTokenApi(exchangeToken, endpoint, errorLogger, successLogger);
 }
 
 export async function signupMerchantApi(
@@ -144,39 +176,25 @@ export async function signupMerchantApi(
     return;
   }
   successLogger(responseData.message);
+  console.log({ responseData });
   return responseData;
 }
-
-export async function loginMerchantApi() {
-  const url = new URL("auth/merchant/login", API_BASE_URL);
-  const loginResponse = await fetch(url, {
+export async function sendVerificationCustomerEmailApi(
+  email,
+  errorLogger = () => {}
+) {
+  const url = new URL("auth/customer/email-verification", API_BASE_URL);
+  const response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(payload),
+    body: JSON.stringify({ email }),
   });
-  const loginData = await loginResponse.json();
-  if (!loginResponse.ok) {
-    errorLogger(loginData.message);
-    console.error(loginData.message); // logservice
+  const responseData = await response.json();
+  if (!response.ok) {
+    errorLogger(responseData.message);
     return;
   }
-  successLogger(loginData.message);
-  return loginData.data;
-}
-export async function getMerchantProfileApi(accessToken, userId) {
-  const url = new URL(`merchant/profile/${userId}`, API_BASE_URL);
-  const userProfile = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-  const userProfileData = await userProfile.json();
-  if (!userProfile.ok) {
-    errorLogger(userProfileData.message);
-    return;
-  }
-  successLogger(userProfileData.message);
-  return userProfileData.data;
+  return responseData.message;
 }
