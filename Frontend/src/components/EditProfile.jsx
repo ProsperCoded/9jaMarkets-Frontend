@@ -12,7 +12,10 @@ import { updateCustomerProfileApi } from "@/lib/api/serviceApi";
 import { Popconfirm } from "antd";
 import { ConfigProvider } from "antd";
 import OTPModal from "@/componets-utils/OTPModal";
-import { sendVerificationCustomerEmailApi } from "@/lib/api/authApi";
+import {
+  sendVerificationCustomerEmailApi,
+  verifyEmailOtp,
+} from "@/lib/api/authApi";
 
 export default function EditProfile() {
   const messageApi = useContext(MESSAGE_API_CONTEXT);
@@ -25,46 +28,69 @@ export default function EditProfile() {
   const handleUpdate = async (field, value) => {
     // Simulate API call
     const payload = { [field]: value };
-    const updatedData = await updateCustomerProfileApi(
+    const updatedProfile = await updateCustomerProfileApi(
       payload,
       errorLogger,
       (msg) => {
         console.log(`Updated ${field} successfully`, msg);
       }
     );
-    if (!updatedData) return;
-    console.log({ updatedData });
-    setProfile(updatedData);
+    if (!updatedProfile) return;
+    console.log({ updatedData: updatedProfile });
+    setProfile(updatedProfile);
   };
 
-  const handleAddAddress = () => {
-    setProfile((prev) => ({
-      ...prev,
-      addresses: [
-        ...(prev.addresses || []),
-        {
-          address: "",
-          city: "",
-          state: "",
-          country: "",
-        },
-      ],
-    }));
+  const handleAddAddress = async () => {
+    const defaultAddress = {
+      name: "",
+      address: "",
+      city: "",
+      state: "",
+      country: "",
+      zipCode: "",
+      postalCode: "",
+    };
+    let newAddresses = [...(profile.addresses || []), defaultAddress];
+    setProfile({ ...profile, addresses: newAddresses });
   };
   const handleUpdateAddress = async (index, address) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setProfile((prev) => ({
-      ...prev,
-      addresses: prev.addresses?.map((a, i) => (i === index ? address : a)),
-    }));
+    const updatedAddresses = profile.addresses?.map((a, i) =>
+      i === index ? address : a
+    );
+    console.log({ updatedAddresses });
+    const extracted = updatedAddresses.map(
+      ({ name, address, city, state, country, zipCode, postalCode }) => ({
+        name,
+        address,
+        city,
+        state,
+        country,
+        zipCode,
+        postalCode,
+      })
+    );
+    const updatedProfile = await updateCustomerProfileApi(
+      { addresses: extracted },
+      errorLogger,
+      (msg) => {
+        console.log(`Updated address successfully`, msg);
+      }
+    );
+    if (!updatedProfile) return;
+    setProfile(updatedProfile);
   };
 
   const handleDeleteAddress = async (index) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setProfile((prev) => ({
-      ...prev,
-      addresses: prev.addresses?.filter((_, i) => i !== index),
-    }));
+    const filteredAddresses = profile.addresses?.filter((_, i) => i !== index);
+    const updatedProfile = await updateCustomerProfileApi(
+      { addresses: filteredAddresses },
+      errorLogger,
+      (msg) => {
+        console.log(`Deleted address successfully`, msg);
+      }
+    );
+    if (!updatedProfile) return;
+    setProfile(updatedProfile);
   };
 
   return (
@@ -181,28 +207,47 @@ export function EmailField({
   const [editValue, setEditValue] = useState(value);
   const [isLoading, setIsLoading] = useState(false);
   const [confirmedOTP, setConfirmedOTP] = useState(false);
-  const [OTPModalOpen, setOTPMOdalOpen] = useState(false);
+  const [confirmedOTP2, setConfirmedOTP2] = useState(false);
+  const [OTP2ModalOpen, setOTP2ModalOpen] = useState(false);
+  const [OTPModalOpen, setOTPModalOpen] = useState(false);
   const messageApi = useContext(MESSAGE_API_CONTEXT);
-  const errorLogger = (message) => {
-    messageApi.error("Failed to update the field ");
-    console.error(message);
-  };
   // const [popConfirmOpen, setPopConfirmOpen] = useState(false);
-  const sendVerification = async () => {
+  const sendVerificationEmail = async () => {
     const email = value;
-    const response = await sendVerificationCustomerEmailApi(email, errorLogger);
+    const response = await sendVerificationCustomerEmailApi(
+      email,
+      (message) => {
+        messageApi.error("Failed to send Verification");
+        console.error(message);
+      }
+    );
     if (response) {
       console.log(response);
       messageApi.success("Email Verification Sent");
-      // setConfirmedOTP(true);
-      setOTPMOdalOpen(true);
+      setOTPModalOpen(true);
+    }
+  };
+  const sendVerificationEmail2 = async () => {
+    if (!editValue) return;
+    const email = editValue;
+    const response = await sendVerificationCustomerEmailApi(
+      email,
+      (message) => {
+        messageApi.error("Failed to send Verification");
+        console.error(message);
+      }
+    );
+    if (response) {
+      console.log(response);
+      messageApi.success("Email Verification Sent");
+      setOTP2ModalOpen(true);
     }
   };
   const handleUpdate = async () => {
     if (!editValue && required) return;
-
     setIsLoading(true);
     try {
+      // update email field
       await onUpdate(editValue);
       setIsEditing(false);
     } catch (error) {
@@ -214,7 +259,44 @@ export function EmailField({
 
   return (
     <div className={cn("flex flex-col space-y-2", className)}>
-      <OTPModal open={OTPModalOpen} setOpen={(open) => setOTPMOdalOpen(open)} />
+      <OTPModal
+        title="VERIFY EMAIL"
+        open={OTPModalOpen}
+        setOpen={(open) => setOTPModalOpen(open)}
+        verifyEmail={async (otp) => {
+          const email = value;
+          const response = await verifyEmailOtp(email, otp, (message) => {
+            messageApi.error("Invalid Token");
+            console.error(message);
+          });
+          if (response) {
+            messageApi.success("Email Verified");
+            setOTPModalOpen(false);
+            setConfirmedOTP(true);
+            setIsEditing(true);
+          }
+        }}
+        sendVerificationEmail={sendVerificationEmail}
+      />
+      <OTPModal
+        title="VERIFY NEW EMAIL"
+        open={OTP2ModalOpen}
+        setOpen={(open) => setOTP2ModalOpen(open)}
+        verifyEmail={async (otp) => {
+          const email = editValue;
+          const response = await verifyEmailOtp(email, otp, (message) => {
+            messageApi.error("Invalid Token");
+            console.error(message);
+          });
+          if (response) {
+            messageApi.success("New Email Verified");
+            setOTP2ModalOpen(false);
+            setConfirmedOTP2(true);
+            handleUpdate();
+          }
+        }}
+        sendVerificationEmail={sendVerificationEmail2}
+      />
       <div className="flex justify-between items-center">
         <label className="font-medium text-muted-foreground text-sm">
           {label}
@@ -230,7 +312,7 @@ export function EmailField({
             <Popconfirm
               title="Are you sure you want to change your email?"
               description="New Email will Serve as New Identification "
-              onConfirm={() => sendVerification()}
+              onConfirm={() => sendVerificationEmail()}
               // onCancel={() => setPopConfirmOpen(false)}
               // open={popConfirmOpen}
               okText="Change Email"
@@ -255,7 +337,7 @@ export function EmailField({
             <Button
               variant="ghost"
               size="icon"
-              onClick={handleUpdate}
+              onClick={sendVerificationEmail2}
               disabled={isLoading}
               className="w-8 h-8"
             >
@@ -504,6 +586,12 @@ export function AddressForm({ address, onUpdate, onDelete }) {
 
       {isEditing ? (
         <form onSubmit={handleSubmit} className="space-y-4">
+          <Input
+            placeholder="Name"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            required
+          />
           <Input
             placeholder="Street Address"
             value={formData.address}

@@ -198,3 +198,19 @@ export async function sendVerificationCustomerEmailApi(
   }
   return responseData.message;
 }
+export async function verifyEmailOtp(email, code, errorLogger = () => {}) {
+  const url = new URL("auth/customer/verify-email", API_BASE_URL);
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, code }),
+  });
+  const responseData = await response.json();
+  if (!response.ok) {
+    errorLogger(responseData.message);
+    return;
+  }
+  return responseData.message;
+}
