@@ -11,6 +11,7 @@ import Loading from "../componets-utils/Loading.jsx";
 import { useEffect } from "react";
 import { GOOGLE_URL } from "@/config";
 import { LOGIN_MODAL_CONTEXT, SIGNUP_MODAL_CONTEXT } from "../contexts";
+import { isStrongPassword } from "../lib/util";
 import { useNavigate } from "react-router-dom";
 const CustomerSignup = () => {
   const [email, setEmail] = useState("");
@@ -50,12 +51,6 @@ const CustomerSignup = () => {
   const { setUserProfile } = useContext(USER_PROFILE_CONTEXT);
 
   if (!signupOpen) return null; // Don't render if modal is hidden
-
-  const isStrongPassword = (password) => {
-    return RegExp(
-      "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
-    ).test(password);
-  };
 
   const handleSignUp = async (e) => {
     // Handle sign up logic here

@@ -214,3 +214,35 @@ export async function verifyEmailOtp(email, code, errorLogger = () => {}) {
   }
   return responseData.message;
 }
+export async function sendForgetPassword(email, errorLogger = () => {}) {
+  const url = new URL("auth/customer/forgot-password", API_BASE_URL);
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email }),
+  });
+  const responseData = await response.json();
+  if (!response.ok) {
+    errorLogger(responseData.message);
+    return;
+  }
+  return responseData.message;
+}
+export async function resetPassword(payload, errorLogger = () => {}) {
+  const url = new URL("auth/customer/reset-password", API_BASE_URL);
+  const response = await fetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+  const responseData = await response.json();
+  if (!response.ok) {
+    errorLogger(responseData.message);
+    return;
+  }
+  return responseData.message;
+}

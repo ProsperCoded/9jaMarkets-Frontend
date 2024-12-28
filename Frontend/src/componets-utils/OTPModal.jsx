@@ -20,7 +20,7 @@ export default function OTPModal({
 }) {
   const [otpValue, setOtpValue] = useState("");
   const messageApi = useContext(MESSAGE_API_CONTEXT);
-  const [sendDelay, setSendDelay] = useState(false);
+  const [sendSnooze, setSendSnooze] = useState(false);
   useEffect(() => {
     if (otpValue) {
       verifyEmail(otpValue);
@@ -35,15 +35,15 @@ export default function OTPModal({
         if (otpValue.length === 6) {
           verifyEmail(otpValue);
         } else {
-          if (sendDelay) {
-            messageApi.error("OTP already sent. Please wait for a while. 60s");
+          if (sendSnooze) {
+            messageApi.error("OTP already sent. Please wait for a while. 30s");
             return;
           }
-          messageApi.success("OTP sent successfully");
           sendVerificationEmail();
+          setSendSnooze(true);
           setTimeout(() => {
-            setSendDelay(false);
-          }, 60000);
+            setSendSnooze(false);
+          }, 30000);
         }
       }}
       onCancel={() => {

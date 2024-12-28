@@ -36,3 +36,8 @@ export function deleteAuth() {
   Cookies.remove("accessToken");
   Cookies.remove("refreshToken");
 }
+export const isStrongPassword = (password) => {
+  return RegExp(
+    "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
+  ).test(password);
+};

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { ContextWrapper } from "./contexts";
 import {
   BrowserRouter as Router,
@@ -26,6 +25,7 @@ import "./App.css";
 import GoogleSigninRedirect from "./componets-utils/GoogleSigninRedirect";
 import Marketplace from "./components/Marketplace";
 import MerchantSignup from "./components/MerchantSignup";
+import ForgetPassword from "./components/ForgetPassword";
 
 function AntDesignConfig({ children }) {
   return (
@@ -78,6 +78,7 @@ function App() {
               <Route path="/merchant-signup" element={<MerchantSignup />} />
               <Route path="/ad" element={<Adverts />} />
               <Route path="/place-ad" element={<PlaceAD />} />
+              <Route path="/forget-password" element={<ForgetPassword />} />
 
               <Route
                 path="/profile/:subpage?"

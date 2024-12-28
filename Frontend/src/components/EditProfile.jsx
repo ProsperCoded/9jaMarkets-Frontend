@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { useState, useContext } from "react";
 import { Pencil, Check, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -155,12 +156,26 @@ export default function EditProfile() {
                   required
                 />
               </div>
-              <ProfileField
-                label="Date of Birth"
-                value={profile.dateOfBirth || ""}
-                onUpdate={(value) => handleUpdate("dateOfBirth", value)}
-                type="date"
-              />
+              <div className="gap-4 grid grid-cols-2">
+                <ProfileField
+                  label="Date of Birth"
+                  value={profile.dateOfBirth || ""}
+                  onUpdate={(value) => handleUpdate("dateOfBirth", value)}
+                  type="date"
+                />
+                <div className="flex flex-col">
+                  <label className="mb-3 font-medium text-muted-foreground text-sm">
+                    Password
+                  </label>
+
+                  <Link
+                    to="/forget-password"
+                    className="font-semibold text-Primary hover:underline"
+                  >
+                    Change Password
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>
