@@ -55,7 +55,6 @@ function InitializeApp({ children }) {
       if (!userProfile_) {
         return;
       }
-      console.log("merchant profile fetched", userProfile_);
       setUserProfile(userProfile_);
     } else if (userType === "merchant") {
       const userProfile_ = await getMerchantProfileApi(
@@ -66,7 +65,6 @@ function InitializeApp({ children }) {
       if (!userProfile_) {
         return;
       }
-      console.log("user profile fetched", userProfile_);
       setUserProfile(userProfile_);
     }
   }

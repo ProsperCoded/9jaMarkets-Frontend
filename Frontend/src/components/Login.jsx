@@ -12,6 +12,8 @@ import { storeAuth, getAuth } from "../lib/util";
 import { LOGIN_MODAL_CONTEXT, SIGNUP_MODAL_CONTEXT } from "../contexts";
 import { GOOGLE_URL } from "@/config";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const LoginModal = () => {
   const { loginOpen, setLoginOpen } = useContext(LOGIN_MODAL_CONTEXT);
   const { setSignupOpen } = useContext(SIGNUP_MODAL_CONTEXT);
@@ -24,6 +26,7 @@ const LoginModal = () => {
   const messageApi = useContext(MESSAGE_API_CONTEXT);
   const { setUserProfile } = useContext(USER_PROFILE_CONTEXT);
   const { userType } = getAuth();
+  const navigate = useNavigate();
   const [loginAsMerchant, setLoginAsMerchant] = useState(
     userType === "merchant" || loginOpen === "merchant"
   );
@@ -177,9 +180,16 @@ const LoginModal = () => {
               />
               Remember me
             </label>
-            <a href="/" className="text-Primary text-sm hover:underline">
+            <p
+              className="text-Primary text-sm hover:underline cursor-pointer"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/forget-password");
+                setLoginOpen(false);
+              }}
+            >
               Forgot Password?
-            </a>
+            </p>
           </div>
           <div className="flex justify-between items-center">
             <label className="flex items-center">

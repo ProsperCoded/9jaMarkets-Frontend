@@ -8,24 +8,50 @@ import {
 } from "@/components/ui/input-otp";
 import { MessageCircleWarning } from "lucide-react";
 import { useEffect } from "react";
+import { useContext } from "react";
+import { MESSAGE_API_CONTEXT } from "@/contexts";
 
-export default function OTPModal({ open, setOpen, setConfirmed }) {
+export default function OTPModal({
+  title,
+  open,
+  setOpen,
+  verifyEmail,
+  sendVerificationEmail,
+}) {
   const [otpValue, setOtpValue] = useState("");
+  const messageApi = useContext(MESSAGE_API_CONTEXT);
+  const [sendSnooze, setSendSnooze] = useState(false);
   useEffect(() => {
-    console.log({ otpValue });
+    if (otpValue) {
+      verifyEmail(otpValue);
+    }
   }, [otpValue]);
 
   return (
     <Modal
-      title="CONFIRM OTP"
+      title={title}
       open={open}
-      onOk={() => setOpen(false)}
+      onOk={() => {
+        if (otpValue.length === 6) {
+          verifyEmail(otpValue);
+        } else {
+          if (sendSnooze) {
+            messageApi.error("OTP already sent. Please wait for a while. 30s");
+            return;
+          }
+          sendVerificationEmail();
+          setSendSnooze(true);
+          setTimeout(() => {
+            setSendSnooze(false);
+          }, 30000);
+        }
+      }}
       onCancel={() => {
         setOpen(false);
       }}
-      okText="Confirm"
+      okText={otpValue.length === 6 ? "Confirm" : "Resend"}
       cancelText="Cancel"
-      okButtonProps={{ danger: true }}
+      okButtonProps={otpValue.length === 6 && { danger: true }}
       cancelButtonProps={{ className: "cancel-button" }}
     >
       <div className="">
