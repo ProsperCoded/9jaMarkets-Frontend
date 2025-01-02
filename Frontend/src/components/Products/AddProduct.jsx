@@ -69,7 +69,7 @@ export default function AddProduct() {
           <p className="text-muted-foreground text-sm">or</p>
           <Button
             variant="outline"
-            className="bg-green hover:bg-hover-green text-white"
+            className="bg-Primary hover:bg-P2 text-white"
             onClick={handleUploadClick}
           >
             Upload from computer
@@ -174,7 +174,7 @@ export default function AddProduct() {
           <Button className="border-green bg-transparent hover:bg-hover-green px-6 border rounded-full text-Primary hover:text-white">
             Cancel
           </Button>
-          <Button className="bg-green hover:bg-hover-green px-6 rounded-full text-white">
+          <Button className="bg-Primary hover:bg-P2 px-6 rounded-full text-white">
             Add Product
           </Button>
         </div>
