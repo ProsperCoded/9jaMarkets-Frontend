@@ -13,6 +13,36 @@
 }
 
 .cancel-button {
-  @apply bg-gray-200 text-gray-700 border-none;
+  @apply bg-gray-200 hover:bg-gray-50 border-none text-gray-700;
   @apply hover:text-stone-900 !important;
+}
+
+.loader {
+  aspect-ratio: 1;
+  background: linear-gradient(
+        #236c13 calc(1 * 100% / 6),
+        #21ca1b 0 calc(3 * 100% / 6),
+        #236c13 0
+      )
+      left bottom,
+    linear-gradient(
+        #236c13 calc(2 * 100% / 6),
+        #21ca1b 0 calc(4 * 100% / 6),
+        #236c13 0
+      )
+      center bottom,
+    linear-gradient(
+        #236c13 calc(3 * 100% / 6),
+        #21ca1b 0 calc(5 * 100% / 6),
+        #236c13 0
+      )
+      right bottom;
+  background-size: 20% 600%;
+  background-repeat: no-repeat;
+  animation: l3 2s infinite linear;
+}
+@keyframes l3 {
+  100% {
+    background-position: left top, center top, right top;
+  }
 }

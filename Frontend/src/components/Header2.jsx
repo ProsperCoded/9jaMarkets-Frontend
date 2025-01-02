@@ -19,7 +19,6 @@ import { USER_PROFILE_CONTEXT } from "../contexts";
 import { UserAvatar } from "../componets-utils/UserAvatar";
 import { useNavigate } from "react-router-dom";
 
-
 const Header2 = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -63,11 +62,7 @@ const Header2 = () => {
             >
               <FontAwesomeIcon icon={faBell} className="w-6 h-6" />
             </Link>
-            <div
-              onClick={() => {
-                navigate("/profile/dashboard");
-              }}
-            >
+            <div>
               <UserAvatar showName={true} auth={true} />
             </div>
           </div>

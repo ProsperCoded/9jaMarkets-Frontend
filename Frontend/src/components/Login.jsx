@@ -3,13 +3,17 @@ import logo from "../assets/Logo.svg";
 import googleLogo from "../assets/Google Icon.svg";
 import facebookLogo from "../assets/facebook.png";
 import appleLogo from "../assets/apple.svg";
-import { loginApi } from "../../libs/user/authApi";
+import { getMerchantProfileApi } from "../lib/api/serviceApi";
+import { loginCustomerApi, loginMerchantApi } from "../lib/api/authApi";
 import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "../contexts";
 import Loading from "../componets-utils/Loading";
-import { getProfileApi } from "../../libs/user/authApi";
-import { storeAuth } from "../../libs/util";
+import { getCustomerProfileApi } from "../lib/api/serviceApi";
+import { storeAuth, getAuth } from "../lib/util";
 import { LOGIN_MODAL_CONTEXT, SIGNUP_MODAL_CONTEXT } from "../contexts";
-
+import { GOOGLE_URL } from "@/config";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const LoginModal = () => {
   const { loginOpen, setLoginOpen } = useContext(LOGIN_MODAL_CONTEXT);
   const { setSignupOpen } = useContext(SIGNUP_MODAL_CONTEXT);
@@ -21,7 +25,18 @@ const LoginModal = () => {
   const [loading, setLoading] = useState(false);
   const messageApi = useContext(MESSAGE_API_CONTEXT);
   const { setUserProfile } = useContext(USER_PROFILE_CONTEXT);
+  const { userType } = getAuth();
+  const navigate = useNavigate();
+  const [loginAsMerchant, setLoginAsMerchant] = useState(
+    userType === "merchant" || loginOpen === "merchant"
+  );
+
+  useEffect(() => {
+    if (loginOpen === "merchant") setLoginAsMerchant(true);
+  }, [loginOpen]);
+
   if (!loginOpen) return null; // Don't render if modal is hidden
+
   const handleLogin = async () => {
     // Handle form submission
     setLoading(true);
@@ -30,14 +45,32 @@ const LoginModal = () => {
       setError(error);
     };
     const payload = { email, password };
-    const loginData = await loginApi(payload, errorLogger);
-    if (!loginData) return;
-    const { accessToken, refreshToken, id: userId } = loginData;
-    storeAuth(userId, accessToken, refreshToken, rememberMe);
-    const userProfile_ = await getProfileApi(userId, accessToken, errorLogger);
-    if (!userProfile_) return;
-    setUserProfile(userProfile_);
-    messageApi.success("You are logged In");
+    if (!loginAsMerchant) {
+      const loginData = await loginCustomerApi(payload, errorLogger);
+      if (!loginData) return;
+      const { accessToken, refreshToken, id: userId } = loginData;
+      storeAuth(userId, accessToken, refreshToken, "customer", rememberMe);
+      const userProfile_ = await getCustomerProfileApi(
+        userId,
+        accessToken,
+        errorLogger
+      );
+      if (!userProfile_) return;
+      setUserProfile(userProfile_);
+    } else if (loginAsMerchant) {
+      const loginData = await loginMerchantApi(payload, errorLogger);
+      if (!loginData) return;
+      const { accessToken, refreshToken, id: userId } = loginData;
+      storeAuth(userId, accessToken, refreshToken, "merchant", rememberMe);
+      const userProfile_ = await getMerchantProfileApi(
+        userId,
+        accessToken,
+        errorLogger
+      );
+      if (!userProfile_) return;
+      setUserProfile(userProfile_);
+    }
+    messageApi.success("Login successful");
     setLoginOpen(false);
   };
   return (
@@ -147,9 +180,27 @@ const LoginModal = () => {
               />
               Remember me
             </label>
-            <a href="/" className="text-Primary text-sm hover:underline">
+            <p
+              className="text-Primary text-sm hover:underline cursor-pointer"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/forget-password");
+                setLoginOpen(false);
+              }}
+            >
               Forgot Password?
-            </a>
+            </p>
+          </div>
+          <div className="flex justify-between items-center">
+            <label className="flex items-center">
+              <input
+                type="checkbox"
+                className="mr-2"
+                checked={loginAsMerchant}
+                onChange={() => setLoginAsMerchant((prev) => !prev)}
+              />
+              Login as Merchant
+            </label>
           </div>
           {error && (
             <p className="font-semibold text-center text-red-500 text-sm">
@@ -176,11 +227,7 @@ const LoginModal = () => {
         </div>
         <div className="flex justify-center space-x-16 mt-4">
           <button className="text-lg">
-            <a
-              href="https://accounts.google.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href={GOOGLE_URL} rel="noopener noreferrer">
               <img src={googleLogo} alt="Google Login" className="h-6" />
             </a>
           </button>

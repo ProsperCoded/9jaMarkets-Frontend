@@ -1,5 +1,6 @@
 export const API_BASE_URL =
   "https://safe-lindsy-obiken-415ef84b.koyeb.app/api/v1/";
+// export const API_BASE_URL = "https://13zvntwc-3000.uks1.devtunnels.ms/api/v1/";
 export const GOOGLE_URL = `${API_BASE_URL}auth/customer/google`;
 // 3 Days for access token
 export const ACCESS_TOKEN_DURATION = 3;

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { ContextWrapper } from "./contexts";
 import {
   BrowserRouter as Router,
@@ -17,7 +16,7 @@ import HowItWorks from "./components/how-it-works";
 import MarketPage from "./components/Markets";
 import MallPage from "./components/Malls";
 import Profile from "./components/Profile";
-import PlaceAD from "./components/PlaceAD"
+import PlaceAD from "./components/PlaceAD";
 
 import { ConfigProvider } from "antd";
 import InitializeApp from "./InitializeApp";
@@ -26,6 +25,7 @@ import "./App.css";
 import GoogleSigninRedirect from "./componets-utils/GoogleSigninRedirect";
 import Marketplace from "./components/Marketplace";
 import MerchantSignup from "./components/MerchantSignup";
+import ForgetPassword from "./components/ForgetPassword";
 
 function AntDesignConfig({ children }) {
   return (
@@ -76,17 +76,14 @@ function App() {
               <Route path="/malls" element={<MallPage />} />
               <Route path="/marketplace" element={<Marketplace />} />
               <Route path="/ad" element={<Adverts />} />
-              <Route path="/adform" element={<PlaceAD />} />
-              
+              <Route path="/place-ad" element={<PlaceAD />} />
+
               <Route
                 path="/profile/:subpage?"
                 element={<ProfilePageWrapper />}
               />
               {/* Google signup */}
-              <Route
-                path="/api/v1/auth/google/callback"
-                element={<GoogleSigninRedirect />}
-              />
+              <Route path="/auth" element={<GoogleSigninRedirect />} />
             </Routes>
             <Footer />
           </InitializeApp>

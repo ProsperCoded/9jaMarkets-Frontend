@@ -1,25 +1,36 @@
-import React, { useContext, useEffect } from "react";
-import ReactDOM from "react-dom";
+import { useContext, useEffect } from "react";
 import { USER_PROFILE_CONTEXT } from "./contexts";
-import { getProfileApi } from "../libs/user/authApi";
-import { getAuth, storeAuth } from "../libs/util";
-import { refreshTokenApi } from "../libs/user/authApi";
+import { getMerchantProfileApi } from "./lib/api/serviceApi";
+import { getCustomerProfileApi } from "./lib/api/serviceApi";
+import {
+  refreshCustomerTokenApi,
+  refreshMerchantTokenApi,
+} from "./lib/api/authApi";
+import { getAuth, storeAuth } from "./lib/util";
 function InitializeApp({ children }) {
   const { userProfile, setUserProfile } = useContext(USER_PROFILE_CONTEXT);
   const errorLogger = (message) => console.error(message);
   async function fetchUserProfile() {
     const authData = getAuth();
     console.log({ authData });
-    let { userId, accessToken, refreshToken } = authData;
+    let { userId, accessToken, refreshToken, userType } = authData;
+    console.log({ authData });
     if (!userId || !accessToken) {
       if (refreshToken) {
-        // refresh token
-        const authData = await refreshTokenApi(
-          refreshToken,
-          errorLogger,
-          console.log
-        );
-        if (!authData) return;
+        // refresh the access-token
+        if (userType === "customer") {
+          const authData = await refreshCustomerTokenApi(
+            refreshToken,
+            errorLogger
+          );
+          if (!authData) return;
+        } else if (userType === "merchant") {
+          const authData = await refreshMerchantTokenApi(
+            refreshToken,
+            errorLogger
+          );
+          if (!authData) return;
+        }
         const {
           id: newUserId,
           accessToken: newAccessToken,
@@ -30,16 +41,32 @@ function InitializeApp({ children }) {
         refreshToken = newRefreshToken;
         userId = newUserId;
       } else {
+        // refresh token has expired
+        console.log("refresh token has expired");
         return;
       }
     }
-
-    const userProfile_ = await getProfileApi(userId, accessToken, errorLogger);
-    if (!userProfile_) {
-      return;
+    if (userType === "customer") {
+      const userProfile_ = await getCustomerProfileApi(
+        userId,
+        accessToken,
+        errorLogger
+      );
+      if (!userProfile_) {
+        return;
+      }
+      setUserProfile(userProfile_);
+    } else if (userType === "merchant") {
+      const userProfile_ = await getMerchantProfileApi(
+        userId,
+        accessToken,
+        errorLogger
+      );
+      if (!userProfile_) {
+        return;
+      }
+      setUserProfile(userProfile_);
     }
-    console.log("user profile fetched", userProfile_);
-    setUserProfile(userProfile_);
   }
   useEffect(() => {
     fetchUserProfile();

@@ -4,17 +4,16 @@ import googleLogo from "../assets/Google Icon.svg";
 import facebookLogo from "../assets/facebook.png";
 import appleLogo from "../assets/apple.svg";
 import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "../contexts";
-import {
-  getMerchantProfileApi,
-  loginMerchantApi,
-  signupMerchantApi,
-} from "../../libs/user/authApi.js";
-import { storeAuth } from "../../libs/util";
+import { getMerchantProfileApi } from "../lib/api/serviceApi";
+import { loginMerchantApi, signupMerchantApi } from "../lib/api/authApi.js";
+import { storeAuth } from "../lib/util";
 import Loading from "../componets-utils/Loading.jsx";
 import { GOOGLE_URL } from "@/config";
 import { LOGIN_MODAL_CONTEXT } from "../contexts";
+import { useNavigate } from "react-router-dom";
 const MerchantSignup = () => {
   const [email, setEmail] = useState("");
+  const navigate = useNavigate();
   const [phone1, setPhone1] = useState("");
   const [phone2, setPhone2] = useState("");
   const [password, setPassword] = useState("");
@@ -25,7 +24,7 @@ const MerchantSignup = () => {
   const [loading, setLoading] = useState(false);
   const [brandName, setBrandName] = useState("");
   const [merchantCategories, setMerchantCategories] = useState([]);
-  const [marketName, setMarketName] = useState("");
+  const [marketName, setMarketName] = useState("Friends Market");
   const [addresses, setAddresses] = useState([
     {
       address: "",
@@ -117,7 +116,7 @@ const MerchantSignup = () => {
     const loginData = await loginMerchantApi({ email, password }, errorLogger);
     if (!loginData) return;
     const { accessToken, refreshToken, id: userId } = loginData;
-    storeAuth(userId, accessToken, refreshToken);
+    storeAuth(userId, accessToken, refreshToken, "merchant");
     const userProfile = await getMerchantProfileApi(
       userId,
       accessToken,
@@ -125,8 +124,8 @@ const MerchantSignup = () => {
     );
     if (!userProfile) return;
     setUserProfile(userProfile);
-    messageApi.success("SignUp Successful");
-    // TODO Redirect instead
+    messageApi.success("Merchant SignUp Successful");
+    navigate("/");
   };
 
   return (
@@ -142,7 +141,7 @@ const MerchantSignup = () => {
           className="mx-auto mb-2 h-10 md:h-14 lg:h-20"
         />
         <h2 className="mb-2 font-bold text-base text-center text-Primary lg:text-xl">
-          Welcome to 9ja Markets
+          Join the 9ja Markets Family and Start Selling Today!
         </h2>
         <form
           className="space-y-4"
@@ -166,7 +165,7 @@ const MerchantSignup = () => {
               value={email}
               required
               onChange={(e) => setEmail(e.target.value)}
-              className="border-gray-300 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+              className="border-gray-300 p-2 border rounded-lg focus:ring-green focus:ring-2 w-full focus:outline-none"
             />
           </div>
           <div className="flex justify-between gap-2 wrap">
@@ -180,11 +179,12 @@ const MerchantSignup = () => {
               <input
                 type="text"
                 id="phone"
+                name="phone1"
                 min={10}
                 max={11}
                 value={phone1}
                 onChange={(e) => setPhone1(e.target.value)}
-                className="border-gray-300 mt-1 p-2 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-green"
+                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-green w-full focus:outline-none"
               />
             </div>
             <div>
@@ -197,11 +197,12 @@ const MerchantSignup = () => {
               <input
                 type="text"
                 id="phone2"
+                name="phone2"
                 min={10}
                 max={11}
                 value={phone2}
                 onChange={(e) => setPhone2(e.target.value)}
-                className="border-gray-300 mt-1 p-2 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-green"
+                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-green w-full focus:outline-none"
               />
             </div>
           </div>
@@ -215,9 +216,10 @@ const MerchantSignup = () => {
             <input
               type="text"
               id="brandName"
+              name="brandName"
               value={brandName}
               onChange={(e) => setBrandName(e.target.value)}
-              className="border-gray-300 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+              className="border-gray-300 p-2 border rounded-lg focus:ring-green focus:ring-2 w-full focus:outline-none"
               required
             />
           </div>
@@ -231,9 +233,10 @@ const MerchantSignup = () => {
             <input
               type="text"
               id="marketName"
+              name="marketName"
               value={marketName}
               onChange={(e) => setMarketName(e.target.value)}
-              className="border-gray-300 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+              className="border-gray-300 p-2 border rounded-lg focus:ring-green focus:ring-2 w-full focus:outline-none"
               required
             />
           </div>
@@ -268,7 +271,7 @@ const MerchantSignup = () => {
                 onChange={(e) =>
                   handleAddressChange(index, "address", e.target.value)
                 }
-                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-green focus:ring-2 w-full focus:outline-none"
                 required
               />
               <input
@@ -278,7 +281,7 @@ const MerchantSignup = () => {
                 onChange={(e) =>
                   handleAddressChange(index, "name", e.target.value)
                 }
-                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-green focus:ring-2 w-full focus:outline-none"
                 required
               />
               {/* ...other address fields (city, state, zipCode, country)... */}
@@ -289,7 +292,7 @@ const MerchantSignup = () => {
                 onChange={(e) =>
                   handleAddressChange(index, "city", e.target.value)
                 }
-                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-green focus:ring-2 w-full focus:outline-none"
                 required
               />
               <input
@@ -299,7 +302,7 @@ const MerchantSignup = () => {
                 onChange={(e) =>
                   handleAddressChange(index, "state", e.target.value)
                 }
-                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-green focus:ring-2 w-full focus:outline-none"
                 required
               />
               <input
@@ -309,7 +312,7 @@ const MerchantSignup = () => {
                 onChange={(e) =>
                   handleAddressChange(index, "zipCode", e.target.value)
                 }
-                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-green focus:ring-2 w-full focus:outline-none"
                 required
               />
               <input
@@ -319,7 +322,7 @@ const MerchantSignup = () => {
                 onChange={(e) =>
                   handleAddressChange(index, "country", e.target.value)
                 }
-                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-green focus:ring-2 w-full focus:outline-none"
                 required
               />
             </div>
@@ -445,7 +448,7 @@ const MerchantSignup = () => {
           )}
           <button
             type="submit"
-            className="bg-green p-2 rounded-lg w-full text-white"
+            className="bg-Primary mx-auto p-2 rounded-lg w-full md:w-1/2 text-white"
           >
             {loading ? (
               <>
@@ -468,7 +471,7 @@ const MerchantSignup = () => {
             onClick={() => setLoginOpen(true)}
             className="font-bold text-Primary"
           >
-            Login
+            Login as Merchant
           </button>
         </p>
         <div className="flex justify-center space-x-16 mt-2 md:mt-3">

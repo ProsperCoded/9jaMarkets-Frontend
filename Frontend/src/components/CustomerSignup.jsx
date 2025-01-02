@@ -4,12 +4,15 @@ import googleLogo from "../assets/Google Icon.svg";
 import facebookLogo from "../assets/facebook.png";
 import appleLogo from "../assets/apple.svg";
 import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "../contexts";
-import { getProfileApi, loginApi, signUpApi } from "../../libs/user/authApi.js";
-import { storeAuth } from "../../libs/util";
+import { getCustomerProfileApi } from "../lib/api/serviceApi";
+import { loginCustomerApi, signUpApi } from "../lib/api/authApi.js";
+import { storeAuth } from "../lib/util";
 import Loading from "../componets-utils/Loading.jsx";
 import { useEffect } from "react";
 import { GOOGLE_URL } from "@/config";
 import { LOGIN_MODAL_CONTEXT, SIGNUP_MODAL_CONTEXT } from "../contexts";
+import { isStrongPassword } from "../lib/util";
+import { useNavigate } from "react-router-dom";
 const CustomerSignup = () => {
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -26,6 +29,7 @@ const CustomerSignup = () => {
   const messageApi = useContext(MESSAGE_API_CONTEXT);
   const { signupOpen, setSignupOpen } = useContext(SIGNUP_MODAL_CONTEXT);
   const { setLoginOpen } = useContext(LOGIN_MODAL_CONTEXT);
+  const navigate = useNavigate();
   useEffect(() => {
     if (modalRef.current & signupOpen) modalRef.current.focus();
     if (signupOpen) {
@@ -47,12 +51,6 @@ const CustomerSignup = () => {
   const { setUserProfile } = useContext(USER_PROFILE_CONTEXT);
 
   if (!signupOpen) return null; // Don't render if modal is hidden
-
-  const isStrongPassword = (password) => {
-    return RegExp(
-      "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
-    ).test(password);
-  };
 
   const handleSignUp = async (e) => {
     // Handle sign up logic here
@@ -83,11 +81,15 @@ const CustomerSignup = () => {
     });
 
     if (!signUp) return;
-    const loginData = await loginApi({ email, password }, errorLogger);
+    const loginData = await loginCustomerApi({ email, password }, errorLogger);
     if (!loginData) return;
     const { accessToken, refreshToken, id: userId } = loginData;
     storeAuth(userId, accessToken, refreshToken);
-    const userProfile = await getProfileApi(userId, accessToken, errorLogger);
+    const userProfile = await getCustomerProfileApi(
+      userId,
+      accessToken,
+      errorLogger
+    );
     if (!userProfile) return;
     setUserProfile(userProfile);
     messageApi.success("SignUp Successful");
@@ -138,7 +140,7 @@ const CustomerSignup = () => {
                 id="firstName"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
-                className="border-gray-300 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+                className="border-gray-300 p-2 border rounded-lg focus:ring-Primary focus:ring-2 w-full focus:outline-none"
               />
             </div>
             <div>
@@ -154,7 +156,7 @@ const CustomerSignup = () => {
                 id="lastName"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
-                className="border-gray-300 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+                className="border-gray-300 p-2 border rounded-lg focus:ring-Primary focus:ring-2 w-full focus:outline-none"
               />
             </div>
           </div>
@@ -171,7 +173,7 @@ const CustomerSignup = () => {
               value={email}
               required
               onChange={(e) => setEmail(e.target.value)}
-              className="border-gray-300 p-2 border rounded-lg focus:ring-green w-full focus:outline-none focus:ring-2"
+              className="border-gray-300 p-2 border rounded-lg focus:ring-Primary focus:ring-2 w-full focus:outline-none"
             />
           </div>
           <div className="flex justify-between gap-2 wrap">
@@ -189,7 +191,7 @@ const CustomerSignup = () => {
                 max={11}
                 value={phone1}
                 onChange={(e) => setPhone1(e.target.value)}
-                className="border-gray-300 mt-1 p-2 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-green"
+                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-Primary w-full focus:outline-none"
               />
             </div>
             <div>
@@ -206,7 +208,7 @@ const CustomerSignup = () => {
                 max={11}
                 value={phone2}
                 onChange={(e) => setPhone2(e.target.value)}
-                className="border-gray-300 mt-1 p-2 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-green"
+                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-Primary w-full focus:outline-none"
               />
             </div>
           </div>
@@ -225,10 +227,11 @@ const CustomerSignup = () => {
                 value={password}
                 required
                 onChange={(e) => setPassword(e.target.value)}
-                className={`mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-green ${
+                className={`mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-Primary ${
                   password ? "border-green-500" : "border-gray-300"
                 }`}
               />
+
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
@@ -278,7 +281,7 @@ const CustomerSignup = () => {
                 id="confirmPassword"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className={`mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-green ${
+                className={`mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-Primary ${
                   confirmPassword ? "border-green-500" : "border-gray-300"
                 }`}
               />
@@ -289,12 +292,7 @@ const CustomerSignup = () => {
               >
                 {showConfirmPassword ? (
                   // Open eye icon for showing confirm password
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="#236C13"
-                    className="size-5"
-                  >
+                  <svg viewBox="0 0 24 24" fill="#236C13" className="size-5">
                     <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
                     <path
                       fillRule="evenodd"
@@ -325,7 +323,7 @@ const CustomerSignup = () => {
           )}
           <button
             type="submit"
-            className="bg-green p-2 rounded-lg w-full text-white"
+            className="bg-Primary p-2 rounded-lg w-full text-white"
           >
             {loading ? (
               <>
@@ -342,15 +340,6 @@ const CustomerSignup = () => {
           <span className="px-4 text-gray-700 text-sm">Or</span>
           <div className="flex-grow border-gray-300 border-t"></div>
         </div>
-        <p className="mt-2 text-center text-sm md:text-base">
-          Already have an account?{" "}
-          <button
-            onClick={() => setLoginOpen(true)}
-            className="font-bold text-Primary"
-          >
-            Login
-          </button>
-        </p>
         <div className="flex justify-center space-x-16 mt-2 md:mt-3">
           <button className="text-lg">
             <a href={GOOGLE_URL} target="_blank">
@@ -376,6 +365,28 @@ const CustomerSignup = () => {
             </a>
           </button>
         </div>
+        <p className="mt-2 text-center text-sm md:text-base">
+          Already have an account?{" "}
+          <button
+            onClick={() => setLoginOpen(true)}
+            className="font-bold text-Primary"
+          >
+            Login
+          </button>
+        </p>
+        <p className="mt-2 text-center text-sm md:text-base">
+          Want to Sell ?{" "}
+          <button
+            onClick={() => {
+              navigate("/merchant-signup");
+              setSignupOpen(false);
+            }}
+            className="font-bold text-Primary cursor-pointer"
+          >
+            Create Merchant Account
+          </button>
+        </p>
+
         <p className="mt-4 text-center text-gray-600 text-xs">
           By continuing you agree to the{" "}
           <a href="/" className="font-bold text-Primary">
