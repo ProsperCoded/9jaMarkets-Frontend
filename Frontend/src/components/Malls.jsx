@@ -53,7 +53,7 @@ const mallPage = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="bg-white drop-shadow-sm py-2 text-green">
+      <div className="bg-white drop-shadow-sm py-2 text-Primary">
         <div className="flex justify-between items-center mx-auto px-4 container">
           {/* Left Section with malls and Malls */}
           <div className="flex items-center space-x-4">
@@ -129,7 +129,7 @@ const mallPage = () => {
                     <h3 className="font-semibold text-lg">{mall.name}</h3>
                     <a
                       href="#"
-                      className="block mt-2 text-green text-sm hover:underline"
+                      className="block mt-2 text-Primary text-sm hover:underline"
                     >
                       View more
                     </a>

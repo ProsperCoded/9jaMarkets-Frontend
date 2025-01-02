@@ -57,7 +57,7 @@ export function UserAvatar({ showName, auth }) {
                   {userProfile.firstName[0]}
                 </span>
               </Avatar>
-              <span className="ml-2 font-semibold text-green algin-middle">
+              <span className="ml-2 font-semibold text-Primary algin-middle">
                 {userProfile.firstName}
               </span>
             </div>
@@ -80,7 +80,7 @@ export function UserAvatar({ showName, auth }) {
             setLoginOpen(true);
             e.stopPropagation();
           }}
-          className="border-white hover:bg-white px-4 py-1 border rounded-full text-white hover:text-green transition"
+          className="border-white hover:bg-white px-4 py-1 border rounded-full text-white hover:text-Primary transition"
         >
           Login
         </button>

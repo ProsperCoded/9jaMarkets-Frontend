@@ -67,7 +67,7 @@ const MyAdverts = () => {
                   Delete
                 </button>
               </div>
-              <a href="#" className="text-green-600">
+              <a href="#" className="text-Primary-600">
                 Edit
               </a>
             </div>

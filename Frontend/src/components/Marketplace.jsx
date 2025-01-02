@@ -1,4 +1,4 @@
-/**
+   /**
  * The Marketplace component renders a marketplace page with a search bar, a hero section and a main content area.
  * The main content area contains a sidebar with categories and a product grid that displays products filtered by category.
  * The component uses a combination of Tailwind CSS classes and custom CSS to style the elements.
@@ -33,7 +33,7 @@ const Marketplace = () => {
   ]);
 
   const [products] = useState([
-    { name: "Classic Dry Iron", price: 40000, image: ComputerVillage  },
+    { name: "Classic Dry Iron", price: 40000, image: ComputerVillage },
     { name: "Samsung TV", price: 100000, image: Alaba },
     { name: "Refrigerator", price: 140000, image: "path/to/image3.jpg" },
     { name: "Multipurpose Blender", price: 40000, image: "path/to/image4.jpg" },
@@ -46,17 +46,17 @@ const Marketplace = () => {
   const [selectedCategory, setSelectedCategory] = useState("Appliances");
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="bg-gray-100 min-h-screen">
       {/* Search Bar */}
-      <div className="flex justify-center bg-white shadow-md py-2 text-Primary relative">
+      <div className="relative flex justify-center bg-white shadow-md py-2 text-Primary">
         <div className="relative w-full max-w-lg">
           <input
             type="text"
             placeholder="Search a vendor or category"
-            className="border border-Primary py-2 pl-10 pr-4 rounded-full focus:ring-2 focus:ring-Primary w-full text-sm placeholder-gray-400 focus:outline-none"
+            className="border-Primary py-2 pr-4 pl-10 border rounded-full focus:ring-2 focus:ring-Primary w-full text-sm placeholder-gray-400 focus:outline-none"
           />
           <svg
-            className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-Primary"
+            className="top-1/2 left-3 absolute w-5 h-5 text-Primary transform -translate-y-1/2"
             fill="currentColor"
             viewBox="0 0 24 24"
           >
@@ -74,77 +74,72 @@ const Marketplace = () => {
         <img
           src={ComputerVillage}
           alt="Computer Village"
-          className="absolute top-0 left-0 w-full h-full object-cover"
+          className="top-0 left-0 absolute w-full h-full market-image object-cover"
         />
-        <div className="absolute top-0 left-0 w-full h-full bg-green-900 bg-opacity-50"></div>
-        <div className="flex flex-col justify-center items-center h-full relative text-center text-white">
-          <h1 className="font-bold text-3xl sm:text-4xl md:text-5xl leading-tight font-stylish">
+        <div className="top-0 left-0 absolute bg-green-900 bg-opacity-50 w-full h-full"></div>
+        <div className="relative flex flex-col justify-center items-center h-full text-center text-white">
+          <h1 className="font-[400] text-5xl sm:text-4xl md:text-8xl uppercase leading-tight otto">
             Computer Village
           </h1>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto flex ">
+      <div className="flex mx-auto container">
         {/* Sidebar */}
-        <div className="w-[300px] bg-white shadow-md p-4 flex flex-col justify-between">
+        <div className="flex flex-col justify-between bg-white shadow-md p-4 w-[300px]">
           <div className="pt-20">
-          <ul className="space-y-2">
-            {categories.map((category, index) => (
-              <li
-                key={index}
-                onClick={() => setSelectedCategory(category)}
-                className={`cursor-pointer p-2 rounded ${
-                  selectedCategory === category
-                    ? "bg-Primary text-white"
-                    : "hover:bg-gray-100"
-                }`}
-              >
-                {category}
-              </li>
-            ))}
-          </ul>
+            <ul className="space-y-2">
+              {categories.map((category, index) => (
+                <li
+                  key={index}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`cursor-pointer p-2 rounded ${
+                    selectedCategory === category
+                      ? "bg-Primary text-white"
+                      : "hover:bg-gray-100"
+                  }`}
+                >
+                  {category}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
         <div className="flex-grow bg-white rounded-2xl py-10 shadow-md ml-6 mt-8 mb-8 mr-6 p-6 pb-20">
-          <h3 className="font-bold text-xl">{selectedCategory}</h3>
-          {/* Gray Line */}
-          <div className="mt-6 border-t-2 border-gray-200"></div>
-          {/* Product Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
-            {products.map((product, index) => (
-              <div
-                key={index}
-                className="relative group bg-white rounded-2xl shadow-lg transform transition-all duration-500 hover:scale-105 hover:shadow-2xl"
-              >
-                {/* Product Image with Zoom and Overlay */}
-                <div className="relative w-full h-40 overflow-hidden rounded-t-2xl">
+            <h3 className="font-bold text-xl">{selectedCategory}</h3>
+            {/* Gray Line */}
+            <div className="mt-6 border-t-2 border-gray-200"></div>
+            {/* Product Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+              {products.map((product, index) => (
+                <div
+                  key={index}
+                  className="bg-white rounded-2xl shadow-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-xl"
+                >
+                  {/* Product Image */}
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110"
+                    className="w-full h-40 object-cover rounded-t-2xl"
                   />
-                  <div className="absolute inset-0 bg-black bg-opacity-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                </div>
-
-                {/* Product Details */}
-                <div className="flex justify-between items-center p-4 transform transition-all duration-500 group-hover:translate-y-2">
-                  <div>
-                    <h4 className="text-sm text-gray-800 font-bold">{product.name}</h4>
-                    <p className="text-Primary font-semibold mt-2">
-                      ₦{product.price.toLocaleString()}
-                    </p>
+                  {/* Product Details */}
+                  <div className="flex justify-between items-center p-4">
+                    <div>
+                      <h4 className="text-sm text-gray-800">{product.name}</h4>
+                      <p className="text-Primary font-thin mt-2">
+                        ₦{product.price.toLocaleString()}
+                      </p>
+                    </div>
+                    <button className="bg-Primary bg-opacity-20 text-Primary py-3 px-4 rounded-full hover:bg-opacity-30">
+                      <FontAwesomeIcon icon={faCartShopping} className="w-5 h-5" />
+                    </button>
                   </div>
-                  {/* Button with Fade-in Effect */}
-                  <button className="bg-Primary bg-opacity-20 text-Primary py-3 px-4 rounded-full opacity-0 group-hover:opacity-100 hover:bg-opacity-30 transition-all duration-500">
-                    <FontAwesomeIcon icon={faCartShopping} className="w-5 h-5" />
-                  </button>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
+              ))}
+            </div>
+        </div>  
       </div>
     </div>
   );
