@@ -3,15 +3,13 @@ import React from 'react';
 const Advert = () => {
   return (
     <div>
-      {/* Page Title */}
-      <h1 id="ad" className="text-2xl font-bold text-Primary mb-6">Advert</h1>
-
       {/* Content Section */}
-      <div className="w-full max-w-4xl p-8 bg-white shadow-md rounded-md">
+      <div className="flex-grow bg-white rounded-2xl py-10 shadow-md ml-6 mt-8 mb-8 mr-6 p-6 pb-20 ">
+      <h1 className="text-2xl font-bold text-Primary mb-6">Advert</h1>
+      <div className="mt-6 mb-6 border-t-2 border-gray-200"></div>
         <p className="text-lg text-gray-600 mb-6">
           Choose from the options below to place or manage your adverts.
         </p>
-
         {/* Advert Options */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Place a New Advert */}
@@ -23,7 +21,7 @@ const Advert = () => {
               Create a new advert to reach your desired audience.
             </p>
             <a
-              href="/place-ad"
+              href="/adform"
               className="inline-block bg-Primary text-white font-medium py-2 px-4 rounded-lg hover:bg-hover-Primary"
             >
               Start Now
@@ -39,7 +37,7 @@ const Advert = () => {
               View, edit, or delete your current adverts.
             </p>
             <a
-              href="/manage-ads"
+              href="/"
               className="inline-block bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-lg hover:bg-gray-400"
             >
               Manage Ads

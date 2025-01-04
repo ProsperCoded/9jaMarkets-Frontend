@@ -1,4 +1,4 @@
-/**
+   /**
  * The Marketplace component renders a marketplace page with a search bar, a hero section and a main content area.
  * The main content area contains a sidebar with categories and a product grid that displays products filtered by category.
  * The component uses a combination of Tailwind CSS classes and custom CSS to style the elements.
@@ -107,42 +107,39 @@ const Marketplace = () => {
           </div>
         </div>
 
-        <div className="flex-grow bg-white shadow-md mt-8 mr-6 mb-8 ml-6 py-10 p-6 pb-20 rounded-2xl">
-          <h3 className="font-bold text-xl">{selectedCategory}</h3>
-          {/* Gray Line */}
-          <div className="border-gray-200 mt-6 border-t-2"></div>
-          {/* Product Grid */}
-          <div className="gap-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 mt-6">
-            {products.map((product, index) => (
-              <div
-                key={index}
-                className="bg-white shadow-lg hover:shadow-xl rounded-2xl transform transition-transform duration-300 hover:scale-105"
-              >
-                {/* Product Image */}
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="rounded-t-2xl w-full h-40 object-cover"
-                />
-                {/* Product Details */}
-                <div className="flex justify-between items-center p-4">
-                  <div>
-                    <h4 className="text-gray-800 text-sm">{product.name}</h4>
-                    <p className="mt-2 font-thin text-Primary">
-                      ₦{product.price.toLocaleString()}
-                    </p>
+        <div className="flex-grow bg-white rounded-2xl py-10 shadow-md ml-6 mt-8 mb-8 mr-6 p-6 pb-20">
+            <h3 className="font-bold text-xl">{selectedCategory}</h3>
+            {/* Gray Line */}
+            <div className="mt-6 border-t-2 border-gray-200"></div>
+            {/* Product Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+              {products.map((product, index) => (
+                <div
+                  key={index}
+                  className="bg-white rounded-2xl shadow-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-xl"
+                >
+                  {/* Product Image */}
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-40 object-cover rounded-t-2xl"
+                  />
+                  {/* Product Details */}
+                  <div className="flex justify-between items-center p-4">
+                    <div>
+                      <h4 className="text-sm text-gray-800">{product.name}</h4>
+                      <p className="text-Primary font-thin mt-2">
+                        ₦{product.price.toLocaleString()}
+                      </p>
+                    </div>
+                    <button className="bg-Primary bg-opacity-20 text-Primary py-3 px-4 rounded-full hover:bg-opacity-30">
+                      <FontAwesomeIcon icon={faCartShopping} className="w-5 h-5" />
+                    </button>
                   </div>
-                  <button className="bg-Primary bg-opacity-20 hover:bg-opacity-30 px-4 py-3 rounded-full text-Primary">
-                    <FontAwesomeIcon
-                      icon={faCartShopping}
-                      className="w-5 h-5"
-                    />
-                  </button>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
+              ))}
+            </div>
+        </div>  
       </div>
     </div>
   );

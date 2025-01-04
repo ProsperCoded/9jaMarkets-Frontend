@@ -119,9 +119,9 @@ const MarketPage = () => {
                     onClick={() => setSelectedState(state)}
                     className={`cursor-pointer p-2 ${
                       selectedState === state
-                        ? "bg-green text-white"
+                        ? "bg-Primary text-white"
                         : "text-gray-800"
-                    } hover:bg-green hover:opacity-75 hover:text-white rounded-lg focus:font-semibold`}
+                    } hover:bg-Primary hover:opacity-75 hover:text-white rounded-lg focus:font-semibold`}
                   >
                     {state}
                   </li>
