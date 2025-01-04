@@ -41,3 +41,12 @@ export const isStrongPassword = (password) => {
     "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
   ).test(password);
 };
+
+export function formatPrice(value = "") {
+  let withoutCommas = removeCommas(value);
+  return withoutCommas.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+export function removeCommas(value = "") {
+  return value.replace(/,/g, "");
+}

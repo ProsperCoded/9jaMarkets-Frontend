@@ -35,100 +35,7 @@ const SUB_PAGES = {
   product: <ProductPage />,
   edit: <EditProfile />,
 };
-function MerchantOptions() {
-  const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
-  const { userProfile } = useContext(USER_PROFILE_CONTEXT);
-  const { setLoginOpen } = useContext(LOGIN_MODAL_CONTEXT);
-  const { setSignupOpen } = useContext(SIGNUP_MODAL_CONTEXT);
-  return (
-    <div className="my-4 pl-1 cursor-pointer select-none">
-      {userProfile && userProfile.userType === "customer" ? (
-        <Collapsible
-          open={isOpen}
-          onOpenChange={setIsOpen}
-          className="space-y-2 w-auto max-w-full"
-        >
-          <div
-            className="flex justify-between items-center space-x-4 hover:bg-Primary p-1 rounded-md hover:text-white"
-            onClick={() => {
-              setIsOpen(!isOpen);
-            }}
-          >
-            <div className="flex items-center gap-2">
-              <Store />
-              <h4 className="font-semibold">Merchant Options</h4>
-            </div>
-            <CollapsibleTrigger asChild>
-              <Button variant="ghost" size="sm" className="p-0 w-9">
-                <ChevronsUpDown className="w-4 h-4" />
-              </Button>
-            </CollapsibleTrigger>
-          </div>
-          <CollapsibleContent className="space-y-2 pl-2">
-            <div
-              className="hover:bg-Primary px-3 py-2 border rounded-md font-mono text-sm hover:text-white transition-colors"
-              onClick={() => {
-                setLoginOpen("merchant");
-              }}
-            >
-              Sign in as Merchant
-            </div>
-            <div
-              className="hover:bg-Primary px-3 py-2 border rounded-md font-mono text-sm hover:text-white transition-colors"
-              onClick={() => {
-                navigate("/merchant-signup");
-              }}
-            >
-              Sign up as Merchant
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
-      ) : (
-        <Collapsible
-          open={isOpen}
-          onOpenChange={setIsOpen}
-          className="space-y-2 w-auto max-w-full"
-        >
-          <div
-            className="flex justify-between items-center space-x-4 hover:bg-Primary p-1 rounded-md hover:text-white"
-            onClick={() => {
-              setIsOpen(!isOpen);
-            }}
-          >
-            <div className="flex items-center gap-2">
-              <Store />
-              <h4 className="font-semibold">Customer Options</h4>
-            </div>
-            <CollapsibleTrigger asChild>
-              <Button variant="ghost" size="sm" className="p-0 w-9">
-                <ChevronsUpDown className="w-4 h-4" />
-              </Button>
-            </CollapsibleTrigger>
-          </div>
-          <CollapsibleContent className="space-y-2 pl-2">
-            <div
-              className="hover:bg-Primary px-3 py-2 border rounded-md font-mono text-sm hover:text-white transition-colors"
-              onClick={() => {
-                setLoginOpen(true);
-              }}
-            >
-              Sign in as Customer
-            </div>
-            <div
-              className="hover:bg-Primary px-3 py-2 border rounded-md font-mono text-sm hover:text-white transition-colors"
-              onClick={() => {
-                setSignupOpen(true);
-              }}
-            >
-              Sign up as Customer
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
-      )}
-    </div>
-  );
-}
+
 const Profile = ({ subpage }) => {
   const { userProfile } = useContext(USER_PROFILE_CONTEXT);
   const { setLogoutOpen } = useContext(LOGOUT_MODAL_CONTEXT);
@@ -141,6 +48,7 @@ const Profile = ({ subpage }) => {
     backgroundColor: "#236C13",
     fontWeight: 600,
   };
+  let name = userProfile && (userProfile.firstName || userProfile.brandName);
   return (
     <div className="flex bg-gray-50 min-h-screen">
       {/* Sidebar */}
@@ -151,11 +59,11 @@ const Profile = ({ subpage }) => {
             style={{ backgroundColor: "#236C13", verticalAlign: "middle" }}
             size="large"
           >
-            <span className="font-semibold">{userProfile.firstName[0]}</span>
+            <span className="font-semibold">{name[0]}</span>
           </Avatar>
           <div className="ml-3">
             <div className="">
-              <h2 className="font-semibold text-lg">{userProfile.firstName}</h2>
+              <h2 className="font-semibold text-lg">{name}</h2>
               <div
                 className="top-10 left-[80%] absolute bg-Primary p-2 rounded-full transition-transform cursor-pointer hover:scale-105"
                 onClick={() => {
@@ -169,7 +77,7 @@ const Profile = ({ subpage }) => {
           </div>
         </div>
 
-        <MerchantOptions />
+        <UserOptions />
         {/* <Link to="/merchant-signup">Merchant Options</Link> */}
         {/* Navigation Links */}
         <nav>
@@ -291,3 +199,98 @@ const Profile = ({ subpage }) => {
 };
 
 export default Profile;
+
+function UserOptions() {
+  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const { userProfile } = useContext(USER_PROFILE_CONTEXT);
+  const { setLoginOpen } = useContext(LOGIN_MODAL_CONTEXT);
+  const { setSignupOpen } = useContext(SIGNUP_MODAL_CONTEXT);
+  return (
+    <div className="my-4 pl-1 cursor-pointer select-none">
+      {userProfile && userProfile.userType === "customer" ? (
+        <Collapsible
+          open={isOpen}
+          onOpenChange={setIsOpen}
+          className="space-y-2 w-auto max-w-full"
+        >
+          <div
+            className="flex justify-between items-center space-x-4 hover:bg-Primary p-1 rounded-md hover:text-white"
+            onClick={() => {
+              setIsOpen(!isOpen);
+            }}
+          >
+            <div className="flex items-center gap-2">
+              <Store />
+              <h4 className="font-semibold">Merchant Options</h4>
+            </div>
+            <CollapsibleTrigger asChild>
+              <Button variant="ghost" size="sm" className="p-0 w-9">
+                <ChevronsUpDown className="w-4 h-4" />
+              </Button>
+            </CollapsibleTrigger>
+          </div>
+          <CollapsibleContent className="space-y-2 pl-2">
+            <div
+              className="hover:bg-Primary px-3 py-2 border rounded-md font-mono text-sm hover:text-white transition-colors"
+              onClick={() => {
+                setLoginOpen("merchant");
+              }}
+            >
+              Sign in as Merchant
+            </div>
+            <div
+              className="hover:bg-Primary px-3 py-2 border rounded-md font-mono text-sm hover:text-white transition-colors"
+              onClick={() => {
+                navigate("/merchant-signup");
+              }}
+            >
+              Sign up as Merchant
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+      ) : (
+        <Collapsible
+          open={isOpen}
+          onOpenChange={setIsOpen}
+          className="space-y-2 w-auto max-w-full"
+        >
+          <div
+            className="flex justify-between items-center space-x-4 hover:bg-Primary p-1 rounded-md hover:text-white"
+            onClick={() => {
+              setIsOpen(!isOpen);
+            }}
+          >
+            <div className="flex items-center gap-2">
+              <Store />
+              <h4 className="font-semibold">Customer Options</h4>
+            </div>
+            <CollapsibleTrigger asChild>
+              <Button variant="ghost" size="sm" className="p-0 w-9">
+                <ChevronsUpDown className="w-4 h-4" />
+              </Button>
+            </CollapsibleTrigger>
+          </div>
+          <CollapsibleContent className="space-y-2 pl-2">
+            <div
+              className="hover:bg-Primary px-3 py-2 border rounded-md font-mono text-sm hover:text-white transition-colors"
+              onClick={() => {
+                setLoginOpen(true);
+              }}
+            >
+              Sign in as Customer
+            </div>
+            <div
+              className="hover:bg-Primary px-3 py-2 border rounded-md font-mono text-sm hover:text-white transition-colors"
+              onClick={() => {
+                setSignupOpen(true);
+              }}
+            >
+              Sign up as Customer
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+      )}
+    </div>
+  );
+}

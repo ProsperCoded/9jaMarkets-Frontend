@@ -7,6 +7,16 @@ export const ACCESS_TOKEN_DURATION = 3;
 // 14 Days for refresh token
 export const REFRESH_TOKEN_DURATION = 14;
 
+export const PRODUCT_CATEGORIES = [
+  "ELECTRONICS",
+  "FASHION",
+  "FOOD",
+  "HEALTH",
+  "HOME",
+  "SPORTS",
+  "TOYS",
+];
+
 export const MARKETS = {
   Abia: [
     { name: "Ariaria International Market (Aba)", img: "/path/to/ariaria.jpg" },
