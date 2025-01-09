@@ -1,10 +1,10 @@
-import { API_BASE_URL } from "../../config";
+import { SERVER_URL } from "../../config";
 export async function signUpApi(
   payload,
   errorLogger = () => {},
   successLogger = () => {}
 ) {
-  const url = new URL("auth/customer/signup", API_BASE_URL);
+  const url = new URL("auth/customer/signup", SERVER_URL);
   console.log(url.href, payload);
   const response = await fetch(url, {
     method: "POST",
@@ -29,7 +29,7 @@ export async function loginApi(
   errorLogger = () => {},
   successLogger = () => {}
 ) {
-  const url = new URL(endpoint, API_BASE_URL);
+  const url = new URL(endpoint, SERVER_URL);
   const loginResponse = await fetch(url, {
     method: "POST",
     headers: {
@@ -60,7 +60,7 @@ export async function refreshTokenApi(
   endpoint,
   errorLogger = () => {}
 ) {
-  const url = new URL(endpoint, API_BASE_URL);
+  const url = new URL(endpoint, SERVER_URL);
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -95,7 +95,7 @@ export async function logoutApi(
   endpoint,
   errorLogger = () => {}
 ) {
-  const url = new URL(endpoint, API_BASE_URL);
+  const url = new URL(endpoint, SERVER_URL);
   const response = await fetch(url, {
     method: "DELETE",
     headers: {
@@ -124,7 +124,7 @@ export async function exchangeTokenApi(
   errorLogger = () => {},
   successLogger = () => {}
 ) {
-  const url = new URL(endpoint, API_BASE_URL);
+  const url = new URL(endpoint, SERVER_URL);
   url.searchParams.append("token", exchangeToken);
   const response = await fetch(url, {
     method: "GET",
@@ -162,7 +162,7 @@ export async function signupMerchantApi(
   errorLogger = () => {},
   successLogger = () => {}
 ) {
-  const url = new URL("auth/merchant/signup", API_BASE_URL);
+  const url = new URL("auth/merchant/signup", SERVER_URL);
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -183,7 +183,7 @@ export async function sendVerificationCustomerEmailApi(
   email,
   errorLogger = () => {}
 ) {
-  const url = new URL("auth/customer/email-verification", API_BASE_URL);
+  const url = new URL("auth/customer/email-verification", SERVER_URL);
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -199,7 +199,7 @@ export async function sendVerificationCustomerEmailApi(
   return responseData.message;
 }
 export async function verifyEmailOtp(email, code, errorLogger = () => {}) {
-  const url = new URL("auth/customer/verify-email", API_BASE_URL);
+  const url = new URL("auth/customer/verify-email", SERVER_URL);
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -215,7 +215,7 @@ export async function verifyEmailOtp(email, code, errorLogger = () => {}) {
   return responseData.message;
 }
 export async function sendForgetPassword(email, errorLogger = () => {}) {
-  const url = new URL("auth/customer/forgot-password", API_BASE_URL);
+  const url = new URL("auth/customer/forgot-password", SERVER_URL);
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -231,7 +231,7 @@ export async function sendForgetPassword(email, errorLogger = () => {}) {
   return responseData.message;
 }
 export async function resetPassword(payload, errorLogger = () => {}) {
-  const url = new URL("auth/customer/reset-password", API_BASE_URL);
+  const url = new URL("auth/customer/reset-password", SERVER_URL);
   const response = await fetch(url, {
     method: "PUT",
     headers: {
