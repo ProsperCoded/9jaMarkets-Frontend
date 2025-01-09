@@ -1,8 +1,8 @@
 import { getAuth } from "../util";
-import { API_BASE_URL } from "@/config";
+import { SERVER_URL } from "@/config";
 export async function uploadProductApi(payload, errorLogger = () => {}) {
   const { accessToken } = getAuth();
-  const url = new URL(`product`, API_BASE_URL);
+  const url = new URL(`product`, SERVER_URL);
   const formData = new FormData();
   formData.append("name", payload.productName);
   formData.append("details", payload.productDetails);
@@ -30,7 +30,7 @@ export async function uploadProductApi(payload, errorLogger = () => {}) {
 }
 export async function getProductsApi(errorLogger = () => {}) {
   const { userId: merchantId } = getAuth();
-  const url = new URL(`product/merchant/${merchantId}`, API_BASE_URL);
+  const url = new URL(`product/merchant/${merchantId}`, SERVER_URL);
   const response = await fetch(url);
   const responseData = await response.json();
   if (!response.ok) {
@@ -41,16 +41,15 @@ export async function getProductsApi(errorLogger = () => {}) {
 }
 export async function deleteProductApi(productId, errorLogger = () => {}) {
   const { accessToken } = getAuth();
-  const url = new URL(`product/${productId}`, API_BASE_URL);
+  const url = new URL(`product/${productId}`, SERVER_URL);
   const response = await fetch(url, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
   });
-
   if (!response.ok) {
-    errorLogger(responseData.message);
+    errorLogger("Unable to delete product ");
     return;
   }
   return "Deleted";

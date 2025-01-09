@@ -2,50 +2,12 @@ import { useState } from "react";
 import searchIcon from "../assets/search.svg"; // Assuming this is your search icon
 import { Link } from "react-router-dom";
 import { MALLS } from "../config";
-const states = [
-  "Abuja",
-  "Abia",
-  "Adamawa",
-  "Akwa-Ibom",
-  "Anambra",
-  "Bauchi",
-  "Bayelsa",
-  "Benue",
-  "Borno",
-  "Cross-River",
-  "Delta",
-  "Ebonyi",
-  "Edo",
-  "Ekiti",
-  "Enugu",
-  "FCT",
-  "Gombe",
-  "Imo",
-  "Jigawa",
-  "Kaduna",
-  "Kano",
-  "Katsina",
-  "Kebbi",
-  "Kogi",
-  "Kwara",
-  "Lagos",
-  "Nasarawa",
-  "Niger",
-  "Ogun",
-  "Ondo",
-  "Osun",
-  "Oyo",
-  "Plateau",
-  "Rivers",
-  "Sokoto",
-  "Taraba",
-  "Yobe",
-  "Zamfara",
-];
-
+import { ChevronDown } from "lucide-react";
+import { STATES } from "../config";
 const mallPage = () => {
   const [selectedState, setSelectedState] = useState("Abuja");
   const [searchTerm, setSearchTerm] = useState("");
+  const [bottomNavVisible, setBottomNavVisible] = useState(false);
 
   const filteredmalls = MALLS[selectedState]?.filter((mall) =>
     mall.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -56,11 +18,11 @@ const mallPage = () => {
       <div className="bg-white drop-shadow-sm py-2 text-Primary">
         <div className="flex justify-between items-center mx-auto px-4 container">
           {/* Left Section with malls and Malls */}
-          <div className="flex items-center space-x-4">
-            <Link to="/markets" className="font-thin text-lg">
+          <div className="md:flex items-center space-x-4 hidden">
+            <Link to="/markets" className="font-bold text-lg">
               Markets
             </Link>
-            <Link to="/malls" className="font-bold text-lg">
+            <Link to="/malls" className="font-thin text-lg">
               Malls
             </Link>
           </div>
@@ -87,22 +49,74 @@ const mallPage = () => {
       {/* Main Layout */}
       <div className="flex">
         {/* Sidebar: List of States */}
-        <aside className="bg-white shadow-lg p-4 w-[300px] h-full">
-          <ul className="space-y-2">
-            {states.map((state) => (
-              <li
-                key={state}
-                onClick={() => setSelectedState(state)}
-                className={`cursor-pointer p-2 ${
-                  selectedState === state
-                    ? "bg-green text-white"
-                    : "text-gray-800"
-                } hover:bg-green hover:opacity-75 hover:text-white rounded-lg focus:font-semibold`}
+
+        <aside
+          className="top-[93%] z-20 md:static fixed bg-white md:shadow-hide rounded-t-2xl w-full md:w-[300px] h-full overflow-visible"
+          style={{
+            boxShadow:
+              "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+            top: bottomNavVisible ? "10%" : "93%",
+            transition: "top 0.3s ease-in-out",
+          }}
+        >
+          <div className="relative p-4 w-full h-full">
+            <div className="left-[10%] z-10 absolute md:hidden">
+              <Link to="/markets" className="font-thin text-lg">
+                Markets
+              </Link>
+            </div>
+            <div className="right-[10%] z-10 absolute md:hidden">
+              <Link to="/malls" className="font-bold text-lg">
+                Malls
+              </Link>
+            </div>
+            <div
+              className="top-[-20px] right-0 left-0 absolute md:hidden transition-transform translate-y-[-50%]"
+              style={{
+                transform: bottomNavVisible ? "rotate(0deg)" : "rotate(180deg)",
+                transition: "transform 0.3s ease-in-out",
+              }}
+            >
+              <div
+                className="z-30 bg-white mx-auto p-4 w-fit h-fit cursor-pointer"
+                style={{
+                  boxShadow: !bottomNavVisible
+                    ? "rgba(37, 37, 37, 0.15) 1px 12px 16px"
+                    : "none",
+                  borderRadius: !bottomNavVisible ? "0 0 1rem 1rem " : "1rem",
+                }}
+                onClick={() => {
+                  setBottomNavVisible((prev) => !prev);
+                }}
               >
-                {state}
-              </li>
-            ))}
-          </ul>
+                <ChevronDown
+                  size={35}
+                  strokeWidth={2}
+                  className="text-Primary"
+                />
+              </div>
+            </div>
+            <div className="relative pt-14 md:pt-2 h-full md:max-h-screen overflow-y-auto">
+              <h3 className="md:hidden font-semibold text-center text-lg">
+                STATES
+              </h3>
+              <ul className="gap-2 space-y-2 grid grid-cols-2 md:grid-cols-1 h-max">
+                {STATES.map((state) => (
+                  <li
+                    key={state}
+                    onClick={() => setSelectedState(state)}
+                    className={`cursor-pointer p-2 ${
+                      selectedState === state
+                        ? "bg-Primary text-white"
+                        : "text-gray-800"
+                    } hover:bg-Primary hover:opacity-75 hover:text-white rounded-lg focus:font-semibold`}
+                  >
+                    {state}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </aside>
 
         {/* Main Content: malls */}

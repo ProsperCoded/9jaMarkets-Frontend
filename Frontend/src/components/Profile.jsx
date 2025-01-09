@@ -10,10 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
   faList,
-  faCartShopping,
   faMessage,
-  faWallet,
-  faUsers,
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
@@ -111,7 +108,7 @@ const Profile = ({ subpage }) => {
                   style={subpage === "customers" ? styleSelected : {}}
                 >
                   <FontAwesomeIcon icon={faUsers} />
-                  <span>Contacts</span>
+                  <span>Customers</span>
                 </Link>
               </li>
             )}

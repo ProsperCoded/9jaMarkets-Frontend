@@ -1,4 +1,4 @@
-import { API_BASE_URL } from "../../config";
+import { SERVER_URL } from "../../config";
 import { getAuth } from "../util";
 export async function getMerchantProfileApi(
   userId,
@@ -6,7 +6,7 @@ export async function getMerchantProfileApi(
   errorLogger = () => {},
   successLogger = () => {}
 ) {
-  const url = new URL(`merchant/${userId}`, API_BASE_URL);
+  const url = new URL(`merchant/${userId}`, SERVER_URL);
   const userProfile = await fetch(url, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -27,7 +27,7 @@ export async function getCustomerProfileApi(
   errorLogger = () => {},
   successLogger = () => {}
 ) {
-  const url = new URL(`customer/profile/${userId}`, API_BASE_URL);
+  const url = new URL(`customer/profile/${userId}`, SERVER_URL);
   const userProfile = await fetch(url, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -47,7 +47,7 @@ export async function updateCustomerProfileApi(
   successLogger = () => {}
 ) {
   const { userId, accessToken } = getAuth();
-  const url = new URL(`customer/profile/${userId}`, API_BASE_URL);
+  const url = new URL(`customer/profile/${userId}`, SERVER_URL);
   const response = await fetch(url, {
     method: "PUT",
     headers: {
