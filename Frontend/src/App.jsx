@@ -17,6 +17,9 @@ import MarketPage from "./components/Markets";
 import MallPage from "./components/Malls";
 import Profile from "./components/Profile";
 import PlaceAD from "./components/PlaceAD";
+import Error404 from "./components/404";
+import MainPage from "./components/Mainpage";
+
 
 import { ConfigProvider } from "antd";
 import InitializeApp from "./InitializeApp";
@@ -79,6 +82,8 @@ function App() {
               <Route path="/ad" element={<Adverts />} />
               <Route path="/place-ad" element={<PlaceAD />} />
               <Route path="/forget-password" element={<ForgetPassword />} />
+              <Route path="/404" element={<Error404 />} />
+              <Route path="/mainpage" element={<MainPage />} />
 
               <Route
                 path="/profile/:subpage?"

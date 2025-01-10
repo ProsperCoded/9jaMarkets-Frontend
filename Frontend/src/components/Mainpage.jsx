@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import CH from "../assets/customerhero.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { Bookmark, BookmarkPlus } from "lucide-react";
 
 function ProductsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
 
   // Simulated Product Data
   const products = [
@@ -42,13 +39,53 @@ function ProductsPage() {
     }
   };
 
+  const ProductCard = ({ product }) => {
+    const [isBookmarked, setIsBookmarked] = useState(false);
+
+    const toggleBookmark = () => {
+      setIsBookmarked((prev) => !prev);
+    };
+
+    return (
+      <div className="bg-white rounded-2xl shadow-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-xl h-70 sm:h-40">
+        {/* Product Image */}
+        <img
+          src={product.image}
+          alt={product.name}
+          className="w-full h-24 sm:h-28 md:h-32 lg:h-40 object-cover rounded-t-2xl"
+        />
+        {/* Product Details */}
+        <div className="flex justify-between items-center px-3 py-2 sm:px-4 sm:py-3">
+          <div>
+            <h4 className="text-xs sm:text-sm text-gray-800 font-semibold">
+              {product.name}
+            </h4>
+            <p className="text-green-700 font-bold mt-1 sm:mt-2 text-xs sm:text-sm">
+              ₦{product.price.toLocaleString()}
+            </p>
+          </div>
+          <button
+            className="bg-white shadow-lg text-green-700 p-2 rounded-full hover:bg-green-100 transition-colors"
+            onClick={toggleBookmark}
+          >
+            {isBookmarked ? (
+              <Bookmark className="w-5 h-5 sm:w-6 sm:h-6" />
+            ) : (
+              <BookmarkPlus className="w-5 h-5 sm:w-6 sm:h-6" />
+            )}
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div>
       {/* Hero Section */}
-      <div className="relative w-full h-[300px]">
+      <div className="relative w-full h-[250px]">
         {/* Hero background image */}
         <img
-          src={CH} // Replace with your actual image path
+          src={CH}
           alt="Hero Background"
           className="absolute top-0 left-0 w-full h-full object-cover"
         />
@@ -88,38 +125,11 @@ function ProductsPage() {
         </div>
       </div>
 
-      {/* Products Section */}
-      <div className="bg-white rounded-2xl py-10 shadow-md mx-6 my-8 p-6 pb-20">
-        <h3 className="font-bold text-xl">Products</h3>
-        {/* Gray Line */}
-        <div className="mt-6 border-t-2 border-gray-200"></div>
-
-        {/* Product Grid */}
+      {/* Product Grid */}
+      <div className="px-4 sm:px-6 md:px-8">
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
           {filteredProducts.map((product, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-2xl shadow-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-xl"
-            >
-              {/* Product Image */}
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-40 object-cover rounded-t-2xl"
-              />
-              {/* Product Details */}
-              <div className="flex justify-between items-center p-4">
-                <div>
-                  <h4 className="text-sm text-gray-800">{product.name}</h4>
-                  <p className="text-green-700 font-thin mt-2">
-                    ₦{product.price.toLocaleString()}
-                  </p>
-                </div>
-                <button className="bg-green-700 bg-opacity-20 text-green-700 py-3 px-4 rounded-full hover:bg-opacity-30">
-                  <FontAwesomeIcon icon={faCartShopping} className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
+            <ProductCard key={index} product={product} />
           ))}
         </div>
       </div>

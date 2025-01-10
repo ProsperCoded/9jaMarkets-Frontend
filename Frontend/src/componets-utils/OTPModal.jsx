@@ -58,7 +58,7 @@ export default function OTPModal({
         <p className="flex my-4 font-bold text-lg">
           <MessageCircleWarning size={20} className="mr-2 text-red-700" />
           <span>
-            You will be logged out and must log in with the new email.
+            You will be logged out and must log in with the new password.
           </span>
         </p>
         <div className="flex flex-col justify-center items-center my-10">
