@@ -1,15 +1,3 @@
-/**
- * MarketPage
- *
- * This component renders a page that displays a list of markets by state
- * and a search bar to filter markets by name. The component also contains
- * a sidebar that displays a list of all states, and an area to display the
- * markets. The component uses the MARKETS and STATES constants from the
- * ../config.js file to get the list of markets and states.
- *
- * @returns {React.ReactElement} The MarketPage component
- */
-
 import { useState } from "react";
 import searchIcon from "../assets/search.svg"; // Assuming this is your search icon
 import { Link } from "react-router-dom";
@@ -18,14 +6,25 @@ import { STATES } from "../config";
 import { ChevronDown } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { MALLS } from "../config";
+import { getMarketsApi } from "@/lib/api/marketapi";
+import { useErrorLogger } from "@/hooks";
+import { useEffect } from "react";
 const MarketPage = () => {
   const [selectedState, setSelectedState] = useState("Abia");
   const [searchTerm, setSearchTerm] = useState("");
   const [bottomNavVisible, setBottomNavVisible] = useState(false);
   const location = useLocation();
+  const errorLogger = useErrorLogger();
   let DATA = MARKETS;
   if (location.pathname === "/markets") DATA = MARKETS;
   else if (location.pathname === "/malls") DATA = MALLS;
+  const fetchMarkets = async () => {
+    const markets = await getMarketsApi(errorLogger);
+    console.log(markets);
+  };
+  useEffect(() => {
+    fetchMarkets();
+  }, []);
   const filteredMarkets = DATA[selectedState]?.filter((market) =>
     market.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -105,7 +104,11 @@ const MarketPage = () => {
                   setBottomNavVisible((prev) => !prev);
                 }}
               >
-                <ChevronDown size={35} strokeWidth={2} className="text-Primary" />
+                <ChevronDown
+                  size={35}
+                  strokeWidth={2}
+                  className="text-Primary"
+                />
               </div>
             </div>
             <div className="relative pt-14 md:pt-2 h-full md:max-h-screen overflow-y-auto">
@@ -142,7 +145,8 @@ const MarketPage = () => {
           <div className="gap-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {filteredMarkets.length > 0 ? (
               filteredMarkets.map((market, index) => (
-                <Link to= '/marketplace'
+                <Link
+                  to="/marketplace"
                   key={index}
                   className="bg-white shadow-md hover:shadow-lg rounded-lg transform transition duration-300 overflow-hidden hover:scale-105"
                 >
@@ -153,9 +157,7 @@ const MarketPage = () => {
                   />
                   <div className="p-4">
                     <h3 className="font-semibold text-lg">{market.name}</h3>
-                    <a
-                      className="block mt-2 text-Primary text-sm hover:underline"
-                    >
+                    <a className="block mt-2 text-Primary text-sm hover:underline">
                       View more
                     </a>
                   </div>
