@@ -11,6 +11,10 @@ import Loading from "../componets-utils/Loading.jsx";
 import { GOOGLE_URL } from "@/config";
 import { LOGIN_MODAL_CONTEXT } from "../contexts";
 import { useNavigate } from "react-router-dom";
+import { isStrongPassword } from "../lib/util";
+import { getMarketNamesApi } from "@/lib/api/marketApi";
+import { useEffect } from "react";
+import { Tabs, TabsList, TabsContent, TabsTrigger } from "./ui/tabs";
 const MerchantSignup = () => {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
@@ -24,7 +28,20 @@ const MerchantSignup = () => {
   const [loading, setLoading] = useState(false);
   const [brandName, setBrandName] = useState("");
   const [merchantCategories, setMerchantCategories] = useState([]);
-  const [marketName, setMarketName] = useState("Friends Market");
+  const [marketName, setMarketName] = useState("");
+  const [mallName, setMallName] = useState("");
+  const [availableMarkets, setAvailableMarkets] = useState([]);
+  const [availableMalls, setAvailableMalls] = useState([
+    "Alaba",
+    "Ikeja",
+    "Oshodi",
+    "Yaba",
+    "Surulere",
+  ]);
+  const errorLogger = (error) => {
+    console.error(error);
+    setError(error);
+  };
   const [addresses, setAddresses] = useState([
     {
       address: "",
@@ -39,13 +56,12 @@ const MerchantSignup = () => {
   const messageApi = useContext(MESSAGE_API_CONTEXT);
   const { setLoginOpen } = useContext(LOGIN_MODAL_CONTEXT);
 
-  // userP
   const { setUserProfile } = useContext(USER_PROFILE_CONTEXT);
 
-  const isStrongPassword = (password) => {
-    return RegExp(
-      "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
-    ).test(password);
+  const fetchMarketNames = async () => {
+    const data = await getMarketNamesApi(errorLogger);
+    if (!data) return;
+    setAvailableMarkets(data);
   };
 
   const handleAddAddress = () => {
@@ -100,13 +116,11 @@ const MerchantSignup = () => {
       password,
       brandName,
       merchantCategories,
-      marketName,
+      // ? the backend only accept marketName, weather mall or market
+      marketName: marketName || mallName,
       addresses,
     };
-    const errorLogger = (error) => {
-      console.error(error);
-      setError(error);
-    };
+
     const signUp = await signupMerchantApi(formData, (error) => {
       console.error(error);
       setError(error);
@@ -127,7 +141,9 @@ const MerchantSignup = () => {
     messageApi.success("Merchant SignUp Successful");
     navigate("/");
   };
-
+  useEffect(() => {
+    fetchMarketNames();
+  }, []);
   return (
     <div
       className="flex justify-center items-center bg-white overflow-auto"
@@ -225,20 +241,69 @@ const MerchantSignup = () => {
           </div>
           <div>
             <label
-              htmlFor="marketName"
-              className="block font-medium text-gray-700 text-sm"
+              htmlFor=""
+              className="block mb-2 font-medium text-gray-700 text-sm"
             >
-              Market Name
+              Affiliation:
             </label>
-            <input
-              type="text"
-              id="marketName"
-              name="marketName"
-              value={marketName}
-              onChange={(e) => setMarketName(e.target.value)}
-              className="border-gray-300 p-2 border rounded-lg focus:ring-green focus:ring-2 w-full focus:outline-none"
-              required
-            />
+            <Tabs defaultValue="market" className="w-full">
+              <TabsList>
+                <TabsTrigger value="market"> Market</TabsTrigger>
+                <TabsTrigger value="malls"> Malls</TabsTrigger>
+              </TabsList>
+              <TabsContent value="market" className="w-full">
+                <div>
+                  <label
+                    htmlFor="marketName"
+                    className="block font-medium text-red-400 text-sm"
+                  >
+                    * Choose this option of you are a market merchant
+                  </label>
+                  <select
+                    id="marketName"
+                    value={marketName}
+                    onChange={(e) => setMarketName(e.target.value)}
+                    className="border-gray-300 px-4 py-2 border rounded-md w-full"
+                    required
+                  >
+                    <option selected>-- Select Market --</option>
+                    {availableMarkets.map((market, ind) => {
+                      return (
+                        <option key={ind} value={market}>
+                          {market}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              </TabsContent>
+              <TabsContent value="malls">
+                <div>
+                  <label
+                    htmlFor="mallName"
+                    className="block font-medium text-red-400 text-sm"
+                  >
+                    * Choose this option of you are a mall merchant
+                  </label>
+                  <select
+                    id="mallName"
+                    value={mallName}
+                    onChange={(e) => setMarketName(e.target.value)}
+                    className="border-gray-300 px-4 py-2 border rounded-md w-full"
+                    required
+                  >
+                    <option selected>-- Select Mall --</option>
+                    {availableMalls.map((mall, ind) => {
+                      return (
+                        <option key={ind} value={mall}>
+                          {mall}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              </TabsContent>
+            </Tabs>
           </div>
           <div>
             <label

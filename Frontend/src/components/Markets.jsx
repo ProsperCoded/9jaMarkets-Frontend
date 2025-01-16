@@ -6,7 +6,7 @@ import { STATES } from "../config";
 import { ChevronDown } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { MALLS } from "../config";
-import { getMarketsApi } from "@/lib/api/marketapi";
+import { getMarketsApi } from "@/lib/api/marketApi";
 import { useErrorLogger } from "@/hooks";
 import { useEffect } from "react";
 const MarketPage = () => {
@@ -66,11 +66,11 @@ const MarketPage = () => {
       <div className="relative flex" tabIndex={3}>
         {/* Sidebar: List of States */}
         <aside
-          className="top-[93%] z-20 md:static fixed bg-white md:shadow-hide rounded-t-2xl w-full md:w-[300px] h-full overflow-visible"
+          className="top-[93%] md:top-0 z-20 fixed md:sticky bg-white md:shadow-hide rounded-t-2xl w-full md:w-[300px] h-full overflow-visible"
           style={{
             boxShadow:
               "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
-            top: bottomNavVisible ? "10%" : "93%",
+            top: bottomNavVisible ? "10%" : "",
             transition: "top 0.3s ease-in-out",
           }}
         >

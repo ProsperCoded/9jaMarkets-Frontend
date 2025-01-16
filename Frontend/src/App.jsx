@@ -20,7 +20,6 @@ import PlaceAD from "./components/PlaceAD";
 import Error404 from "./components/404";
 import MainPage from "./components/Mainpage";
 
-
 import { ConfigProvider } from "antd";
 import InitializeApp from "./InitializeApp";
 
@@ -82,7 +81,6 @@ function App() {
               <Route path="/ad" element={<Adverts />} />
               <Route path="/place-ad" element={<PlaceAD />} />
               <Route path="/forget-password" element={<ForgetPassword />} />
-              <Route path="/404" element={<Error404 />} />
               <Route path="/mainpage" element={<MainPage />} />
 
               <Route
@@ -91,6 +89,7 @@ function App() {
               />
               {/* Google signup */}
               <Route path="/auth" element={<GoogleSigninRedirect />} />
+              <Route path="*" element={<Error404 />} />
             </Routes>
             <Footer />
           </InitializeApp>
