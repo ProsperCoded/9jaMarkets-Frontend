@@ -3,7 +3,12 @@ import logo from "../assets/Logo.svg";
 import googleLogo from "../assets/Google Icon.svg";
 import facebookLogo from "../assets/facebook.png";
 import appleLogo from "../assets/apple.svg";
-import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "../contexts";
+import {
+  MARKET_DATA_CONTEXT,
+  MESSAGE_API_CONTEXT,
+  MALLS_DATA_CONTEXT,
+  USER_PROFILE_CONTEXT,
+} from "../contexts";
 import { getMerchantProfileApi } from "../lib/api/serviceApi";
 import { loginMerchantApi, signupMerchantApi } from "../lib/api/authApi.js";
 import { storeAuth } from "../lib/util";
@@ -30,14 +35,10 @@ const MerchantSignup = () => {
   const [merchantCategories, setMerchantCategories] = useState([]);
   const [marketName, setMarketName] = useState("");
   const [mallName, setMallName] = useState("");
-  const [availableMarkets, setAvailableMarkets] = useState([]);
-  const [availableMalls, setAvailableMalls] = useState([
-    "Alaba",
-    "Ikeja",
-    "Oshodi",
-    "Yaba",
-    "Surulere",
-  ]);
+  const { marketsData } = useContext(MARKET_DATA_CONTEXT);
+  const { mallsData } = useContext(MALLS_DATA_CONTEXT);
+  const availableMarkets = marketsData.map((market) => market.name);
+  const availableMalls = mallsData.map((mall) => mall.name);
   const errorLogger = (error) => {
     console.error(error);
     setError(error);
@@ -57,12 +58,6 @@ const MerchantSignup = () => {
   const { setLoginOpen } = useContext(LOGIN_MODAL_CONTEXT);
 
   const { setUserProfile } = useContext(USER_PROFILE_CONTEXT);
-
-  const fetchMarketNames = async () => {
-    const data = await getMarketNamesApi(errorLogger);
-    if (!data) return;
-    setAvailableMarkets(data);
-  };
 
   const handleAddAddress = () => {
     setAddresses([
@@ -141,9 +136,6 @@ const MerchantSignup = () => {
     messageApi.success("Merchant SignUp Successful");
     navigate("/");
   };
-  useEffect(() => {
-    fetchMarketNames();
-  }, []);
   return (
     <div
       className="flex justify-center items-center bg-white overflow-auto"

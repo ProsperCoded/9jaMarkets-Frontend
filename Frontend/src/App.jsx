@@ -75,8 +75,9 @@ function App() {
               />
               <Route path="/how-it-works" element={<HowItWorks />} />
               <Route path="/markets" element={<MarketPage />} />
+              <Route path="/markets/:id" element={<Marketplace />} />
               <Route path="/malls" element={<MallPage />} />
-              <Route path="/marketplace" element={<Marketplace />} />
+              {/* <Route path="/marketplace" element={<Marketplace />} /> */}
               <Route path="/merchant-signup" element={<MerchantSignup />} />
               <Route path="/ad" element={<Adverts />} />
               <Route path="/place-ad" element={<PlaceAD />} />

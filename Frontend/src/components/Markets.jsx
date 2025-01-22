@@ -1,33 +1,30 @@
 import { useState } from "react";
 import searchIcon from "../assets/search.svg"; // Assuming this is your search icon
 import { Link } from "react-router-dom";
-import { MARKETS } from "../config";
 import { STATES } from "../config";
 import { ChevronDown } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { MALLS } from "../config";
-import { getMarketsApi } from "@/lib/api/marketApi";
+import { getMarketsAndMallsApi } from "@/lib/api/marketApi";
 import { useErrorLogger } from "@/hooks";
 import { useEffect } from "react";
+import { useContext } from "react";
+import { MARKET_DATA_CONTEXT } from "@/contexts";
+import { useMemo } from "react";
 const MarketPage = () => {
-  const [selectedState, setSelectedState] = useState("Abia");
+  const [selectedState, setSelectedState] = useState("Abuja");
   const [searchTerm, setSearchTerm] = useState("");
   const [bottomNavVisible, setBottomNavVisible] = useState(false);
   const location = useLocation();
   const errorLogger = useErrorLogger();
-  let DATA = MARKETS;
-  if (location.pathname === "/markets") DATA = MARKETS;
-  else if (location.pathname === "/malls") DATA = MALLS;
-  const fetchMarkets = async () => {
-    const markets = await getMarketsApi(errorLogger);
-    console.log(markets);
-  };
-  useEffect(() => {
-    fetchMarkets();
-  }, []);
-  const filteredMarkets = DATA[selectedState]?.filter((market) =>
-    market.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const { marketsData } = useContext(MARKET_DATA_CONTEXT);
+  const filteredMarkets = useMemo(() => {
+    if (!selectedState) return marketsData;
+    const markets = marketsData.filter((market) =>
+      market.state.toLowerCase().includes(selectedState.toLowerCase())
+    );
+    return markets;
+  }, [selectedState, marketsData]);
 
   return (
     <div className="relative flex flex-col min-h-screen">
@@ -146,20 +143,22 @@ const MarketPage = () => {
             {filteredMarkets.length > 0 ? (
               filteredMarkets.map((market, index) => (
                 <Link
-                  to="/marketplace"
+                  to={`/markets/${market.id}`}
                   key={index}
                   className="bg-white shadow-md hover:shadow-lg rounded-lg transform transition duration-300 overflow-hidden hover:scale-105"
                 >
                   <img
                     src={market.img}
                     alt={market.name}
+                    lazy="true"
                     className="w-full h-32 object-cover"
                   />
                   <div className="p-4">
                     <h3 className="font-semibold text-lg">{market.name}</h3>
-                    <a className="block mt-2 text-Primary text-sm hover:underline">
-                      View more
-                    </a>
+                    <div className="flex items-center gap-1">
+                      <MapPin size={20} strokeWidth={1} />
+                      <p className="my-1 text-sm">{market.address}</p>
+                    </div>
                   </div>
                 </Link>
               ))

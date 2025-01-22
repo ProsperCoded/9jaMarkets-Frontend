@@ -1,7 +1,7 @@
 // const fetch = require("node-fetch"); // For using the fetch API in Node.js
 // const FormData = require("form-data");
 const fs = require("fs"); // For reading image files
-const MARKETS = require("./Markets.cjs");
+const MALLS = require("./Malls.cjs");
 const apiUrl = "https://safe-lindsy-obiken-415ef84b.koyeb.app/api/v1/market";
 
 const defaultCity = "Ibadan";
@@ -9,17 +9,17 @@ const defaultAddress = "moniya market, moniya, Ibadan";
 const defaultDescription = "Best Market in town, located in Ibadan";
 
 // ? Inject all market with it's states
-const marketWithStates = Object.values(MARKETS).map((stateMarkets, ind) => {
-  return stateMarkets.map((market) => {
-    return { ...market, state: Object.keys(MARKETS)[ind] };
+const mallsWithStates = Object.values(MALLS).map((stateMalls, ind) => {
+  return stateMalls.map((market) => {
+    return { ...market, state: Object.keys(MALLS)[ind] };
   });
 });
 
-// ? Flatten the array of markets with states
-let allMarkets = marketWithStates.flat();
+// ? Flatten the array of Malls with states
+let allMalls = mallsWithStates.flat();
 
 //  ? Insert Default values for city, address and description
-allMarkets = allMarkets.map((market) => {
+allMalls = allMalls.map((market) => {
   return {
     ...market,
     city: defaultCity,
@@ -27,7 +27,7 @@ allMarkets = allMarkets.map((market) => {
     description: defaultDescription,
   };
 });
-const uploadMarket = async (market) => {
+const uploadMarket = async (mall) => {
   try {
     // * Using formData when market image is available and supported
     // const formData = new FormData();
@@ -48,12 +48,12 @@ const uploadMarket = async (market) => {
 
     // * Using JSON when market image is not available or supported
     const body = {
-      name: market.name,
-      description: market.description,
-      address: market.address,
-      city: market.city,
-      state: market.state,
-      isMall: "false",
+      name: mall.name,
+      description: mall.description,
+      address: mall.address,
+      city: mall.city,
+      state: mall.state,
+      isMall: true,
     };
     const response = await fetch(apiUrl, {
       method: "POST",
@@ -67,17 +67,19 @@ const uploadMarket = async (market) => {
       console.error(responseData);
       throw new Error(`Failed to upload malls: ${response.statusText}`);
     }
-    console.log(`Market ${market.name} uploaded successfully:`, responseData);
+
+    console.log(`malls ${mall.name} uploaded successfully:`, responseData);
   } catch (error) {
-    console.error(`Error uploading market ${market.name}:`, error.message);
+    console.log(error);
+    console.error(`Error uploading malls ${mall.name}:`, error.message);
   }
 };
 
-const uploadAllMarkets = async () => {
-  console.log(allMarkets);
-  for (const market of allMarkets) {
-    await uploadMarket(market);
+const uploadAllMalls = async () => {
+  console.log(allMalls);
+  for (const mall of allMalls) {
+    await uploadMarket(mall);
   }
 };
 
-uploadAllMarkets();
+uploadAllMalls();

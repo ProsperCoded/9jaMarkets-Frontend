@@ -1,13 +1,13 @@
 /**
  * ExploreSection
- * 
- * This component renders the explore page with a search bar at the top and 
+ *
+ * This component renders the explore page with a search bar at the top and
  * a carousel of featured markets and malls below it. The search bar is connected
  * to the state and filters the data based on the user input. The component also
  * renders a link to place an ad and a button to navigate to the state page.
  * The component is responsive and the number of cards in the carousel changes
  * based on the screen size.
- * 
+ *
  * @returns {JSX.Element} the explore page component
  */
 import { useNavigate } from "react-router-dom";
@@ -89,7 +89,6 @@ const categories = {
   Sports: Sports_category,
 };
 
-
 function ExploreSection() {
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -164,7 +163,7 @@ function ExploreSection() {
               placeholder="Search by state, market, or category..."
               value={searchQuery}
               onChange={handleSearchChange}
-              className="border-Primary py-2 pr-4 pl-10 border rounded-full focus:ring-2 focus:ring-Primary w-full text-sm placeholder-gray-500 focus:outline-none flex-grow"
+              className="flex-grow border-Primary py-2 pr-4 pl-10 border rounded-full focus:ring-2 focus:ring-Primary w-full text-sm focus:outline-none placeholder-gray-500"
             />
             <svg
               fill="currentColor"
@@ -218,7 +217,7 @@ function ExploreSection() {
       <div className="relative flex justify-center items-center mb-8 w-full">
         <div className="flex md:flex-row flex-col justify-center md:items-center md:space-x-10 sm:px-6 md:px-4 w-full overflow-visible">
           <Link to="/ad" className="mb-3 w-auto">
-            <div className="flex md:flex-col justify-center items-center bg-orange shadow-md md:mx-3 mb-1 rounded-xl md:rounded-lg w-full sm:size-32 h-10 text-white algin-middle">
+            <div className="flex md:flex-col justify-center items-center bg-orange shadow-md md:mx-3 mb-1 rounded-xl md:rounded-lg w-full h-10 text-white algin-middle sm:size-32">
               <FontAwesomeIcon
                 icon={faPlus}
                 className="md:m-0 mr-3 mb-1 size-5"
@@ -256,7 +255,7 @@ function ExploreSection() {
 
       {/* Markets and Malls Carousel */}
       {/* Featured Markets Carousel */}
-      <h2 className="mb-4 font-bold text-center text-Primary text-lg sm:text-xl">
+      <h2 className="mb-4 font-bold text-center text-lg text-Primary sm:text-xl">
         Featured Markets
       </h2>
       <div className="relative mr-auto mb-8 ml-auto xl:max-w-[80%]">
@@ -273,7 +272,7 @@ function ExploreSection() {
           >
             {marketsData.map((market) => (
               <SwiperSlide key={market.name}>
-                <div className="flex-shrink-0 bg-gray-100 shadow-md hover:shadow-lg rounded-lg w-auto sm:w-48 h-40 sm:h-48 transform transition duration-300 hover:scale-105 overflow-visible">
+                <div className="flex-shrink-0 bg-gray-100 shadow-md hover:shadow-lg rounded-lg w-auto sm:w-48 h-40 sm:h-48 transform transition duration-300 overflow-visible hover:scale-105">
                   <img
                     src={market.imageUrl}
                     alt={market.name}
@@ -296,7 +295,7 @@ function ExploreSection() {
       </div>
 
       {/* Featured Malls Carousel */}
-      <h2 className="mb-4 font-bold text-center text-Primary text-lg sm:text-xl">
+      <h2 className="mb-4 font-bold text-center text-lg text-Primary sm:text-xl">
         Featured Malls
       </h2>
       <div className="relative mr-auto mb-8 ml-auto xl:max-w-[80%]">
