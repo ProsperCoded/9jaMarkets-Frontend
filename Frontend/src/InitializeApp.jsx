@@ -1,15 +1,24 @@
 import { useContext, useEffect } from "react";
-import { USER_PROFILE_CONTEXT } from "./contexts";
+import {
+  MALLS_DATA_CONTEXT,
+  MARKET_DATA_CONTEXT,
+  USER_PROFILE_CONTEXT,
+} from "./contexts";
 import { getMerchantProfileApi } from "./lib/api/serviceApi";
 import { getCustomerProfileApi } from "./lib/api/serviceApi";
 import {
   refreshCustomerTokenApi,
   refreshMerchantTokenApi,
 } from "./lib/api/authApi";
+import { getMarketsAndMallsApi } from "./lib/api/marketApi";
 import { getAuth, storeAuth } from "./lib/util";
+import { useErrorLogger } from "./hooks";
 function InitializeApp({ children }) {
-  const { userProfile, setUserProfile } = useContext(USER_PROFILE_CONTEXT);
-  const errorLogger = (message) => console.error(message);
+  const { setUserProfile } = useContext(USER_PROFILE_CONTEXT);
+  const { setMarketsData } = useContext(MARKET_DATA_CONTEXT);
+  const { setMallsData } = useContext(MALLS_DATA_CONTEXT);
+  // const errorLogger = (message) => console.error(message);
+  const errorLogger = useErrorLogger();
   async function fetchUserProfile() {
     const authData = getAuth();
     console.log({ authData });
@@ -68,8 +77,28 @@ function InitializeApp({ children }) {
       setUserProfile(userProfile_);
     }
   }
+  async function fetchMarket() {
+    const marketsAndMalls = await getMarketsAndMallsApi(errorLogger);
+    if (!marketsAndMalls) return;
+    // group malls and market into separate arrays
+    const grouped = marketsAndMalls.reduce(
+      (acc, marketOrMall) => {
+        if (marketOrMall.isMall) {
+          acc.malls.push(marketOrMall);
+        } else {
+          acc.markets.push(marketOrMall);
+        }
+        return acc;
+      },
+      { malls: [], markets: [] }
+    );
+    console.log(grouped);
+    setMarketsData(grouped.markets);
+    setMallsData(grouped.malls);
+  }
   useEffect(() => {
     fetchUserProfile();
+    fetchMarket();
   }, []);
   return children;
 }

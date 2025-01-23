@@ -37,6 +37,14 @@ export const MERCHANT_SIGNUP_MODAL_CONTEXT = createContext({
   merchantSignupOpen: false,
   setMerchantSignupOpen: () => {},
 });
+export const MARKET_DATA_CONTEXT = createContext({
+  marketsData: [],
+  setMarketsData: () => {},
+});
+export const MALLS_DATA_CONTEXT = createContext({
+  mallsData: [],
+  setMallsData: () => {},
+});
 export function ContextWrapper({ children }) {
   const [userProfile, setUserProfile] = useState(null);
   const [merchantProfile, setMerchantProfile] = useState(null);
@@ -45,6 +53,8 @@ export function ContextWrapper({ children }) {
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
   const [signupOpen, setSignupOpen] = useState(false);
+  const [marketsData, setMarketsData] = useState([]);
+  const [mallsData, setMallsData] = useState([]);
   useEffect(() => {
     console.log(userProfile);
   }, [userProfile]);
@@ -82,7 +92,15 @@ export function ContextWrapper({ children }) {
                     setLogoutOpen={setLogoutOpen}
                   />
                   {contextHolder}
-                  {children}
+                  <MARKET_DATA_CONTEXT.Provider
+                    value={{ marketsData, setMarketsData }}
+                  >
+                    <MALLS_DATA_CONTEXT.Provider
+                      value={{ mallsData, setMallsData }}
+                    >
+                      {children}
+                    </MALLS_DATA_CONTEXT.Provider>
+                  </MARKET_DATA_CONTEXT.Provider>
                   <LoginModal />
                   <Signup />
                 </LOGOUT_MODAL_CONTEXT.Provider>

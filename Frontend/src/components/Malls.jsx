@@ -1,17 +1,22 @@
-import { useState } from "react";
+import { useState, useContext, useMemo } from "react";
 import searchIcon from "../assets/search.svg"; // Assuming this is your search icon
 import { Link } from "react-router-dom";
-import { MALLS } from "../config";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, MapPin } from "lucide-react";
 import { STATES } from "../config";
+import { MALLS_DATA_CONTEXT } from "@/contexts";
 const mallPage = () => {
   const [selectedState, setSelectedState] = useState("Abuja");
   const [searchTerm, setSearchTerm] = useState("");
   const [bottomNavVisible, setBottomNavVisible] = useState(false);
-
-  const filteredmalls = MALLS[selectedState]?.filter((mall) =>
-    mall.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const { mallsData } = useContext(MALLS_DATA_CONTEXT);
+  const filteredMalls = useMemo(() => {
+    if (!selectedState) return mallsData;
+    const malls = mallsData.filter((market) =>
+      market.state.toLowerCase().includes(selectedState.toLowerCase())
+    );
+    console.log({ malls });
+    return malls;
+  }, [selectedState, mallsData]);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -19,10 +24,10 @@ const mallPage = () => {
         <div className="flex justify-between items-center mx-auto px-4 container">
           {/* Left Section with malls and Malls */}
           <div className="md:flex items-center space-x-4 hidden">
-            <Link to="/markets" className="font-bold text-lg">
+            <Link to="/markets" className="font-thin text-lg">
               Markets
             </Link>
-            <Link to="/malls" className="font-thin text-lg">
+            <Link to="/malls" className="font-bold text-lg">
               Malls
             </Link>
           </div>
@@ -49,13 +54,12 @@ const mallPage = () => {
       {/* Main Layout */}
       <div className="flex">
         {/* Sidebar: List of States */}
-
         <aside
-          className="top-[93%] z-20 md:static fixed bg-white md:shadow-hide rounded-t-2xl w-full md:w-[300px] h-full overflow-visible"
+          className="top-[93%] md:top-0 z-20 fixed md:sticky bg-white md:shadow-hide rounded-t-2xl w-full md:w-[300px] h-full overflow-visible"
           style={{
             boxShadow:
               "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
-            top: bottomNavVisible ? "10%" : "93%",
+            top: bottomNavVisible ? "10%" : "",
             transition: "top 0.3s ease-in-out",
           }}
         >
@@ -127,9 +131,10 @@ const mallPage = () => {
 
           {/* mall Cards Grid */}
           <div className="gap-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {filteredmalls.length > 0 ? (
-              filteredmalls.map((mall, index) => (
-                <div
+            {filteredMalls.length > 0 ? (
+              filteredMalls.map((mall, index) => (
+                <Link
+                  to={`/malls/${mall.id}`}
                   key={index}
                   className="bg-white shadow-md hover:shadow-lg rounded-lg transform transition duration-300 overflow-hidden hover:scale-105"
                 >
@@ -141,14 +146,12 @@ const mallPage = () => {
                   />
                   <div className="p-4">
                     <h3 className="font-semibold text-lg">{mall.name}</h3>
-                    <a
-                      href="#"
-                      className="block mt-2 text-Primary text-sm hover:underline"
-                    >
-                      View more
-                    </a>
+                    <div className="flex items-center gap-1">
+                      <MapPin size={20} strokeWidth={1} />
+                      <p className="my-1 text-sm">{mall.address}</p>
+                    </div>
                   </div>
-                </div>
+                </Link>
               ))
             ) : (
               <p>No malls found for "{searchTerm}"</p>
