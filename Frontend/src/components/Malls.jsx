@@ -14,7 +14,6 @@ const mallPage = () => {
     const malls = mallsData.filter((market) =>
       market.state.toLowerCase().includes(selectedState.toLowerCase())
     );
-    console.log({ malls });
     return malls;
   }, [selectedState, mallsData]);
 
@@ -139,7 +138,7 @@ const mallPage = () => {
                   className="bg-white shadow-md hover:shadow-lg rounded-lg transform transition duration-300 overflow-hidden hover:scale-105"
                 >
                   <img
-                    src={mall.img}
+                    src={mall.displayImage}
                     alt={mall.name}
                     lazy="true"
                     className="w-full h-32 object-cover"

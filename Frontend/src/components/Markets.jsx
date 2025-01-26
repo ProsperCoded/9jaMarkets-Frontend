@@ -5,11 +5,12 @@ import { STATES } from "../config";
 import { ChevronDown } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { MALLS } from "../config";
-import { getMarketsAndMallsApi } from "@/lib/api/marketApi";
+import { getMarketsApi } from "@/lib/api/marketApi";
 import { useErrorLogger } from "@/hooks";
 import { useEffect } from "react";
 import { useContext } from "react";
-import { MARKET_DATA_CONTEXT } from "@/contexts";
+import { MapPin } from "lucide-react";
+import { MARKET_DATA_CONTEXT, MALLS_DATA_CONTEXT } from "@/contexts";
 import { useMemo } from "react";
 const MarketPage = () => {
   const [selectedState, setSelectedState] = useState("Abuja");
@@ -18,6 +19,7 @@ const MarketPage = () => {
   const location = useLocation();
   const errorLogger = useErrorLogger();
   const { marketsData } = useContext(MARKET_DATA_CONTEXT);
+
   const filteredMarkets = useMemo(() => {
     if (!selectedState) return marketsData;
     const markets = marketsData.filter((market) =>
@@ -148,7 +150,7 @@ const MarketPage = () => {
                   className="bg-white shadow-md hover:shadow-lg rounded-lg transform transition duration-300 overflow-hidden hover:scale-105"
                 >
                   <img
-                    src={market.img}
+                    src={market.displayImage}
                     alt={market.name}
                     lazy="true"
                     className="w-full h-32 object-cover"

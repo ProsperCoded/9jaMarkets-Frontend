@@ -10,9 +10,10 @@ import {
   refreshCustomerTokenApi,
   refreshMerchantTokenApi,
 } from "./lib/api/authApi";
-import { getMarketsAndMallsApi } from "./lib/api/marketApi";
+import { getMarketsApi } from "./lib/api/marketApi";
 import { getAuth, storeAuth } from "./lib/util";
 import { useErrorLogger } from "./hooks";
+import { getMallsApi } from "./lib/api/mallApi";
 function InitializeApp({ children }) {
   const { setUserProfile } = useContext(USER_PROFILE_CONTEXT);
   const { setMarketsData } = useContext(MARKET_DATA_CONTEXT);
@@ -78,23 +79,25 @@ function InitializeApp({ children }) {
     }
   }
   async function fetchMarket() {
-    const marketsAndMalls = await getMarketsAndMallsApi(errorLogger);
-    if (!marketsAndMalls) return;
+    const markets = await getMarketsApi(errorLogger);
+    const malls = await getMallsApi(errorLogger);
+    console.log({ markets, malls });
+    if (!markets) return;
+    setMarketsData(markets);
+    if (!malls) return;
+    setMallsData(malls);
     // group malls and market into separate arrays
-    const grouped = marketsAndMalls.reduce(
-      (acc, marketOrMall) => {
-        if (marketOrMall.isMall) {
-          acc.malls.push(marketOrMall);
-        } else {
-          acc.markets.push(marketOrMall);
-        }
-        return acc;
-      },
-      { malls: [], markets: [] }
-    );
-    console.log(grouped);
-    setMarketsData(grouped.markets);
-    setMallsData(grouped.malls);
+    // const grouped = markets.reduce(
+    //   (acc, marketOrMall) => {
+    //     if (marketOrMall.isMall) {
+    //       acc.malls.push(marketOrMall);
+    //     } else {
+    //       acc.markets.push(marketOrMall);
+    //     }
+    //     return acc;
+    //   },
+    //   { malls: [], markets: [] }
+    // );
   }
   useEffect(() => {
     fetchUserProfile();
