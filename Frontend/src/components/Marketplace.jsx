@@ -10,8 +10,6 @@
  * The component also renders a back to top button that scrolls to the top of the page when clicked.
  */
 import { useState } from "react";
-import ComputerVillage from "../assets/markets/ComputerVillage.jpg";
-import Alaba from "../assets/markets/AlabaMarket.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { PRODUCT_CATEGORIES } from "@/config";
@@ -21,21 +19,19 @@ import { useErrorLogger } from "@/hooks";
 import { getMarketProducts } from "@/lib/api/marketApi";
 import { useContext } from "react";
 import { MARKET_DATA_CONTEXT } from "@/contexts";
-
+import LoadingPage from "@/componets-utils/LoadingPage";
+import NotFoundPage from "@/components/NotFoundPage";
+import {
+  faInfoCircle,
+  faMapMarkerAlt,
+  faMap,
+} from "@fortawesome/free-solid-svg-icons";
+import { useMemo } from "react";
 const Marketplace = () => {
-  const [categories] = useState(["All Categories", ...PRODUCT_CATEGORIES]);
+  const categories = ["All Categories", ...PRODUCT_CATEGORIES];
   const errorLogger = useErrorLogger();
   const { id: marketId } = useParams();
-  const [products, setProducts] = useState([
-    { name: "Classic Dry Iron", price: 40000, image: ComputerVillage },
-    { name: "Samsung TV", price: 100000, image: Alaba },
-    { name: "Refrigerator", price: 140000, image: "path/to/image3.jpg" },
-    { name: "Multipurpose Blender", price: 40000, image: "path/to/image4.jpg" },
-    { name: "Washing Machine", price: 79000, image: "path/to/image5.jpg" },
-    { name: "Kitchen Oven", price: 200000, image: "path/to/image6.jpg" },
-    { name: "Counter Microwave", price: 58000, image: "path/to/image7.jpg" },
-    { name: "Home Theatre Set", price: 180000, image: "path/to/image8.jpg" },
-  ]);
+  const [products, setProducts] = useState();
   const { marketsData } = useContext(MARKET_DATA_CONTEXT);
   const market = marketsData.find((market) => market.id === marketId);
   const fetchProducts = async () => {
@@ -43,13 +39,20 @@ const Marketplace = () => {
     if (!marketProducts) return;
     setProducts(marketProducts);
   };
-
+  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+  const filteredProducts = useMemo(() => {
+    if (!products) return [];
+    if (selectedCategory === "All Categories") return products;
+    return products.filter((product) => product.category === selectedCategory);
+  }, [products, selectedCategory]);
   useEffect(() => {
     fetchProducts();
   }, []);
 
-  const [selectedCategory, setSelectedCategory] = useState("Appliances");
-
+  if (!market && marketsData.length > 0) {
+    return <NotFoundPage />;
+  }
+  if (!market) return <LoadingPage message={"Market Could not be found"} />;
   return (
     <div className="bg-gray-100 min-h-screen">
       {/* Search Bar */}
@@ -77,7 +80,7 @@ const Marketplace = () => {
       {/* Hero Section */}
       <div className="relative w-screen h-[300px]">
         <img
-          src={ComputerVillage}
+          src={market.displayImage}
           alt="Computer Village"
           className="top-0 left-0 absolute w-full h-full market-image object-cover"
         />
@@ -111,41 +114,64 @@ const Marketplace = () => {
             </ul>
           </div>
         </div>
-
-        <div className="flex-grow bg-white shadow-md mt-8 mr-6 mb-8 ml-6 py-10 p-6 pb-20 rounded-2xl">
-          <h3 className="font-bold text-xl">{selectedCategory}</h3>
-          {/* Gray Line */}
-          <div className="border-gray-200 mt-6 border-t-2"></div>
-          {/* Product Grid */}
-          <div className="gap-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 mt-6">
-            {products.map((product, index) => (
-              <div
-                key={index}
-                className="bg-white shadow-lg hover:shadow-xl rounded-2xl transform transition-transform duration-300 hover:scale-105"
-              >
-                {/* Product Image */}
-                <img
-                  src={product.displayImage.url}
-                  alt={product.name}
-                  className="rounded-t-2xl w-full h-40 object-cover"
+        <div>
+          <div className="flex-grow bg-white shadow-md mx-6 my-4 p-6 rounded-2xl">
+            <div className="flex flex-wrap justify-center gap-2 mt-4 font-semibold md:text-lg">
+              <div className="flex items-center border-green-700 mb-2 pr-3 border-r-2">
+                <FontAwesomeIcon
+                  icon={faMapMarkerAlt}
+                  className="mr-2 text-Primary"
                 />
-                {/* Product Details */}
-                <div className="flex justify-between items-center p-4">
-                  <div>
-                    <h4 className="text-gray-800 text-sm">{product.name}</h4>
-                    <p className="mt-2 font-thin text-Primary">
-                      ₦{product.price.toLocaleString()}
-                    </p>
-                  </div>
-                  <button className="bg-Primary bg-opacity-20 hover:bg-opacity-30 px-4 py-3 rounded-full text-Primary">
-                    <FontAwesomeIcon
-                      icon={faCartShopping}
-                      className="w-5 h-5"
-                    />
-                  </button>
-                </div>
+                <span className="text-gray-700">{market.address}</span>
               </div>
-            ))}
+              <div className="flex items-center border-green-700 mb-2 pr-3 border-r-2 min-w-fit">
+                <FontAwesomeIcon
+                  icon={faInfoCircle}
+                  className="mr-2 text-Primary"
+                />
+                <span className="text-gray-700">{market.description}</span>
+              </div>
+              <div className="flex items-center mb-2">
+                <FontAwesomeIcon icon={faMap} className="mr-2 text-Primary" />
+                <span className="text-gray-700">{market.state}</span>
+              </div>
+            </div>
+          </div>
+          <div className="flex-grow bg-white shadow-md mt-8 mr-6 mb-8 ml-6 py-10 p-6 pb-20 rounded-2xl">
+            <h3 className="font-bold text-xl">{selectedCategory}</h3>
+            {/* Gray Line */}
+            <div className="border-gray-200 mt-6 border-t-2"></div>
+            {/* Product Grid */}
+            <div className="gap-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 mt-6">
+              {filteredProducts.map((product, index) => (
+                <div
+                  key={index}
+                  className="bg-white shadow-lg hover:shadow-xl rounded-2xl transform transition-transform duration-300 hover:scale-105"
+                >
+                  {/* Product Image */}
+                  <img
+                    src={product.displayImage && product.displayImage.url}
+                    alt={product.name}
+                    className="rounded-t-2xl w-full h-40 object-cover"
+                  />
+                  {/* Product Details */}
+                  <div className="flex justify-between items-center p-4">
+                    <div>
+                      <h4 className="text-gray-800 text-sm">{product.name}</h4>
+                      <p className="mt-2 font-thin text-Primary">
+                        ₦{product.price.toLocaleString()}
+                      </p>
+                    </div>
+                    <button className="bg-Primary bg-opacity-20 hover:bg-opacity-30 px-4 py-3 rounded-full text-Primary">
+                      <FontAwesomeIcon
+                        icon={faCartShopping}
+                        className="w-5 h-5"
+                      />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

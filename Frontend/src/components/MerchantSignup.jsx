@@ -13,7 +13,7 @@ import { getMerchantProfileApi } from "../lib/api/serviceApi";
 import { loginMerchantApi, signupMerchantApi } from "../lib/api/authApi.js";
 import { storeAuth } from "../lib/util";
 import Loading from "../componets-utils/Loading.jsx";
-import { GOOGLE_URL } from "@/config";
+import { GOOGLE_URL, PRODUCT_CATEGORIES } from "@/config";
 import { LOGIN_MODAL_CONTEXT } from "../contexts";
 import { useNavigate } from "react-router-dom";
 import { isStrongPassword } from "../lib/util";
@@ -309,9 +309,13 @@ const MerchantSignup = () => {
               className="border-gray-300 px-4 py-2 border rounded-md w-full"
               required
             >
-              <option value="CLOTHING">Clothing</option>
-              <option value="GROCERY">Grocery</option>
-              {/* Add more categories as needed */}
+              {PRODUCT_CATEGORIES.map((category, ind) => {
+                return (
+                  <option key={ind} value={category}>
+                    {category}
+                  </option>
+                );
+              })}
             </select>
           </div>
           {addresses.map((address, index) => (

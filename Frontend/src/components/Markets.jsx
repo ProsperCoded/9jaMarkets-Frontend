@@ -3,8 +3,6 @@ import searchIcon from "../assets/search.svg"; // Assuming this is your search i
 import { Link } from "react-router-dom";
 import { STATES } from "../config";
 import { ChevronDown } from "lucide-react";
-import { useLocation } from "react-router-dom";
-import { useErrorLogger } from "@/hooks";
 import { useContext } from "react";
 import { MapPin } from "lucide-react";
 import { MARKET_DATA_CONTEXT } from "@/contexts";
