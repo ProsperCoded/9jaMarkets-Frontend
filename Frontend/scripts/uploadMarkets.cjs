@@ -30,38 +30,39 @@ allMarkets = allMarkets.map((market) => {
 const uploadMarket = async (market) => {
   try {
     // * Using formData when market image is available and supported
-    // const formData = new FormData();
-    // formData.append("name", market.name);
-    // formData.append("description", market.description);
-    // formData.append("address", market.address);
-    // formData.append("city", market.city);
-    // formData.append("state", market.state);
-    // formData.append("image", fs.createReadStream(market.img)); // Attach image
+    const formData = new FormData();
+    formData.append("name", market.name);
+    formData.append("description", market.description);
+    formData.append("address", market.address);
+    formData.append("city", market.city);
+    formData.append("state", market.state);
+    formData.append("displayImage", fs.createReadStream(market.img)); // Attach image
 
-    // const response = await fetch(apiUrl, {
-    //   method: "POST",
-    //   body: formData,
-    //   headers: {
-    //     ...formData.getHeaders(),
-    //   },
-    // });
-
-    // * Using JSON when market image is not available or supported
-    const body = {
-      name: market.name,
-      description: market.description,
-      address: market.address,
-      city: market.city,
-      state: market.state,
-      isMall: "false",
-    };
     const response = await fetch(apiUrl, {
       method: "POST",
-      body: JSON.stringify(body),
+      body: formData,
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
+        // Note: fetch will not automatically set the correct Content-Type for FormData, since it's not through the browser
       },
     });
+
+    // * Using JSON when market image is not available or supported
+    // const body = {
+    //   name: market.name,
+    //   description: market.description,
+    //   address: market.address,
+    //   city: market.city,
+    //   state: market.state,
+    //   isMall: "false",
+    // };
+    // const response = await fetch(apiUrl, {
+    //   method: "POST",
+    //   body: JSON.stringify(body),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
     const responseData = await response.json();
     if (!response.ok) {
       console.error(responseData);
@@ -69,6 +70,7 @@ const uploadMarket = async (market) => {
     }
     console.log(`Market ${market.name} uploaded successfully:`, responseData);
   } catch (error) {
+    console.error(error);
     console.error(`Error uploading market ${market.name}:`, error.message);
   }
 };
