@@ -17,8 +17,6 @@ import { GOOGLE_URL } from "@/config";
 import { LOGIN_MODAL_CONTEXT } from "../contexts";
 import { useNavigate } from "react-router-dom";
 import { isStrongPassword } from "../lib/util";
-import { getMarketNamesApi } from "@/lib/api/marketApi";
-import { useEffect } from "react";
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "./ui/tabs";
 const MerchantSignup = () => {
   const [email, setEmail] = useState("");

@@ -20,7 +20,7 @@ import { useEffect } from "react";
 import { useErrorLogger } from "@/hooks";
 import { getMarketProducts } from "@/lib/api/marketApi";
 import { useContext } from "react";
-import { MALLS_DATA_CONTEXT, MARKET_DATA_CONTEXT } from "@/contexts";
+import { MARKET_DATA_CONTEXT } from "@/contexts";
 
 const Marketplace = () => {
   const [categories] = useState(["All Categories", ...PRODUCT_CATEGORIES]);
@@ -36,13 +36,10 @@ const Marketplace = () => {
     { name: "Counter Microwave", price: 58000, image: "path/to/image7.jpg" },
     { name: "Home Theatre Set", price: 180000, image: "path/to/image8.jpg" },
   ]);
-  // const { marketsData } = useContext(MARKET_DATA_CONTEXT);
-  const { marketsData } = useContext(MALLS_DATA_CONTEXT);
+  const { marketsData } = useContext(MARKET_DATA_CONTEXT);
   const market = marketsData.find((market) => market.id === marketId);
   const fetchProducts = async () => {
-    console.log({ marketId });
     const marketProducts = await getMarketProducts(marketId, errorLogger);
-    console.log({ marketProducts });
     if (!marketProducts) return;
     setProducts(marketProducts);
   };
@@ -128,7 +125,7 @@ const Marketplace = () => {
               >
                 {/* Product Image */}
                 <img
-                  src={product.image}
+                  src={product.displayImage.url}
                   alt={product.name}
                   className="rounded-t-2xl w-full h-40 object-cover"
                 />

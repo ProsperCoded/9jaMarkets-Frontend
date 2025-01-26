@@ -5,8 +5,9 @@ const axios = require("axios");
 const FormData = require("form-data");
 const MARKETS = require("./Markets.cjs");
 
-// const apiUrl = "https://safe-lindsy-obiken-415ef84b.koyeb.app/api/v1/market";
-const apiUrl = "https://lnczzhnm-3000.euw.devtunnels.ms/api/v1/market";
+const apiUrl = "https://safe-lindsy-obiken-415ef84b.koyeb.app/api/v1/market";
+// const apiUrl = "https://safe-lindsy-obiken-415ef84b.koyeb";
+// const apiUrl = "https://lnczzhnm-3000.euw.devtunnels.ms/api/v1/market";
 const defaultCity = "Ibadan";
 const defaultAddress = "moniya market, moniya, Ibadan";
 const defaultDescription = "Best Market in town, located in Ibadan";
@@ -75,12 +76,11 @@ const uploadMarket = async (market) => {
     // }
     console.log(`Market ${market.name} uploaded successfully:`, responseData);
   } catch (error) {
-    console.error(`Error uploading market ${market.name}:`, error.message);
+    console.error(`Error uploading market ${market.name}:`, error);
   }
 };
 
 const uploadAllMarkets = async () => {
-  console.log(allMarkets);
   for (const market of allMarkets) {
     await uploadMarket(market);
   }

@@ -4,8 +4,8 @@ const fs = require("fs"); // For reading image files
 const axios = require("axios");
 const FormData = require("form-data");
 const MALLS = require("./Malls.cjs");
-// const apiUrl = "https://safe-lindsy-obiken-415ef84b.koyeb.app/api/v1/market";
-const apiUrl = "https://lnczzhnm-3000.euw.devtunnels.ms/api/v1/market";
+const apiUrl = "https://safe-lindsy-obiken-415ef84b.koyeb.app/api/v1/market";
+// const apiUrl = "https://lnczzhnm-3000.euw.devtunnels.ms/api/v1/market";
 
 const defaultCity = "Ibadan";
 const defaultAddress = "moniya market, moniya, Ibadan";
@@ -77,7 +77,7 @@ const uploadMarket = async (mall) => {
     console.log(`malls ${mall.name} uploaded successfully:`, responseData);
   } catch (error) {
     console.log(error);
-    console.error(`Error uploading malls ${mall.name}:`, error.message);
+    console.error(`Error uploading malls ${mall.name}:`, error);
   }
 };
 

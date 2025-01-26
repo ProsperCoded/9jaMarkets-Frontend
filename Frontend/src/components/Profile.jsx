@@ -12,6 +12,7 @@ import {
   faList,
   faMessage,
   faSignOutAlt,
+  faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import DefaultProfileContent from "./DefaultProfileContent";
