@@ -1,3 +1,4 @@
+// export const SERVER_URL = "https://lnczzhnm-3000.euw.devtunnels.ms/api/v1/";
 export const SERVER_URL =
   "https://safe-lindsy-obiken-415ef84b.koyeb.app/api/v1/";
 export const GOOGLE_URL = `${SERVER_URL}auth/customer/google`;

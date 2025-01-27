@@ -3,28 +3,37 @@ import searchIcon from "../assets/search.svg"; // Assuming this is your search i
 import { Link } from "react-router-dom";
 import { STATES } from "../config";
 import { ChevronDown } from "lucide-react";
-import { useLocation } from "react-router-dom";
-import { MALLS } from "../config";
-import { getMarketsAndMallsApi } from "@/lib/api/marketApi";
-import { useErrorLogger } from "@/hooks";
-import { useEffect } from "react";
 import { useContext } from "react";
+import { MapPin } from "lucide-react";
 import { MARKET_DATA_CONTEXT } from "@/contexts";
 import { useMemo } from "react";
 const MarketPage = () => {
   const [selectedState, setSelectedState] = useState("Abuja");
   const [searchTerm, setSearchTerm] = useState("");
   const [bottomNavVisible, setBottomNavVisible] = useState(false);
-  const location = useLocation();
-  const errorLogger = useErrorLogger();
   const { marketsData } = useContext(MARKET_DATA_CONTEXT);
+
   const filteredMarkets = useMemo(() => {
     if (!selectedState) return marketsData;
-    const markets = marketsData.filter((market) =>
-      market.state.toLowerCase().includes(selectedState.toLowerCase())
-    );
+    if (searchTerm) {
+      const markets = marketsData.filter((market) => {
+        if (!market.state) return false;
+        return (
+          market.state.toLowerCase().includes(selectedState.toLowerCase()) &&
+          market.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      });
+      return markets;
+    }
+    const markets = marketsData.filter((market) => {
+      if (!market.state) return false;
+      const includes = market.state
+        .toLowerCase()
+        .includes(selectedState.toLowerCase());
+      return includes;
+    });
     return markets;
-  }, [selectedState, marketsData]);
+  }, [selectedState, marketsData, searchTerm]);
 
   return (
     <div className="relative flex flex-col min-h-screen">
@@ -148,7 +157,7 @@ const MarketPage = () => {
                   className="bg-white shadow-md hover:shadow-lg rounded-lg transform transition duration-300 overflow-hidden hover:scale-105"
                 >
                   <img
-                    src={market.img}
+                    src={market.displayImage}
                     alt={market.name}
                     lazy="true"
                     className="w-full h-32 object-cover"

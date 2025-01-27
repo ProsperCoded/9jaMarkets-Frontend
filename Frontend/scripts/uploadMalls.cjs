@@ -1,8 +1,11 @@
 // const fetch = require("node-fetch"); // For using the fetch API in Node.js
 // const FormData = require("form-data");
 const fs = require("fs"); // For reading image files
+const axios = require("axios");
+const FormData = require("form-data");
 const MALLS = require("./Malls.cjs");
 const apiUrl = "https://safe-lindsy-obiken-415ef84b.koyeb.app/api/v1/market";
+// const apiUrl = "https://lnczzhnm-3000.euw.devtunnels.ms/api/v1/market";
 
 const defaultCity = "Ibadan";
 const defaultAddress = "moniya market, moniya, Ibadan";
@@ -47,31 +50,34 @@ const uploadMarket = async (mall) => {
     // });
 
     // * Using JSON when market image is not available or supported
-    const body = {
-      name: mall.name,
-      description: mall.description,
-      address: mall.address,
-      city: mall.city,
-      state: mall.state,
-      isMall: true,
-    };
-    const response = await fetch(apiUrl, {
-      method: "POST",
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json",
-      },
+    const formData = new FormData();
+    formData.append("name", mall.name);
+    formData.append("description", mall.description);
+    formData.append("address", mall.address);
+    formData.append("city", mall.city);
+    formData.append("state", mall.state);
+    formData.append("displayImage", fs.createReadStream(mall.img)); // Attach image
+    const response = await axios.post(apiUrl, formData, {
+      headers: formData.getHeaders(),
     });
-    const responseData = await response.json();
-    if (!response.ok) {
-      console.error(responseData);
-      throw new Error(`Failed to upload malls: ${response.statusText}`);
-    }
+
+    // const response = await fetch(apiUrl, {
+    //   method: "POST",
+    //   body: JSON.stringify(body),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+    const responseData = await response.data;
+    // if (!response.ok) {
+    //   console.error(responseData);
+    //   throw new Error(`Failed to upload malls: ${response.statusText}`);
+    // }
 
     console.log(`malls ${mall.name} uploaded successfully:`, responseData);
   } catch (error) {
     console.log(error);
-    console.error(`Error uploading malls ${mall.name}:`, error.message);
+    console.error(`Error uploading malls ${mall.name}:`, error);
   }
 };
 
