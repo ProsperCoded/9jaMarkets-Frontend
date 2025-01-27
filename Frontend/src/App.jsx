@@ -19,6 +19,7 @@ import Profile from "./components/Profile";
 import PlaceAD from "./components/PlaceAD";
 import Error404 from "./components/404";
 import MainPage from "./components/Mainpage";
+import Bookmark from "./components/Bookmarkpage"
 
 
 import { ConfigProvider } from "antd";
@@ -84,6 +85,7 @@ function App() {
               <Route path="/forget-password" element={<ForgetPassword />} />
               <Route path="/404" element={<Error404 />} />
               <Route path="/mainpage" element={<MainPage />} />
+              <Route path="/bookmark" element={<Bookmark />} />
 
               <Route
                 path="/profile/:subpage?"
