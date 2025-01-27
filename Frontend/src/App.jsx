@@ -21,7 +21,6 @@ import Error404 from "./components/404";
 import MainPage from "./components/Mainpage";
 import Bookmark from "./components/Bookmarkpage"
 
-
 import { ConfigProvider } from "antd";
 import InitializeApp from "./InitializeApp";
 
@@ -77,13 +76,13 @@ function App() {
               />
               <Route path="/how-it-works" element={<HowItWorks />} />
               <Route path="/markets" element={<MarketPage />} />
+              <Route path="/markets/:id" element={<Marketplace />} />
               <Route path="/malls" element={<MallPage />} />
-              <Route path="/marketplace" element={<Marketplace />} />
+              {/* <Route path="/marketplace" element={<Marketplace />} /> */}
               <Route path="/merchant-signup" element={<MerchantSignup />} />
               <Route path="/ad" element={<Adverts />} />
               <Route path="/place-ad" element={<PlaceAD />} />
               <Route path="/forget-password" element={<ForgetPassword />} />
-              <Route path="/404" element={<Error404 />} />
               <Route path="/mainpage" element={<MainPage />} />
               <Route path="/bookmark" element={<Bookmark />} />
 
@@ -93,6 +92,7 @@ function App() {
               />
               {/* Google signup */}
               <Route path="/auth" element={<GoogleSigninRedirect />} />
+              <Route path="*" element={<Error404 />} />
             </Routes>
             <Footer />
           </InitializeApp>
