@@ -19,6 +19,7 @@ import Profile from "./components/Profile";
 import PlaceAD from "./components/PlaceAD";
 import NotFoundPage from "./components/NotFoundPage";
 import MainPage from "./components/Mainpage";
+import Bookmark from "./components/Bookmarkpage"
 
 import { ConfigProvider } from "antd";
 import InitializeApp from "./InitializeApp";
@@ -83,6 +84,7 @@ function App() {
               <Route path="/place-ad" element={<PlaceAD />} />
               <Route path="/forget-password" element={<ForgetPassword />} />
               <Route path="/mainpage" element={<MainPage />} />
+              <Route path="/bookmark" element={<Bookmark />} />
 
               <Route
                 path="/profile/:subpage?"

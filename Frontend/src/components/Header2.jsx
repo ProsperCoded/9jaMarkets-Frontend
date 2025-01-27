@@ -5,23 +5,19 @@
  * side of the header. The navigation links will slide in from the right when
  * the icon is clicked.
  */
-import { useState, useEffect, useContext } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
   faTimes,
-  faBell,
-  faCartShopping,
+  faBookmark,
 } from "@fortawesome/free-solid-svg-icons";
 import logo from "../assets/Logo.svg";
-import { USER_PROFILE_CONTEXT } from "../contexts";
 import { UserAvatar } from "../componets-utils/UserAvatar";
-import { useNavigate } from "react-router-dom";
 
 const Header2 = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const navigate = useNavigate();
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
     document.body.style.overflow = isMenuOpen ? "auto" : "hidden";
@@ -53,14 +49,8 @@ const Header2 = () => {
         <div className="flex items-center space-x-4 md:space-x-6">
           {/* Desktop Icons */}
           <div className="md:flex space-x-4 hidden">
-            <Link to="/cart" className="flex items-center hover:text-orange">
-              <FontAwesomeIcon icon={faCartShopping} className="w-6 h-6" />
-            </Link>
-            <Link
-              to="/notifications"
-              className="flex items-center hover:text-orange"
-            >
-              <FontAwesomeIcon icon={faBell} className="w-6 h-6" />
+            <Link to="/bookmark" className="flex items-center hover:text-orange">
+              <FontAwesomeIcon icon={faBookmark} className="w-6 h-6" />
             </Link>
             <div>
               <UserAvatar showName={true} auth={true} />

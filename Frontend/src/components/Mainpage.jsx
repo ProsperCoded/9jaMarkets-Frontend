@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import CH from "../assets/customerhero.png";
 import { Bookmark, BookmarkPlus } from "lucide-react";
 
@@ -47,32 +46,29 @@ function ProductsPage() {
     };
 
     return (
-      <div className="bg-white rounded-2xl shadow-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-xl h-70 sm:h-40">
+      <div className="relative bg-white rounded-2xl shadow-md hover:shadow-lg transform transition-transform duration-300 hover:scale-105 p-4 w-full max-w-sm">
         {/* Product Image */}
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-24 sm:h-28 md:h-32 lg:h-40 object-cover rounded-t-2xl"
+          className="w-full h-36 object-cover rounded-t-2xl"
         />
+
         {/* Product Details */}
-        <div className="flex justify-between items-center px-3 py-2 sm:px-4 sm:py-3">
+        <div className="p-3 flex justify-between items-center">
           <div>
-            <h4 className="text-xs sm:text-sm text-gray-800 font-semibold">
-              {product.name}
-            </h4>
-            <p className="text-green-700 font-bold mt-1 sm:mt-2 text-xs sm:text-sm">
+            <h4 className="text-sm font-semibold text-gray-800">{product.name}</h4>
+            <p className="text-green-700 font-bold text-sm mt-1">
               ₦{product.price.toLocaleString()}
             </p>
           </div>
+          
+          {/* Bookmark Icon */}
           <button
-            className="bg-white shadow-lg text-green-700 p-2 rounded-full hover:bg-green-100 transition-colors"
+            className="p-2 bg-white shadow-md rounded-full hover:bg-green-100 transition-colors"
             onClick={toggleBookmark}
           >
-            {isBookmarked ? (
-              <Bookmark className="w-5 h-5 sm:w-6 sm:h-6" />
-            ) : (
-              <BookmarkPlus className="w-5 h-5 sm:w-6 sm:h-6" />
-            )}
+            {isBookmarked ? <Bookmark className="w-5 h-5 text-green-700" /> : <BookmarkPlus className="w-5 h-5 text-gray-500" />}
           </button>
         </div>
       </div>
@@ -80,20 +76,18 @@ function ProductsPage() {
   };
 
   return (
-    <div>
+    <div className="w-full">
       {/* Hero Section */}
-      <div className="relative w-full h-[250px]">
-        {/* Hero background image */}
+      <div className="relative w-full h-[300px] bg-green-700 flex items-center justify-center">
         <img
           src={CH}
-          alt="Hero Background"
-          className="absolute top-0 left-0 w-full h-full object-cover"
+          alt="Nigeria Map"
+          className="absolute w-full h-full object-cover opacity-50"
         />
 
-        {/* Overlay content */}
-        <div className="relative flex flex-col items-center justify-center h-full">
+        <div className="relative flex flex-col items-center w-full px-4">
           {/* Search Bar */}
-          <div className="flex items-center bg-white rounded-full shadow-lg w-[80%] max-w-[500px] px-3 py-2">
+          <div className="flex items-center bg-white rounded-full shadow-lg w-[90%] max-w-[500px] px-4 py-2">
             <input
               type="text"
               value={searchQuery}
@@ -114,7 +108,7 @@ function ProductsPage() {
           </div>
 
           {/* Dropdowns */}
-          <div className="flex gap-4 mt-4">
+          <div className="flex flex-wrap gap-4 mt-4 justify-center">
             <button className="bg-white border border-gray-300 text-sm px-4 py-2 rounded-full shadow-sm hover:shadow-md">
               State
             </button>
@@ -125,9 +119,28 @@ function ProductsPage() {
         </div>
       </div>
 
-      {/* Product Grid */}
-      <div className="px-4 sm:px-6 md:px-8">
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+      {/* Category Filters */}
+      <div className="flex justify-center overflow-x-auto whitespace-nowrap gap-2 p-4">
+        {[
+          "All Categories", "Appliances", "Automobiles", "Health & Beauty", "Home & Office",
+          "Electronics", "Fashion", "Supermarket", "Computing", "Baby Products", "Gaming",
+          "Sporting Goods", "Toys"
+        ].map((category, index) => (
+          <button
+            key={index}
+            className={`px-4 py-2 rounded-full text-sm ${index === 0 ? "bg-Primary text-white" : "bg-white border border-gray-300"}`}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+      
+      {/* Top Products Section */}
+      <div className="px-6 sm:px-12 md:px-16 mb-12">
+        <h3 className="text-lg font-semibold mb-4">TOP</h3>
+
+        {/* Product Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
           {filteredProducts.map((product, index) => (
             <ProductCard key={index} product={product} />
           ))}
