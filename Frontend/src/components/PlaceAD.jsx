@@ -9,15 +9,24 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Upload } from "lucide-react";
 import { X } from "lucide-react";
-
-import { Label } from "@/components/ui/label";
+import { useNavigate } from 'react-router-dom';
+import { message } from 'antd';
 
 export default function AddProduct() {
   const [selectedImages, setSelectedImages] = React.useState([]);
   const [showModal, setShowModal] = React.useState(false);
+  const [formData, setFormData] = React.useState({
+    productName: '',
+    category: '',
+    price: '',
+    inStock: '',
+    description: ''
+  });
   const fileInputRef = React.useRef(null);
+  const navigate = useNavigate();
 
   const handleDrop = (e) => {
     e.preventDefault();
@@ -28,7 +37,7 @@ export default function AddProduct() {
   const handleFiles = (files) => {
     const validFiles = files.filter((file) => file.size <= 5 * 1024 * 1024); // 5MB in bytes
     if (validFiles.length < files.length) {
-      alert(
+      message.error(
         "Some files were not uploaded because they exceed the 5MB size limit."
       );
     }
@@ -54,12 +63,58 @@ export default function AddProduct() {
     setSelectedImages(selectedImages.filter((_, i) => i !== index));
   };
 
+  const handleInputChange = (field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const validateForm = () => {
+    // Check if at least one image is uploaded
+    if (selectedImages.length === 0) {
+      message.error('Please upload at least one product image');
+      return false;
+    }
+
+    // Check if all required fields are filled
+    if (!formData.productName.trim()) {
+      message.error('Please enter a product name');
+      return false;
+    }
+    if (!formData.category) {
+      message.error('Please select a category');
+      return false;
+    }
+    if (!formData.price.trim()) {
+      message.error('Please enter a price');
+      return false;
+    }
+    if (!formData.inStock) {
+      message.error('Please select stock status');
+      return false;
+    }
+    if (!formData.description.trim()) {
+      message.error('Please enter a product description');
+      return false;
+    }
+
+    return true;
+  };
+
   const handleAddProduct = () => {
-    setShowModal(true);
+    if (validateForm()) {
+      setShowModal(true);
+    }
+  };
+
+  const handleSelectPlan = (planId) => {
+    setShowModal(false);
+    navigate(`/billing?plan=${planId}`);
   };
 
   return (
-    <div className="flex-grow bg-white rounded-2xl py-10 shadow-md ml-6 mt-8 mb-8 mr-6 p-6 pb-20">
+    <div className="flex-grow bg-white rounded-2xl py-10 shadow-md mx-auto mt-8 mb-8 max-w-4xl p-4 sm:p-6 pb-20">
       <div className="gap-6 grid">
         {/* Image Upload Section */}
         <div
@@ -78,7 +133,7 @@ export default function AddProduct() {
               className="bg-Primary hover:bg-P2 text-white"
               onClick={handleUploadClick}
             >
-              Upload from computer
+              Upload from device
             </Button>
             <input
               type="file"
@@ -129,14 +184,19 @@ export default function AddProduct() {
 
         {/* Form Fields */}
         <div className="gap-4 grid">
-          <div className="gap-4 grid grid-cols-1 md:grid-cols-2">
+          <div className="gap-4 grid grid-cols-1 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="product-name">Product Name</Label>
-              <Input id="product-name" placeholder="Laptop" />
+              <Input 
+                id="product-name" 
+                placeholder="Laptop" 
+                value={formData.productName}
+                onChange={(e) => handleInputChange('productName', e.target.value)}
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="category">Category</Label>
-              <Select>
+              <Select value={formData.category} onValueChange={(value) => handleInputChange('category', value)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select Category" />
                 </SelectTrigger>
@@ -160,16 +220,21 @@ export default function AddProduct() {
             </div>
           </div>
 
-          <div className="gap-4 grid grid-cols-1 md:grid-cols-2">
+          <div className="gap-4 grid grid-cols-1 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="price">Price</Label>
-              <Input id="price" placeholder="₦100,000.00" />
+              <Input 
+                id="price" 
+                placeholder="₦100,000.00" 
+                value={formData.price}
+                onChange={(e) => handleInputChange('price', e.target.value)}
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="stock">In Stock?</Label>
-              <Select>
+              <Select value={formData.inStock} onValueChange={(value) => handleInputChange('inStock', value)}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Yes" />
+                  <SelectValue placeholder="Select Stock Status" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="yes">Yes</SelectItem>
@@ -185,14 +250,16 @@ export default function AddProduct() {
               id="description"
               placeholder="Describe your product briefly here"
               className="min-h-[150px]"
+              value={formData.description}
+              onChange={(e) => handleInputChange('description', e.target.value)}
             />
           </div>
-          <div className="flex justify-center gap-5 mt-10">
-            <Button className="border-Primary bg-transparent hover:bg-P2 px-6 border rounded-full text-Primary hover:text-white">
+          <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-5 mt-6 sm:mt-10">
+            <Button className="w-full sm:w-auto border-Primary bg-transparent hover:bg-P2 px-6 border rounded-full text-Primary hover:text-white">
               Cancel
             </Button>
             <Button
-              className="bg-Primary hover:bg-P2 px-6 rounded-full text-white"
+              className="w-full sm:w-auto bg-Primary hover:bg-P2 px-6 rounded-full text-white"
               onClick={handleAddProduct}
             >
               Add Product
@@ -202,8 +269,8 @@ export default function AddProduct() {
       </div>
 
       {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-          <div className="bg-white rounded-xl shadow-lg w-[90vw] max-w-[1000px] p-8 relative">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 p-4">
+          <div className="bg-white rounded-xl shadow-lg w-[95vw] max-w-[1000px] p-4 sm:p-8 relative max-h-[90vh] overflow-y-auto">
             {/* Close Button */}
             <button
               className="absolute top-4 right-4 text-gray-400 hover:text-Primary transition-colors"
@@ -221,7 +288,7 @@ export default function AddProduct() {
             </div>
 
             {/* Plan Options */}
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               {/* Free Plan */}
               <div className="group rounded-xl border border-gray-200 p-6 hover:bg-Primary hover:border-Primary transition-all duration-300">
                 <h3 className="text-xl font-semibold text-Primary group-hover:text-white">Free Plan</h3>
@@ -267,36 +334,42 @@ export default function AddProduct() {
                     </li>
                   </ul>
                 </div>
-                <button className="mt-6 w-full rounded-full bg-Primary text-white px-6 py-2 text-sm font-medium group-hover:bg-white group-hover:text-Primary transition-colors">
+                <button 
+                  onClick={() => handleSelectPlan('standard')}
+                  className="mt-6 w-full rounded-full bg-Primary text-white px-6 py-2 text-sm font-medium group-hover:bg-white group-hover:text-Primary transition-colors"
+                >
                   Select Plan
                 </button>
               </div>
 
               {/* Premium Plan */}
-              <div className="group rounded-xl border border-gray-200 bg-Primary p-6">
-                <h3 className="text-xl font-semibold text-white">Premium Plan</h3>
+              <div className="group rounded-xl border border-gray-200 p-6 hover:bg-Primary hover:border-Primary transition-all duration-300">
+                <h3 className="text-xl font-semibold text-Primary group-hover:text-white">Premium Plan</h3>
                 <div className="mt-4 space-y-3">
-                  <p className="text-base text-white">₦3,500</p>
+                  <p className="text-base group-hover:text-white">₦3,500</p>
                   <ul className="space-y-2">
-                    <li className="flex items-start gap-2 text-sm text-white">
-                      <span>✓</span>
+                    <li className="flex items-start gap-2 text-sm text-gray-600 group-hover:text-white">
+                      <span className="text-Primary group-hover:text-white">✓</span>
                       30 days
                     </li>
-                    <li className="flex items-start gap-2 text-sm text-white">
-                      <span>✓</span>
+                    <li className="flex items-start gap-2 text-sm text-gray-600 group-hover:text-white">
+                      <span className="text-Primary group-hover:text-white">✓</span>
                       Maximize visibility for a month
                     </li>
-                    <li className="flex items-start gap-2 text-sm text-white">
-                      <span>✓</span>
+                    <li className="flex items-start gap-2 text-sm text-gray-600 group-hover:text-white">
+                      <span className="text-Primary group-hover:text-white">✓</span>
                       Reach a wider audience consistently
                     </li>
-                    <li className="flex items-start gap-2 text-sm text-white">
-                      <span>✓</span>
+                    <li className="flex items-start gap-2 text-sm text-gray-600 group-hover:text-white">
+                      <span className="text-Primary group-hover:text-white">✓</span>
                       Boost engagement and conversions
                     </li>
                   </ul>
                 </div>
-                <button className="mt-6 w-full rounded-full bg-white text-Primary px-6 py-2 text-sm font-medium">
+                <button 
+                  onClick={() => handleSelectPlan('premium')}
+                  className="mt-6 w-full rounded-full bg-Primary text-white px-6 py-2 text-sm font-medium group-hover:bg-white group-hover:text-Primary transition-colors"
+                >
                   Select Plan
                 </button>
               </div>
