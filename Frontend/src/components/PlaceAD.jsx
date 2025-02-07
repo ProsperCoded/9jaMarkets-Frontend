@@ -394,7 +394,9 @@ export default function AddProduct() {
                     </li>
                   </ul>
                 </div>
-                <button className="mt-6 w-full rounded-full bg-Primary text-white px-6 py-2 text-sm font-medium group-hover:bg-white group-hover:text-Primary transition-colors">
+                <button 
+                onClick={() => handleSelectPlan('boost')}
+                className="mt-6 w-full rounded-full bg-Primary text-white px-6 py-2 text-sm font-medium group-hover:bg-white group-hover:text-Primary transition-colors">
                   Select Plan
                 </button>
               </div>
