@@ -133,7 +133,7 @@ const MARKETS = {
     { name: "Warji Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Wanka Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Wunti Market", img: "./markets/BodijaMarket.jpg" },
-    { name: "Yelwa Market", img: "./markets/BodijaMarket.jpg" },
+    { name: "Yelwa Market", img: "./markets/BodijaMarket.jpg",},
     { name: "Yuli Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Zindi Market", img: "./markets/BodijaMarket.jpg" },
   ],
@@ -260,7 +260,7 @@ const MARKETS = {
     { name: "Aratumi Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Balogun Market, Lagos Island", img: "./markets/BodijaMarket.jpg" },
     { name: "Bar Beach Market", img: "./markets/BodijaMarket.jpg" },
-    { name: "Computer Village", img: "./markets/BodijaMarket.jpg" },
+    { name: "Computer Village", img: "./markets/BodijaMarket.jpg",address:"Computer Village, Lagos Island" },
     {
       name: "Èbúté Èrò Market, Lagos Island",
       img: "./markets/BodijaMarket.jpg",

@@ -25,10 +25,10 @@ let allMarkets = marketWithStates.flat();
 //  ? Insert Default values for city, address and description
 allMarkets = allMarkets.map((market) => {
   return {
-    ...market,
     city: defaultCity,
     address: defaultAddress,
     description: defaultDescription,
+    ...market,
   };
 });
 const uploadMarket = async (market) => {

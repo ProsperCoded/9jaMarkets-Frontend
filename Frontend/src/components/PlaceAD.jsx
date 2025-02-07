@@ -141,9 +141,20 @@ export default function AddProduct() {
                   <SelectValue placeholder="Select Category" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="laptops">Laptops</SelectItem>
-                  <SelectItem value="phones">Phones</SelectItem>
-                  <SelectItem value="tablets">Tablets</SelectItem>
+                  <SelectItem value="education">Education & Stationery</SelectItem>
+                  <SelectItem value="real-estate">Real Estate & Housing</SelectItem>
+                  <SelectItem value="events">Events & Entertainment</SelectItem>
+                  <SelectItem value="tech-services">Technology Services</SelectItem>
+                  <SelectItem value="cultural-experiences">Cultural Experiences</SelectItem>
+                  <SelectItem value="food">Food & Groceries</SelectItem>
+                  <SelectItem value="electronics">Electronics & Gadgets</SelectItem>
+                  <SelectItem value="fashion">Fashion & Accessories</SelectItem>
+                  <SelectItem value="health">Health & Wellness</SelectItem>
+                  <SelectItem value="home">Home & Living</SelectItem>
+                  <SelectItem value="automobile">Automobile Needs</SelectItem>
+                  <SelectItem value="traditional-crafts">Traditional Crafts</SelectItem>
+                  <SelectItem value="sports">Sports & Outdoor</SelectItem>
+                  <SelectItem value="kids">Kids & Baby Products</SelectItem>
                 </SelectContent>
               </Select>
             </div>
