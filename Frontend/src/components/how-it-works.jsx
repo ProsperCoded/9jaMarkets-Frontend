@@ -65,7 +65,7 @@ const HowItWorksPage = () => {
           </p>
           <Link 
             to="/signup"
-            className="inline-flex items-center px-8 py-3 bg-Primary hover:bg-Primary/90 text-white rounded-full transition-colors"
+            className="inline-flex items-center px-8 py-3 bg-orange hover:bg-orange/90 text-white rounded-full transition-colors"
           >
             Get Started
           </Link>
@@ -79,8 +79,8 @@ const HowItWorksPage = () => {
           <h2 className="text-3xl font-bold text-center mb-16">For Buyers</h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center p-6 rounded-lg bg-white shadow-sm">
-              <div className="w-12 h-12 bg-Primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Search className="text-Primary" />
+              <div className="w-12 h-12 bg-orange/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Search className="text-orange" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Explore Markets and Products</h3>
               <p className="text-gray-600">
@@ -89,8 +89,8 @@ const HowItWorksPage = () => {
             </div>
             
             <div className="text-center p-6 rounded-lg bg-white shadow-sm">
-              <div className="w-12 h-12 bg-Primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Search className="text-Primary" />
+              <div className="w-12 h-12 bg-orange/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Search className="text-orange" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Search and Filter with Ease</h3>
               <p className="text-gray-600">
@@ -99,8 +99,8 @@ const HowItWorksPage = () => {
             </div>
             
             <div className="text-center p-6 rounded-lg bg-white shadow-sm">
-              <div className="w-12 h-12 bg-Primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Bookmark className="text-Primary" />
+              <div className="w-12 h-12 bg-orange/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Bookmark className="text-orange" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Bookmark and Connect</h3>
               <p className="text-gray-600">
@@ -111,7 +111,7 @@ const HowItWorksPage = () => {
           <div className="text-center mt-8">
             <Link 
               to="/markets"
-              className="inline-flex items-center px-8 py-3 bg-Primary hover:bg-Primary/90 text-white rounded-full transition-colors"
+              className="inline-flex items-center px-8 py-3 bg-orange hover:bg-orange/90 text-white rounded-full transition-colors"
             >
               Explore Markets Now
             </Link>
