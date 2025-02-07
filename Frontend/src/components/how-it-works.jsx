@@ -1,11 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Search, UserCircle2, Bookmark, Store, Image as ImageIcon, MessageCircle } from "lucide-react";
 import heroImage from "../assets/Hero.jpg";
+import { LOGIN_MODAL_CONTEXT, SIGNUP_MODAL_CONTEXT } from "../contexts";
 
 const HowItWorksPage = () => {
   // State for testimonial carousel
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const { setLoginOpen } = useContext(LOGIN_MODAL_CONTEXT);
+  const { setSignupOpen } = useContext(SIGNUP_MODAL_CONTEXT);
 
   const testimonials = [
     {
@@ -63,12 +66,12 @@ const HowItWorksPage = () => {
           <p className="text-xl text-white/90 mb-8">
             Your gateway to seamless market connections.
           </p>
-          <Link 
-            to="/signup"
+          <button 
+            onClick={() => setLoginOpen(true)}
             className="inline-flex items-center px-8 py-3 bg-orange hover:bg-orange/90 text-white rounded-full transition-colors"
           >
             Get Started
-          </Link>
+          </button>
         </div>
       </div>
 
@@ -109,12 +112,12 @@ const HowItWorksPage = () => {
             </div>
           </div>
           <div className="text-center mt-8">
-            <Link 
-              to="/markets"
+            <button 
+              onClick={() => setLoginOpen(true)}
               className="inline-flex items-center px-8 py-3 bg-orange hover:bg-orange/90 text-white rounded-full transition-colors"
             >
               Explore Markets Now
-            </Link>
+            </button>
           </div>
         </div>
 
@@ -153,12 +156,12 @@ const HowItWorksPage = () => {
             </div>
           </div>
           <div className="text-center mt-8">
-            <Link 
-              to="/signup?type=merchant"
+            <button 
+              onClick={() => setSignupOpen(true)}
               className="inline-flex items-center px-8 py-3 bg-Primary hover:bg-Primary/90 text-white rounded-full transition-colors"
             >
               Sign Up as a Merchant
-            </Link>
+            </button>
           </div>
         </div>
       </div>

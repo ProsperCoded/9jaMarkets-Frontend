@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Home, ArrowLeft, HelpCircle } from "lucide-react";
+import logo from "../assets/Logo.svg";
 
 const NotFoundPage = () => {
   return (
@@ -13,8 +14,15 @@ const NotFoundPage = () => {
         <div className="max-w-md w-full">
           {/* Logo or Brand (optional) */}
           <div className="flex justify-center mb-8">
-            <Link to="/" className="text-Primary font-bold text-2xl">
-              9ja Markets
+            <Link
+              to="/"
+              className="text-Primary font-bold text-2xl flex items-center"
+            >
+              <img
+                src={logo}
+                alt="9ja Markets Logo"
+                className="h-10 mr-2"
+              />
             </Link>
           </div>
 
