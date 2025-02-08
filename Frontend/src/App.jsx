@@ -20,6 +20,7 @@ import PlaceAD from "./components/PlaceAD";
 import NotFoundPage from "./components/NotFoundPage";
 import MainPage from "./components/Mainpage";
 import Bookmark from "./components/Bookmarkpage"
+import BillingPage from "./components/BillingPage";
 
 import { ConfigProvider } from "antd";
 import InitializeApp from "./InitializeApp";
@@ -82,6 +83,7 @@ function App() {
               <Route path="/merchant-signup" element={<MerchantSignup />} />
               <Route path="/ad" element={<Adverts />} />
               <Route path="/place-ad" element={<PlaceAD />} />
+              <Route path="/billing" element={<BillingPage />} />
               <Route path="/forget-password" element={<ForgetPassword />} />
               <Route path="/mainpage" element={<MainPage />} />
               <Route path="/bookmark" element={<Bookmark />} />
