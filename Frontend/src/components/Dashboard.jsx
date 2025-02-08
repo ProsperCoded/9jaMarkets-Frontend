@@ -1,5 +1,5 @@
-import React from "react";
-import { Trash, ChevronsUpDown, Store, UserRound } from "lucide-react";
+import React, { useContext, useState } from "react";
+import { Trash, ChevronsUpDown, Store, UserRound, Pencil } from "lucide-react";
 import { Button } from "./ui/button";
 import {
   Collapsible,
@@ -14,39 +14,41 @@ import {
   faSignOutAlt,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
-import DefaultProfileContent from "./DefaultProfileContent";
-import ProductPage from "./Products/ProductPage";
-import { useContext, useState } from "react";
+import {
+  Link,
+  Outlet,
+  useParams,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
+import { Avatar } from "antd";
 import {
   USER_PROFILE_CONTEXT,
   LOGOUT_MODAL_CONTEXT,
-  LOGIN_MODAL_CONTEXT,
   SIGNUP_MODAL_CONTEXT,
+  LOGIN_MODAL_CONTEXT,
 } from "@/contexts";
-import { useNavigate } from "react-router-dom";
-import EditProfile from "./EditProfile";
-import { Avatar } from "antd";
-import { Pencil } from "lucide-react";
-const SUB_PAGES = {
-  dashboard: <DefaultProfileContent />,
-  product: <ProductPage />,
-  edit: <EditProfile />,
-};
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
-const Profile = ({ subpage }) => {
+// Remove SUB_PAGES mapping as we now use nested routes with <Outlet>
+const Dashboard = () => {
+  const { subpage } = useParams();
+  const location = useLocation();
+  const currentSubPage = subpage || "overview";
   const { userProfile } = useContext(USER_PROFILE_CONTEXT);
   const { setLogoutOpen } = useContext(LOGOUT_MODAL_CONTEXT);
   const navigate = useNavigate();
+
   if (!userProfile) {
     navigate("/");
-    return;
+    return null;
   }
   const styleSelected = {
     backgroundColor: "#236C13",
     fontWeight: 600,
   };
-  let name = userProfile && (userProfile.firstName || userProfile.brandName);
+  const name = userProfile.firstName || userProfile.brandName;
+
   return (
     <div className="flex bg-gray-50 min-h-screen">
       {/* Sidebar */}
@@ -60,53 +62,58 @@ const Profile = ({ subpage }) => {
             <span className="font-semibold">{name[0]}</span>
           </Avatar>
           <div className="ml-3">
-            <div className="">
-              <h2 className="font-semibold text-lg">{name}</h2>
-              <div
-                className="top-10 left-[80%] absolute bg-Primary p-2 rounded-full transition-transform cursor-pointer hover:scale-105"
-                onClick={() => {
-                  navigate("/profile/edit");
-                }}
-              >
-                <Pencil className="size-5" color="white" />
-              </div>
+            <h2 className="font-semibold text-lg">{name}</h2>
+            <div
+              className="top-10 left-[80%] absolute bg-Primary p-2 rounded-full transition-transform cursor-pointer hover:scale-105"
+              onClick={() => navigate("/dashboard/edit")}
+            >
+              <Pencil className="size-5" color="white" />
             </div>
             <p className="text-sm">{userProfile.phoneNumbers[0].number}</p>
           </div>
         </div>
 
         <UserOptions />
-        {/* <Link to="/merchant-signup">Merchant Options</Link> */}
-        {/* Navigation Links */}
         <div>
           <ul className="space-y-4">
             <li>
               <Link
-                to="/profile/dashboard"
+                to="/dashboard/overview"
                 className="flex items-center space-x-3 hover:bg-Primary p-2 rounded-lg hover:text-white"
-                style={subpage === "dashboard" ? styleSelected : {}}
+                style={
+                  location.pathname === "/dashboard/overview"
+                    ? styleSelected
+                    : {}
+                }
               >
                 <FontAwesomeIcon icon={faHome} />
-                <span>Dashboard</span>
+                <span>Overview</span>
               </Link>
             </li>
             <li>
               <Link
-                to="/profile/product"
+                to="/dashboard/product"
                 className="flex items-center space-x-3 hover:bg-Primary p-2 rounded-lg hover:text-white"
-                style={subpage === "product" ? styleSelected : {}}
+                style={
+                  location.pathname === "/dashboard/product"
+                    ? styleSelected
+                    : {}
+                }
               >
                 <FontAwesomeIcon icon={faList} />
                 <span>Products</span>
               </Link>
             </li>
             {userProfile.userType === "merchant" && (
-              // Customers that contact the merchant
               <li>
                 <Link
-                  to="/customers"
+                  to="/dashboard/customers"
                   className="flex items-center space-x-3 hover:bg-Primary p-2 rounded-lg hover:text-white"
-                  style={subpage === "customers" ? styleSelected : {}}
+                  style={
+                    location.pathname === "/dashboard/customers"
+                      ? styleSelected
+                      : {}
+                  }
                 >
                   <FontAwesomeIcon icon={faUsers} />
                   <span>Customers</span>
@@ -115,11 +122,14 @@ const Profile = ({ subpage }) => {
             )}
             <li>
               <Link
-                to="/messages"
+                to="/dashboard/messages"
                 className="flex items-center space-x-3 hover:bg-Primary p-2 rounded-lg hover:text-white"
-                style={subpage === "messages" ? styleSelected : {}}
+                style={
+                  location.pathname === "/dashboard/messages"
+                    ? styleSelected
+                    : {}
+                }
               >
-                {/* Vendors you have contacted in the past */}
                 <FontAwesomeIcon icon={faMessage} />
                 <span>Vendors</span>
               </Link>
@@ -129,16 +139,14 @@ const Profile = ({ subpage }) => {
         <ul className="mt-auto">
           <li className="pt-10">
             <div
-              onClick={() => {
-                setLogoutOpen(true);
-              }}
-              className="flex items-center space-x-3 hover:bg-red-100 p-2 pt-25 rounded-lg text-red-500 hover:text-red-700 cursor-pointer"
+              onClick={() => setLogoutOpen(true)}
+              className="flex items-center space-x-3 hover:bg-red-100 p-2 rounded-lg text-red-500 hover:text-red-700 cursor-pointer"
             >
               <FontAwesomeIcon icon={faSignOutAlt} />
               <span>Logout</span>
             </div>
             <div>
-              <h3 className="flex items-center space-x-3 hover:bg-red-100 p-2 pt-25 rounded-lg text-red-500 hover:text-red-700 cursor-pointer">
+              <h3 className="flex items-center space-x-3 hover:bg-red-100 p-2 rounded-lg text-red-500 hover:text-red-700 cursor-pointer">
                 <Trash className="mr-1" size={20} />
                 Delete Account
               </h3>
@@ -149,18 +157,14 @@ const Profile = ({ subpage }) => {
 
       {/* Main Content */}
       <main className="flex-1 p-6">
-        {/* Render Subpage */}
-        {subpage && SUB_PAGES[subpage] ? (
-          SUB_PAGES[subpage]
-        ) : (
-          <DefaultProfileContent />
-        )}
+        {/* Subpage injected via Outlet */}
+        <Outlet />
       </main>
     </div>
   );
 };
 
-export default Profile;
+export default Dashboard;
 
 function UserOptions() {
   const [isOpen, setIsOpen] = useState(false);
@@ -168,6 +172,7 @@ function UserOptions() {
   const { userProfile } = useContext(USER_PROFILE_CONTEXT);
   const { setLoginOpen } = useContext(LOGIN_MODAL_CONTEXT);
   const { setSignupOpen } = useContext(SIGNUP_MODAL_CONTEXT);
+
   return (
     <div className="my-4 pl-1 cursor-pointer select-none">
       {userProfile && userProfile.userType === "customer" ? (
@@ -178,9 +183,7 @@ function UserOptions() {
         >
           <div
             className="flex justify-between items-center space-x-4 hover:bg-Primary p-1 rounded-md hover:text-white"
-            onClick={() => {
-              setIsOpen(!isOpen);
-            }}
+            onClick={() => setIsOpen(!isOpen)}
           >
             <div className="flex items-center gap-2">
               <Store />
@@ -195,17 +198,13 @@ function UserOptions() {
           <CollapsibleContent className="space-y-2 pl-2">
             <div
               className="hover:bg-Primary px-3 py-2 border rounded-md font-mono text-sm hover:text-white transition-colors"
-              onClick={() => {
-                setLoginOpen("merchant");
-              }}
+              onClick={() => setLoginOpen("merchant")}
             >
               Sign in as Merchant
             </div>
             <div
               className="hover:bg-Primary px-3 py-2 border rounded-md font-mono text-sm hover:text-white transition-colors"
-              onClick={() => {
-                navigate("/merchant-signup");
-              }}
+              onClick={() => navigate("/merchant-signup")}
             >
               Sign up as Merchant
             </div>
@@ -219,9 +218,7 @@ function UserOptions() {
         >
           <div
             className="flex justify-between items-center space-x-4 hover:bg-Primary p-1 rounded-md hover:text-white"
-            onClick={() => {
-              setIsOpen(!isOpen);
-            }}
+            onClick={() => setIsOpen(!isOpen)}
           >
             <div className="flex items-center gap-2">
               <UserRound />
@@ -236,20 +233,17 @@ function UserOptions() {
           <CollapsibleContent className="space-y-2 pl-2">
             <div
               className="hover:bg-Primary px-3 py-2 border rounded-md font-mono text-sm hover:text-white transition-colors"
-              onClick={() => {
-                setLoginOpen(true);
-              }}
+              onClick={() => setLoginOpen(true)}
             >
               Sign in as Customer
             </div>
             <div
               className="hover:bg-Primary px-3 py-2 border rounded-md font-mono text-sm hover:text-white transition-colors"
-              onClick={() => {
-                setSignupOpen(true);
-              }}
+              onClick={() => setSignupOpen(true)}
             >
               Sign up as Customer
             </div>
+            {/* <h4 className="font-semibold">Merchant Options</h4> */}
           </CollapsibleContent>
         </Collapsible>
       )}
