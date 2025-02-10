@@ -10,18 +10,10 @@
  *
  * @returns {JSX.Element} the explore page component
  */
+import React from 'react';
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import Wears_category from "../assets/Wears_category.jpg";
-import Automobile_category from "../assets/Automobile_category.jpg";
-import Gadgets_category from "../assets/Gadgets_category.jpg";
-import Realestate_category from "../assets/Realestate_category.jpg";
-import Furniture_category from "../assets/Furniture_category.jpg";
-import Food_category from "../assets/Food_category.jpg";
-import Pharmacy_category from "../assets/Pharmacy_category.jpg";
-import Sports_category from "../assets/Sports_category.jpg";
 import { Link } from "react-router-dom";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 
@@ -48,6 +40,39 @@ import Select from "./../componets-utils/Select";
 import { useMemo } from "react";
 import { MALLS, MARKETS } from "../config";
 // import { Select } from "shadcn";
+import Education from "../assets/categories/education-&-stationery.webp";
+import RealEstate from "../assets/categories/real-Estate-&-housing.jpg";
+import Events from "../assets/categories/events-&-entertainment.jpg";
+import Technology from "../assets/categories/technology-services.jpeg";
+import Cultural from "../assets/categories/cultural-experiences.jpg";
+import Food from "../assets/categories/food-&-groceries.webp";
+import Electronics from "../assets/categories/electronics&gadgets.webp";
+import Fashion from "../assets/categories/fashion&accessories.jpg";
+import Health from "../assets/categories/health&wellness.jpg";
+import HomeImage from "../assets/categories/home&living.webp";
+import Automobile from "../assets/categories/automobile-needs.webp";
+import Traditional from "../assets/categories/traditional-crafts.jpg";
+import Sports from "../assets/categories/sports&outdoor.jpg";
+import Kids from "../assets/categories/kids&babyproducts.png";
+
+
+import { 
+  GraduationCap, // Education
+  Building2, // Real Estate
+  Music, // Events
+  Laptop, // Technology
+  Theater, // Cultural
+  ShoppingBasket, // Food
+  Smartphone, // Electronics
+  Shirt, // Fashion
+  Heart, // Health
+  Home, // Home
+  Car, // Automobile
+  Paintbrush, // Traditional
+  Trophy, // Sports
+  Baby // Kids
+} from 'lucide-react';
+
 const allMarkets = Object.values(MARKETS).flat();
 const allMalls = Object.values(MALLS).flat();
 const featuredMarkets = [
@@ -78,15 +103,40 @@ const featuredMalls = [
   { name: "Jabi Lake Mall", location: "Abuja", imageUrl: JabiLakeMall },
 ];
 
+// Update the categoryIcons mapping
+const categoryIcons = {
+  "Education & Stationery": GraduationCap,
+  "Real Estate & Housing": Building2,
+  "Events & Entertainment": Music,
+  "Technology Services": Laptop,
+  "Cultural Experiences": Theater,
+  "Food & Groceries": ShoppingBasket,
+  "Electronics & Gadgets": Smartphone,
+  "Fashion & Accessories": Shirt,
+  "Health & Wellness": Heart,
+  "Home & Living": Home,
+  "Automobile Needs": Car,
+  "Traditional Crafts": Paintbrush,
+  "Sports & Outdoor": Trophy,
+  "Kids & Baby Products": Baby,
+};
+
+// Add back the categories object
 const categories = {
-  Wears: Wears_category,
-  Automobile: Automobile_category,
-  Gadgets: Gadgets_category,
-  RealEstate: Realestate_category,
-  Furniture: Furniture_category,
-  Food: Food_category,
-  Pharmacy: Pharmacy_category,
-  Sports: Sports_category,
+  "Education & Stationery": Education,
+  "Real Estate & Housing": RealEstate,
+  "Events & Entertainment": Events,
+  "Technology Services": Technology,
+  "Cultural Experiences": Cultural,
+  "Food & Groceries": Food,
+  "Electronics & Gadgets": Electronics,
+  "Fashion & Accessories": Fashion,
+  "Health & Wellness": Health,
+  "Home & Living": HomeImage,
+  "Automobile Needs": Automobile,
+  "Traditional Crafts": Traditional,
+  "Sports & Outdoor": Sports,
+  "Kids & Baby Products": Kids,
 };
 
 function ExploreSection() {
@@ -153,184 +203,205 @@ function ExploreSection() {
     return filteredData;
   }, [searchQuery]);
   return (
-    <div className="bg-white py-10 explore-section">
-      <div className="mx-auto px-4 sm:px-6 lg:px-8 text-center container">
-        <div className="flex flex-col justify-center items-center space-x-4 mb-6">
-          {/* Search Bar and Buttons */}
-          <div className="relative flex gap-3 m-6 w-full xl:max-w-[80%]">
-            <input
-              type="text"
-              placeholder="Search by state, market, or category..."
-              value={searchQuery}
-              onChange={handleSearchChange}
-              className="flex-grow border-Primary py-2 pr-4 pl-10 border rounded-full focus:ring-2 focus:ring-Primary w-full text-sm focus:outline-none placeholder-gray-500"
-            />
-            <svg
-              fill="currentColor"
-              className="top-2.5 left-3 absolute w-5 h-5 text-gray-500"
-              viewBox="0 0 24 24"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10.5 3.75a6.75 6.75 0 1 0 4.247 11.943l5.53 5.53a.75.75 0 0 0 1.06-1.06l-5.53-5.53A6.75 6.75 0 0 0 10.5 3.75ZM5.25 10.5a5.25 5.25 0 1 1 10.5 0 5.25 5.25 0 0 1-10.5 0Z"
-                clipRule="evenodd"
-              />
-            </svg>
-            {screenProperties.isMobile ? (
-              <Select
-                options={options}
-                selected={selected}
-                setSelected={(option) => {
-                  // TODO: this should filter the data based on the selected option, not navigate
-                  // * only implemented it like this to behave like the original links in the code
-                  if (option === "go to") return;
-                  navigate(`/${option}`);
-                  setSelected(options.indexOf(option));
-                }}
-              />
-            ) : (
-              <>
-                <Link to="/state">
-                  <button className="bg-Primary px-4 py-2 rounded-full text-sm text-white sm:text-base btn">
-                    State
-                  </button>
-                </Link>
+    <div className="min-h-screen bg-white py-12 lg:py-16 explore-section">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Search Section */}
+        <div className="mb-12">
+          <div className="flex flex-col justify-center items-center w-full">
+            <div className="relative flex flex-col sm:flex-row gap-4 w-full max-w-4xl">
+              <div className="relative flex-grow">
+                <input
+                  type="text"
+                  placeholder="Search by state, market, or category..."
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  className="w-full px-10 py-3 border-2 border-Primary rounded-full focus:ring-2 focus:ring-Primary focus:outline-none text-sm md:text-base placeholder-gray-500 transition-all duration-200"
+                />
+                <svg
+                  fill="currentColor"
+                  className="absolute top-1/2 -translate-y-1/2 left-3 w-5 h-5 text-gray-500"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10.5 3.75a6.75 6.75 0 1 0 4.247 11.943l5.53 5.53a.75.75 0 0 0 1.06-1.06l-5.53-5.53A6.75 6.75 0 0 0 10.5 3.75ZM5.25 10.5a5.25 5.25 0 1 1 10.5 0 5.25 5.25 0 0 1-10.5 0Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </div>
 
-                <Link to="/markets">
-                  <button className="bg-Primary px-4 py-2 rounded-full text-sm text-white sm:text-base btn">
-                    Market
-                  </button>
-                </Link>
-
-                <Link to="/category">
-                  <button className="bg-Primary px-4 py-2 rounded-full text-sm text-white sm:text-base btn">
-                    Category
-                  </button>
-                </Link>
-              </>
-            )}
+              {screenProperties.isMobile ? (
+                <Select
+                  options={options}
+                  selected={selected}
+                  setSelected={(option) => {
+                    if (option === "go to") return;
+                    navigate(`/${option}`);
+                    setSelected(options.indexOf(option));
+                  }}
+                  className="w-full sm:w-auto"
+                />
+              ) : (
+                <div className="flex gap-3 flex-wrap sm:flex-nowrap">
+                  <Link to="/state">
+                    <button className="w-full sm:w-auto bg-Primary hover:bg-Primary/90 px-6 py-3 rounded-full text-sm md:text-base text-white transition-colors duration-200">
+                      State
+                    </button>
+                  </Link>
+                  <Link to="/markets">
+                    <button className="w-full sm:w-auto bg-Primary hover:bg-Primary/90 px-6 py-3 rounded-full text-sm md:text-base text-white transition-colors duration-200">
+                      Market
+                    </button>
+                  </Link>
+                  <Link to="/category">
+                    <button className="w-full sm:w-auto bg-Primary hover:bg-Primary/90 px-6 py-3 rounded-full text-sm md:text-base text-white transition-colors duration-200">
+                      Category
+                    </button>
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Place Ad + Categories Carousel */}
-      <div className="relative flex justify-center items-center mb-8 w-full">
-        <div className="flex md:flex-row flex-col justify-center md:items-center md:space-x-10 sm:px-6 md:px-4 w-full overflow-visible">
-          <Link to="/ad" className="mb-3 w-auto">
-            <div className="flex md:flex-col justify-center items-center bg-orange shadow-md md:mx-3 mb-1 rounded-xl md:rounded-lg w-full h-10 text-white algin-middle sm:size-32">
-              <FontAwesomeIcon
-                icon={faPlus}
-                className="md:m-0 mr-3 mb-1 size-5"
-              />
-              <span className="font-bold text-sm sm:text-base">Place Ad</span>
+        {/* Place Ad + Categories Section */}
+        <div className="mb-16">
+          <h2 className="mb-8 font-bold text-center text-xl md:text-2xl text-Primary">
+            Categories
+          </h2>
+          <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-12">
+            <Link to="/ad" className="w-full md:w-auto">
+              <div className="flex md:flex-col items-center justify-center gap-3 bg-orange hover:bg-orange/90 shadow-lg rounded-xl p-4 md:p-6 text-white transition-all duration-200 h-full">
+                <FontAwesomeIcon icon={faPlus} className="text-2xl" />
+                <span className="font-bold text-base md:text-lg">Place Ad</span>
+              </div>
+            </Link>
+
+            <div className="w-full md:w-3/4">
+              <Swiper
+                slidesPerView={cardNumber}
+                spaceBetween={20}
+                pagination={{
+                  clickable: true,
+                }}
+                modules={[Pagination]}
+                className="custom-swiper-pagination pb-10"
+              >
+                {Object.entries(categories).map(([name, imageUrl]) => (
+                  <SwiperSlide key={name}>
+                    <Link to={`/category/${name.toLowerCase().replace(/\s+/g, '-')}`}>
+                      <div className="group cursor-pointer">
+                        <div className="relative w-full pt-[100%] rounded-xl overflow-hidden">
+                          {/* Background Image */}
+                          <img
+                            src={imageUrl}
+                            alt={name}
+                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
+                            loading="lazy"
+                          />
+                          
+                          {/* Dark Overlay */}
+                          <div className="absolute inset-0 bg-black/50 group-hover:bg-black/40 transition-colors duration-200" />
+                          
+                          {/* Icon */}
+                          {categoryIcons[name] && (
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              {React.createElement(categoryIcons[name], {
+                                className: "text-white transition-transform duration-200 group-hover:scale-110",
+                                size: 32,
+                                strokeWidth: 1.5
+                              })}
+                            </div>
+                          )}
+                        </div>
+                        <p className="mt-2 text-center text-sm font-medium text-gray-700 group-hover:text-Primary">
+                          {name}
+                        </p>
+                      </div>
+                    </Link>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             </div>
-          </Link>
+          </div>
+        </div>
 
-          <div className="m-0 w-auto md:w-[70%]">
+        {/* Markets Section */}
+        <div className="mb-16">
+          <h2 className="mb-8 font-bold text-center text-xl md:text-2xl text-Primary">
+            Featured Markets
+          </h2>
+          <div className="max-w-6xl mx-auto">
             <Swiper
               slidesPerView={cardNumber}
-              spaceBetween={30}
+              spaceBetween={24}
               pagination={{
                 clickable: true,
               }}
               modules={[Pagination]}
-              className="custom-swiper-pagination pb-6"
+              className="custom-swiper-pagination pb-10"
             >
-              {Object.entries(categories).map(([name, imageUrl]) => (
-                <SwiperSlide key={name}>
-                  <div className="w-40 sm:w-40 md:w-32 h-32 sm:h-40">
+              {marketsData.map((market) => (
+                <SwiperSlide key={market.name}>
+                  <div className="bg-white shadow-lg rounded-xl overflow-hidden transition-all duration-200 hover:shadow-xl hover:scale-105">
                     <img
-                      src={imageUrl}
-                      alt={name}
-                      className="shadow-md rounded-lg w-full h-full object-cover"
-                      lazy="true"
+                      src={market.imageUrl}
+                      alt={market.name}
+                      className="w-full aspect-[4/3] object-cover"
+                      loading="lazy"
                     />
+                    <div className="p-4">
+                      <h3 className="font-bold text-gray-800 text-base md:text-lg mb-1">
+                        {market.name}
+                      </h3>
+                      <p className="text-gray-600 text-sm md:text-base">
+                        {market.location}
+                      </p>
+                    </div>
                   </div>
                 </SwiperSlide>
               ))}
             </Swiper>
           </div>
         </div>
-      </div>
 
-      {/* Markets and Malls Carousel */}
-      {/* Featured Markets Carousel */}
-      <h2 className="mb-4 font-bold text-center text-lg text-Primary sm:text-xl">
-        Featured Markets
-      </h2>
-      <div className="relative mr-auto mb-8 ml-auto xl:max-w-[80%]">
-        {/* Carousel */}
-        <div className="flex justify-center space-x-4 px-4 sm:px-6 overflow-visible">
-          <Swiper
-            slidesPerView={cardNumber}
-            spaceBetween={30}
-            pagination={{
-              clickable: true,
-            }}
-            modules={[Pagination]}
-            className="custom-swiper-pagination pb-6"
-          >
-            {marketsData.map((market) => (
-              <SwiperSlide key={market.name}>
-                <div className="flex-shrink-0 bg-gray-100 shadow-md hover:shadow-lg rounded-lg w-auto sm:w-48 h-40 sm:h-48 transform transition duration-300 overflow-visible hover:scale-105">
-                  <img
-                    src={market.imageUrl}
-                    alt={market.name}
-                    className="rounded-t-lg w-full h-24 sm:h-28 object-cover"
-                    lazy="true"
-                  />
-                  <div className="p-2">
-                    <h3 className="group-hover:text-orange font-bold text-gray-800 text-sm sm:text-base">
-                      {market.name}
-                    </h3>
-                    <p className="text-gray-500 text-xs sm:text-sm">
-                      {market.location}
-                    </p>
+        {/* Malls Section */}
+        <div>
+          <h2 className="mb-8 font-bold text-center text-xl md:text-2xl text-Primary">
+            Featured Malls
+          </h2>
+          <div className="max-w-6xl mx-auto">
+            <Swiper
+              slidesPerView={cardNumber}
+              spaceBetween={24}
+              pagination={{
+                clickable: true,
+              }}
+              modules={[Pagination]}
+              className="custom-swiper-pagination pb-10"
+            >
+              {mallsData.map((mall) => (
+                <SwiperSlide key={mall.name}>
+                  <div className="bg-white shadow-lg rounded-xl overflow-hidden transition-all duration-200 hover:shadow-xl hover:scale-105">
+                    <img
+                      src={mall.imageUrl}
+                      alt={mall.name}
+                      className="w-full aspect-[4/3] object-cover"
+                      loading="lazy"
+                    />
+                    <div className="p-4">
+                      <h3 className="font-bold text-gray-800 text-base md:text-lg mb-1">
+                        {mall.name}
+                      </h3>
+                      <p className="text-gray-600 text-sm md:text-base">
+                        {mall.location}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-      </div>
-
-      {/* Featured Malls Carousel */}
-      <h2 className="mb-4 font-bold text-center text-lg text-Primary sm:text-xl">
-        Featured Malls
-      </h2>
-      <div className="relative mr-auto mb-8 ml-auto xl:max-w-[80%]">
-        {/* Carousel */}
-        <div className="flex justify-center space-x-4 px-4 sm:px-6 overflow-visible">
-          <Swiper
-            slidesPerView={cardNumber}
-            spaceBetween={30}
-            pagination={{
-              clickable: true,
-            }}
-            modules={[Pagination]}
-            className="custom-swiper-pagination pb-6"
-          >
-            {mallsData.map((mall) => (
-              <SwiperSlide key={mall.name}>
-                <div className="flex-shrink-0 bg-gray-100 shadow-md hover:shadow-lg rounded-lg w-40 sm:w-48 h-40 sm:h-48 transform transition duration-300 hover:scale-105">
-                  <img
-                    src={mall.imageUrl}
-                    alt={mall.name}
-                    className="rounded-t-lg w-full h-24 sm:h-28 object-cover"
-                    lazy="true"
-                  />
-                  <div className="p-2">
-                    <h3 className="font-bold text-sm sm:text-base">
-                      {mall.name}
-                    </h3>
-                    <p className="text-gray-500 text-xs sm:text-sm">
-                      {mall.location}
-                    </p>
-                  </div>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
         </div>
       </div>
     </div>
