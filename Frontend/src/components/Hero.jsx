@@ -68,7 +68,7 @@ function Hero() {
         {/* <button className="bg-red-500 p-3" onClick={makePay}>
           Pay
         </button> */}
-        <InterswitchPay {...paymentParameters} />
+        {/* <InterswitchPay {...paymentParameters} /> */}
         {/* Positioned Paragraph (optional) */}
         {/* <p className="py-2 w-full text-center sm:text-lg md:text-xl">
           Your gateway to the best products from Nigeria’s leading markets.
