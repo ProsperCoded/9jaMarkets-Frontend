@@ -16,7 +16,9 @@ import { Separator } from "../ui/separator";
 import { useNavigate, useLocation } from "react-router-dom";
 import { plans } from "@/config";
 import { useContext } from "react";
-import { USER_PROFILE_CONTEXT } from "@/contexts";
+import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "@/contexts";
+import { getProduct } from "@/lib/api/productApi";
+import { useErrorLogger } from "@/hooks";
 const paymentMethods = [
   { id: "card", name: "Pay with Interswitch", icon: InterswitchLogo },
 ];
@@ -24,21 +26,33 @@ const paymentMethods = [
 export default function BillingPage() {
   const [selectedMethod, setSelectedMethod] = useState("card");
   const [selectedPlan, setSelectedPlan] = useState(null);
+  const [productData, setProductData] = useState(null);
   const { userProfile } = useContext(USER_PROFILE_CONTEXT);
   const navigate = useNavigate();
   const location = useLocation();
-
+  const messageApi = useContext(MESSAGE_API_CONTEXT);
+  const errorLogger = useErrorLogger();
   let url = new URL(window.location.href);
   let planId = url.searchParams.get("plan");
-
   let productId = url.searchParams.get("productId");
   useEffect(() => {
     // const params = new URLSearchParams(location.search);
-    if (planId && plans[planId]) {
-      setSelectedPlan(plans[planId]);
-    } else {
+    if (!(planId && plans[planId])) {
       navigate("/products");
+      messageApi.error("Must Select a valid plan");
+      return;
     }
+    if (!productId) {
+      navigate("/products");
+      messageApi.error("Must Select a valid product");
+      return;
+    }
+    setSelectedPlan(plans[planId]);
+    getProduct(productId, errorLogger).then((data) => {
+      // ! Testing
+      console.log({ productdata: data });
+      setProductData(data);
+    });
   }, [location, navigate]);
 
   if (!selectedPlan || !userProfile) {
@@ -136,7 +150,24 @@ export default function BillingPage() {
                 <CardTitle>Order Summary</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="flex justify-between">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3">
+                    <div className="relative rounded-md w-16 h-16 overflow-hidden shrink-0">
+                      <img
+                        src={productData?.displayImage.url}
+                        alt={productData?.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h4 className="font-medium">{productData?.name}</h4>
+                      <p className="max-w-[200px] text-muted-foreground text-sm truncate">
+                        {productData?.details}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="space-x-3 my-4">
                   <span className="font-medium">{selectedPlan.name}</span>
                   <span>₦{selectedPlan.price.toLocaleString()}</span>
                 </div>
