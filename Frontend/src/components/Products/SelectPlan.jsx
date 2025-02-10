@@ -68,7 +68,7 @@ export default function SelectPlan() {
                 </span>
                 <Button
                   variant="primary"
-                  className="hover:bg-P2 font-semibold hover:text-white transition-colors duration-300"
+                  className="bg-Primary hover:bg-P2 font-semibold hover:text-white transition-colors duration-300"
                   onClick={() => {
                     let url = new URL(window.location);
                     let productId = url.searchParams.get("productId");

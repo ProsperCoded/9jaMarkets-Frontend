@@ -49,8 +49,11 @@ export default function BillingPage() {
     }
     setSelectedPlan(plans[planId]);
     getProduct(productId, errorLogger).then((data) => {
-      // ! Testing
-      console.log({ productdata: data });
+      if (!data) {
+        navigate("/products");
+        messageApi.error("Product not found");
+        return;
+      }
       setProductData(data);
     });
   }, [location, navigate]);
