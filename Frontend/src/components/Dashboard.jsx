@@ -92,10 +92,10 @@ const Dashboard = () => {
             </li>
             <li>
               <Link
-                to="/dashboard/product"
+                to="/dashboard/products"
                 className="flex items-center space-x-3 hover:bg-Primary p-2 rounded-lg hover:text-white"
                 style={
-                  location.pathname === "/dashboard/product"
+                  location.pathname === "/dashboard/products"
                     ? styleSelected
                     : {}
                 }

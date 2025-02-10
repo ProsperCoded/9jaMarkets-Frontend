@@ -4,7 +4,6 @@ import {
   Routes,
   Route,
   useLocation,
-  useParams,
   Navigate,
 } from "react-router-dom";
 import Header from "./components/Header";
@@ -17,7 +16,7 @@ import HowItWorks from "./components/how-it-works";
 import MarketPage from "./components/Markets";
 import MallPage from "./components/Malls";
 import Dashboard from "./components/Dashboard"; // Updated import from Profile -> Dashboard
-import PlaceAD from "./components/PlaceAD";
+import AdPayment from "./components/Products/AdPayment";
 import NotFoundPage from "./components/NotFoundPage";
 import MainPage from "./components/Mainpage";
 import Bookmark from "./components/Bookmarkpage";
@@ -25,6 +24,7 @@ import BillingPage from "./components/BillingPage";
 import Overview from "./components/Overview";
 import ProductPage from "./components/Products/ProductPage";
 import EditProfile from "./components/EditProfile";
+import SelectPlan from "./components/Products/SelectPlan";
 
 import { ConfigProvider } from "antd";
 import InitializeApp from "./InitializeApp";
@@ -86,7 +86,6 @@ function App() {
               {/* <Route path="/marketplace" element={<Marketplace />} /> */}
               <Route path="/merchant-signup" element={<MerchantSignup />} />
               <Route path="/ad" element={<Adverts />} />
-              <Route path="/place-ad" element={<PlaceAD />} />
               <Route path="/billing" element={<BillingPage />} />
               <Route path="/forget-password" element={<ForgetPassword />} />
               <Route path="/mainpage" element={<MainPage />} />
@@ -97,7 +96,11 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />}>
                 <Route index element={<Navigate to="overview" replace />} />
                 <Route path="overview" element={<Overview />} />
-                <Route path="product" element={<ProductPage />} />
+                {/* Products routes */}
+                <Route path="products" element={<ProductPage />}>
+                  <Route path="select-plan" element={<SelectPlan />} />
+                  <Route path="ad-payment" element={<AdPayment />} />
+                </Route>
                 <Route path="edit" element={<EditProfile />} />
                 <Route path="customers" element={<div>Customers</div>} />
                 <Route path="messages" element={<div>Vendors</div>} />
