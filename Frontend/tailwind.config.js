@@ -23,9 +23,10 @@ export default {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
         },
+        // for Shadcn
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "#F8912D",
+          foreground: "#EBEBEB",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import InterswitchLogo from "../assets/billing/InterswitchLogo.svg";
-import { Button } from "./ui/button";
+import InterswitchLogo from "../../assets/billing/InterswitchLogo.svg";
+import { Button } from "../ui/button";
 import {
   Card,
   CardContent,
@@ -8,16 +8,17 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
-import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import { Separator } from "./ui/separator";
+} from "../ui/card";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { Separator } from "../ui/separator";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useParams } from "react-router-dom";
 import { plans } from "@/config";
 import { useContext } from "react";
-import { USER_PROFILE_CONTEXT } from "@/contexts";
+import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "@/contexts";
+import { getProduct } from "@/lib/api/productApi";
+import { useErrorLogger } from "@/hooks";
 const paymentMethods = [
   { id: "card", name: "Pay with Interswitch", icon: InterswitchLogo },
 ];
@@ -25,20 +26,36 @@ const paymentMethods = [
 export default function BillingPage() {
   const [selectedMethod, setSelectedMethod] = useState("card");
   const [selectedPlan, setSelectedPlan] = useState(null);
+  const [productData, setProductData] = useState(null);
   const { userProfile } = useContext(USER_PROFILE_CONTEXT);
-  const params = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-
+  const messageApi = useContext(MESSAGE_API_CONTEXT);
+  const errorLogger = useErrorLogger();
+  let url = new URL(window.location.href);
+  let planId = url.searchParams.get("plan");
+  let productId = url.searchParams.get("productId");
   useEffect(() => {
     // const params = new URLSearchParams(location.search);
-    // const planId = params.get("plan");
-    let planId = "premium";
-    if (planId && plans[planId]) {
-      setSelectedPlan(plans[planId]);
-    } else {
+    if (!(planId && plans[planId])) {
       navigate("/products");
+      messageApi.error("Must Select a valid plan");
+      return;
     }
+    if (!productId) {
+      navigate("/products");
+      messageApi.error("Must Select a valid product");
+      return;
+    }
+    setSelectedPlan(plans[planId]);
+    getProduct(productId, errorLogger).then((data) => {
+      if (!data) {
+        navigate("/products");
+        messageApi.error("Product not found");
+        return;
+      }
+      setProductData(data);
+    });
   }, [location, navigate]);
 
   if (!selectedPlan || !userProfile) {
@@ -136,7 +153,24 @@ export default function BillingPage() {
                 <CardTitle>Order Summary</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="flex justify-between">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3">
+                    <div className="relative rounded-md w-16 h-16 overflow-hidden shrink-0">
+                      <img
+                        src={productData?.displayImage.url}
+                        alt={productData?.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h4 className="font-medium">{productData?.name}</h4>
+                      <p className="max-w-[200px] text-muted-foreground text-sm truncate">
+                        {productData?.details}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="space-x-3 my-4">
                   <span className="font-medium">{selectedPlan.name}</span>
                   <span>₦{selectedPlan.price.toLocaleString()}</span>
                 </div>
