@@ -23,7 +23,7 @@ ChartJS.register(
 
 // Stats Component
 const Stats = ({ stats }) => (
-  <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+  <div className="gap-4 grid grid-cols-1 sm:grid-cols-4">
     {[
       { title: "Total Sales", value: stats.totalSales, color: "orange-500" },
       { title: "Orders", value: stats.orders, color: "blue" },
@@ -35,7 +35,7 @@ const Stats = ({ stats }) => (
         className={`bg-${stat.color}-100 text-${stat.color}-600 p-5 rounded shadow`}
       >
         <h3 className="text-sm">{stat.title}</h3>
-        <p className="text-xl font-semibold">₦ {stat.value.toLocaleString()}</p>
+        <p className="font-semibold text-xl">₦ {stat.value.toLocaleString()}</p>
       </div>
     ))}
   </div>
@@ -68,8 +68,8 @@ const SalesAnalysisChart = ({ salesAnalysis }) => {
   };
 
   return (
-    <div className="bg-white p-5 rounded shadow">
-      <h3 className="text-lg font-semibold mb-4">Sales Analysis</h3>
+    <div className="bg-white shadow p-5 rounded">
+      <h3 className="mb-4 font-semibold text-lg">Sales Analysis</h3>
       <div style={{ width: "100%", height: "300px" }}>
         <Bar data={barData} options={{ maintainAspectRatio: false }} />
       </div>
@@ -94,8 +94,8 @@ const OrderStatusChart = ({ orderStatus }) => {
   };
 
   return (
-    <div className="bg-white p-5 rounded shadow flex flex-col items-center">
-      <h3 className="text-lg font-semibold mb-4">Order Status</h3>
+    <div className="flex flex-col items-center bg-white shadow p-5 rounded">
+      <h3 className="mb-4 font-semibold text-lg">Order Status</h3>
       <div style={{ width: "300px", height: "300px" }}>
         <Doughnut data={doughnutData} />
       </div>
@@ -105,25 +105,27 @@ const OrderStatusChart = ({ orderStatus }) => {
 
 // Recent Orders Component
 const RecentOrders = ({ recentOrders }) => (
-  <div className="bg-white p-5 rounded shadow overflow-x-auto">
-    <h3 className="text-lg font-semibold mb-4">Recent Orders</h3>
-    <table className="table-auto w-full">
+  <div className="bg-white shadow p-5 rounded overflow-x-auto">
+    <h3 className="mb-4 font-semibold text-lg">Recent Orders</h3>
+    <table className="w-full table-auto">
       <thead>
         <tr>
-          <th className="border px-4 py-2">Order ID</th>
-          <th className="border px-4 py-2">Product</th>
-          <th className="border px-4 py-2">Date</th>
-          <th className="border px-4 py-2">Price</th>
-          <th className="border px-4 py-2">Status</th>
+          <th className="px-4 py-2 border">Order ID</th>
+          <th className="px-4 py-2 border">Product</th>
+          <th className="px-4 py-2 border">Date</th>
+          <th className="px-4 py-2 border">Price</th>
+          <th className="px-4 py-2 border">Status</th>
         </tr>
       </thead>
       <tbody>
         {recentOrders.map((order, idx) => (
           <tr key={idx}>
-            <td className="border px-4 py-2">{order.id}</td>
-            <td className="border px-4 py-2">{order.product}</td>
-            <td className="border px-4 py-2">{order.date}</td>
-            <td className="border px-4 py-2">₦ {order.price.toLocaleString()}</td>
+            <td className="px-4 py-2 border">{order.id}</td>
+            <td className="px-4 py-2 border">{order.product}</td>
+            <td className="px-4 py-2 border">{order.date}</td>
+            <td className="px-4 py-2 border">
+              ₦ {order.price.toLocaleString()}
+            </td>
             <td
               className={`border px-4 py-2 text-${
                 order.status === "completed"
@@ -144,8 +146,8 @@ const RecentOrders = ({ recentOrders }) => (
 
 // Top Products Component
 const TopProducts = ({ topProducts }) => (
-  <div className="bg-white p-5 rounded shadow">
-    <h3 className="text-lg font-semibold mb-4">Top Products</h3>
+  <div className="bg-white shadow p-5 rounded">
+    <h3 className="mb-4 font-semibold text-lg">Top Products</h3>
     <ul>
       {topProducts.map((product, idx) => (
         <li
@@ -153,7 +155,9 @@ const TopProducts = ({ topProducts }) => (
           className="flex justify-between py-2 border-b last:border-none"
         >
           <span>{product.name}</span>
-          <span className="font-semibold">₦ {product.sales.toLocaleString()}</span>
+          <span className="font-semibold">
+            ₦ {product.sales.toLocaleString()}
+          </span>
         </li>
       ))}
     </ul>
@@ -175,10 +179,34 @@ const DefaultProfileContent = () => {
     ],
     orderStatus: { completed: 77, pending: 20, cancelled: 5 },
     recentOrders: [
-      { id: "#123456", product: "HP EliteBook", date: "05-12-2024", price: 250000, status: "completed" },
-      { id: "#123457", product: "DELL Inspiron", date: "06-12-2024", price: 190000, status: "cancelled" },
-      { id: "#123458", product: "MacBook Air", date: "10-12-2024", price: 420000, status: "pending" },
-      { id: "#123459", product: "Alienware", date: "12-12-2024", price: 600000, status: "completed" },
+      {
+        id: "#123456",
+        product: "HP EliteBook",
+        date: "05-12-2024",
+        price: 250000,
+        status: "completed",
+      },
+      {
+        id: "#123457",
+        product: "DELL Inspiron",
+        date: "06-12-2024",
+        price: 190000,
+        status: "cancelled",
+      },
+      {
+        id: "#123458",
+        product: "MacBook Air",
+        date: "10-12-2024",
+        price: 420000,
+        status: "pending",
+      },
+      {
+        id: "#123459",
+        product: "Alienware",
+        date: "12-12-2024",
+        price: 600000,
+        status: "completed",
+      },
     ],
     topProducts: [
       { name: "MacBook Air Laptop", sales: 742000 },
@@ -191,11 +219,11 @@ const DefaultProfileContent = () => {
   return (
     <main>
       <Stats stats={stats} />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+      <div className="gap-4 grid grid-cols-1 md:grid-cols-2 mt-6">
         <SalesAnalysisChart salesAnalysis={stats.salesAnalysis} />
         <OrderStatusChart orderStatus={stats.orderStatus} />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+      <div className="gap-4 grid grid-cols-1 md:grid-cols-2 mt-6">
         <RecentOrders recentOrders={stats.recentOrders} />
         <TopProducts topProducts={stats.topProducts} />
       </div>

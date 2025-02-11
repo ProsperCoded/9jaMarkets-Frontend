@@ -24,3 +24,4 @@ dist-ssr
 *.sw?
 
 9ja-app.rest
+/temp

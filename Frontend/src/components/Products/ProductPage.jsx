@@ -5,10 +5,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import AddProduct from "./AddProduct";
 import ViewProducts from "./ViewProduct";
-
+import { useNavigate, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 export default function ProductPage() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  if (location.pathname !== "/dashboard/products") {
+    return <Outlet />;
+  }
   return (
-    <div className="mx-auto p-4 w-full max-w-4xl">
+    <div className="mx-auto p-4 w-full max-w-6xl">
       <Tabs defaultValue="add" className="w-full">
         <TabsList className="grid grid-cols-2 mb-8 w-full">
           <TabsTrigger

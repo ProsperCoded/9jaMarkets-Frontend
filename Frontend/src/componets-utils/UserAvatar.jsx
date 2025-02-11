@@ -33,7 +33,7 @@ export function UserAvatar({ showName, auth }) {
         <li
           className="hover:font-semibold hover:text-Primary transition-colors cursor-pointer select-none"
           onClick={() => {
-            navigate("/profile");
+            navigate("/dashboard");
           }}
         >
           Profile
@@ -44,7 +44,7 @@ export function UserAvatar({ showName, auth }) {
   return userProfile ? (
     <span
       onDoubleClick={() => {
-        navigate("/profile");
+        navigate("/dashboard");
       }}
       className="select-none"
     >

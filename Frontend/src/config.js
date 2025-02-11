@@ -16,6 +16,41 @@ export const PRODUCT_CATEGORIES = [
   "SPORTS",
   "TOYS",
 ];
+export const plans = {
+  standard: {
+    id: "standard",
+    name: "Standard Plan",
+    price: 1500,
+    duration: "7 days",
+    benefits: [
+      "Perfect for weekly campaigns",
+      "Moderate reach for your ad",
+      "Basic visibility features",
+    ],
+  },
+  premium: {
+    id: "premium",
+    name: "Premium Plan",
+    price: 3500,
+    duration: "30 days",
+    benefits: [
+      "Maximum visibility",
+      "Reach a wider audience consistently",
+      "Boost engagement and conversions",
+      "Premium placement in search results",
+    ],
+  },
+  boost: {
+    id: "boost",
+    name: "Boost Plan",
+    price: 10000,
+    duration: "30 days",
+    benefits: [
+      "Highlighted placement for top visibility",
+      "Fast-track reach with premium exposure",
+    ],
+  },
+};
 
 export const MARKETS = {
   Abia: [

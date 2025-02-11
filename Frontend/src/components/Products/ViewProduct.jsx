@@ -22,7 +22,7 @@ export default function ViewProducts() {
     getProducts();
   }, []);
   return (
-    <div className="py-6 container">
+    <div className="py-6">
       <div className="flex flex-col gap-2 lg:grid grid-cols-2 grid-flow-row">
         {products.map((product) => (
           <ProductCard
