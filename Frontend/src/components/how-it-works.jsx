@@ -53,7 +53,7 @@ const HowItWorksPage = () => {
         <div className="absolute inset-0">
           <img
             src={heroImage}
-            alt="How It Works"
+            alt="How We Work"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-black/50" />
@@ -112,12 +112,12 @@ const HowItWorksPage = () => {
             </div>
           </div>
           <div className="text-center mt-8">
-            <button 
-              onClick={() => setLoginOpen(true)}
+            <Link 
+              to="/markets"
               className="inline-flex items-center px-8 py-3 bg-orange hover:bg-orange/90 text-white rounded-full transition-colors"
             >
               Explore Markets Now
-            </button>
+            </Link>
           </div>
         </div>
 

@@ -39,6 +39,17 @@ export async function getProductsApi(errorLogger = () => {}) {
   }
   return responseData.data;
 }
+export async function getProduct(productId, errorLogger = () => {}) {
+  const url = new URL(`product/${productId}`, SERVER_URL);
+  const response = await fetch(url);
+  const responseData = await response.json();
+  if (!response.ok) {
+    errorLogger(responseData.message);
+    return;
+  }
+  return responseData.data;
+}
+
 export async function deleteProductApi(productId, errorLogger = () => {}) {
   const { accessToken } = getAuth();
   const url = new URL(`product/${productId}`, SERVER_URL);

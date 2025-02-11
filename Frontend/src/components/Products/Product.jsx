@@ -5,6 +5,7 @@ import { MESSAGE_API_CONTEXT } from "@/contexts";
 import { deleteProductApi } from "@/lib/api/productApi";
 import { Plus } from "lucide-react";
 import { Edit, Trash2 } from "lucide-react";
+import { Link } from "react-router-dom";
 export function ProductCard({ product, getProducts }) {
   const messageApi = useContext(MESSAGE_API_CONTEXT);
   return (
@@ -28,7 +29,7 @@ export function ProductCard({ product, getProducts }) {
             {product.details}
           </p>
         </div>
-        <div className="flex justify-end items-center gap-1">
+        <div className="flex justify-end items-center gap-1 h-max">
           <Button size="icon" variant="ghost" className="w-8 h-8">
             <Edit className="w-4 h-4" />
             <span className="sr-only">Edit</span>
@@ -53,10 +54,16 @@ export function ProductCard({ product, getProducts }) {
             <Trash2 className="w-4 h-4" />
             <span className="sr-only">Delete</span>
           </Button>
-          <Button size="sm" className="bg-Primary hover:bg-P2 rounded-full h-6">
+          <Link
+            className="flex bg-Primary hover:bg-P2 px-3 py-2 rounded-full font-bold text-white"
+            // onClick={() => {
+            //   navigate(`/dashboard/products/run-ad?productId=${product.id}`);
+            // }}
+            to={`/dashboard/products/select-plan?productId=${product.id}`}
+          >
             <Plus />
-            Run as Ad
-          </Button>
+            <span>Run as Ad</span>
+          </Link>
         </div>
       </div>
     </Card>

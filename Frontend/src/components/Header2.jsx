@@ -8,11 +8,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBars,
-  faTimes,
-  faBookmark,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBars, faTimes, faBookmark } from "@fortawesome/free-solid-svg-icons";
 import logo from "../assets/Logo.svg";
 import { UserAvatar } from "../componets-utils/UserAvatar";
 
@@ -24,7 +20,7 @@ const Header2 = () => {
   };
 
   return (
-    <header className="top-0 z-20 bg-Primary shadow px-4 w-full text-white">
+    <header className="relative top-0 z-20 bg-Primary shadow px-4 w-full text-white">
       <div className="flex justify-between items-center mx-auto p-2 h-14 container">
         {/* Logo and Nav */}
         <div className="flex items-center">
@@ -37,7 +33,7 @@ const Header2 = () => {
               Home
             </Link>
             <Link to="/how-it-works" className="hover:text-orange">
-              How it Works
+              How We Work
             </Link>
             <Link to="/markets" className="hover:text-orange">
               Markets &rarr;
@@ -49,7 +45,10 @@ const Header2 = () => {
         <div className="flex items-center space-x-4 md:space-x-6">
           {/* Desktop Icons */}
           <div className="md:flex space-x-4 hidden">
-            <Link to="/bookmark" className="flex items-center hover:text-orange">
+            <Link
+              to="/bookmark"
+              className="flex items-center hover:text-orange"
+            >
               <FontAwesomeIcon icon={faBookmark} className="w-6 h-6" />
             </Link>
             <div>
@@ -102,7 +101,7 @@ const Header2 = () => {
                 onClick={toggleMenu}
                 className="block hover:text-orange"
               >
-                How it Works
+                How We Work
               </Link>
               <Link
                 to="/markets"
