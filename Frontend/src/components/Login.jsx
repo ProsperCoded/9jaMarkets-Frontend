@@ -214,7 +214,7 @@ const LoginModal = () => {
           >
             {loading ? (
               <>
-                <Loading /> Login...
+                <Loading /> Logging in...
               </>
             ) : (
               "Login"

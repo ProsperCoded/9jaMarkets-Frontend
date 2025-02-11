@@ -199,7 +199,7 @@ const MarketPage = () => {
               ) : (
                 <div className="col-span-full py-8 text-center">
                   <p className="text-gray-600">
-                    No markets found for "{searchTerm}"
+                    No markets found for &quot;{searchTerm}&quot;
                   </p>
                 </div>
               )}

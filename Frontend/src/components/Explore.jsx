@@ -41,7 +41,7 @@ import { useMemo } from "react";
 import { MALLS, MARKETS } from "../config";
 // import { Select } from "shadcn";
 import Education from "../assets/categories/education-&-stationery.webp";
-import RealEstate from "../assets/categories/real-Estate-&-housing.jpg";
+import RealEstate from "../assets/categories/real-EState-&-housing.jpg";
 import Events from "../assets/categories/events-&-entertainment.jpg";
 import Technology from "../assets/categories/technology-services.jpeg";
 import Cultural from "../assets/categories/cultural-experiences.jpg";
@@ -118,10 +118,10 @@ const categoryIcons = {
   "Automobile Needs": Car,
   "Traditional Crafts": Paintbrush,
   "Sports & Outdoor": Trophy,
-  "Kids & Baby Products": Baby,
+  "Kids & Baby Products": Baby
 };
 
-// Add back the categories object
+// Update the categories object with new image mappings
 const categories = {
   "Education & Stationery": Education,
   "Real Estate & Housing": RealEstate,

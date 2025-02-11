@@ -66,23 +66,6 @@ const NotFoundPage = () => {
                 <span>Go Back</span>
               </button>
             </div>
-
-            {/* Help Section */}
-            <div className="mt-8 pt-6 border-t border-gray-100">
-              <div className="flex items-center justify-center gap-2 text-gray-500">
-                <HelpCircle size={16} />
-                <span className="text-sm">Need help?</span>
-              </div>
-              <div className="mt-2 text-sm space-x-2">
-                <Link to="/support" className="text-Primary hover:underline">
-                  Support Page
-                </Link>
-                <span>•</span>
-                <Link to="/contact" className="text-Primary hover:underline">
-                  Contact Us
-                </Link>
-              </div>
-            </div>
           </div>
         </div>
       </div>
