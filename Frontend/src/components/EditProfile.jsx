@@ -7,9 +7,20 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { Card } from "./ui/card";
+import { Trash } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { MapPin } from "lucide-react";
-import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "@/contexts";
-import { updateCustomerProfileApi } from "@/lib/api/serviceApi";
+import { PRODUCT_CATEGORIES } from "@/config";
+import {
+  MALLS_DATA_CONTEXT,
+  MARKET_DATA_CONTEXT,
+  MESSAGE_API_CONTEXT,
+  USER_PROFILE_CONTEXT,
+} from "@/contexts";
+import {
+  updateCustomerProfileApi,
+  updateMerchantProfileApi,
+} from "@/lib/api/serviceApi";
 import { Popconfirm } from "antd";
 import { ConfigProvider } from "antd";
 import OTPModal from "@/componets-utils/OTPModal";
@@ -17,19 +28,26 @@ import {
   sendVerificationCustomerEmailApi,
   verifyEmailOtp,
 } from "@/lib/api/authApi";
+import { useEffect } from "react";
 
 export default function EditProfile() {
   const messageApi = useContext(MESSAGE_API_CONTEXT);
+
   const { userProfile: profile, setUserProfile: setProfile } =
     useContext(USER_PROFILE_CONTEXT);
+  const isMerchant = profile.userType === "merchant";
   const errorLogger = (message) => {
     messageApi.error("Failed to update the field ");
     console.error(message);
   };
+  const updateProfileApi = isMerchant
+    ? updateMerchantProfileApi
+    : updateCustomerProfileApi;
   const handleUpdate = async (field, value) => {
     // Simulate API call
+
     const payload = { [field]: value };
-    const updatedProfile = await updateCustomerProfileApi(
+    const updatedProfile = await updateProfileApi(
       payload,
       errorLogger,
       (msg) => {
@@ -38,6 +56,7 @@ export default function EditProfile() {
     );
     if (!updatedProfile) return;
     console.log({ updatedData: updatedProfile });
+    messageApi.success(`Updated ${field} successfully`);
     setProfile(updatedProfile);
   };
 
@@ -70,7 +89,7 @@ export default function EditProfile() {
         postalCode,
       })
     );
-    const updatedProfile = await updateCustomerProfileApi(
+    const updatedProfile = await updateProfileApi(
       { addresses: extracted },
       errorLogger,
       (msg) => {
@@ -83,7 +102,7 @@ export default function EditProfile() {
 
   const handleDeleteAddress = async (index) => {
     const filteredAddresses = profile.addresses?.filter((_, i) => i !== index);
-    const updatedProfile = await updateCustomerProfileApi(
+    const updatedProfile = await updateProfileApi(
       { addresses: filteredAddresses },
       errorLogger,
       (msg) => {
@@ -99,7 +118,7 @@ export default function EditProfile() {
       <h1 className="mt-4 mb-8 font-extrabold text-5xl text-center text-Primary">
         EDIT PROFILE
       </h1>
-      <div className="items-start gap-5 grid grid-cols-2">
+      <div className="items-start gap-10 lg:gap-5 grid grid-cols-1 lg:grid-cols-2">
         <div className="gap-6 grid">
           <div className="gap-4 grid">
             <h2 className="font-semibold text-xl">Personal Information</h2>
@@ -111,27 +130,31 @@ export default function EditProfile() {
                 type="email"
                 required
               />
-              {/* <ProfileField
-                label="Password"
-                value={profile.password}
-                onUpdate={(value) => handleUpdate("password", value)}
-                type="password"
-                required
-              /> */}
-              <div className="gap-4 grid grid-cols-2">
-                <ProfileField
-                  label="First Name"
-                  value={profile.firstName}
-                  onUpdate={(value) => handleUpdate("firstName", value)}
-                  required
-                />
-                <ProfileField
-                  label="Last Name"
-                  value={profile.lastName}
-                  onUpdate={(value) => handleUpdate("lastName", value)}
-                  required
-                />
-              </div>
+              {isMerchant ? (
+                <div>
+                  <ProfileField
+                    label="Brand Name"
+                    value={profile.brandName}
+                    onUpdate={(value) => handleUpdate("brandName", value)}
+                    required
+                  />
+                </div>
+              ) : (
+                <div className="gap-4 grid grid-cols-2">
+                  <ProfileField
+                    label="First Name"
+                    value={profile.firstName}
+                    onUpdate={(value) => handleUpdate("firstName", value)}
+                    required
+                  />
+                  <ProfileField
+                    label="Last Name"
+                    value={profile.lastName}
+                    onUpdate={(value) => handleUpdate("lastName", value)}
+                    required
+                  />
+                </div>
+              )}
               <div className="gap-4 grid grid-cols-2">
                 <ProfileField
                   label="Phone 1"
@@ -144,6 +167,7 @@ export default function EditProfile() {
                   }
                   required
                 />
+
                 <ProfileField
                   label="Phone 2"
                   value={profile.phoneNumbers[1].number}
@@ -157,12 +181,14 @@ export default function EditProfile() {
                 />
               </div>
               <div className="gap-4 grid grid-cols-2">
-                <ProfileField
-                  label="Date of Birth"
-                  value={profile.dateOfBirth || ""}
-                  onUpdate={(value) => handleUpdate("dateOfBirth", value)}
-                  type="date"
-                />
+                {!isMerchant && (
+                  <ProfileField
+                    label="Date of Birth"
+                    value={profile.dateOfBirth || ""}
+                    onUpdate={(value) => handleUpdate("dateOfBirth", value)}
+                    type="date"
+                  />
+                )}
                 <div className="flex flex-col">
                   <label className="mb-3 font-medium text-muted-foreground text-sm">
                     Password
@@ -175,6 +201,12 @@ export default function EditProfile() {
                     Change Password
                   </Link>
                 </div>
+              </div>
+              <div>
+                <MarketSelect
+                  id={profile.marketId}
+                  onUpdate={(value) => handleUpdate("marketName", value)}
+                />
               </div>
             </div>
           </div>
@@ -205,6 +237,99 @@ export default function EditProfile() {
             ))}
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function MarketSelect({ onUpdate, id }) {
+  const { marketsData } = useContext(MARKET_DATA_CONTEXT);
+  const { mallsData } = useContext(MALLS_DATA_CONTEXT);
+  const availableMarkets = marketsData.map((market) => market.name);
+  const [marketName, setMarketId] = useState(
+    marketsData.find((market) => market.id === id)?.name || ""
+  );
+  const [mallId, setMallId] = useState("");
+  const availableMalls = mallsData.map((mall) => mall.name);
+  useEffect(() => {
+    setMarketId(marketsData.find((market) => market.id === id)?.name || "");
+  }, [marketsData]);
+  return (
+    <div className="flex items-end gap-4">
+      <div>
+        <label className="font-medium text-muted-foreground text-sm">
+          Affiliation:
+        </label>
+        <Tabs defaultValue="market" className="w-full">
+          <TabsList>
+            <TabsTrigger value="market"> Market</TabsTrigger>
+            <TabsTrigger value="malls"> Malls</TabsTrigger>
+          </TabsList>
+          <TabsContent value="market" className="w-full">
+            <div>
+              <label
+                htmlFor="marketName"
+                className="block font-medium text-red-400 text-sm"
+              >
+                * Choose this option of you are a market merchant
+              </label>
+              <select
+                id="marketName"
+                value={marketName}
+                onChange={(e) => setMarketId(e.target.value)}
+                className="border-gray-300 px-4 py-2 border rounded-md w-full"
+                required
+              >
+                <option>-- Select Market --</option>
+                {availableMarkets.map((market, ind) => {
+                  return (
+                    <option
+                      key={ind}
+                      value={market}
+                      selected={marketName === market}
+                    >
+                      {market}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+          </TabsContent>
+          <TabsContent value="malls">
+            <div>
+              <label
+                htmlFor="mallName"
+                className="block font-medium text-red-400 text-sm"
+              >
+                * Choose this option of you are a mall merchant
+              </label>
+              <select
+                id="mallName"
+                value={mallId}
+                onChange={(e) => setMallId(e.target.value)}
+                className="border-gray-300 px-4 py-2 border rounded-md w-full"
+                required
+              >
+                <option selected>-- Select Mall --</option>
+                {availableMalls.map((mall, ind) => {
+                  return (
+                    <option key={ind} value={mall}>
+                      {mall}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+          </TabsContent>
+        </Tabs>
+      </div>
+      <div>
+        <Button
+          variant="outline"
+          onClick={() => onUpdate(marketName || mallId)}
+        >
+          Update
+        </Button>
       </div>
     </div>
   );
@@ -388,6 +513,7 @@ export function EmailField({
     </div>
   );
 }
+
 export function ProfileField({
   label,
   value,

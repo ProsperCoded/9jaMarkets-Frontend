@@ -230,93 +230,95 @@ const MerchantSignup = () => {
             />
           </div>
           <div>
-            <label
-              htmlFor=""
-              className="block mb-2 font-medium text-gray-700 text-sm"
-            >
-              Affiliation:
-            </label>
-            <Tabs defaultValue="market" className="w-full">
-              <TabsList>
-                <TabsTrigger value="market"> Market</TabsTrigger>
-                <TabsTrigger value="malls"> Malls</TabsTrigger>
-              </TabsList>
-              <TabsContent value="market" className="w-full">
-                <div>
-                  <label
-                    htmlFor="marketName"
-                    className="block font-medium text-red-400 text-sm"
-                  >
-                    * Choose this option of you are a market merchant
-                  </label>
-                  <select
-                    id="marketName"
-                    value={marketName}
-                    onChange={(e) => setMarketName(e.target.value)}
-                    className="border-gray-300 px-4 py-2 border rounded-md w-full"
-                    required
-                  >
-                    <option selected>-- Select Market --</option>
-                    {availableMarkets.map((market, ind) => {
-                      return (
-                        <option key={ind} value={market}>
-                          {market}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-              </TabsContent>
-              <TabsContent value="malls">
-                <div>
-                  <label
-                    htmlFor="mallName"
-                    className="block font-medium text-red-400 text-sm"
-                  >
-                    * Choose this option of you are a mall merchant
-                  </label>
-                  <select
-                    id="mallName"
-                    value={mallName}
-                    onChange={(e) => setMarketName(e.target.value)}
-                    className="border-gray-300 px-4 py-2 border rounded-md w-full"
-                    required
-                  >
-                    <option selected>-- Select Mall --</option>
-                    {availableMalls.map((mall, ind) => {
-                      return (
-                        <option key={ind} value={mall}>
-                          {mall}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-              </TabsContent>
-            </Tabs>
-          </div>
-          <div>
-            <label
-              htmlFor="merchantCategories"
-              className="block font-medium text-gray-700 text-sm"
-            >
-              Merchant Categories
-            </label>
-            <select
-              id="merchantCategories"
-              value={merchantCategories}
-              onChange={handleMerchantCategoriesChange}
-              className="border-gray-300 px-4 py-2 border rounded-md w-full"
-              required
-            >
-              {PRODUCT_CATEGORIES.map((category, ind) => {
-                return (
-                  <option key={ind} value={category}>
-                    {category}
-                  </option>
-                );
-              })}
-            </select>
+            <div>
+              <label
+                htmlFor=""
+                className="block mb-2 font-medium text-gray-700 text-sm"
+              >
+                Affiliation:
+              </label>
+              <Tabs defaultValue="market" className="w-full">
+                <TabsList>
+                  <TabsTrigger value="market"> Market</TabsTrigger>
+                  <TabsTrigger value="malls"> Malls</TabsTrigger>
+                </TabsList>
+                <TabsContent value="market" className="w-full">
+                  <div>
+                    <label
+                      htmlFor="marketName"
+                      className="block font-medium text-red-400 text-sm"
+                    >
+                      * Choose this option of you are a market merchant
+                    </label>
+                    <select
+                      id="marketName"
+                      value={marketName}
+                      onChange={(e) => setMarketName(e.target.value)}
+                      className="border-gray-300 px-4 py-2 border rounded-md w-full"
+                      required
+                    >
+                      <option selected>-- Select Market --</option>
+                      {availableMarkets.map((market, ind) => {
+                        return (
+                          <option key={ind} value={market}>
+                            {market}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                </TabsContent>
+                <TabsContent value="malls">
+                  <div>
+                    <label
+                      htmlFor="mallName"
+                      className="block font-medium text-red-400 text-sm"
+                    >
+                      * Choose this option of you are a mall merchant
+                    </label>
+                    <select
+                      id="mallName"
+                      value={mallName}
+                      onChange={(e) => setMallName(e.target.value)}
+                      className="border-gray-300 px-4 py-2 border rounded-md w-full"
+                      required
+                    >
+                      <option selected>-- Select Mall --</option>
+                      {availableMalls.map((mall, ind) => {
+                        return (
+                          <option key={ind} value={mall}>
+                            {mall}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </div>
+            <div>
+              <label
+                htmlFor="merchantCategories"
+                className="block font-medium text-gray-700 text-sm"
+              >
+                Merchant Categories
+              </label>
+              <select
+                id="merchantCategories"
+                value={merchantCategories}
+                onChange={handleMerchantCategoriesChange}
+                className="border-gray-300 px-4 py-2 border rounded-md w-full"
+                required
+              >
+                {PRODUCT_CATEGORIES.map((category, ind) => {
+                  return (
+                    <option key={ind} value={category}>
+                      {category}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
           </div>
           {addresses.map((address, index) => (
             <div key={index} className="mb-2 p-2 border rounded-lg">
