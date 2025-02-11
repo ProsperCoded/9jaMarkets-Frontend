@@ -1,7 +1,6 @@
 import React from "react";
 import backgroundImage from "../assets/Hero.jpg";
 import logo from "../assets/Logo.svg";
-import { InterswitchPay } from "react-interswitch";
 
 function Hero() {
   function paymentCallback(response) {

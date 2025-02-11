@@ -74,9 +74,6 @@ importers:
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
-      react-interswitch:
-        specifier: ^1.0.8
-        version: 1.0.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-router-dom:
         specifier: ^6.26.2
         version: 6.28.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1124,18 +1121,6 @@ packages:
   '@swc/types@0.1.17':
     resolution: {integrity: sha512-V5gRru+aD8YVyCOMAjMpWR1Ui577DD5KSJsHP8RAxopAH22jFz6GZd/qxqjO6MJHQhcsjvjOFXyDhyLQUnMveQ==}
 
-  '@testing-library/react-hooks@5.1.3':
-    resolution: {integrity: sha512-UdEUtlQapQ579NEcXDAUE275u+KUsPtxW7NmFrNt0bE6lW8lqNCyxDK0RSuECmNZ/S0/fgP00W9RWRhVKO/hRg==}
-    peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
-      react-test-renderer: '>=16.9.0'
-    peerDependenciesMeta:
-      react-dom:
-        optional: true
-      react-test-renderer:
-        optional: true
-
   '@types/estree@1.0.6':
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
 
@@ -1147,9 +1132,6 @@ packages:
 
   '@types/react-dom@18.3.1':
     resolution: {integrity: sha512-qW1Mfv8taImTthu4KoXgDfLuk4bydU6Q/TkADnDWWHwi4NX4BR+LWfTp2sVmTqRrsHvyDDTelgelxJ+SsejKKQ==}
-
-  '@types/react-test-renderer@19.0.0':
-    resolution: {integrity: sha512-qDVnNybqFm2eZKJ4jD34EvRd6VHD67KjgnWaEMM0Id9L22EpWe3nOSVKHWL1XWRCxUWe3lhXwlEeCKD1BlJCQA==}
 
   '@types/react@18.3.12':
     resolution: {integrity: sha512-D2wOSq/d6Agt28q7rSI3jhU7G6aiuzljDGZ2hTZHIkrTLUI+AF3WMeKkEZ9nN2fkBAlcktT6vcZjDFiIhMYEQw==}
@@ -1557,10 +1539,6 @@ packages:
 
   fill-range@7.1.1:
     resolution: {integrity: sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==}
-    engines: {node: '>=8'}
-
-  filter-console@0.1.1:
-    resolution: {integrity: sha512-zrXoV1Uaz52DqPs+qEwNJWJFAWZpYJ47UNmpN9q4j+/EYsz85uV0DC9k8tRND5kYmoVzL0W+Y75q4Rg8sRJCdg==}
     engines: {node: '>=8'}
 
   find-up@5.0.0:
@@ -2328,18 +2306,6 @@ packages:
     resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
     peerDependencies:
       react: ^18.3.1
-
-  react-error-boundary@3.1.4:
-    resolution: {integrity: sha512-uM9uPzZJTF6wRQORmSrvOIgt4lJ9MC1sNgEOj2XGsDTRE4kmpWxg7ENK9EWNKJRMAOY9z0MuF4yIfl6gp4sotA==}
-    engines: {node: '>=10', npm: '>=6'}
-    peerDependencies:
-      react: '>=16.13.1'
-
-  react-interswitch@1.0.8:
-    resolution: {integrity: sha512-jzheAW6kVMzO25o3S6TZQx6w49TVcB+gMN8R3Zio106BChZqO2aNCgu2tjmcuihY5kqXWYWb43gDJgV+kQyKhA==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      react: ^16.0.0
 
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
@@ -3551,18 +3517,6 @@ snapshots:
     dependencies:
       '@swc/counter': 0.1.3
 
-  '@testing-library/react-hooks@5.1.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      '@babel/runtime': 7.26.0
-      '@types/react': 18.3.12
-      '@types/react-dom': 18.3.1
-      '@types/react-test-renderer': 19.0.0
-      filter-console: 0.1.1
-      react: 18.3.1
-      react-error-boundary: 3.1.4(react@18.3.1)
-    optionalDependencies:
-      react-dom: 18.3.1(react@18.3.1)
-
   '@types/estree@1.0.6': {}
 
   '@types/json-schema@7.0.15': {}
@@ -3570,10 +3524,6 @@ snapshots:
   '@types/prop-types@15.7.13': {}
 
   '@types/react-dom@18.3.1':
-    dependencies:
-      '@types/react': 18.3.12
-
-  '@types/react-test-renderer@19.0.0':
     dependencies:
       '@types/react': 18.3.12
 
@@ -4186,8 +4136,6 @@ snapshots:
   fill-range@7.1.1:
     dependencies:
       to-regex-range: 5.0.1
-
-  filter-console@0.1.1: {}
 
   find-up@5.0.0:
     dependencies:
@@ -4998,19 +4946,6 @@ snapshots:
       loose-envify: 1.4.0
       react: 18.3.1
       scheduler: 0.23.2
-
-  react-error-boundary@3.1.4(react@18.3.1):
-    dependencies:
-      '@babel/runtime': 7.26.0
-      react: 18.3.1
-
-  react-interswitch@1.0.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
-    dependencies:
-      '@testing-library/react-hooks': 5.1.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react: 18.3.1
-    transitivePeerDependencies:
-      - react-dom
-      - react-test-renderer
 
   react-is@16.13.1: {}
 
