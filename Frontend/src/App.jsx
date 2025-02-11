@@ -60,6 +60,10 @@ function App() {
 
   // Check if it's the home page to conditionally render Header
   const isHomePage = location.pathname === "/";
+  
+  // Add paths where footer should not appear
+  const hideFooterPaths = ['/markets', '/malls'];
+  const shouldShowFooter = !hideFooterPaths.includes(location.pathname);
 
   return (
     <div className="app">
@@ -107,7 +111,9 @@ function App() {
 
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
-            <Footer />
+
+            {/* Conditionally render footer */}
+            {shouldShowFooter && <Footer />}
           </InitializeApp>
         </ContextWrapper>
       </AntDesignConfig>

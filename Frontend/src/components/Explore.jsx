@@ -16,6 +16,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
+import { Search } from "lucide-react";
 
 // Import Swiper styles
 import "swiper/css";
@@ -158,13 +159,11 @@ function ExploreSection() {
     const handleResize = () => {
       const isMobile = window.innerWidth < 600;
       const isIPad = window.innerWidth >= 600 && window.innerWidth < 1024;
-      const isDesktop = window.innerWidth >= 1024 && window.innerWidth < 1440;
-      const isExtraLarge = window.innerWidth >= 1440;
-      setScreenProperties({ isMobile, isIPad, isDesktop, isExtraLarge });
-      const newCardNumber = isExtraLarge
-        ? 5
-        : isDesktop
-        ? 4
+      const isDesktop = window.innerWidth >= 1024;
+      
+      setScreenProperties({ isMobile, isIPad, isDesktop });
+      const newCardNumber = isDesktop
+        ? 4  // Show 4 cards on desktop
         : isIPad
         ? 3
         : isMobile
@@ -203,120 +202,88 @@ function ExploreSection() {
     return filteredData;
   }, [searchQuery]);
   return (
-    <div className="min-h-screen bg-white py-12 lg:py-16 explore-section">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-white py-12 lg:py-16">
+      <div className="container mx-auto px-4 max-w-6xl">
         {/* Search Section */}
-        <div className="mb-12">
-          <div className="flex flex-col justify-center items-center w-full">
-            <div className="relative flex flex-col sm:flex-row gap-4 w-full max-w-4xl">
-              <div className="relative flex-grow">
-                <input
-                  type="text"
-                  placeholder="Search by state, market, or category..."
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                  className="w-full px-10 py-3 border-2 border-Primary rounded-full focus:ring-2 focus:ring-Primary focus:outline-none text-sm md:text-base placeholder-gray-500 transition-all duration-200"
-                />
-                <svg
-                  fill="currentColor"
-                  className="absolute top-1/2 -translate-y-1/2 left-3 w-5 h-5 text-gray-500"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10.5 3.75a6.75 6.75 0 1 0 4.247 11.943l5.53 5.53a.75.75 0 0 0 1.06-1.06l-5.53-5.53A6.75 6.75 0 0 0 10.5 3.75ZM5.25 10.5a5.25 5.25 0 1 1 10.5 0 5.25 5.25 0 0 1-10.5 0Z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-
-              {screenProperties.isMobile ? (
-                <Select
-                  options={options}
-                  selected={selected}
-                  setSelected={(option) => {
-                    if (option === "go to") return;
-                    navigate(`/${option}`);
-                    setSelected(options.indexOf(option));
-                  }}
-                  className="w-full sm:w-auto"
-                />
-              ) : (
-                <div className="flex gap-3 flex-wrap sm:flex-nowrap">
-                  <Link to="/state">
-                    <button className="w-full sm:w-auto bg-Primary hover:bg-Primary/90 px-6 py-3 rounded-full text-sm md:text-base text-white transition-colors duration-200">
-                      State
-                    </button>
-                  </Link>
-                  <Link to="/markets">
-                    <button className="w-full sm:w-auto bg-Primary hover:bg-Primary/90 px-6 py-3 rounded-full text-sm md:text-base text-white transition-colors duration-200">
-                      Market
-                    </button>
-                  </Link>
-                  <Link to="/category">
-                    <button className="w-full sm:w-auto bg-Primary hover:bg-Primary/90 px-6 py-3 rounded-full text-sm md:text-base text-white transition-colors duration-200">
-                      Category
-                    </button>
-                  </Link>
-                </div>
-              )}
-            </div>
+        <div className="flex flex-col items-center space-y-6">
+          <div className="relative flex w-full max-w-3xl items-center">
+            <input
+              type="text"
+              placeholder="Search by state, market, or category..."
+              value={searchQuery}
+              onChange={handleSearchChange}
+              className="w-full rounded-full border-2 border-Primary px-6 py-3 pr-[100px] text-sm focus:outline-none focus:ring-2 focus:ring-Primary/20 md:py-4 md:text-base"
+            />
+            <button className="absolute right-2 flex items-center justify-center rounded-full bg-[#F8912D] px-4 py-2 text-white transition-colors hover:bg-[#F8912D]/90 md:px-6 md:py-2.5">
+              <Search className="h-5 w-5" />
+              <span className="ml-2 hidden md:inline">Search</span>
+            </button>
           </div>
         </div>
 
         {/* Place Ad + Categories Section */}
-        <div className="mb-16">
-          <h2 className="mb-8 font-bold text-center text-xl md:text-2xl text-Primary">
+        <div className="mt-12">
+          {/* Mobile: Place Ad Button */}
+          <div className="md:hidden mb-6">
+            <button 
+              onClick={() => navigate('/ad')}
+              className="w-full bg-[#F8912D] hover:bg-[#F8912D]/90 text-white rounded-xl p-4 shadow-lg transition-all duration-200 flex items-center justify-center gap-3"
+            >
+              <FontAwesomeIcon icon={faPlus} className="text-xl" />
+              <span className="font-semibold">Place Your Ad</span>
+            </button>
+          </div>
+
+          <h2 className="mb-6 font-bold text-center text-xl md:text-2xl text-Primary">
             Categories
           </h2>
-          <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-12">
-            <Link to="/ad" className="w-full md:w-auto">
-              <div className="flex md:flex-col items-center justify-center gap-3 bg-orange hover:bg-orange/90 shadow-lg rounded-xl p-4 md:p-6 text-white transition-all duration-200 h-full">
-                <FontAwesomeIcon icon={faPlus} className="text-2xl" />
-                <span className="font-bold text-base md:text-lg">Place Ad</span>
-              </div>
-            </Link>
 
-            <div className="w-full md:w-3/4">
+          <div className="flex flex-col md:flex-row gap-4">
+            {/* Desktop: Place Ad Button */}
+            <div className="hidden md:block w-[200px]">
+              <button 
+                onClick={() => navigate('/ad')}
+                className="w-full bg-[#F8912D] hover:bg-[#F8912D]/90 text-white rounded-xl shadow-lg transition-all duration-200 group"
+              >
+                <div className="aspect-square p-4 flex flex-col items-center justify-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+                    <FontAwesomeIcon icon={faPlus} className="text-xl" />
+                  </div>
+                  <div className="text-center">
+                    <div className="font-semibold text-base">Place Your Ad</div>
+                    <p className="text-xs text-white/80">Advertise your business here</p>
+                  </div>
+                </div>
+              </button>
+            </div>
+
+            {/* Categories Swiper */}
+            <div className="w-full">
               <Swiper
                 slidesPerView={cardNumber}
-                spaceBetween={20}
+                spaceBetween={16}
                 pagination={{
                   clickable: true,
                 }}
                 modules={[Pagination]}
-                className="custom-swiper-pagination pb-10"
+                className="custom-swiper-pagination pb-8"
               >
                 {Object.entries(categories).map(([name, imageUrl]) => (
                   <SwiperSlide key={name}>
                     <Link to={`/category/${name.toLowerCase().replace(/\s+/g, '-')}`}>
                       <div className="group cursor-pointer">
-                        <div className="relative w-full pt-[100%] rounded-xl overflow-hidden">
-                          {/* Background Image */}
+                        <div className="relative aspect-square rounded-xl overflow-hidden">
                           <img
                             src={imageUrl}
                             alt={name}
-                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
-                            loading="lazy"
+                            className="absolute inset-0 w-full h-full object-cover scale-75"
                           />
-                          
-                          {/* Dark Overlay */}
-                          <div className="absolute inset-0 bg-black/50 group-hover:bg-black/40 transition-colors duration-200" />
-                          
-                          {/* Icon */}
-                          {categoryIcons[name] && (
-                            <div className="absolute inset-0 flex items-center justify-center">
-                              {React.createElement(categoryIcons[name], {
-                                className: "text-white transition-transform duration-200 group-hover:scale-110",
-                                size: 32,
-                                strokeWidth: 1.5
-                              })}
-                            </div>
-                          )}
+                          <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-200 rounded-xl" />
+                          <div className="absolute inset-0 p-4 flex flex-col items-center justify-center text-white">
+                            {React.createElement(categoryIcons[name], { className: "w-6 h-6 mb-2" })}
+                            <h3 className="text-center text-sm font-medium">{name}</h3>
+                          </div>
                         </div>
-                        <p className="mt-2 text-center text-sm font-medium text-gray-700 group-hover:text-Primary">
-                          {name}
-                        </p>
                       </div>
                     </Link>
                   </SwiperSlide>

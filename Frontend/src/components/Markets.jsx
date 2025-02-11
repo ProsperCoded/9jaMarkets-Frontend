@@ -36,39 +36,31 @@ const MarketPage = () => {
   return (
     <div className="relative z-0 flex flex-col bg-gray-50 min-h-screen">
       {/* Header Navigation */}
-      <div className="top-0 z-30 sticky bg-white shadow-sm py-4">
-        <div className="mx-auto px-4 container">
-          <div className="flex justify-between items-center gap-4">
-            {/* Left Section */}
-            <div className="md:flex items-center space-x-6 hidden">
-              <Link
-                to="/markets"
-                className="flex items-center gap-2 hover:opacity-90 font-bold text-lg text-Primary transition-opacity"
-              >
-                <Store className="w-5 h-5" />
-                Markets
-              </Link>
-              <Link
-                to="/malls"
-                className="flex items-center gap-2 text-gray-600 text-lg hover:text-Primary transition-colors"
-              >
-                <ShoppingBag className="w-5 h-5" />
-                Malls
-              </Link>
-            </div>
+      <div className="top-0 z-30 sticky bg-white shadow-sm">
+        {/* Market/Mall Switch */}
+        <div className="absolute left-0 top-0 h-full flex items-center pl-8">
+          <div className="flex items-center space-x-6">
+            <Link
+              to="/markets"
+              className="flex items-center gap-2 hover:opacity-90 font-bold text-lg text-Primary transition-opacity py-4"
+            >
+              <Store className="w-5 h-5" />
+              Markets
+            </Link>
+            <Link
+              to="/malls"
+              className="flex items-center gap-2 text-gray-600 text-lg hover:text-Primary transition-colors py-4"
+            >
+              <ShoppingBag className="w-5 h-5" />
+              Malls
+            </Link>
+          </div>
+        </div>
 
-            {/* Mobile Nav */}
-            <div className="flex items-center gap-4 md:hidden">
-              <Link to="/markets" className="font-bold text-lg text-Primary">
-                Markets
-              </Link>
-              <Link to="/malls" className="text-gray-600 text-lg">
-                Malls
-              </Link>
-            </div>
-
-            {/* Search Bar */}
-            <div className="flex flex-1 items-center gap-2 max-w-2xl">
+        {/* Search Bar - Centered */}
+        <div className="mx-auto px-4 container h-16">
+          <div className="flex justify-center items-center h-full">
+            <div className="flex items-center gap-2 max-w-2xl w-full">
               <div className="relative flex-1">
                 <input
                   type="text"

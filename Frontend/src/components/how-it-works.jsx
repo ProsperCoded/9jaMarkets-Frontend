@@ -53,7 +53,7 @@ const HowItWorksPage = () => {
         <div className="absolute inset-0">
           <img
             src={heroImage}
-            alt="How It Works"
+            alt="How We Work"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-black/50" />
