@@ -62,8 +62,17 @@ function App() {
   const isHomePage = location.pathname === "/";
   
   // Add paths where footer should not appear
-  const hideFooterPaths = ['/markets', '/malls'];
-  const shouldShowFooter = !hideFooterPaths.includes(location.pathname);
+  const hideFooterPaths = [
+    '/markets', 
+    '/malls',
+    '/dashboard',
+    '/dashboard/overview',
+    '/dashboard/products',
+    '/dashboard/customers',
+    '/dashboard/messages',
+    '/dashboard/edit'
+  ];
+  const shouldShowFooter = !hideFooterPaths.some(path => location.pathname.startsWith(path));
 
   return (
     <div className="app">

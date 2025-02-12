@@ -247,14 +247,6 @@ const MARKETS = {
     { name: "Ikotun Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Idumota Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Ita Faji Market", img: "./markets/BodijaMarket.jpg" },
-    {
-      name: "Isale Eko Market, Lagos Island",
-      img: "./markets/BodijaMarket.jpg",
-    },
-    {
-      name: "Jankarra Market, Lagos Island",
-      img: "./markets/BodijaMarket.jpg",
-    },
     { name: "Ladipo Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Lekki Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Agboju Market", img: "./markets/BodijaMarket.jpg" },
@@ -266,28 +258,8 @@ const MARKETS = {
     { name: "Oniru New Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Fespar Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Oshodi Market", img: "./markets/BodijaMarket.jpg" },
-    {
-      name: "Rauf Aregbesola Market",
-      img: "./markets/BodijaMarket.jpg",
-    },
-    { name: "Téjúoshó Market", img: "./markets/BodijaMarket.jpg" },
-    { name: "Sangotedo Market", img: "./markets/BodijaMarket.jpg" },
-    { name: "Ajuwe Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Jakande Market", img: "./markets/BodijaMarket.jpg" },
-    { name: "Akodo Market, Epe", img: "./markets/BodijaMarket.jpg" },
-    {
-      name: "Boundary Seafood Market",
-      img: "./markets/BodijaMarket.jpg",
-    },
-    { name: "Apongbo Market", img: "./markets/BodijaMarket.jpg" },
-    {
-      name: "Liverpool Crayfish Market",
-      img: "./markets/BodijaMarket.jpg",
-    },
-    { name: "Arena Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Cele Market", img: "./markets/BodijaMarket.jpg" },
-    { name: "Ijesha Market, Ijeshatedo", img: "./markets/BodijaMarket.jpg" },
-    { name: "State Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Agege Market", img: "./markets/BodijaMarket.jpg" },
   ],
 
