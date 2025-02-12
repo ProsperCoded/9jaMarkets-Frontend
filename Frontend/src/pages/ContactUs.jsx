@@ -71,7 +71,7 @@ const ContactUs = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="bg-Primary text-white py-16 relative overflow-hidden">
+      <div className="bg-Primary/80 text-white py-16 relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('/pattern.svg')] opacity-10"></div>
         <div className="container mx-auto px-4 relative">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center">
@@ -85,7 +85,7 @@ const ContactUs = () => {
       </div>
 
       {/* Contact Info Cards */}
-      <div className="container mx-auto pt-1 px-4 -mt-8">
+      <div className="container mx-auto pt-16 px-4 -mt-8">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           {contactInfo.map((info, index) => (
             <div 
@@ -93,7 +93,7 @@ const ContactUs = () => {
               className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow"
             >
               <div className="flex items-center gap-4 mb-4">
-                <span className="bg-Primary/10 text-Primary p-3 rounded-full">
+                <span className="bg-orange/10 text-orange p-3 rounded-full">
                   {info.icon}
                 </span>
                 <h3 className="text-lg font-semibold">{info.title}</h3>
