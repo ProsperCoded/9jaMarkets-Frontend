@@ -43,21 +43,9 @@ const MARKETS = {
     { name: "Eket Fish Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Eket Main Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Ewet Housing Estate Market", img: "./markets/BodijaMarket.jpg" },
-    {
-      name: "Ikot Ekpene Fabric Market",
-      img: "./markets/BodijaMarket.jpg",
-    },
-    {
-      name: "Ikot Ekpene Main Market (Mbut Obio)",
-      img: "./markets/BodijaMarket.jpg",
-    },
     { name: "Itam Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Oron Fish Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Oron Main Market", img: "./markets/BodijaMarket.jpg" },
-    {
-      name: "Uyo Main Market (Uyo Central Market)",
-      img: "./markets/BodijaMarket.jpg",
-    },
     { name: "Urua Ekpa Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Urua Nsit Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Urua Akpan Ete Market", img: "./markets/BodijaMarket.jpg" },
@@ -124,10 +112,7 @@ const MARKETS = {
     { name: "Sabon Kaura Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Sade Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Soro Market", img: "./markets/BodijaMarket.jpg" },
-    {
-      name: "Tafawa Balewa Main Market",
-      img: "./markets/BodijaMarket.jpg",
-    },
+    { name: "Tafawa Balewa Main Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Tafawa Balewa Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Toro Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Warji Market", img: "./markets/BodijaMarket.jpg" },
@@ -252,19 +237,11 @@ const MARKETS = {
 
   Lagos: [
     { name: "Agbalata Market Badagry", img: "./markets/BodijaMarket.jpg" },
-    {
-      name: "Alaba International Market",
-      img: "./markets/BodijaMarket.jpg",
-    },
     { name: "Ajah Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Aratumi Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Balogun Market, Lagos Island", img: "./markets/BodijaMarket.jpg" },
     { name: "Bar Beach Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Computer Village", img: "./markets/BodijaMarket.jpg",address:"Computer Village, Lagos Island" },
-    {
-      name: "Èbúté Èrò Market, Lagos Island",
-      img: "./markets/BodijaMarket.jpg",
-    },
     { name: "Epe Fish Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Iyana-Iba Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Ikotun Market", img: "./markets/BodijaMarket.jpg" },
@@ -312,6 +289,24 @@ const MARKETS = {
     { name: "Ijesha Market, Ijeshatedo", img: "./markets/BodijaMarket.jpg" },
     { name: "State Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Agege Market", img: "./markets/BodijaMarket.jpg" },
+  ],
+
+  Oyo: [
+    { name: "Gbagi International Market", img: "./markets/gbagi-international.jpg", address:"Ibadan-Ife Road, Ibadan" },
+    { name: "Bodija Market", img: "./markets/bodija.jpg", address:"Bodija, Ibadan North, Ibadan" },
+    { name: "Ogunpa Market", img: "./markets/ogunpa.jpg", address:"Dugbe Alawo area, Ibadan" },
+    { name: "Dugbe Market", img: "./markets/dugbe.jpg", address:"Central business district, Ibadan" },
+    { name: "Aleshinloye Market", img: "./markets/aleshinloye.jpg", address:"Aleshinloye area, Ibadan" },
+    { name: "Oje Market", img: "./markets/oje.jpg", address:"Oje area, Ibadan" },
+    { name: "Oja Oba Market", img: "./markets/oja-oba.jpg", address:"Near the Alaafin's palace, Oyo Town" },
+    { name: "New Waso Market", img: "./markets/new-waso.jpg", address:"Ogbomoso North, Ogbomoso" },
+    { name: "Sango Market", img: "./markets/sango.jpg", address:"Sango Area, Ibadan" },
+    { name: "Iso Adiye Market", img: "./markets/iso-adiye.jpg", address:"Ibadan" },
+    { name: "Oranyan Market", img: "./markets/oranyan.jpg", address:"Oranyan area, Ibadan" },
+    { name: "Beere Market", img: "./markets/beere.jpg", address:"Beere area, Ibadan" },
+    { name: "Ojoo Market", img: "./markets/ojoo.jpg", address:"Ojoo area, Ibadan" },
+    { name: "Apata Market", img: "./markets/apata.jpg", address:"Apata area, Ibadan" },
+    { name: "Iseyin Market", img: "./markets/iseyin.jpg", address:"Iseyin Town" },
   ],
 };
 
