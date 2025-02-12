@@ -268,7 +268,7 @@ export default function AddProduct() {
       <div className="flex justify-end">
         <Button
           onClick={handleSubmit}
-          className="w-full bg-Primary hover:bg-Primary/80 sm:w-auto"
+          className="w-full bg-Primary text-white hover:bg-Primary/80 sm:w-auto"
           disabled={isSubmitting}
         >
           {isSubmitting ? "Adding Product..." : "Add Product"}

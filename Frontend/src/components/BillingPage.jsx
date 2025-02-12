@@ -53,7 +53,7 @@ export default function BillingPage() {
     <div className="bg-gray-50 px-4 py-8 min-h-screen">
       <div className="mx-auto max-w-4xl container">
         <div className="space-y-4 mb-8 text-center">
-          <h1 className="font-bold text-2xl md:text-3xl tracking-tight">
+          <h1 className="font-bold text-2xl md:text-3xl text-Primary tracking-tight">
             Complete Your Payment
           </h1>
           <p className="text-muted-foreground text-sm md:text-base">

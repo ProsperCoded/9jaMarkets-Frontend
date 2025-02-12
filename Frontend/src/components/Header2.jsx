@@ -33,7 +33,7 @@ const Header2 = () => {
               Home
             </Link>
             <Link to="/how-it-works" className="hover:text-orange">
-              How We Work
+              What we do
             </Link>
             <Link to="/markets" className="hover:text-orange">
               Markets &rarr;
@@ -104,7 +104,7 @@ const Header2 = () => {
                 onClick={toggleMenu}
                 className="block hover:text-orange"
               >
-                How We Work
+                What we do
               </Link>
               <Link
                 to="/markets"

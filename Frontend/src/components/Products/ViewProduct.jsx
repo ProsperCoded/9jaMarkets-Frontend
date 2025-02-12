@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { getProductsApi } from "@/lib/api/productApi";
 import { Package, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function ViewProducts() {
   const [products, setProducts] = useState([]);
@@ -45,7 +44,7 @@ export default function ViewProducts() {
         </div>
         <h3 className="text-lg font-semibold text-gray-900 mb-2">No Products Yet</h3>
         <p className="text-gray-500 mb-6 max-w-sm">
-          You haven't added any products to your store. Start selling by adding your first product.
+          You haven&apos;t added any products to your store. Start selling by adding your first product.
         </p>
         <Button
           onClick={() => {
