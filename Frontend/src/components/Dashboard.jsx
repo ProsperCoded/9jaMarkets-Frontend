@@ -168,7 +168,7 @@ const SidebarContent = ({
         <div className="ml-3 relative">
           <h2 className="font-semibold text-lg">{name}</h2>
           <button
-            className="absolute -right-8 top-0 bg-Primary p-2 rounded-full transition-transform hover:scale-105"
+            className="absolute -right-10 top-0 bg-Primary p-2 rounded-full transition-transform hover:scale-105"
             onClick={() => navigate("/dashboard/edit")}
           >
             <Pencil className="w-4 h-4" color="white" />

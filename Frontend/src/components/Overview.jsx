@@ -52,15 +52,15 @@ const Stats = ({ stats }) => (
         color: "green",
         bgColor: "bg-green-50",
         textColor: "text-green-700"
-      }
-    ].map((stat, index) => (
+      },
+    ].map((stat) => (
       <div
-        key={index}
-        className={` ${stat.bgColor} p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow`}
+        key={stat.title}
+        className={`${stat.bgColor} rounded-lg shadow-sm p-6 transition-transform hover:scale-105`}
       >
-        <h3 className="text-sm font-medium text-gray-500">{stat.title}</h3>
-        <p className={` ${stat.textColor} text-2xl font-bold mt-2`}>
-          {typeof stat.value === 'number' ? stat.value.toLocaleString() : stat.value}
+        <h3 className="text-sm font-medium text-gray-600">{stat.title}</h3>
+        <p className={`mt-2 text-2xl font-semibold ${stat.textColor}`}>
+          ₦{stat.value.toLocaleString()}
         </p>
       </div>
     ))}
@@ -69,24 +69,61 @@ const Stats = ({ stats }) => (
 
 // Sales Analysis Chart Component
 const SalesAnalysisChart = ({ salesAnalysis }) => {
+  const barData = {
+    labels: salesAnalysis.map((item) => item.week),
+    datasets: [
+      {
+        label: "Total Sales",
+        backgroundColor: "#F8912D",
+        borderRadius: 10,
+        data: salesAnalysis.map((item) => item.sales),
+      },
+      {
+        label: "Expenses",
+        backgroundColor: "#FF3D00",
+        borderRadius: 10,
+        data: salesAnalysis.map((item) => item.expenses),
+      },
+      {
+        label: "Profit",
+        backgroundColor: "#236C13",
+        borderRadius: 10,
+        data: salesAnalysis.map((item) => item.profit),
+      },
+    ],
+  };
+
   const options = {
-    responsive: true,
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: 'Sales Analysis',
-      },
+        position: 'bottom',
+        labels: {
+          usePointStyle: true,
+          padding: 20
+        }
+      }
     },
+    scales: {
+      y: {
+        beginAtZero: true,
+        grid: {
+          drawBorder: false
+        }
+      },
+      x: {
+        grid: {
+          display: false
+        }
+      }
+    }
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-sm">
-      <div className="h-[300px] sm:h-[400px]">
-        <Bar options={options} data={salesAnalysis} />
+    <div className="bg-white rounded-lg shadow-sm p-6">
+      <h3 className="text-lg font-medium text-gray-900 mb-6">Sales Analysis</h3>
+      <div className="h-[300px]">
+        <Bar data={barData} options={options} />
       </div>
     </div>
   );
@@ -94,24 +131,37 @@ const SalesAnalysisChart = ({ salesAnalysis }) => {
 
 // Order Status Chart Component
 const OrderStatusChart = ({ orderStatus }) => {
+  const doughnutData = {
+    labels: ["Completed", "Pending", "Cancelled"],
+    datasets: [
+      {
+        data: [
+          orderStatus.completed,
+          orderStatus.pending,
+          orderStatus.cancelled,
+        ],
+        backgroundColor: ["#236C13", "#F8912D", "#FF3D00"],
+      },
+    ],
+  };
+
   const options = {
-    responsive: true,
-    maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: 'right',
-      },
-      title: {
-        display: true,
-        text: 'Order Status',
-      },
-    },
+        position: 'bottom',
+        labels: {
+          usePointStyle: true,
+          padding: 20
+        }
+      }
+    }
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-sm">
-      <div className="h-[300px]">
-        <Doughnut options={options} data={orderStatus} />
+    <div className="bg-white rounded-lg shadow-sm p-6">
+      <h3 className="text-lg font-medium text-gray-900 mb-6">Order Status</h3>
+      <div className="h-[300px] flex items-center justify-center">
+        <Doughnut data={doughnutData} options={options} />
       </div>
     </div>
   );
@@ -119,57 +169,83 @@ const OrderStatusChart = ({ orderStatus }) => {
 
 // Recent Orders Component
 const RecentOrders = ({ recentOrders }) => (
-  <div className="bg-white p-4 rounded-lg shadow-sm overflow-x-auto">
-    <h3 className="text-lg font-semibold mb-4">Recent Orders</h3>
-    <table className="min-w-full">
-      <thead>
-        <tr className="border-b">
-          <th className="text-left py-2 px-4">Order ID</th>
-          <th className="text-left py-2 px-4">Customer</th>
-          <th className="text-left py-2 px-4">Product</th>
-          <th className="text-left py-2 px-4">Amount</th>
-          <th className="text-left py-2 px-4">Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        {recentOrders.map((order) => (
-          <tr key={order.id} className="border-b hover:bg-gray-50">
-            <td className="py-2 px-4">{order.id}</td>
-            <td className="py-2 px-4">{order.customer}</td>
-            <td className="py-2 px-4">{order.product}</td>
-            <td className="py-2 px-4">₦{order.amount.toLocaleString()}</td>
-            <td className="py-2 px-4">
-              <span className={`
-                px-2 py-1 rounded-full text-xs
-                ${order.status === 'Completed' ? 'bg-green-100 text-green-800' :
-                  order.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
-                  'bg-red-100 text-red-800'}
-              `}>
-                {order.status}
-              </span>
-            </td>
+  <div className="bg-white rounded-lg shadow-sm p-6 overflow-hidden">
+    <div className="flex justify-between items-center mb-6">
+      <h3 className="text-lg font-medium text-gray-900">Recent Orders</h3>
+      <button className="text-sm text-Primary hover:text-Primary/90">
+        View All
+      </button>
+    </div>
+    <div className="overflow-x-auto">
+      <table className="min-w-full divide-y divide-gray-200">
+        <thead>
+          <tr>
+            {["Order ID", "Product", "Date", "Price", "Status"].map((header) => (
+              <th
+                key={header}
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                {header}
+              </th>
+            ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody className="divide-y divide-gray-200">
+          {recentOrders.map((order) => (
+            <tr key={order.id} className="hover:bg-gray-50">
+              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                {order.id}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {order.product}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {order.date}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                ₦{order.price.toLocaleString()}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <span
+                  className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                    ${
+                      order.status === "completed"
+                        ? "bg-green-100 text-green-800"
+                        : order.status === "pending"
+                        ? "bg-yellow-100 text-yellow-800"
+                        : "bg-red-100 text-red-800"
+                    }`}
+                >
+                  {order.status}
+                </span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   </div>
 );
 
 // Top Products Component
 const TopProducts = ({ topProducts }) => (
-  <div className="bg-white p-4 rounded-lg shadow-sm">
-    <h3 className="text-lg font-semibold mb-4">Top Products</h3>
+  <div className="bg-white rounded-lg shadow-sm p-6">
+    <div className="flex justify-between items-center mb-6">
+      <h3 className="text-lg font-medium text-gray-900">Top Products</h3>
+      <button className="text-sm text-Primary hover:text-Primary/90">
+        View All
+      </button>
+    </div>
     <div className="space-y-4">
-      {topProducts.map((product) => (
-        <div key={product.id} className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <img src={product.image} alt={product.name} className="w-12 h-12 rounded-lg object-cover" />
-            <div>
-              <h4 className="font-medium">{product.name}</h4>
-              <p className="text-sm text-gray-500">{product.category}</p>
-            </div>
-          </div>
-          <span className="font-semibold">₦{product.sales.toLocaleString()}</span>
+      {topProducts.map((product, idx) => (
+        <div
+          key={idx}
+          className="flex items-center justify-between p-4 rounded-lg hover:bg-gray-50"
+        >
+          <span className="text-sm text-gray-600">{product.name}</span>
+          <span className="text-sm font-medium text-gray-900">
+            ₦{product.sales.toLocaleString()}
+          </span>
         </div>
       ))}
     </div>
@@ -183,57 +259,61 @@ const DefaultProfileContent = () => {
     orders: 102,
     expenses: 10290,
     profit: 39965,
-    salesAnalysis: {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-      datasets: [{
-        label: 'Sales',
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: 'rgba(35, 108, 19, 0.5)',
-      }]
-    },
-    orderStatus: {
-      labels: ['Completed', 'Pending', 'Cancelled'],
-      datasets: [{
-        data: [12, 19, 3],
-        backgroundColor: [
-          'rgba(35, 108, 19, 0.5)',
-          'rgba(248, 145, 45, 0.5)',
-          'rgba(239, 68, 68, 0.5)',
-        ],
-      }]
-    },
+    salesAnalysis: [
+      { week: "Week 1", sales: 12000, expenses: 4000, profit: 8000 },
+      { week: "Week 2", sales: 15000, expenses: 7000, profit: 8000 },
+      { week: "Week 3", sales: 10000, expenses: 2000, profit: 8000 },
+      { week: "Week 4", sales: 13000, expenses: 3000, profit: 10000 },
+    ],
+    orderStatus: { completed: 77, pending: 20, cancelled: 5 },
     recentOrders: [
-      { id: '1', customer: 'John Doe', product: 'Product A', amount: 1200, status: 'Completed' },
-      { id: '2', customer: 'Jane Smith', product: 'Product B', amount: 950, status: 'Pending' },
-      { id: '3', customer: 'Bob Johnson', product: 'Product C', amount: 750, status: 'Cancelled' },
+      {
+        id: "#123456",
+        product: "HP EliteBook",
+        date: "05-12-2024",
+        price: 250000,
+        status: "completed",
+      },
+      {
+        id: "#123457",
+        product: "DELL Inspiron",
+        date: "06-12-2024",
+        price: 190000,
+        status: "cancelled",
+      },
+      {
+        id: "#123458",
+        product: "MacBook Air",
+        date: "10-12-2024",
+        price: 420000,
+        status: "pending",
+      },
+      {
+        id: "#123459",
+        product: "Alienware",
+        date: "12-12-2024",
+        price: 600000,
+        status: "completed",
+      },
     ],
     topProducts: [
-      { id: 1, name: 'Product A', category: 'Category 1', sales: 50000, image: '/placeholder.jpg' },
-      { id: 2, name: 'Product B', category: 'Category 2', sales: 45000, image: '/placeholder.jpg' },
-      { id: 3, name: 'Product C', category: 'Category 3', sales: 40000, image: '/placeholder.jpg' },
-    ]
+      { name: "MacBook Air Laptop", sales: 742000 },
+      { name: "DELL Inspiron Laptop", sales: 430000 },
+      { name: "HP EliteBook Laptop", sales: 250000 },
+      { name: "Alienware Laptop", sales: 600000 },
+    ],
   });
 
   return (
     <div className="space-y-6 p-6">
       <Stats stats={stats} />
-      
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
-          <SalesAnalysisChart salesAnalysis={stats.salesAnalysis} />
-        </div>
-        <div>
-          <OrderStatusChart orderStatus={stats.orderStatus} />
-        </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <SalesAnalysisChart salesAnalysis={stats.salesAnalysis} />
+        <OrderStatusChart orderStatus={stats.orderStatus} />
       </div>
-      
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
-          <RecentOrders recentOrders={stats.recentOrders} />
-        </div>
-        <div>
-          <TopProducts topProducts={stats.topProducts} />
-        </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <RecentOrders recentOrders={stats.recentOrders} />
+        <TopProducts topProducts={stats.topProducts} />
       </div>
     </div>
   );
