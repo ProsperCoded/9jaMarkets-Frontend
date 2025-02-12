@@ -208,7 +208,7 @@ export default function AddProduct() {
               <SelectValue placeholder="Select a category" />
             </SelectTrigger>
             <SelectContent>
-              {PRODUCT_CATEGORIES.map((category) => (
+              {PRODUCT_CATEGORIES.filter(cat => cat !== 'All Categories').map((category) => (
                 <SelectItem key={category} value={category}>
                   {category}
                 </SelectItem>
