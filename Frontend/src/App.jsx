@@ -11,7 +11,6 @@ import Header2 from "./components/Header2";
 import Hero from "./components/Hero";
 import ExploreSection from "./components/Explore";
 import Footer from "./components/Footer";
-import Adverts from "./components/Adverts";
 import HowItWorks from "./components/how-it-works";
 import MarketPage from "./components/Markets";
 import MallPage from "./components/Malls";
@@ -34,6 +33,12 @@ import GoogleSigninRedirect from "./componets-utils/GoogleSigninRedirect";
 import Marketplace from "./components/Marketplace";
 import MerchantSignup from "./components/MerchantSignup";
 import ForgetPassword from "./components/ForgetPassword";
+import AboutPage from "./components/AboutPage";
+import TermsPage from "./components/TermsPage";
+import PrivacyPage from "./components/PrivacyPage";
+import BillingPolicyPage from "./components/BillingPolicyPage";
+import CookiePolicyPage from "./components/CookiePolicyPage";
+import CopyrightPage from "./components/CopyrightPage";
 
 function AntDesignConfig({ children }) {
   return (
@@ -61,7 +66,7 @@ function App() {
   // Check if it's the home page to conditionally render Header
   const isHomePage = location.pathname === "/";
   
-  // Add paths where footer should not appear
+  // Update hideFooterPaths to not hide footer on policy pages
   const hideFooterPaths = [
     '/markets', 
     '/malls',
@@ -72,6 +77,7 @@ function App() {
     '/dashboard/messages',
     '/dashboard/edit'
   ];
+  
   const shouldShowFooter = !hideFooterPaths.some(path => location.pathname.startsWith(path));
 
   return (
@@ -117,6 +123,14 @@ function App() {
                 <Route path="customers" element={<div>Customers</div>} />
                 <Route path="messages" element={<div>Vendors</div>} />
               </Route>
+
+              {/* Policy Pages */}
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/terms" element={<TermsPage />} />
+              <Route path="/privacy" element={<PrivacyPage />} />
+              <Route path="/billing-policy" element={<BillingPolicyPage />} />
+              <Route path="/cookie" element={<CookiePolicyPage />} />
+              <Route path="/copyright" element={<CopyrightPage />} />
 
               <Route path="*" element={<NotFoundPage />} />
             </Routes>

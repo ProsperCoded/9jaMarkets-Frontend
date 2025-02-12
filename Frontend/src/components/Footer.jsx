@@ -1,8 +1,40 @@
+import React from "react";
 import logo from '../assets/Logo.svg';
 import { Link } from 'react-router-dom';
 import { Twitter, Instagram, Facebook } from 'lucide-react';
 
-function Footer() {
+const Footer = () => {
+  const footerLinks = [
+    {
+      title: "Company",
+      links: [
+        { name: "About Us", href: "/about" },
+        { name: "Terms & Conditions", href: "/terms" },
+        { name: "Privacy Policy", href: "/privacy" },
+        { name: "Billing Policy", href: "/billing-policy" },
+        { name: "Cookie Policy", href: "/cookie" },
+        { name: "Copyright", href: "/copyright" },
+      ]
+    },
+    {
+      title: "Support",
+      links: [
+        { name: "Safety Tips", href: "/safety" },
+        { name: "Contact Us", href: "/contact" },
+        { name: "FAQ", href: "/faq" },
+        { name: "Place Ads", href: "/ads" },
+        { name: "Invest", href: "/invest" },
+      ]
+    },
+    {
+      title: "Apps",
+      links: [
+        { name: "Google Play", href: "https://play.google.com" },
+        { name: "App Store", href: "https://www.apple.com/app-store/" },
+      ]
+    },
+  ];
+
   return (
     <footer className="bg-Primary text-white px-8 py-10">
       <div className="container mx-auto flex flex-wrap justify-between space-y-8 md:space-y-0">
@@ -12,54 +44,57 @@ function Footer() {
         </div>
         
         {/* About Us Section */}
-        <nav className="w-full md:w-1/4">
+        <div className="w-full md:w-1/4">
           <h6 className="footer-title text-lg font-semibold mb-4">About Us</h6>
           <ul className="space-y-2">
-            <li><Link to="/about" className="link link-hover">About 9ja Market</Link></li>
-            <li><Link to="/terms" className="link link-hover">Terms & Conditions</Link></li>
-            <li><Link to="/privacy" className="link link-hover">Privacy Policy</Link></li>
-            <li><Link to="/billing" className="link link-hover">Billing Policy</Link></li>
-            <li><Link to="/cookie" className="link link-hover">Cookie Policy</Link></li>
-            <li><Link to="/copyright" className="link link-hover">Copyright</Link></li>
+            {footerLinks[0].links.map((link, index) => (
+              <li key={index}>
+                <Link 
+                  to={link.href}
+                  className="text-white hover:text-orange transition-colors"
+                >
+                  {link.name}
+                </Link>
+              </li>
+            ))}
           </ul>
-        </nav>
+        </div>
 
         {/* Support Section */}
-        <nav className="w-full md:w-1/4">
+        <div className="w-full md:w-1/4">
           <h6 className="footer-title text-lg font-semibold mb-4">Support</h6>
           <ul className="space-y-2">
-            <li><Link to="/safety" className="link link-hover">Safety Tips</Link></li>
-            <li><Link to="/contact" className="link link-hover">Contact Us</Link></li>
-            <li><Link to="/faq" className="link link-hover">FAQ</Link></li>
-            <li><Link to="/ads" className="link link-hover">Place Ads</Link></li>
-            <li><Link to="/invest" className="link link-hover">Invest</Link></li>
+            {footerLinks[1].links.map((link, index) => (
+              <li key={index}>
+                <Link 
+                  to={link.href}
+                  className="text-white hover:text-orange transition-colors"
+                >
+                  {link.name}
+                </Link>
+              </li>
+            ))}
           </ul>
-        </nav>
+        </div>
 
         {/* Apps Section */}
-        <nav className="w-full md:w-1/4">
+        <div className="w-full md:w-1/4">
           <h6 className="footer-title text-lg font-semibold mb-4">Apps</h6>
           <ul className="space-y-4">
-            <li>
-              <a href="https://play.google.com" target="_blank" rel="noopener noreferrer">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/512px-Google_Play_Store_badge_EN.svg.png"
-                  alt="Get it on Google Play"
-                  className="h-10"
-                />
-              </a>
-            </li>
-            <li>
-              <a href="https://www.apple.com/app-store/" target="_blank" rel="noopener noreferrer">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Download_on_the_App_Store_Badge.svg/512px-Download_on_the_App_Store_Badge.svg.png"
-                  alt="Download on the App Store"
-                  className="h-10"
-                />
-              </a>
-            </li>
+            {footerLinks[2].links.map((link, index) => (
+              <li key={index}>
+                <a 
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white hover:text-orange transition-colors"
+                >
+                  {link.name}
+                </a>
+              </li>
+            ))}
           </ul>
-        </nav>
+        </div>
       </div>
       <div className="mt-8 border-t border-white/20 pt-6">
         <div className="container mx-auto flex justify-between items-center">
@@ -67,13 +102,13 @@ function Footer() {
             &copy; {new Date().getFullYear()} 9ja Markets. All rights reserved.
           </div>
           <div className="flex space-x-4">
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300">
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-orange">
               <Twitter size={24} />
             </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-orange">
               <Instagram size={24} />
             </a>
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-orange">
               <Facebook size={24} />
             </a>
           </div>
@@ -81,6 +116,6 @@ function Footer() {
       </div>
     </footer>
   );
-}
+};
 
 export default Footer;
