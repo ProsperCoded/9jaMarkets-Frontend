@@ -362,6 +362,7 @@ export const MARKETS = {
     { name: "Agege Market", img: "/path/to/agege-market.jpg" },
   ],
 };
+
 export const STATES = [
   "Abuja",
   "Abia",

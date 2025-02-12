@@ -244,25 +244,25 @@ function ExploreSection() {
 
           <div className="flex flex-col md:flex-row gap-4">
             {/* Desktop: Place Ad Button */}
-            <div className="hidden md:block w-[200px]">
+            <div className="hidden md:block">
               <button 
                 onClick={() => navigate('/ad')}
-                className="w-full bg-[#F8912D] hover:bg-[#F8912D]/90 text-white rounded-xl shadow-lg transition-all duration-200 group"
+                className="w-[200px] bg-orange hover:bg-orange/90 text-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 group"
               >
-                <div className="aspect-square p-4 flex flex-col items-center justify-center gap-3">
+                <div className="p-4 flex flex-col items-center justify-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
                     <FontAwesomeIcon icon={faPlus} className="text-xl" />
                   </div>
                   <div className="text-center">
-                    <div className="font-semibold text-base">Place Your Ad</div>
-                    <p className="text-xs text-white/80">Advertise your business here</p>
+                    <div className="font-semibold">Place Your Ad</div>
+                    <p className="text-sm text-white/80">Advertise here</p>
                   </div>
                 </div>
               </button>
             </div>
 
             {/* Categories Swiper */}
-            <div className="w-full">
+            <div className="w-full md:max-w-[calc(100%-220px)]">
               <Swiper
                 slidesPerView={cardNumber}
                 spaceBetween={16}
@@ -275,16 +275,19 @@ function ExploreSection() {
                 {Object.entries(categories).map(([name, imageUrl]) => (
                   <SwiperSlide key={name}>
                     <Link to={`/category/${name.toLowerCase().replace(/\s+/g, '-')}`}>
-                      <div className="group relative w-full aspect-square rounded-xl overflow-hidden shadow-md">
-                        <img
-                          src={imageUrl}
-                          alt={name}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                        />
-                        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-300" />
-                        <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
-                          <div className="w-12 h-12 mb-3 rounded-full bg-white/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                            <FontAwesomeIcon icon={getCategoryIcon(name)} className="text-white text-xl" />
+                      <div className="group cursor-pointer h-[200px]">
+                        <div className="relative h-full rounded-xl overflow-hidden">
+                          <img
+                            src={imageUrl}
+                            alt={name}
+                            className="w-full h-full object-cover"
+                          />
+                          <div className="absolute inset-0 bg-black/50 group-hover:bg-black/60 transition-colors duration-200" />
+                          <div className="absolute inset-0 p-4 flex flex-col items-center justify-center text-white">
+                            {React.createElement(categoryIcons[name], { 
+                              className: "w-6 h-6 mb-2 group-hover:scale-110 transition-transform duration-200" 
+                            })}
+                            <h3 className="text-center text-sm font-medium">{name}</h3>
                           </div>
                           <h3 className="text-white text-center font-semibold text-sm md:text-base">
                             {name}
