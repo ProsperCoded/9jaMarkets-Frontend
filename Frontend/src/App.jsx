@@ -41,6 +41,7 @@ import CookiePolicyPage from "./components/CookiePolicyPage";
 import CopyrightPage from "./components/CopyrightPage";
 import SafetyTips from "./pages/SafetyTips";
 import FAQ from "./pages/FAQ";
+import ContactUs from "./pages/ContactUs";
 
 function AntDesignConfig({ children }) {
   return (
@@ -133,9 +134,9 @@ function App() {
               <Route path="/billing-policy" element={<BillingPolicyPage />} />
               <Route path="/cookie" element={<CookiePolicyPage />} />
               <Route path="/copyright" element={<CopyrightPage />} />
-
               <Route path="/safety" element={<SafetyTips />} />
               <Route path="/faq" element={<FAQ />} />
+              <Route path="/contact" element={<ContactUs />} />
 
               <Route path="*" element={<NotFoundPage />} />
             </Routes>

@@ -113,25 +113,27 @@ const FAQ = () => {
       <div className="container mx-auto max-w-4xl">
         <div className="flex items-center gap-3 mb-8">
           <HelpCircle className="h-8 w-8 text-Primary" />
-          <h1 className="text-3xl font-bold text-gray-900">
+          <h1 className="text-3xl font-bold text-Primary">
             Frequently Asked Questions (FAQ)
           </h1>
         </div>
 
         {/* Category Navigation */}
-        <div className="flex flex-wrap gap-2 mb-8">
-          {Object.entries(categories).map(([key, value]) => (
-            <button
-              key={key}
-              onClick={() => setActiveCategory(key)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors
-                ${activeCategory === key 
-                  ? 'bg-Primary text-white' 
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
-            >
-              {value}
-            </button>
-          ))}
+        <div className="overflow-x-auto pb-2 mb-8 -mx-4 px-4">
+          <div className="flex gap-2 w-max">
+            {Object.entries(categories).map(([key, value]) => (
+              <button
+                key={key}
+                onClick={() => setActiveCategory(key)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors whitespace-nowrap
+                  ${activeCategory === key 
+                    ? 'bg-Primary text-white' 
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+              >
+                {value}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* FAQ Items */}

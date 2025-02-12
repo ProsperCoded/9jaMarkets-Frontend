@@ -3,7 +3,6 @@ import { Shield, AlertTriangle } from "lucide-react";
 const SafetyTips = () => {
   const buyerTips = [
     "Verify Listings: Check product descriptions, reviews, and seller ratings before making a purchase.",
-    "Communicate Safely: Use 9ja Market's messaging system to communicate with sellers. Avoid sharing personal details.",
     "Secure Payments: Only use our official payment gateway to complete transactions. Avoid direct bank transfers.",
     "Inspect on Delivery: If possible, verify the item before finalizing the transaction."
   ];
@@ -20,7 +19,7 @@ const SafetyTips = () => {
       <div className="container mx-auto max-w-4xl">
         <div className="flex items-center gap-3 mb-8">
           <Shield className="h-8 w-8 text-Primary" />
-          <h1 className="text-3xl font-bold text-gray-900">Safety Tips</h1>
+          <h1 className="text-3xl font-bold text-Primary">Safety Tips</h1>
         </div>
         
         <p className="text-lg text-gray-600 mb-8">
