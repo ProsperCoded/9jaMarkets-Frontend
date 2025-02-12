@@ -65,7 +65,7 @@ function Header() {
               Home
             </Link>
             <Link to="/how-it-works" className="hover:text-orange">
-              How it Works
+              How We Work
             </Link>
             <Link to="/markets" className="hover:text-orange">
               Markets &rarr;
@@ -119,7 +119,7 @@ function Header() {
                   onClick={toggleMenu}
                   className="block hover:text-orange"
                 >
-                  How it Works
+                  How We Work
                 </Link>
                 <Link
                   to="/markets"
