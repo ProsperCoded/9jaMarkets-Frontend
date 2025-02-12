@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card } from "./ui/card";
-import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "@/contexts";
+import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT, LOGOUT_MODAL_CONTEXT } from "@/contexts";
 import { updateCustomerProfileApi } from "@/lib/api/serviceApi";
 import { Popconfirm, ConfigProvider } from "antd";
 import OTPModal from "@/componets-utils/OTPModal";
@@ -44,6 +44,7 @@ export default function EditProfile() {
   const messageApi = useContext(MESSAGE_API_CONTEXT);
   const { userProfile: profile, setUserProfile: setProfile } =
     useContext(USER_PROFILE_CONTEXT);
+  const { setLogoutOpen } = useContext(LOGOUT_MODAL_CONTEXT);
   const errorLogger = (message) => {
     messageApi.error("Failed to update the field ");
     console.error(message);
@@ -116,6 +117,8 @@ export default function EditProfile() {
     setProfile(updatedProfile);
   };
 
+  const [deleteAccountOpen, setDeleteAccountOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Header Section */}
@@ -135,7 +138,7 @@ export default function EditProfile() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Sidebar Navigation */}
           <div className="lg:col-span-1">
-            <div className="sticky top-8 space-y-1 bg-white rounded-lg shadow-sm p-2">
+            <div className="sticky top-20 space-y-1 bg-white rounded-lg shadow-sm p-2 flex flex-col h-[calc(100vh-120px)]">
               <button className="w-full text-left px-4 py-2 rounded-md bg-Primary/5 text-Primary font-medium">
                 Personal Information
               </button>
@@ -145,6 +148,16 @@ export default function EditProfile() {
               <button className="w-full text-left px-4 py-2 rounded-md text-gray-700 hover:bg-gray-50">
                 Notifications
               </button>
+              
+              {/* Logout button at bottom */}
+              <div className="mt-auto">
+                <button 
+                  onClick={() => setLogoutOpen(true)}
+                  className="w-full text-left px-4 py-2 rounded-md text-red-600 hover:bg-red-50"
+                >
+                  Logout
+                </button>
+              </div>
             </div>
           </div>
 
@@ -211,6 +224,39 @@ export default function EditProfile() {
                     >
                       Change Password
                     </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Security Card */}
+            <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+              <div className="border-b border-gray-200 bg-gray-50 px-6 py-4">
+                <h2 className="text-lg font-medium text-gray-900">Security</h2>
+                <p className="mt-1 text-sm text-gray-600">
+                  Manage your account security settings
+                </p>
+              </div>
+              <div className="px-6 py-6 space-y-6">
+                <div className="flex flex-col space-y-4">
+                  <Link
+                    to="/forget-password"
+                    className="inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-Primary hover:bg-Primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-Primary w-full sm:w-auto"
+                  >
+                    Change Password
+                  </Link>
+                  
+                  <div className="border-t pt-4">
+                    <h3 className="text-lg font-medium text-gray-900 mb-2">Danger Zone</h3>
+                    <p className="text-sm text-gray-600 mb-4">
+                      Once you delete your account, there is no going back. Please be certain.
+                    </p>
+                    <button
+                      onClick={() => setDeleteAccountOpen(true)}
+                      className="inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 w-full sm:w-auto"
+                    >
+                      Delete Account
+                    </button>
                   </div>
                 </div>
               </div>

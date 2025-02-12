@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/select";
 
 const PRODUCT_CATEGORIES = [
+  "All Categories",
   "Education & Stationery",
   "Real Estate & Housing",
   "Events & Entertainment",
@@ -47,11 +48,12 @@ const Marketplace = () => {
     setProducts(marketProducts);
   };
 
-  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+  const [selectedCategory, setSelectedCategory] = useState(PRODUCT_CATEGORIES[0]);
   const filteredProducts = useMemo(() => {
     if (!products) return [];
-    if (selectedCategory === "All Categories") return products;
-    return products.filter((product) => product.category === selectedCategory);
+    return selectedCategory === "All Categories" 
+      ? products 
+      : products.filter((product) => product.category === selectedCategory);
   }, [products, selectedCategory]);
 
   useEffect(() => {
@@ -112,7 +114,7 @@ const Marketplace = () => {
             <div className="bg-white rounded-lg shadow-md p-4 sticky top-[72px] max-h-[calc(100vh-120px)] overflow-y-auto">
               <h2 className="text-lg font-semibold mb-4">Categories</h2>
               <ul className="space-y-2">
-                {categories.map((category, index) => (
+                {PRODUCT_CATEGORIES.map((category, index) => (
                   <li key={index}>
                     <button
                       onClick={() => setSelectedCategory(category)}
@@ -137,7 +139,7 @@ const Marketplace = () => {
                 <SelectValue placeholder="Select a category" />
               </SelectTrigger>
               <SelectContent>
-                {categories.map((category) => (
+                {PRODUCT_CATEGORIES.map((category) => (
                   <SelectItem 
                     key={category} 
                     value={category}
