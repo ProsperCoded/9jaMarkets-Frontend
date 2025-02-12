@@ -87,7 +87,7 @@ const HowItWorksPage = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">Explore Markets and Products</h3>
               <p className="text-gray-600">
-                Discover Nigeria's leading markets and connect with merchants offering what you need.
+                Discover Nigeria&apos;s leading markets and connect with merchants offering what you need.
               </p>
             </div>
             
