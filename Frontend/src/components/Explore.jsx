@@ -231,7 +231,7 @@ function ExploreSection() {
           <div className="md:hidden mb-6">
             <button 
               onClick={() => navigate('/ad')}
-              className="w-full bg-[#F8912D] hover:bg-[#F8912D]/90 text-white rounded-xl p-4 shadow-lg transition-all duration-200 flex items-center justify-center gap-3"
+              className="w-full h-full bg-[#F8912D] hover:bg-[#F8912D]/90 text-white rounded-xl p-4 shadow-lg transition-all duration-200 flex items-center justify-center gap-3"
             >
               <FontAwesomeIcon icon={faPlus} className="text-xl" />
               <span className="font-semibold">Place Your Ad</span>
@@ -247,7 +247,7 @@ function ExploreSection() {
             <div className="hidden md:block">
               <button 
                 onClick={() => navigate('/ad')}
-                className="w-[200px] bg-orange hover:bg-orange/90 text-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 group"
+                className="w-[200px] h-[200px] bg-orange hover:bg-orange/90 text-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 group"
               >
                 <div className="p-4 flex flex-col items-center justify-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">

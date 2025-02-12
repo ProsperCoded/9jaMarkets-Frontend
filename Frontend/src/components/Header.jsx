@@ -76,12 +76,17 @@ function Header() {
           <UserAvatar showName={true} auth={true} />
         </div>
 
-        {/* Mobile Hamburger Menu */}
-        <div className="md:hidden text-white" onClick={toggleMenu}>
-          <FontAwesomeIcon
-            icon={isMenuOpen ? faTimes : faBars}
-            className="w-6 h-6"
-          />
+        {/* Mobile Avatar and Menu */}
+        <div className="md:hidden flex items-center gap-4">
+          <div className="flex items-center">
+            <UserAvatar showName={false} auth={true} />
+          </div>
+          <div className="text-white" onClick={toggleMenu}>
+            <FontAwesomeIcon
+              icon={isMenuOpen ? faTimes : faBars}
+              className="w-6 h-6"
+            />
+          </div>
         </div>
 
         {/* Mobile Side Panel */}

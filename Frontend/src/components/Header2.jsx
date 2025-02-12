@@ -49,20 +49,23 @@ const Header2 = () => {
               to="/bookmark"
               className="flex items-center hover:text-orange"
             >
-              <FontAwesomeIcon icon={faBookmark} className="w-6 h-6" />
+              <FontAwesomeIcon icon={faBookmark} className="text-xl" />
             </Link>
-            <div>
-              <UserAvatar showName={true} auth={true} />
-            </div>
+            <UserAvatar showName={true} auth={true} />
           </div>
 
-          {/* Mobile Burger Menu */}
-          <button className="md:hidden text-white" onClick={toggleMenu}>
-            <FontAwesomeIcon
-              icon={isMenuOpen ? faTimes : faBars}
-              className="w-6 h-6"
-            />
-          </button>
+          {/* Mobile Avatar and Menu */}
+          <div className="md:hidden flex items-center gap-4">
+            <div className="flex items-center">
+              <UserAvatar showName={false} auth={true} />
+            </div>
+            <button onClick={toggleMenu}>
+              <FontAwesomeIcon
+                icon={isMenuOpen ? faTimes : faBars}
+                className="w-6 h-6"
+              />
+            </button>
+          </div>
         </div>
       </div>
 

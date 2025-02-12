@@ -182,7 +182,7 @@ const Marketplace = () => {
                     </p>
                   </div>
                 </div>
-              )}
+              ))}
             </div>
           </div>
         </div>

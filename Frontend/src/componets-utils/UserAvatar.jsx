@@ -81,7 +81,7 @@ export function UserAvatar({ showName, auth }) {
     </span>
   ) : (
     auth && (
-      <div className="flex md:flex-row flex-col gap-3 ml-auto">
+      <div className={`flex ${showName ? 'md:flex-row flex-col gap-3' : 'hidden'}`}>
         <button
           onClick={(e) => {
             setLoginOpen(true);
