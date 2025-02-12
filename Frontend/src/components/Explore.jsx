@@ -140,6 +140,10 @@ const categories = {
   "Kids & Baby Products": Kids,
 };
 
+const getCategoryIcon = (category) => {
+  return categoryIcons[category] || faStore; // Default to store icon if no match found
+};
+
 function ExploreSection() {
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -271,18 +275,20 @@ function ExploreSection() {
                 {Object.entries(categories).map(([name, imageUrl]) => (
                   <SwiperSlide key={name}>
                     <Link to={`/category/${name.toLowerCase().replace(/\s+/g, '-')}`}>
-                      <div className="group cursor-pointer">
-                        <div className="relative aspect-square rounded-xl overflow-hidden">
-                          <img
-                            src={imageUrl}
-                            alt={name}
-                            className="absolute inset-0 w-full h-full object-cover scale-75"
-                          />
-                          <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-200 rounded-xl" />
-                          <div className="absolute inset-0 p-4 flex flex-col items-center justify-center text-white">
-                            {React.createElement(categoryIcons[name], { className: "w-6 h-6 mb-2" })}
-                            <h3 className="text-center text-sm font-medium">{name}</h3>
+                      <div className="group relative w-full aspect-square rounded-xl overflow-hidden shadow-md">
+                        <img
+                          src={imageUrl}
+                          alt={name}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
+                        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-300" />
+                        <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
+                          <div className="w-12 h-12 mb-3 rounded-full bg-white/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <FontAwesomeIcon icon={getCategoryIcon(name)} className="text-white text-xl" />
                           </div>
+                          <h3 className="text-white text-center font-semibold text-sm md:text-base">
+                            {name}
+                          </h3>
                         </div>
                       </div>
                     </Link>
