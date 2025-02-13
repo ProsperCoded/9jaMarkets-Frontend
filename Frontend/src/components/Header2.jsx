@@ -20,7 +20,7 @@ const Header2 = () => {
 
   return (
     <>
-      <header className="fixed top-0 z-20 bg-Primary shadow px-4 w-full text-white">
+      <header className="fixed top-0 z-[15] bg-Primary shadow px-4 w-full text-white">
         <div className="flex justify-between items-center mx-auto p-2 h-14 container">
           {/* Logo and Nav */}
           <div className="flex items-center">
@@ -81,7 +81,7 @@ const Header2 = () => {
 
       {/* Mobile Side Panel (Only Nav Links) */}
       {isMenuOpen && (
-        <div className="z-30 fixed inset-0">
+        <div className="z-[60] fixed inset-0">
           <div className="top-0 right-0 absolute grid grid-rows-[auto_1fr_auto] bg-black bg-opacity-20 backdrop-blur-md p-6 w-1/2 h-full text-lg text-white overflow-y-auto">
             {/* Close Button */}
             <div className="flex justify-end">
