@@ -36,7 +36,7 @@ import JabiLakeMall from "../assets/optimized/malls/JabiLakeMall.jpg";
 
 // Import optimized category images
 import Education from "../assets/optimized/categories/education-&-stationery.webp";
-import RealEstate from "../assets/optimized/categories/real-EState-&-housing.jpg";
+import RealEstate from "../assets/optimized/categories/real-Estate-&-housing.jpg";
 import Events from "../assets/optimized/categories/events-&-entertainment.jpg";
 import Technology from "../assets/optimized/categories/technology-services.jpeg";
 import Cultural from "../assets/optimized/categories/cultural-experiences.jpg";
