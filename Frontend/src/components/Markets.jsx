@@ -2,7 +2,7 @@ import { useState, useContext, useMemo } from "react";
 import searchIcon from "../assets/search.svg";
 import { Link } from "react-router-dom";
 import { STATES } from "../config";
-import { MapPin, Store, ShoppingBag, Filter, X } from "lucide-react";
+import { MapPin, Store, ShoppingBag, Filter, X, Building2, MapPinOff } from "lucide-react";
 import { MARKET_DATA_CONTEXT } from "@/contexts";
 
 const MarketPage = () => {
@@ -36,7 +36,7 @@ const MarketPage = () => {
   return (
     <div className="relative z-0 flex flex-col bg-gray-50 min-h-screen">
       {/* Header Navigation */}
-      <div className="top-0 z-30 sticky bg-white shadow-sm">
+      <div className="top-0 z-[20] sticky bg-white shadow-sm">
         {/* Market/Mall Switch */}
         <div className="absolute left-0 top-0 h-full flex items-center pl-8">
           <div className="flex items-center space-x-6">
@@ -86,14 +86,14 @@ const MarketPage = () => {
 
       {/* Mobile Filter Drawer */}
       <div
-        className={`fixed inset-0 bg-black/50 z-50 transition-opacity duration-300 md:hidden ${
+        className={`fixed inset-0 bg-black/50 z-[40] transition-opacity duration-300 md:hidden ${
           showFilters ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setShowFilters(false)}
       />
 
       <div
-        className={`fixed top-0 right-0 h-full w-[280px] bg-white z-[51] transform transition-transform duration-300 ease-in-out md:hidden ${
+        className={`fixed top-0 right-0 h-full w-[280px] bg-white z-[41] transform transition-transform duration-300 ease-in-out md:hidden ${
           showFilters ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -133,7 +133,7 @@ const MarketPage = () => {
       {/* Main Content */}
       <div className="flex flex-1">
         {/* Desktop Sidebar */}
-        <aside className="md:block top-[85px] sticky hidden bg-white p-6 w-72 lg:w-80 h-[calc(100vh-85px)] overflow-y-auto">
+        <aside className="md:block top-[85px] sticky hidden bg-white p-6 w-72 lg:w-80 h-[calc(100vh-85px)] overflow-y-auto z-[16]">
           <h3 className="mb-4 font-semibold text-lg">Select State</h3>
           <div className="gap-2 grid">
             {STATES.map((state) => (
@@ -189,10 +189,43 @@ const MarketPage = () => {
                   </Link>
                 ))
               ) : (
-                <div className="col-span-full py-8 text-center">
-                  <p className="text-gray-600">
-                    No markets found for &quot;{searchTerm}&quot;
-                  </p>
+                <div className="col-span-full flex flex-col items-center justify-center py-12 px-4">
+                  <div className="relative mb-6">
+                    <Building2 className="w-24 h-24 text-gray-200 animate-pulse" />
+                    <MapPinOff className="w-12 h-12 text-Primary absolute -bottom-2 -right-2 transform rotate-12" />
+                  </div>
+                  <div className="text-center max-w-md mx-auto space-y-3">
+                    <h3 className="text-xl font-semibold text-gray-800">
+                      No Markets Found in {selectedState}
+                    </h3>
+                    <p className="text-gray-600">
+                      {searchTerm ? (
+                        <>
+                          We couldn't find any markets matching "{searchTerm}" in {selectedState}.
+                          Try adjusting your search or exploring a different state.
+                        </>
+                      ) : (
+                        <>
+                          We're still mapping markets in {selectedState}. 
+                          Try exploring markets in a different state or check back later.
+                        </>
+                      )}
+                    </p>
+                    <div className="pt-6 flex flex-row gap-3 justify-center">
+                      <button
+                        onClick={() => setSearchTerm("")}
+                        className="px-4 py-2 text-Primary border-2 border-Primary rounded-full hover:bg-Primary/5 transition-colors text-sm"
+                      >
+                        Clear Search
+                      </button>
+                      <Link
+                        to="/markets"
+                        className="px-4 py-2 bg-Primary text-white rounded-full hover:bg-Primary/90 transition-colors text-sm whitespace-nowrap"
+                      >
+                        Explore All Markets
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
