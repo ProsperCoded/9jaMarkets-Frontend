@@ -109,7 +109,7 @@ const FAQ = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-b from-Primary/10 to-transparent py-12 px-4">
       <div className="container mx-auto max-w-4xl">
         <div className="flex items-center gap-3 mb-8">
           <HelpCircle className="h-8 w-8 text-Primary" />
@@ -128,7 +128,7 @@ const FAQ = () => {
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors whitespace-nowrap
                   ${activeCategory === key 
                     ? 'bg-Primary text-white' 
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+                    : 'bg-white text-gray-700 hover:bg-gray-300'}`}
               >
                 {value}
               </button>

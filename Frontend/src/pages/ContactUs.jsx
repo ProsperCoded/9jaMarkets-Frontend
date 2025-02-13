@@ -78,8 +78,8 @@ const ContactUs = () => {
             Get in Touch
           </h1>
           <p className="text-xl opacity-90 max-w-2xl mx-auto text-center">
-            Have questions? We'd love to hear from you. Send us a message and 
-            we'll respond as soon as possible.
+            Have questions? We&apos;d love to hear from you. Send us a message and 
+            we&apos;ll respond as soon as possible.
           </p>
         </div>
       </div>

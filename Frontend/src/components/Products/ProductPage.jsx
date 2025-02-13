@@ -1,12 +1,11 @@
-"use client";
-
-import * as React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Package, Plus, List } from "lucide-react";
+import { Plus, List } from "lucide-react";
 import AddProduct from "./AddProduct";
 import ViewProducts from "./ViewProduct";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Outlet } from "react-router-dom";
+
+//# sourceMappingURL=ProductPage.jsx.map
 
 export default function ProductPage() {
   const navigate = useNavigate();

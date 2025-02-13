@@ -78,10 +78,10 @@ const AboutPage = () => {
       <div className="bg-gradient-to-b from-Primary/10 to-transparent">
         <div className="container mx-auto px-4 py-16">
           <h1 className="text-4xl md:text-5xl font-bold text-Primary mb-6 text-center">
-            Welcome to 9ja Markets: Shaping Africa&apos;s Economic Future
+            Welcome to 9ja Markets: Shaping Africa's Economic Future
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto text-center leading-relaxed">
-            Nigeria&apos;s premier online marketplace dedicated to bridging the gap between 
+            Nigeria's premier online marketplace dedicated to bridging the gap between 
             buyers and sellers nationwide.
           </p>
 

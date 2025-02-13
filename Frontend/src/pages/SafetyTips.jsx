@@ -15,7 +15,7 @@ const SafetyTips = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-b from-Primary/10 to-transparent py-12 px-4">
       <div className="container mx-auto max-w-4xl">
         <div className="flex items-center gap-3 mb-8">
           <Shield className="h-8 w-8 text-Primary" />

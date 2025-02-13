@@ -12,7 +12,7 @@
  */
 import React from 'react';
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
@@ -22,40 +22,37 @@ import { Search } from "lucide-react";
 import "swiper/css";
 import "swiper/css/pagination";
 
-// import "./styles.css";
+// Import optimized images for markets and malls
+import AlabaMarket from "../assets/optimized/markets/AlabaMarket.jpg";
+import BodijaMarket from "../assets/optimized/markets/BodijaMarket.jpg";
+import OilMillMarket from "../assets/optimized/markets/OilMillMarket.jpg";
+import ComputerVillage from "../assets/optimized/markets/ComputerVillage.jpg";
+import OnitshaMarket from "../assets/optimized/markets/OnitshaMarket.jpg";
+import IkejaMall from "../assets/optimized/malls/IkejaMall.jpg";
+import PalmsMall from "../assets/optimized/malls/PalmsMall.jpg";
+import OnitshaMall from "../assets/optimized/malls/OnitshaMall.jpg";
+import AdoBayeroMall from "../assets/optimized/malls/AdoBayeroMall.jpg";
+import JabiLakeMall from "../assets/optimized/malls/JabiLakeMall.jpg";
 
-// Import images for markets and malls
-import AlabaMarket from "../assets/markets/AlabaMarket.jpg";
-import BodijaMarket from "../assets/markets/BodijaMarket.jpg";
-import OilMillMarket from "../assets/markets/OilMillMarket.jpg";
-import ComputerVillage from "../assets/markets/ComputerVillage.jpg";
-import OnitshaMarket from "../assets/markets/OnitshaMarket.jpg";
-import IkejaMall from "../assets/malls/IkejaMall.jpg";
-import PalmsMall from "../assets/malls/PalmsMall.jpg";
-import OnitshaMall from "../assets/malls/OnitshaMall.jpg";
-import AdoBayeroMall from "../assets/malls/AdoBayeroMall.jpg";
-import JabiLakeMall from "../assets/malls/JabiLakeMall.jpg";
+// Import optimized category images
+import Education from "../assets/optimized/categories/education-&-stationery.webp";
+import RealEstate from "../assets/optimized/categories/real-EState-&-housing.jpg";
+import Events from "../assets/optimized/categories/events-&-entertainment.jpg";
+import Technology from "../assets/optimized/categories/technology-services.jpeg";
+import Cultural from "../assets/optimized/categories/cultural-experiences.jpg";
+import Food from "../assets/optimized/categories/food-&-groceries.webp";
+import Electronics from "../assets/optimized/categories/electronics&gadgets.webp";
+import Fashion from "../assets/optimized/categories/fashion&accessories.jpg";
+import Health from "../assets/optimized/categories/health&wellness.jpg";
+import HomeImage from "../assets/optimized/categories/home&living.webp";
+import Automobile from "../assets/optimized/categories/automobile-needs.webp";
+import Traditional from "../assets/optimized/categories/traditional-crafts.jpg";
+import Sports from "../assets/optimized/categories/sports&outdoor.jpg";
+import Kids from "../assets/optimized/categories/kids&babyproducts.png";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import Select from "./../componets-utils/Select";
-import { useMemo } from "react";
+import { faPlus, faStore } from "@fortawesome/free-solid-svg-icons";
 import { MALLS, MARKETS } from "../config";
-// import { Select } from "shadcn";
-import Education from "../assets/categories/education-&-stationery.webp";
-import RealEstate from "../assets/categories/real-EState-&-housing.jpg";
-import Events from "../assets/categories/events-&-entertainment.jpg";
-import Technology from "../assets/categories/technology-services.jpeg";
-import Cultural from "../assets/categories/cultural-experiences.jpg";
-import Food from "../assets/categories/food-&-groceries.webp";
-import Electronics from "../assets/categories/electronics&gadgets.webp";
-import Fashion from "../assets/categories/fashion&accessories.jpg";
-import Health from "../assets/categories/health&wellness.jpg";
-import HomeImage from "../assets/categories/home&living.webp";
-import Automobile from "../assets/categories/automobile-needs.webp";
-import Traditional from "../assets/categories/traditional-crafts.jpg";
-import Sports from "../assets/categories/sports&outdoor.jpg";
-import Kids from "../assets/categories/kids&babyproducts.png";
-
 
 import { 
   GraduationCap, // Education
@@ -140,32 +137,20 @@ const categories = {
   "Kids & Baby Products": Kids,
 };
 
-const getCategoryIcon = (category) => {
-  return categoryIcons[category] || faStore; // Default to store icon if no match found
-};
-
 function ExploreSection() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [cardNumber, setCardNumber] = useState(1);
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value.toLowerCase());
   };
-  // define a default number of cards to show
-  const [cardNumber, setCardNumber] = useState(1);
-  const [screenProperties, setScreenProperties] = useState({
-    isMobile: false,
-    isTablet: false,
-    isDesktop: false,
-    isExtraLarge: false,
-  });
-  const navigate = useNavigate();
+
   useEffect(() => {
     const handleResize = () => {
       const isMobile = window.innerWidth < 600;
       const isIPad = window.innerWidth >= 600 && window.innerWidth < 1024;
       const isDesktop = window.innerWidth >= 1024;
       
-      setScreenProperties({ isMobile, isIPad, isDesktop });
       const newCardNumber = isDesktop
         ? 4  // Show 4 cards on desktop
         : isIPad
@@ -178,33 +163,26 @@ function ExploreSection() {
     };
 
     window.addEventListener("resize", handleResize);
-
-    // Call handler right away so state gets updated with initial window size
     handleResize();
-
-    // Remove event listener on cleanup
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  const [selected, setSelected] = useState(0);
-  const options = ["go to", "state", "markets", "category"];
+
   const marketsData = useMemo(() => {
     if (!searchQuery) return featuredMarkets;
-
-    const filteredData = allMarkets
+    return allMarkets
       .filter((market) => market.name.toLowerCase().includes(searchQuery))
-      // limit
       .slice(0, 20);
-    return filteredData;
   }, [searchQuery]);
+
   const mallsData = useMemo(() => {
     if (!searchQuery) return featuredMalls;
-
-    const filteredData = allMalls
+    return allMalls
       .filter((mall) => mall.name.toLowerCase().includes(searchQuery))
-      // limit
       .slice(0, 20);
-    return filteredData;
   }, [searchQuery]);
+
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-white py-12 lg:py-16">
       <div className="container mx-auto px-4 max-w-6xl">
