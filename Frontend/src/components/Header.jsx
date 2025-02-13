@@ -9,13 +9,11 @@
  * @param {Function} openSignUpModal - Function to open the sign up modal.
  * @returns {ReactElement} The header element.
  */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import logo from "../assets/Logo.svg";
-import { Link } from "react-router-dom"                      ;
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 import { UserAvatar } from "../componets-utils/UserAvatar";
-import { useContext } from "react";
 import { USER_PROFILE_CONTEXT } from "@/contexts";
 
 function Header() {
@@ -81,12 +79,13 @@ function Header() {
           <div className="flex items-center">
             <UserAvatar showName={false} auth={true} />
           </div>
-          <div className="text-white" onClick={toggleMenu}>
-            <FontAwesomeIcon
-              icon={isMenuOpen ? faTimes : faBars}
-              className="w-6 h-6"
-            />
-          </div>
+          <button className="text-white p-2 hover:bg-white/10 rounded-full transition-colors" onClick={toggleMenu}>
+            {isMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
+          </button>
         </div>
 
         {/* Mobile Side Panel */}
@@ -95,20 +94,12 @@ function Header() {
             <div className="top-0 right-0 absolute grid grid-rows-[auto_1fr_auto] bg-black bg-opacity-20 backdrop-blur-md p-6 w-1/2 h-full text-lg text-white overflow-y-auto">
               {/* Close Button */}
               <div className="flex justify-end">
-                <svg
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-6 h-6 cursor-pointer"
+                <button 
                   onClick={toggleMenu}
+                  className="p-2 hover:bg-white/10 rounded-full transition-colors"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
+                  <X className="w-6 h-6 cursor-pointer" />
+                </button>
               </div>
               {/* Nav Links */}
               <div className="align-top justify-start space-y-4">
