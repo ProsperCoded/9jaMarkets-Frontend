@@ -1,7 +1,13 @@
 import React from "react";
 import logo from '../assets/Logo.svg';
 import { Link } from 'react-router-dom';
-import { Twitter, Instagram, Facebook } from 'lucide-react';
+import { 
+  Twitter, 
+  Instagram, 
+  Facebook, 
+  PlayCircle, 
+  Apple 
+} from 'lucide-react';
 
 const Footer = () => {
   const footerLinks = [
@@ -24,13 +30,6 @@ const Footer = () => {
         { name: "FAQ", href: "/faq" },
         { name: "Place Ads", href: "/ads" },
         { name: "Invest", href: "/invest" },
-      ]
-    },
-    {
-      title: "Apps",
-      links: [
-        { name: "Google Play", href: "https://play.google.com" },
-        { name: "App Store", href: "https://www.apple.com/app-store/" },
       ]
     },
   ];
@@ -79,23 +78,37 @@ const Footer = () => {
 
         {/* Apps Section */}
         <div className="w-full md:w-1/4">
-          <h6 className="footer-title text-lg font-semibold mb-4">Apps</h6>
-          <ul className="space-y-4">
-            {footerLinks[2].links.map((link, index) => (
-              <li key={index}>
-                <a 
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-white hover:text-orange transition-colors"
-                >
-                  {link.name}
-                </a>
-              </li>
-            ))}
-          </ul>
+          <h6 className="footer-title text-lg font-semibold mb-4">Get Our App</h6>
+          <div className="flex flex-col space-y-4">
+            <a 
+              href="https://play.google.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center space-x-2 bg-white/10 hover:bg-white/20 transition-colors rounded-lg px-4 py-2"
+            >
+              <PlayCircle size={24} />
+              <div className="flex flex-col">
+                <span className="text-xs">GET IT ON</span>
+                <span className="text-sm font-semibold">Google Play</span>
+              </div>
+            </a>
+            <a 
+              href="https://www.apple.com/app-store/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center space-x-2 bg-white/10 hover:bg-white/20 transition-colors rounded-lg px-4 py-2"
+            >
+              <Apple size={24} />
+              <div className="flex flex-col">
+                <span className="text-xs">Download on the</span>
+                <span className="text-sm font-semibold">App Store</span>
+              </div>
+            </a>
+          </div>
         </div>
       </div>
+
+      {/* Social Links & Copyright */}
       <div className="mt-8 border-t border-white/20 pt-6">
         <div className="container mx-auto flex justify-between items-center">
           <div className="text-sm">
