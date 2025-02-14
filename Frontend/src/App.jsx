@@ -14,7 +14,7 @@ import Footer from "./components/Footer";
 import HowItWorks from "./components/how-it-works";
 import MarketPage from "./components/Markets";
 import MallPage from "./components/Malls";
-import Dashboard from "./components/Dashboard"; // Updated import from Profile -> Dashboard
+import Dashboard from "./components/Dashboard";
 import AdPayment from "./components/Products/AdPayment";
 import NotFoundPage from "./components/NotFoundPage";
 import MainPage from "./components/Mainpage";
@@ -24,6 +24,7 @@ import Overview from "./components/Overview";
 import ProductPage from "./components/Products/ProductPage";
 import EditProfile from "./components/EditProfile";
 import SelectPlan from "./components/Products/SelectPlan";
+import InvestPage from './pages/Invest';
 
 import { ConfigProvider } from "antd";
 import InitializeApp from "./InitializeApp";
@@ -61,15 +62,11 @@ function AntDesignConfig({ children }) {
     </ConfigProvider>
   );
 }
-// set up and routes
-function App() {
-  // Custom hook to get the current location
-  const location = useLocation();
 
-  // Check if it's the home page to conditionally render Header
+function App() {
+  const location = useLocation();
   const isHomePage = location.pathname === "/";
   
-  // Update hideFooterPaths to not hide footer on policy pages
   const hideFooterPaths = [
     '/markets', 
     '/malls',
@@ -105,19 +102,18 @@ function App() {
               <Route path="/markets" element={<MarketPage />} />
               <Route path="/markets/:id" element={<Marketplace />} />
               <Route path="/malls" element={<MallPage />} />
-              {/* <Route path="/marketplace" element={<Marketplace />} /> */}
               <Route path="/merchant-signup" element={<MerchantSignup />} />
               <Route path="/billing" element={<BillingPage />} />
               <Route path="/forget-password" element={<ForgetPassword />} />
               <Route path="/mainpage" element={<MainPage />} />
               <Route path="/bookmark" element={<Bookmark />} />
               <Route path="/auth" element={<GoogleSigninRedirect />} />
+              <Route path="/invest" element={<InvestPage />} />
 
               {/* Dashboard routes with Outlet */}
               <Route path="/dashboard" element={<Dashboard />}>
                 <Route index element={<Navigate to="overview" replace />} />
                 <Route path="overview" element={<Overview />} />
-                {/* Products routes */}
                 <Route path="products" element={<ProductPage />}>
                   <Route path="select-plan" element={<SelectPlan />} />
                   <Route path="ad-payment" element={<AdPayment />} />
