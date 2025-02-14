@@ -6,10 +6,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 ChartJS.register( CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend );
 
-
 // Stats Component
 const Stats = ({ stats }) => (
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto">
     {[
       { 
         title: "Total Sales", 
@@ -33,7 +32,7 @@ const Stats = ({ stats }) => (
         icon: <Wallet className="w-6 h-6 text-red-500" />,
         bgColor: "bg-red-50",
         iconBg: "bg-red-200",
-        textColor: "text-red-700",
+        textColor: "text-red-500",
       },
       { 
         title: "Profit", 
@@ -175,7 +174,6 @@ const OrderStatusChart = ({ orderStatus }) => {
       {
         data: [75, 15, 10], // Matching the percentages in the image
         backgroundColor: ["#236C13", "#F8912D", "#FF3D00"],
-        borderWidth: 0,
       },
     ],
   };
@@ -186,12 +184,29 @@ const OrderStatusChart = ({ orderStatus }) => {
     cutout: '70%',
     plugins: {
       legend: {
-        position: 'bottom',
+        position: 'right',
+        align: 'center',
         labels: {
           usePointStyle: true,
           padding: 20,
+          boxWidth: 6,
           font: {
             size: 12
+          },
+          generateLabels: function(chart) {
+            const data = chart.data;
+            if (data.labels.length && data.datasets.length) {
+              return data.labels.map((label, i) => {
+                const dataset = data.datasets[0];
+                return {
+                  text: `${label} ${dataset.data[i]}%`,
+                  fillStyle: dataset.backgroundColor[i],
+                  hidden: false,
+                  index: i
+                };
+              });
+            }
+            return [];
           }
         }
       }
@@ -203,7 +218,7 @@ const OrderStatusChart = ({ orderStatus }) => {
       <h3 className="text-lg font-medium text-gray-900 mb-6">Order Status</h3>
       <div className="h-[300px] relative">
         <Doughnut data={doughnutData} options={options} />
-        <div className="absolute top-1/2.5 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <div className="absolute top-1/2 left-1/3 transform -translate-x-1/2 -translate-y-1/2">
           <div className="bg-Primary/20 rounded-full p-10">
             <ShoppingCart className="w-8 h-8 text-Primary" />
           </div>
@@ -223,7 +238,7 @@ const RecentOrders = ({ recentOrders }) => (
       </button>
     </div>
     <div className="overflow-x-auto">
-      <table className="min-w-full divide-y divide-gray-200">
+      <table className="w-full divide-y divide-gray-200">
         <thead>
           <tr>
             {["Order ID", "Product", "Date", "Price", "Status"].map((header) => (
@@ -351,7 +366,7 @@ const DefaultProfileContent = () => {
   });
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="max-w-7xl mx-auto space-y-6 p-6">
       <Stats stats={stats} />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <SalesAnalysisChart salesAnalysis={stats.salesAnalysis} />
