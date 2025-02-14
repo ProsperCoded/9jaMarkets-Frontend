@@ -43,6 +43,7 @@ import CopyrightPage from "./components/CopyrightPage";
 import SafetyTips from "./pages/SafetyTips";
 import FAQ from "./pages/FAQ";
 import ContactUs from "./pages/ContactUs";
+import ScrollToTop from "./components/ScrollToTop";
 
 function AntDesignConfig({ children }) {
   return (
@@ -85,6 +86,7 @@ function App() {
       <AntDesignConfig>
         <ContextWrapper>
           <InitializeApp>
+            <ScrollToTop />
             {/* Render Header based on the route */}
             {isHomePage ? <Header /> : <Header2 />}
 
