@@ -8,12 +8,12 @@ ChartJS.register( CategoryScale, LinearScale, BarElement, ArcElement, Title, Too
 
 // Stats Component
 const Stats = ({ stats }) => (
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto">
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
     {[
       { 
         title: "Total Sales", 
         value: stats.totalSales, 
-        icon: <Banknote className="w-6 h-6 text-orange" />,
+        icon: <Banknote className="w-5 h-5 text-orange" />,
         bgColor: "bg-orange/5",
         iconBg: "bg-orange/20",
         textColor: "text-orange",
@@ -21,7 +21,7 @@ const Stats = ({ stats }) => (
       { 
         title: "Orders", 
         value: stats.orders, 
-        icon: <Package className="w-6 h-6 text-blue-500" />,
+        icon: <Package className="w-5 h-5 text-blue-500" />,
         bgColor: "bg-blue-50",
         iconBg: "bg-blue-200", 
         textColor: "text-blue-500",
@@ -29,7 +29,7 @@ const Stats = ({ stats }) => (
       { 
         title: "Expenses", 
         value: stats.expenses, 
-        icon: <Wallet className="w-6 h-6 text-red-500" />,
+        icon: <Wallet className="w-5 h-5 text-red-500" />,
         bgColor: "bg-red-50",
         iconBg: "bg-red-200",
         textColor: "text-red-500",
@@ -37,24 +37,24 @@ const Stats = ({ stats }) => (
       { 
         title: "Profit", 
         value: stats.profit, 
-        icon: <span className="text-xl text-green-500 font-bold">₦</span>,
-        bgColor: "bg-green-50",
-        iconBg: "bg-green-200",
-        textColor: "text-green-700",
+        icon: <span className="text-lg text-Primary px-2 font-bold">₦</span>,
+        bgColor: "bg-Primary/5",
+        iconBg: "bg-Primary/20",
+        textColor: "text-Primary",
       },
     ].map((stat) => (
       <div
         key={stat.title}
-        className={`${stat.bgColor} rounded-lg shadow-sm p-6`}
+        className={`${stat.bgColor} rounded-lg shadow-sm p-4`}
       >
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <div className={`${stat.iconBg} p-3 rounded-full`}>
+          <div className="flex items-center space-x-3">
+            <div className={`${stat.iconBg} p-2 rounded-full`}>
               {stat.icon}
             </div>
             <div>
-              <h3 className="text-sm font-medium text-gray-600">{stat.title}</h3>
-              <p className={`mt-1 text-xl font-semibold ${stat.textColor}`}>
+              <h3 className="text-xs font-medium text-gray-600">{stat.title}</h3>
+              <p className={`mt-1 text-lg font-semibold ${stat.textColor}`}>
                 ₦{stat.value.toLocaleString()}
               </p>
             </div>
@@ -73,23 +73,23 @@ const SalesAnalysisChart = ({ salesAnalysis }) => {
       {
         label: "Total Sales",
         backgroundColor: "#F8912D",
-        borderRadius: 8,
+        borderRadius: 6,
         data: salesAnalysis.map((item) => item.sales),
-        barThickness: 15,
+        barThickness: 12,
       },
       {
         label: "Expenses",
         backgroundColor: "#FF3D00",
-        borderRadius: 8,
+        borderRadius: 6,
         data: salesAnalysis.map((item) => item.expenses),
-        barThickness: 15,
+        barThickness: 12,
       },
       {
         label: "Profit",
         backgroundColor: "#236C13",
-        borderRadius: 8,
+        borderRadius: 6,
         data: salesAnalysis.map((item) => item.profit),
-        barThickness: 15,
+        barThickness: 12,
       },
     ],
   };
@@ -102,9 +102,9 @@ const SalesAnalysisChart = ({ salesAnalysis }) => {
         position: 'bottom',
         labels: {
           usePointStyle: true,
-          padding: 20,
+          padding: 15,
           font: {
-            size: 12
+            size: 11
           }
         }
       }
@@ -118,7 +118,7 @@ const SalesAnalysisChart = ({ salesAnalysis }) => {
         },
         ticks: {
           font: {
-            size: 12
+            size: 11
           }
         }
       },
@@ -128,7 +128,7 @@ const SalesAnalysisChart = ({ salesAnalysis }) => {
         },
         ticks: {
           font: {
-            size: 12
+            size: 11
           }
         }
       }
@@ -136,11 +136,11 @@ const SalesAnalysisChart = ({ salesAnalysis }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h3 className="text-lg font-medium text-gray-900">Sales Analysis</h3>
+    <div className="bg-white rounded-lg shadow-sm p-4">
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-base font-medium text-gray-900">Sales Analysis</h3>
         <Select>
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-[140px]">
             <SelectValue placeholder="Select month" />
           </SelectTrigger>
           <SelectContent>
@@ -159,7 +159,7 @@ const SalesAnalysisChart = ({ salesAnalysis }) => {
           </SelectContent>
         </Select>
       </div>
-      <div className="h-[300px]">
+      <div className="h-[250px]">
         <Bar data={barData} options={options} />
       </div>
     </div>
@@ -172,7 +172,7 @@ const OrderStatusChart = ({ orderStatus }) => {
     labels: ["Completed", "Pending", "Cancelled"],
     datasets: [
       {
-        data: [75, 15, 10], // Matching the percentages in the image
+        data: [75, 15, 10],
         backgroundColor: ["#236C13", "#F8912D", "#FF3D00"],
       },
     ],
@@ -188,10 +188,10 @@ const OrderStatusChart = ({ orderStatus }) => {
         align: 'center',
         labels: {
           usePointStyle: true,
-          padding: 20,
+          padding: 15,
           boxWidth: 6,
           font: {
-            size: 12
+            size: 11
           },
           generateLabels: function(chart) {
             const data = chart.data;
@@ -214,13 +214,13 @@ const OrderStatusChart = ({ orderStatus }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6">
-      <h3 className="text-lg font-medium text-gray-900 mb-6">Order Status</h3>
-      <div className="h-[300px] relative">
+    <div className="bg-white rounded-lg shadow-sm p-4">
+      <h3 className="text-base font-medium text-gray-900 mb-4">Order Status</h3>
+      <div className="h-[250px] relative">
         <Doughnut data={doughnutData} options={options} />
-        <div className="absolute top-1/2 left-1/3 transform -translate-x-1/2 -translate-y-1/2">
-          <div className="bg-Primary/20 rounded-full p-10">
-            <ShoppingCart className="w-8 h-8 text-Primary" />
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div className="bg-Primary/20 rounded-full p-8">
+            <ShoppingCart className="w-6 h-6 text-Primary" />
           </div>
         </div>
       </div>
@@ -230,21 +230,21 @@ const OrderStatusChart = ({ orderStatus }) => {
 
 // Recent Orders Component
 const RecentOrders = ({ recentOrders }) => (
-  <div className="bg-white rounded-lg shadow-sm p-6 overflow-hidden">
-    <div className="flex justify-between items-center mb-6">
-      <h3 className="text-lg font-medium text-gray-900">Recent Orders</h3>
-      <button className="text-sm text-Primary hover:text-Primary/90">
+  <div className="bg-white rounded-lg shadow-sm p-4 overflow-hidden">
+    <div className="flex justify-between items-center mb-4">
+      <h3 className="text-base font-medium text-gray-900">Recent Orders</h3>
+      <button className="text-xs text-Primary hover:text-Primary/90">
         View All
       </button>
     </div>
     <div className="overflow-x-auto">
-      <table className="w-full divide-y divide-gray-200">
+      <table className="min-w-full divide-y divide-gray-200">
         <thead>
           <tr>
             {["Order ID", "Product", "Date", "Price", "Status"].map((header) => (
               <th
                 key={header}
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 {header}
               </th>
@@ -254,21 +254,21 @@ const RecentOrders = ({ recentOrders }) => (
         <tbody className="divide-y divide-gray-200">
           {recentOrders.map((order) => (
             <tr key={order.id} className="hover:bg-gray-50">
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+              <td className="px-4 py-3 whitespace-nowrap text-xs font-medium text-gray-900">
                 {order.id}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td className="px-4 py-3 whitespace-nowrap text-xs text-gray-500">
                 {order.product}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td className="px-4 py-3 whitespace-nowrap text-xs text-gray-500">
                 {order.date}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td className="px-4 py-3 whitespace-nowrap text-xs text-gray-500">
                 ₦{order.price.toLocaleString()}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap">
+              <td className="px-4 py-3 whitespace-nowrap">
                 <span
-                  className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                  className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium
                     ${
                       order.status === "completed"
                         ? "bg-green-100 text-green-800"
@@ -290,21 +290,21 @@ const RecentOrders = ({ recentOrders }) => (
 
 // Top Products Component
 const TopProducts = ({ topProducts }) => (
-  <div className="bg-white rounded-lg shadow-sm p-6">
-    <div className="flex justify-between items-center mb-6">
-      <h3 className="text-lg font-medium text-gray-900">Top Products</h3>
-      <button className="text-sm text-Primary hover:text-Primary/90">
+  <div className="bg-white rounded-lg shadow-sm p-4">
+    <div className="flex justify-between items-center mb-4">
+      <h3 className="text-base font-medium text-gray-900">Top Products</h3>
+      <button className="text-xs text-Primary hover:text-Primary/90">
         View All
       </button>
     </div>
-    <div className="space-y-4">
+    <div className="space-y-3">
       {topProducts.map((product, idx) => (
         <div
           key={idx}
-          className="flex items-center justify-between p-4 rounded-lg hover:bg-gray-50"
+          className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50"
         >
-          <span className="text-sm text-gray-600">{product.name}</span>
-          <span className="text-sm font-medium text-gray-900">
+          <span className="text-xs text-gray-600">{product.name}</span>
+          <span className="text-xs font-medium text-gray-900">
             ₦{product.sales.toLocaleString()}
           </span>
         </div>
@@ -366,13 +366,13 @@ const DefaultProfileContent = () => {
   });
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6 p-6">
+    <div className="space-y-4 p-4 max-w-7xl mx-auto">
       <Stats stats={stats} />
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <SalesAnalysisChart salesAnalysis={stats.salesAnalysis} />
         <OrderStatusChart orderStatus={stats.orderStatus} />
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <RecentOrders recentOrders={stats.recentOrders} />
         <TopProducts topProducts={stats.topProducts} />
       </div>
