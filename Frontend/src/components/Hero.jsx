@@ -1,7 +1,6 @@
 import React from "react";
 import backgroundImage from "../assets/Hero.jpg";
 import logo from "../assets/Logo.svg";
-import { InterswitchPay } from "react-interswitch";
 
 function Hero() {
   function paymentCallback(response) {
@@ -68,7 +67,7 @@ function Hero() {
         {/* <button className="bg-red-500 p-3" onClick={makePay}>
           Pay
         </button> */}
-        <InterswitchPay {...paymentParameters} />
+        {/* <InterswitchPay {...paymentParameters} /> */}
         {/* Positioned Paragraph (optional) */}
         {/* <p className="py-2 w-full text-center sm:text-lg md:text-xl">
           Your gateway to the best products from Nigeria’s leading markets.

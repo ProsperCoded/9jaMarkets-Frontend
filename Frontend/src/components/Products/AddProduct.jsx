@@ -9,9 +9,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Upload } from "lucide-react";
-import { X } from "lucide-react";
-
+import { Upload, X, ImagePlus } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { formatPrice, removeCommas } from "@/lib/util";
 import { useContext } from "react";
@@ -22,6 +20,7 @@ import { PRODUCT_CATEGORIES } from "@/config";
 export default function AddProduct() {
   const [selectedImages, setSelectedImages] = React.useState([]);
   const fileInputRef = React.useRef(null);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const [productName, setProductName] = React.useState("");
   const [category, setCategory] = React.useState("");
@@ -40,9 +39,7 @@ export default function AddProduct() {
   const handleFiles = (files) => {
     const validFiles = files.filter((file) => file.size <= 5 * 1024 * 1024); // 5MB in bytes
     if (validFiles.length < files.length) {
-      alert(
-        "Some files were not uploaded because they exceed the 5MB size limit."
-      );
+      messageApi.warning("Some files were not uploaded because they exceed the 5MB size limit.");
     }
     const newImages = validFiles.map((file) => ({
       file,
@@ -66,15 +63,17 @@ export default function AddProduct() {
   const removeImage = (index) => {
     setSelectedImages(selectedImages.filter((_, i) => i !== index));
   };
+
   const resetStates = () => {
     setProductName("");
     setCategory("");
     setPrice("");
-    setStock(0);
+    setStock(1);
     setProductDetails("");
     setProductDescription("");
     setSelectedImages([]);
   };
+
   const handleSubmit = async () => {
     if (
       !productName ||
@@ -88,11 +87,8 @@ export default function AddProduct() {
       messageApi.error("All fields are required.");
       return;
     }
-    const errorLogger = (message) => {
-      console.error(message);
-      messageApi.error(message);
-    };
-    messageApi.loading("Adding product...");
+
+    setIsSubmitting(true);
     try {
       const payload = {
         productName,
@@ -101,179 +97,182 @@ export default function AddProduct() {
         stock,
         productDetails,
         productDescription,
-        selectedImages,
+        images: selectedImages.map((img) => img.file),
       };
-      const response = await uploadProductApi(payload, errorLogger);
+
+      const response = await uploadProductApi(
+        payload,
+        (error) => {
+          messageApi.error("Failed to upload product");
+          console.error(error);
+        },
+        (msg) => {
+          messageApi.success(msg);
+          resetStates();
+        }
+      );
+
       if (!response) return;
-      console.log(response);
-      messageApi.success("Product Added successfully.");
-      resetStates();
     } catch (error) {
-      errorLogger("An error occurred while adding the product.");
+      messageApi.error("An error occurred while uploading the product");
+      console.error(error);
     } finally {
-      messageApi.done();
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="gap-6 grid">
+    <div className="space-y-8">
       {/* Image Upload Section */}
-      <div
-        className="border-2 p-8 border-dashed rounded-lg text-center"
-        onDragOver={(e) => e.preventDefault()}
-        onDrop={handleDrop}
-      >
-        <div className="flex flex-col items-center gap-2">
-          <div className="flex justify-center items-center bg-green-50 rounded-full w-12 h-12">
-            <Upload className="w-6 h-6 text-Primary" />
-          </div>
-          <p>Drag and drop an image(s) here</p>
-          <p className="text-muted-foreground text-sm">or</p>
-          <Button
-            variant="outline"
-            className="bg-orange hover:bg-P2 text-stone-50"
-            onClick={handleUploadClick}
-          >
-            Upload from computer
-          </Button>
+      <div className="space-y-4">
+        <div>
+          <h3 className="text-lg font-medium">Product Images</h3>
+          <p className="text-sm text-gray-500">Add up to 5 images for your product</p>
+        </div>
+
+        <div
+          className={`border-2 border-dashed rounded-lg p-6 ${
+            selectedImages.length === 0 ? 'border-gray-300' : 'border-Primary/20'
+          }`}
+          onDrop={handleDrop}
+          onDragOver={(e) => e.preventDefault()}
+        >
           <input
             type="file"
             ref={fileInputRef}
+            onChange={handleFileChange}
+            accept="image/png,image/jpeg,image/jpg"
             className="hidden"
             multiple
-            accept=".jpg,.png"
-            onChange={handleFileChange}
           />
-        </div>
-      </div>
 
-      {selectedImages.length > 0 && (
-        <div className="space-y-4">
-          <h3 className="font-medium">Selected images</h3>
-          <div className="space-y-2">
-            {selectedImages.map((image, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-2 p-2 border rounded-lg"
-              >
-                <img
-                  src={image.url}
-                  alt={image.name}
-                  className="rounded w-12 h-12 object-cover"
-                />
-                <div className="flex-1">
-                  <p className="font-medium text-sm">{image.name}</p>
-                  <p className="text-muted-foreground text-sm">{image.size}</p>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => removeImage(index)}
-                >
-                  <X className="w-4 h-4" />
-                </Button>
+          {selectedImages.length === 0 ? (
+            <div className="text-center">
+              <ImagePlus className="mx-auto h-12 w-12 text-gray-400" />
+              <div className="mt-4 flex text-sm items-center justify-center leading-6 text-gray-600">
+                <label className="relative cursor-pointer rounded-md bg-white font-semibold text-Primary focus-within:outline-none focus-within:ring-2 focus-within:ring-Primary focus-within:ring-offset-2 hover:text-Primary/90">
+                  <span onClick={handleUploadClick}>Upload images</span>
+                  <p className="pl-1">or drag and drop</p>
+                </label>
               </div>
-            ))}
-          </div>
+              <p className="text-xs leading-5 text-gray-600">PNG, JPG up to 5MB</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              {selectedImages.map((image, index) => (
+                <div key={index} className="relative group">
+                  <img
+                    src={image.url}
+                    alt={`Preview ${index + 1}`}
+                    className="h-24 w-full object-cover rounded-lg"
+                  />
+                  <button
+                    onClick={() => removeImage(index)}
+                    className="absolute -top-2 -right-2 p-1 bg-red-100 rounded-full text-red-600 opacity-0 group-hover:opacity-100 transition-opacity"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                  <p className="mt-1 text-xs text-gray-500">{image.size}</p>
+                </div>
+              ))}
+              {selectedImages.length < 5 && (
+                <button
+                  onClick={handleUploadClick}
+                  className="h-24 rounded-lg border-2 border-dashed border-gray-300 p-4 text-center hover:border-Primary/50 transition-colors"
+                >
+                  <Upload className="h-8 w-8 mx-auto text-gray-400" />
+                  <span className="mt-2 block text-sm text-gray-600">Add more</span>
+                </button>
+              )}
+            </div>
+          )}
         </div>
-      )}
-
-      <div className="flex items-center gap-2 bg-red bg-red-50 p-4 border border-red-200 rounded-lg text-red-800 text-sm">
-        <span>Images should be less than 5mb (.png or .jpg formats)</span>
       </div>
 
-      {/* Form Fields */}
-      <div className="gap-4 grid">
-        <div className="gap-4 grid grid-cols-2">
-          <div className="space-y-2">
-            <Label htmlFor="product-name">Product Name</Label>
-            <Input
-              id="product-name"
-              placeholder="Laptop"
-              value={productName}
-              onChange={(e) => setProductName(e.target.value)}
-              required
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="category">Category</Label>
-            <Select value={category} onValueChange={setCategory} required>
-              <SelectTrigger>
-                <SelectValue placeholder="Select Category" />
-              </SelectTrigger>
-              <SelectContent>
-                {PRODUCT_CATEGORIES.map((category) => (
-                  <SelectItem key={category} value={category}>
-                    {category}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-
-        <div className="gap-4 grid grid-cols-2">
-          <div className="space-y-2">
-            <Label htmlFor="price">Price</Label>
-            <Input
-              id="price"
-              placeholder="₦100,000.00"
-              value={formatPrice(price)}
-              onChange={(e) => setPrice(e.target.value)}
-              required
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="stock">Stock Available</Label>
-            <Input
-              id="price"
-              placeholder="₦100,000.00"
-              type="number"
-              value={stock}
-              onChange={(e) => setStock(e.target.value)}
-              required
-            />
-          </div>
-        </div>
-        <div className="gap-4 grid grid-cols-1">
-          <div className="space-y-2">
-            <Label htmlFor="product-details">Product Details</Label>
-            <Textarea
-              id="product-details"
-              placeholder="State Accurate Product Details"
-              className="min-h-[50px]"
-              value={productDetails}
-              onChange={(e) => setProductDetails(e.target.value)}
-              required
-            />
-          </div>
+      {/* Product Details Form */}
+      <div className="grid gap-6 sm:grid-cols-2">
+        <div className="space-y-2">
+          <Label htmlFor="productName">Product Name</Label>
+          <Input
+            id="productName"
+            value={productName}
+            onChange={(e) => setProductName(e.target.value)}
+            placeholder="Enter product name"
+          />
         </div>
 
         <div className="space-y-2">
+          <Label htmlFor="category">Category</Label>
+          <Select value={category} onValueChange={setCategory}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select a category" />
+            </SelectTrigger>
+            <SelectContent>
+              {PRODUCT_CATEGORIES.filter(cat => cat !== 'All Categories').map((category) => (
+                <SelectItem key={category} value={category}>
+                  {category}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="price">Price (₦)</Label>
+          <Input
+            id="price"
+            value={price}
+            onChange={(e) => {
+              const value = e.target.value.replace(/[^0-9,]/g, "");
+              setPrice(value);
+            }}
+            placeholder="Enter price"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="stock">Stock Available</Label>
+          <Input
+            id="stock"
+            type="number"
+            min="1"
+            value={stock}
+            onChange={(e) => setStock(parseInt(e.target.value) || 1)}
+          />
+        </div>
+
+        <div className="space-y-2 sm:col-span-2">
+          <Label htmlFor="details">Product Details</Label>
+          <Textarea
+            id="details"
+            value={productDetails}
+            onChange={(e) => setProductDetails(e.target.value)}
+            placeholder="Enter key product details"
+            className="min-h-[100px]"
+          />
+        </div>
+
+        <div className="space-y-2 sm:col-span-2">
           <Label htmlFor="description">Product Description</Label>
           <Textarea
             id="description"
-            placeholder="Describe your product briefly here"
-            className="min-h-[150px]"
             value={productDescription}
             onChange={(e) => setProductDescription(e.target.value)}
-            required
+            placeholder="Enter detailed product description"
+            className="min-h-[150px]"
           />
         </div>
-        <div className="flex justify-center gap-5 mt-10">
-          <Button className="border-green bg-transparent hover:bg-Primary px-6 border rounded-full text-Primary hover:text-white">
-            Cancel
-          </Button>
-          <Button
-            className="bg-Primary hover:bg-P2 px-6 rounded-full text-white"
-            onClick={(e) => {
-              handleSubmit();
-              e.preventDefault();
-            }}
-          >
-            Add Product
-          </Button>
-        </div>
+      </div>
+
+      {/* Submit Button */}
+      <div className="flex justify-end">
+        <Button
+          onClick={handleSubmit}
+          className="w-full bg-Primary text-white hover:bg-Primary/80 sm:w-auto"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Adding Product..." : "Add Product"}
+        </Button>
       </div>
     </div>
   );

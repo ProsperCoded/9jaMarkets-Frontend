@@ -1,132 +1,129 @@
-import React, { useState, useEffect } from "react"
-import { CreditCard, Building2, Wallet } from 'lucide-react'
-import { Button } from "./ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card"
-import { Input } from "./ui/input"
-import { Label } from "./ui/label"
-import { RadioGroup, RadioGroupItem } from "./ui/radio-group"
-import { Separator } from "./ui/separator"
-import { useNavigate, useLocation } from 'react-router-dom'
-
+import React, { useState, useEffect } from "react";
+import InterswitchLogo from "../assets/billing/InterswitchLogo.svg";
+import { Button } from "./ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { Separator } from "./ui/separator";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { plans } from "@/config";
+import { useContext } from "react";
+import { USER_PROFILE_CONTEXT } from "@/contexts";
 const paymentMethods = [
-  { id: "card", name: "Credit/Debit Card", icon: CreditCard },
-  { id: "bank", name: "Bank Transfer", icon: Building2 },
-  { id: "wallet", name: "Mobile Wallet", icon: Wallet },
-]
-
-const plans = {
-  standard: {
-    id: "standard",
-    name: "Standard Plan",
-    price: 1500,
-    duration: "7 days",
-    benefits: [
-      "Perfect for weekly campaigns",
-      "Moderate reach for your ad",
-      "Basic visibility features"
-    ],
-  },
-  premium: {
-    id: "premium",
-    name: "Premium Plan",
-    price: 3500,
-    duration: "30 days",
-    benefits: [
-      "Maximum visibility",
-      "Reach a wider audience consistently",
-      "Boost engagement and conversions",
-      "Premium placement in search results"
-    ],
-  },
-  boost: {
-    id: "boost",
-    name: "Boost Plan",
-    price: 10000,
-    duration: "30 days",
-    benefits: [
-      "Highlighted placement for top visibility",
-      "Fast-track reach with premium exposure"
-    ],
-  }
-}
+  { id: "card", name: "Pay with Interswitch", icon: InterswitchLogo },
+];
 
 export default function BillingPage() {
-  const [selectedMethod, setSelectedMethod] = useState("card")
-  const [selectedPlan, setSelectedPlan] = useState(null)
-  const navigate = useNavigate()
-  const location = useLocation()
-  
-  useEffect(() => {
-    const params = new URLSearchParams(location.search)
-    const planId = params.get('plan')
-    if (planId && plans[planId]) {
-      setSelectedPlan(plans[planId])
-    } else {
-      navigate('/products')
-    }
-  }, [location, navigate])
+  const [selectedMethod, setSelectedMethod] = useState("card");
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const { userProfile } = useContext(USER_PROFILE_CONTEXT);
+  const params = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  if (!selectedPlan) {
+  useEffect(() => {
+    // const params = new URLSearchParams(location.search);
+    // const planId = params.get("plan");
+    let planId = "premium";
+    if (planId && plans[planId]) {
+      setSelectedPlan(plans[planId]);
+    } else {
+      navigate("/products");
+    }
+  }, [location, navigate]);
+
+  if (!selectedPlan || !userProfile) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="flex justify-center items-center bg-gray-50 min-h-screen">
         <p>Loading...</p>
       </div>
-    )
+    );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-8">
-      <div className="container max-w-4xl mx-auto">
-        <div className="space-y-4 text-center mb-8">
-          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Complete Your Payment</h1>
+    <div className="bg-gray-50 px-4 py-8 min-h-screen">
+      <div className="mx-auto max-w-4xl container">
+        <div className="space-y-4 mb-8 text-center">
+          <h1 className="font-bold text-2xl md:text-3xl text-Primary tracking-tight">
+            Complete Your Payment
+          </h1>
           <p className="text-muted-foreground text-sm md:text-base">
-            Choose a payment method and complete your transaction to activate your plan.
+            Choose a payment method and complete your transaction to activate
+            your plan.
           </p>
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-3">
-          <Card className="lg:col-span-2 order-2 lg:order-1">
+        <div className="gap-8 grid lg:grid-cols-3">
+          <Card className="order-2 lg:order-1 lg:col-span-2">
             <CardHeader>
               <CardTitle>Payment Method</CardTitle>
-              <CardDescription>Select your preferred payment method</CardDescription>
+              <CardDescription>
+                Select your preferred payment method
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <RadioGroup
                 value={selectedMethod}
                 onValueChange={setSelectedMethod}
-                className="grid gap-4"
+                className="gap-4 grid"
               >
                 {paymentMethods.map((method) => {
-                  const Icon = method.icon
                   return (
                     <Label
                       key={method.id}
-                      className="flex items-center p-3 md:p-4 border rounded-lg cursor-pointer hover:border-Primary [&:has(:checked)]:bg-Primary/10 [&:has(:checked)]:border-Primary transition-all"
+                      className="flex items-center [&:has(:checked)]:border-Primary hover:border-Primary [&:has(:checked)]:bg-Primary/10 p-3 md:p-4 border rounded-lg transition-all cursor-pointer"
                     >
                       <RadioGroupItem value={method.id} className="mr-4" />
-                      <Icon className="w-5 h-5 mr-3" />
+                      <img className="mr-3 w-16" src={method.icon} />
                       {method.name}
                     </Label>
-                  )
+                  );
                 })}
               </RadioGroup>
 
               <Separator />
 
               <div className="space-y-4">
-                <h3 className="text-lg font-medium">Billing Information</h3>
-                <div className="grid gap-4">
-                  <div className="grid gap-2">
+                <h3 className="font-medium text-lg">Billing Information</h3>
+                <div className="gap-4 grid">
+                  <div className="gap-2 grid">
                     <Label htmlFor="name">Full Name</Label>
-                    <Input id="name" placeholder="Enter your full name" className="w-full" />
+                    <Input
+                      id="name"
+                      placeholder="Enter your full name"
+                      // expected to be a merchant
+                      value={userProfile.brandName}
+                      className="w-full"
+                    />
                   </div>
-                  <div className="grid gap-2">
+                  <div className="gap-2 grid">
                     <Label htmlFor="email">Email Address</Label>
-                    <Input id="email" type="email" placeholder="Enter your email" className="w-full" />
+                    <Input
+                      id="email"
+                      type="email"
+                      value={userProfile.email}
+                      placeholder="Enter your email"
+                      className="w-full"
+                    />
                   </div>
-                  <div className="grid gap-2">
+                  <div className="gap-2 grid">
                     <Label htmlFor="phone">Phone Number (Optional)</Label>
-                    <Input id="phone" type="tel" placeholder="Enter your phone number" className="w-full" />
+                    <Input
+                      id="phone"
+                      type="tel"
+                      value={userProfile.phoneNumbers[0].number}
+                      placeholder="Enter your phone number"
+                      className="w-full"
+                    />
                   </div>
                 </div>
               </div>
@@ -143,14 +140,14 @@ export default function BillingPage() {
                   <span className="font-medium">{selectedPlan.name}</span>
                   <span>₦{selectedPlan.price.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between text-sm text-muted-foreground">
+                <div className="flex justify-between text-muted-foreground text-sm">
                   <span>Duration</span>
                   <span>{selectedPlan.duration}</span>
                 </div>
                 <Separator />
                 <div className="space-y-2">
-                  <span className="text-sm font-medium">Plan Benefits:</span>
-                  <ul className="text-sm text-muted-foreground space-y-1">
+                  <span className="font-medium text-sm">Plan Benefits:</span>
+                  <ul className="space-y-1 text-muted-foreground text-sm">
                     {selectedPlan.benefits.map((benefit, index) => (
                       <li key={index} className="flex items-start">
                         <span className="mr-2">•</span>
@@ -166,12 +163,15 @@ export default function BillingPage() {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button className="w-full bg-Primary hover:bg-Primary/90 text-white" size="lg">
+                <Button
+                  className="bg-Primary hover:bg-Primary/90 w-full text-white"
+                  size="lg"
+                >
                   Review and Confirm
                 </Button>
               </CardFooter>
             </Card>
-            <div className="flex items-center justify-center gap-2 text-xs md:text-sm text-muted-foreground">
+            <div className="flex justify-center items-center gap-2 text-muted-foreground text-xs md:text-sm">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -192,5 +192,5 @@ export default function BillingPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

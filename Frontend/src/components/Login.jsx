@@ -43,6 +43,7 @@ const LoginModal = () => {
     const errorLogger = (error) => {
       console.error(error);
       setError(error);
+      setLoading(false);
     };
     const payload = { email, password };
     if (!loginAsMerchant) {
@@ -213,7 +214,7 @@ const LoginModal = () => {
           >
             {loading ? (
               <>
-                <Loading /> Login...
+                <Loading /> Logging in...
               </>
             ) : (
               "Login"

@@ -8,6 +8,11 @@ export default {
       "zen-tokyo-zoo": ["Zen Tokyo Zoo"],
     },
     extend: {
+      animation: {
+        "caret-blink": "caret-blink 1.25s ease-out infinite",
+        'spin-slow': 'spin 3s linear infinite',
+        'bounce': 'bounce 1s infinite',
+      },
       colors: {
         orange: "#F8912D",
         Primary: "#236C13",
@@ -23,9 +28,10 @@ export default {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
         },
+        // for Shadcn
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "#F8912D",
+          foreground: "#EBEBEB",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -64,9 +70,6 @@ export default {
           "0%,70%,100%": { opacity: "1" },
           "20%,50%": { opacity: "0" },
         },
-      },
-      animation: {
-        "caret-blink": "caret-blink 1.25s ease-out infinite",
       },
     },
   },

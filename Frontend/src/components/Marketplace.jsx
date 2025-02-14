@@ -1,173 +1,187 @@
-/**
- * The Marketplace component renders a marketplace page with a search bar, a hero section and a main content area.
- * The main content area contains a sidebar with categories and a product grid that displays products filtered by category.
- * The component uses a combination of Tailwind CSS classes and custom CSS to style the elements.
- * The component also uses React hooks to handle state and side effects.
- * The component renders a gray line to separate the hero section from the main content area.
- * The component renders a product grid with products filtered by category and sorted by name.
- * The component renders a loading indicator when the products are being fetched from the server.
- * The component renders an error message when there is an error fetching the products from the server.
- * The component also renders a back to top button that scrolls to the top of the page when clicked.
- */
-import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
-import { PRODUCT_CATEGORIES } from "@/config";
+import { useState, useContext, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
 import { useErrorLogger } from "@/hooks";
 import { getMarketProducts } from "@/lib/api/marketApi";
-import { useContext } from "react";
 import { MARKET_DATA_CONTEXT } from "@/contexts";
 import LoadingPage from "@/componets-utils/LoadingPage";
 import NotFoundPage from "@/components/NotFoundPage";
+import { Search, Bookmark, BookmarkCheck } from "lucide-react";
 import {
-  faInfoCircle,
-  faMapMarkerAlt,
-  faMap,
-} from "@fortawesome/free-solid-svg-icons";
-import { useMemo } from "react";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+const PRODUCT_CATEGORIES = [
+  "All Categories",
+  "Education & Stationery",
+  "Real Estate & Housing",
+  "Events & Entertainment",
+  "Technology Services",
+  "Cultural Experiences",
+  "Food & Groceries",
+  "Electronics & Gadgets",
+  "Fashion & Accessories",
+  "Health & Wellness",
+  "Home & Living",
+  "Automobile Needs",
+  "Traditional Crafts",
+  "Sports & Outdoor",
+  "Kids & Baby Products"
+];
+
 const Marketplace = () => {
-  const categories = ["All Categories", ...PRODUCT_CATEGORIES];
   const errorLogger = useErrorLogger();
   const { id: marketId } = useParams();
   const [products, setProducts] = useState();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { marketsData } = useContext(MARKET_DATA_CONTEXT);
   const market = marketsData.find((market) => market.id === marketId);
+  const [bookmarkedProducts, setBookmarkedProducts] = useState(new Set());
+
   const fetchProducts = async () => {
     const marketProducts = await getMarketProducts(marketId, errorLogger);
     if (!marketProducts) return;
     setProducts(marketProducts);
   };
-  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+
+  const [selectedCategory, setSelectedCategory] = useState(PRODUCT_CATEGORIES[0]);
   const filteredProducts = useMemo(() => {
     if (!products) return [];
-    if (selectedCategory === "All Categories") return products;
-    return products.filter((product) => product.category === selectedCategory);
+    return selectedCategory === "All Categories" 
+      ? products 
+      : products.filter((product) => product.category === selectedCategory);
   }, [products, selectedCategory]);
+
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [marketId]);
 
-  if (!market && marketsData.length > 0) {
-    return <NotFoundPage />;
-  }
+  const toggleBookmark = (productId) => {
+    setBookmarkedProducts(prev => {
+      const newBookmarks = new Set(prev);
+      if (newBookmarks.has(productId)) {
+        newBookmarks.delete(productId);
+      } else {
+        newBookmarks.add(productId);
+      }
+      return newBookmarks;
+    });
+  };
+
+  if (!market && marketsData.length > 0) return <NotFoundPage />;
   if (!market) return <LoadingPage message={"Market Could not be found"} />;
+
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="bg-gray-50 min-h-screen">
       {/* Search Bar */}
-      <div className="relative flex justify-center bg-white shadow-md py-2 text-Primary">
-        <div className="relative w-full max-w-lg">
-          <input
-            type="text"
-            placeholder="Search a vendor or category"
-            className="border-Primary py-2 pr-4 pl-10 border rounded-full focus:ring-2 focus:ring-Primary w-full text-sm focus:outline-none placeholder-gray-400"
-          />
-          <svg
-            className="top-1/2 left-3 absolute w-5 h-5 text-Primary transform -translate-y-1/2"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              fillRule="evenodd"
-              d="M10.5 3.75a6.75 6.75 0 1 0 4.247 11.943l5.53 5.53a.75.75 0 0 0 1.06-1.06l-5.53-5.53A6.75 6.75 0 0 0 10.5 3.75ZM5.25 10.5a5.25 5.25 0 1 1 10.5 0 5.25 5.25 0 0 1-10.5 0Z"
-              clipRule="evenodd"
+      <div className="sticky top-0 z-50 bg-white shadow-md py-2 text-Primary">
+        <div className="container mx-auto px-4">
+          <div className="relative w-full max-w-lg mx-auto">
+            <input
+              type="text"
+              placeholder="Search a vendor or category"
+              className="border-Primary py-2 pr-4 pl-10 border rounded-full focus:ring-2 focus:ring-Primary w-full text-sm focus:outline-none placeholder-gray-400"
             />
-          </svg>
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-Primary" />
+          </div>
         </div>
       </div>
 
       {/* Hero Section */}
-      <div className="relative w-screen h-[300px]">
+      <div className="relative h-[200px] md:h-[200px] w-full">
         <img
           src={market.displayImage}
-          alt="Computer Village"
-          className="top-0 left-0 absolute w-full h-full market-image object-cover"
+          alt={market.name}
+          className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="top-0 left-0 absolute bg-green-900 bg-opacity-50 w-full h-full"></div>
-        <div className="relative flex flex-col justify-center items-center h-full text-center text-white">
-          <h1 className="font-[400] text-5xl sm:text-4xl md:text-8xl uppercase leading-tight otto">
+        <div className="absolute inset-0 bg-black/50"></div>
+        <div className="relative flex flex-col justify-center items-center h-full text-center text-white px-4">
+          <h1 className="font-[400] text-3xl sm:text-4xl md:text-6xl lg:text-7xl uppercase leading-tight otto">
             {market.name}
           </h1>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="flex mx-auto container">
-        {/* Sidebar */}
-        <div className="flex flex-col justify-between bg-white shadow-md p-4 w-[300px]">
-          <div className="pt-20">
-            <ul className="space-y-2">
-              {categories.map((category, index) => (
-                <li
-                  key={index}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`cursor-pointer p-2 rounded ${
-                    selectedCategory === category
-                      ? "bg-Primary text-white"
-                      : "hover:bg-gray-100"
-                  }`}
-                >
-                  {category}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-        <div>
-          <div className="flex-grow bg-white shadow-md mx-6 my-4 p-6 rounded-2xl">
-            <div className="flex flex-wrap justify-center gap-2 mt-4 font-semibold md:text-lg">
-              <div className="flex items-center border-green-700 mb-2 pr-3 border-r-2">
-                <FontAwesomeIcon
-                  icon={faMapMarkerAlt}
-                  className="mr-2 text-Primary"
-                />
-                <span className="text-gray-700">{market.address}</span>
-              </div>
-              <div className="flex items-center border-green-700 mb-2 pr-3 border-r-2 min-w-fit">
-                <FontAwesomeIcon
-                  icon={faInfoCircle}
-                  className="mr-2 text-Primary"
-                />
-                <span className="text-gray-700">{market.description}</span>
-              </div>
-              <div className="flex items-center mb-2">
-                <FontAwesomeIcon icon={faMap} className="mr-2 text-Primary" />
-                <span className="text-gray-700">{market.state}</span>
-              </div>
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Sidebar - Desktop */}
+          <div className="hidden lg:block w-[280px] shrink-0">
+            <div className="bg-white rounded-lg shadow-md p-4 sticky top-[72px] max-h-[calc(100vh-120px)] overflow-y-auto">
+              <h2 className="text-lg font-semibold mb-4">Categories</h2>
+              <ul className="space-y-2">
+                {PRODUCT_CATEGORIES.map((category, index) => (
+                  <li key={index}>
+                    <button
+                      onClick={() => setSelectedCategory(category)}
+                      className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
+                        selectedCategory === category
+                          ? "bg-Primary text-white"
+                          : "hover:bg-gray-100"
+                      }`}
+                    >
+                      {category}
+                    </button>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
-          <div className="flex-grow bg-white shadow-md mt-8 mr-6 mb-8 ml-6 py-10 p-6 pb-20 rounded-2xl">
-            <h3 className="font-bold text-xl">{selectedCategory}</h3>
-            {/* Gray Line */}
-            <div className="border-gray-200 mt-6 border-t-2"></div>
-            {/* Product Grid */}
-            <div className="gap-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 mt-6">
-              {filteredProducts.map((product, index) => (
+
+          {/* Mobile Category Selector */}
+          <div className="lg:hidden w-full">
+            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+              <SelectTrigger className="w-full focus:ring-Primary">
+                <SelectValue placeholder="Select a category" />
+              </SelectTrigger>
+              <SelectContent>
+                {PRODUCT_CATEGORIES.map((category) => (
+                  <SelectItem 
+                    key={category} 
+                    value={category}
+                    className="focus:bg-Primary/10 focus:text-Primary"
+                  >
+                    {category}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Products Grid */}
+          <div className="flex-1">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              {filteredProducts.map((product) => (
                 <div
-                  key={index}
-                  className="bg-white shadow-lg hover:shadow-xl rounded-2xl transform transition-transform duration-300 hover:scale-105"
+                  key={product.id}
+                  className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
                 >
-                  {/* Product Image */}
-                  <img
-                    src={product.displayImage && product.displayImage.url}
-                    alt={product.name}
-                    className="rounded-t-2xl w-full h-40 object-cover"
-                  />
-                  {/* Product Details */}
-                  <div className="flex justify-between items-center p-4">
-                    <div>
-                      <h4 className="text-gray-800 text-sm">{product.name}</h4>
-                      <p className="mt-2 font-thin text-Primary">
-                        ₦{product.price.toLocaleString()}
-                      </p>
-                    </div>
-                    <button className="bg-Primary bg-opacity-20 hover:bg-opacity-30 px-4 py-3 rounded-full text-Primary">
-                      <FontAwesomeIcon
-                        icon={faCartShopping}
-                        className="w-5 h-5"
-                      />
+                  <div className="aspect-square relative">
+                    <img
+                      src={product.displayImage?.url || "/path/to/fallback.jpg"}
+                      alt={product.name}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <button
+                      onClick={() => toggleBookmark(product.id)}
+                      className="absolute top-2 right-2 p-2 rounded-full bg-Primary/80 text-white hover:bg-Primary transition-colors"
+                    >
+                      {bookmarkedProducts.has(product.id) ? (
+                        <BookmarkCheck className="w-4 h-4" />
+                      ) : (
+                        <Bookmark className="w-4 h-4" />
+                      )}
                     </button>
+                  </div>
+                  <div className="p-2">
+                    <h3 className="font-medium text-sm truncate">{product.name}</h3>
+                    <p className="text-Primary font-bold text-sm">
+                      ₦{product.price?.toLocaleString()}
+                    </p>
                   </div>
                 </div>
               ))}

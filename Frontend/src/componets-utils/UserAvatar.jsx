@@ -23,7 +23,7 @@ export function UserAvatar({ showName, auth }) {
     <div>
       <ul className="space-y-2 mx-2 px-2 min-w-[10ch]">
         <li
-          className="hover:font-semibold hover:text-Primary transition-colors cursor-pointer select-none"
+          className="hover:font-semibold hover:text-red-500 transition-colors cursor-pointer select-none"
           onClick={() => {
             setLogoutOpen(true);
           }}
@@ -33,7 +33,7 @@ export function UserAvatar({ showName, auth }) {
         <li
           className="hover:font-semibold hover:text-Primary transition-colors cursor-pointer select-none"
           onClick={() => {
-            navigate("/profile");
+            navigate("/dashboard");
           }}
         >
           Profile
@@ -44,7 +44,7 @@ export function UserAvatar({ showName, auth }) {
   return userProfile ? (
     <span
       onDoubleClick={() => {
-        navigate("/profile");
+        navigate("/dashboard");
       }}
       className="select-none"
     >
@@ -59,7 +59,7 @@ export function UserAvatar({ showName, auth }) {
           {showName ? (
             <div className="flex items-center bg-white px-2 py-1.5 rounded-full">
               <Avatar
-                style={{ backgroundColor: "#21CA1B", verticalAlign: "middle" }}
+                style={{ backgroundColor: "#F8912D", verticalAlign: "middle" }}
                 size="medium"
               >
                 <span className="font-semibold">{name[0]}</span>
@@ -70,7 +70,7 @@ export function UserAvatar({ showName, auth }) {
             </div>
           ) : (
             <Avatar
-              style={{ backgroundColor: "#21CA1B", verticalAlign: "middle" }}
+              style={{ backgroundColor: "orange", verticalAlign: "middle" }}
               size="medium"
             >
               <span className="font-semibold">{name[0]}</span>
@@ -81,7 +81,7 @@ export function UserAvatar({ showName, auth }) {
     </span>
   ) : (
     auth && (
-      <div className="flex md:flex-row flex-col gap-3 ml-auto">
+      <div className={`flex ${showName ? 'md:flex-row flex-col gap-3' : 'hidden'}`}>
         <button
           onClick={(e) => {
             setLoginOpen(true);

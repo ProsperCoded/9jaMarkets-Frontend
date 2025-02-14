@@ -1,27 +1,50 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useContext } from "react";
-import { Pencil, Check, X } from "lucide-react";
+import { Pencil, Check, X, Plus, MapPin, Phone, Trash } from "lucide-react";
+import PropTypes from 'prop-types';
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
 import { Card } from "./ui/card";
-import { MapPin } from "lucide-react";
-import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "@/contexts";
+import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT, LOGOUT_MODAL_CONTEXT } from "@/contexts";
 import { updateCustomerProfileApi } from "@/lib/api/serviceApi";
-import { Popconfirm } from "antd";
-import { ConfigProvider } from "antd";
+import { Popconfirm, ConfigProvider } from "antd";
 import OTPModal from "@/componets-utils/OTPModal";
 import {
   sendVerificationCustomerEmailApi,
   verifyEmailOtp,
 } from "@/lib/api/authApi";
 
+// Add PropTypes for form components
+const fieldPropTypes = {
+  label: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onUpdate: PropTypes.func.isRequired,
+  type: PropTypes.string,
+  required: PropTypes.bool,
+  className: PropTypes.string,
+};
+
+const addressPropTypes = {
+  address: PropTypes.shape({
+    name: PropTypes.string,
+    address: PropTypes.string,
+    city: PropTypes.string,
+    state: PropTypes.string,
+    country: PropTypes.string,
+    zipCode: PropTypes.string,
+    postalCode: PropTypes.string,
+  }).isRequired,
+  onUpdate: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+};
+
 export default function EditProfile() {
   const messageApi = useContext(MESSAGE_API_CONTEXT);
   const { userProfile: profile, setUserProfile: setProfile } =
     useContext(USER_PROFILE_CONTEXT);
+  const { setLogoutOpen } = useContext(LOGOUT_MODAL_CONTEXT);
   const errorLogger = (message) => {
     messageApi.error("Failed to update the field ");
     console.error(message);
@@ -94,121 +117,198 @@ export default function EditProfile() {
     setProfile(updatedProfile);
   };
 
-  return (
-    <div>
-      <h1 className="mt-4 mb-8 font-extrabold text-5xl text-center text-Primary">
-        EDIT PROFILE
-      </h1>
-      <div className="items-start gap-5 grid grid-cols-2">
-        <div className="gap-6 grid">
-          <div className="gap-4 grid">
-            <h2 className="font-semibold text-xl">Personal Information</h2>
-            <div className="gap-4 grid bg-card shadow p-4 rounded-lg">
-              <EmailField
-                label="Email"
-                value={profile.email}
-                onUpdate={(value) => handleUpdate("email", value)}
-                type="email"
-                required
-              />
-              {/* <ProfileField
-                label="Password"
-                value={profile.password}
-                onUpdate={(value) => handleUpdate("password", value)}
-                type="password"
-                required
-              /> */}
-              <div className="gap-4 grid grid-cols-2">
-                <ProfileField
-                  label="First Name"
-                  value={profile.firstName}
-                  onUpdate={(value) => handleUpdate("firstName", value)}
-                  required
-                />
-                <ProfileField
-                  label="Last Name"
-                  value={profile.lastName}
-                  onUpdate={(value) => handleUpdate("lastName", value)}
-                  required
-                />
-              </div>
-              <div className="gap-4 grid grid-cols-2">
-                <ProfileField
-                  label="Phone 1"
-                  value={profile.phoneNumbers[0].number}
-                  onUpdate={(value) =>
-                    handleUpdate("phoneNumbers", [
-                      value,
-                      profile.phoneNumbers[1].number,
-                    ])
-                  }
-                  required
-                />
-                <ProfileField
-                  label="Phone 2"
-                  value={profile.phoneNumbers[1].number}
-                  onUpdate={(value) =>
-                    handleUpdate("phoneNumbers", [
-                      profile.phoneNumbers[0].number,
-                      value,
-                    ])
-                  }
-                  required
-                />
-              </div>
-              <div className="gap-4 grid grid-cols-2">
-                <ProfileField
-                  label="Date of Birth"
-                  value={profile.dateOfBirth || ""}
-                  onUpdate={(value) => handleUpdate("dateOfBirth", value)}
-                  type="date"
-                />
-                <div className="flex flex-col">
-                  <label className="mb-3 font-medium text-muted-foreground text-sm">
-                    Password
-                  </label>
+  const [deleteAccountOpen, setDeleteAccountOpen] = useState(false);
 
-                  <Link
-                    to="/forget-password"
-                    className="font-semibold text-Primary hover:underline"
-                  >
-                    Change Password
-                  </Link>
-                </div>
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      {/* Header Section */}
+      <div className="bg-Primary/5 border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+            Profile Settings
+          </h1>
+          <p className="mt-2 text-sm text-gray-600">
+            Manage your account settings and preferences
+          </p>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Sidebar Navigation */}
+          <div className="lg:col-span-1">
+            <div className="sticky top-20 space-y-1 bg-white rounded-lg shadow-sm p-2 flex flex-col h-[calc(100vh-120px)]">
+              <button className="w-full text-left px-4 py-2 rounded-md bg-Primary/5 text-Primary font-medium">
+                Personal Information
+              </button>
+              <button className="w-full text-left px-4 py-2 rounded-md text-gray-700 hover:bg-gray-50">
+                Security
+              </button>
+              <button className="w-full text-left px-4 py-2 rounded-md text-gray-700 hover:bg-gray-50">
+                Notifications
+              </button>
+              
+              {/* Logout button at bottom */}
+              <div className="mt-auto">
+                <button 
+                  onClick={() => setLogoutOpen(true)}
+                  className="w-full text-left px-4 py-2 rounded-md text-red-600 hover:bg-red-50"
+                >
+                  Logout
+                </button>
               </div>
             </div>
           </div>
-        </div>
-        <div className="gap-4 grid">
-          <div className="flex justify-between items-center">
-            <h2 className="font-semibold text-xl">Addresses</h2>
-            {(!profile.addresses || profile.addresses.length < 2) && (
-              <Button
-                onClick={handleAddAddress}
-                className="bg-[#236C13] hover:bg-[#236C13]/90"
-              >
-                <Plus className="mr-2 w-4 h-4" />
-                Add Address
-              </Button>
-            )}
-          </div>
-          <div className="gap-4 grid">
-            {profile.addresses?.map((address, index) => (
-              <AddressForm
-                key={index}
-                address={address}
-                onUpdate={(updatedAddress) =>
-                  handleUpdateAddress(index, updatedAddress)
-                }
-                onDelete={() => handleDeleteAddress(index)}
-              />
-            ))}
+
+          {/* Form Sections */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* Personal Information Card */}
+            <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+              <div className="border-b border-gray-200 bg-gray-50 px-6 py-4">
+                <h2 className="text-lg font-medium text-gray-900">Personal Information</h2>
+                <p className="mt-1 text-sm text-gray-600">
+                  Update your personal details and contact information
+                </p>
+              </div>
+              <div className="px-6 py-6 space-y-6">
+                <EmailField
+                  label="Email Address"
+                  value={profile.email}
+                  onUpdate={(value) => handleUpdate("email", value)}
+                  type="email"
+                  required
+                />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <ProfileField
+                    label="First Name"
+                    value={profile.firstName}
+                    onUpdate={(value) => handleUpdate("firstName", value)}
+                    required
+                  />
+                  <ProfileField
+                    label="Last Name"
+                    value={profile.lastName}
+                    onUpdate={(value) => handleUpdate("lastName", value)}
+                    required
+                  />
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <ProfileField
+                    label="Primary Phone"
+                    value={profile.phoneNumbers[0].number}
+                    onUpdate={(value) =>
+                      handleUpdate("phoneNumbers", [value, profile.phoneNumbers[1].number])
+                    }
+                    required
+                  />
+                  <ProfileField
+                    label="Secondary Phone"
+                    value={profile.phoneNumbers[1].number}
+                    onUpdate={(value) =>
+                      handleUpdate("phoneNumbers", [profile.phoneNumbers[0].number, value])
+                    }
+                  />
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <ProfileField
+                    label="Date of Birth"
+                    value={profile.dateOfBirth || ""}
+                    onUpdate={(value) => handleUpdate("dateOfBirth", value)}
+                    type="date"
+                  />
+                  <div className="flex flex-col justify-end">
+                    <Link
+                      to="/forget-password"
+                      className="inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-Primary hover:bg-Primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-Primary"
+                    >
+                      Change Password
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Security Card */}
+            <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+              <div className="border-b border-gray-200 bg-gray-50 px-6 py-4">
+                <h2 className="text-lg font-medium text-gray-900">Security</h2>
+                <p className="mt-1 text-sm text-gray-600">
+                  Manage your account security settings
+                </p>
+              </div>
+              <div className="px-6 py-6 space-y-6">
+                <div className="flex flex-col space-y-4">
+                  <Link
+                    to="/forget-password"
+                    className="inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-Primary hover:bg-Primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-Primary w-full sm:w-auto"
+                  >
+                    Change Password
+                  </Link>
+                  
+                  <div className="border-t pt-4">
+                    <h3 className="text-lg font-medium text-gray-900 mb-2">Danger Zone</h3>
+                    <p className="text-sm text-gray-600 mb-4">
+                      Once you delete your account, there is no going back. Please be certain.
+                    </p>
+                    <button
+                      onClick={() => setDeleteAccountOpen(true)}
+                      className="inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 w-full sm:w-auto"
+                    >
+                      Delete Account
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Addresses Card */}
+            <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+              <div className="border-b border-gray-200 bg-gray-50 px-6 py-4 flex justify-between items-center">
+                <div>
+                  <h2 className="text-lg font-medium text-gray-900">Addresses</h2>
+                  <p className="mt-1 text-sm text-gray-600">
+                    Manage your delivery addresses
+                  </p>
+                </div>
+                {(!profile.addresses || profile.addresses.length < 2) && (
+                  <Button
+                    onClick={handleAddAddress}
+                    className="bg-Primary hover:bg-Primary/90 text-white"
+                  >
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add Address
+                  </Button>
+                )}
+              </div>
+              <div className="p-6 space-y-6">
+                {profile.addresses?.map((address, index) => (
+                  <AddressForm
+                    key={index}
+                    address={address}
+                    onUpdate={(updatedAddress) =>
+                      handleUpdateAddress(index, updatedAddress)
+                    }
+                    onDelete={() => handleDeleteAddress(index)}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
 }
+
+// Add PropTypes to components
+EmailField.propTypes = fieldPropTypes;
+ProfileField.propTypes = fieldPropTypes;
+PhoneNumberField.propTypes = {
+  phoneNumbers: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onUpdate: PropTypes.func.isRequired,
+};
+AddressForm.propTypes = addressPropTypes;
 
 export function EmailField({
   label,
@@ -577,23 +677,30 @@ export function AddressForm({ address, onUpdate, onDelete }) {
   };
 
   return (
-    <Card className="space-y-4 p-4">
-      <div className="flex justify-between items-center">
-        <div className="flex items-center space-x-2">
-          <MapPin className="w-5 h-5 text-[#F8912D]" />
-          <h3 className="font-medium">Address</h3>
+    <div className="bg-gray-50 rounded-lg p-6">
+      <div className="flex justify-between items-center mb-4">
+        <div className="flex items-center space-x-3">
+          <MapPin className="w-5 h-5 text-Primary" />
+          <h3 className="font-medium text-gray-900">
+            {address.name || "New Address"}
+          </h3>
         </div>
-        <div className="space-x-2">
-          {!isEditing && (
+        <div className="flex items-center space-x-2">
+          {!isEditing ? (
             <Button
               variant="outline"
               onClick={() => setIsEditing(true)}
-              className="border-[#236C13] hover:bg-[#21CA1B]/10"
+              className="border-Primary text-Primary hover:bg-Primary/5"
             >
               Edit
             </Button>
-          )}
-          <Button variant="destructive" onClick={onDelete} disabled={isLoading}>
+          ) : null}
+          <Button 
+            variant="ghost" 
+            onClick={onDelete} 
+            disabled={isLoading}
+            className="text-red-600 hover:bg-red-50 hover:text-red-700"
+          >
             Delete
           </Button>
         </div>
@@ -685,6 +792,6 @@ export function AddressForm({ address, onUpdate, onDelete }) {
           )}
         </div>
       )}
-    </Card>
+    </div>
   );
 }
