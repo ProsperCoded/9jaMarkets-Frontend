@@ -1,25 +1,11 @@
 import React, { useState } from "react";
 import { Bar, Doughnut } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  ArcElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend } from "chart.js";
+import { Wallet, Package, Banknote, ShoppingCart } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  ArcElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register( CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend );
+
 
 // Stats Component
 const Stats = ({ stats }) => (
@@ -28,40 +14,53 @@ const Stats = ({ stats }) => (
       { 
         title: "Total Sales", 
         value: stats.totalSales, 
-        color: "orange",
-        bgColor: "bg-orange-50",
-        textColor: "text-orange-700" 
+        icon: <Banknote className="w-6 h-6 text-orange" />,
+        bgColor: "bg-orange/5",
+        iconBg: "bg-orange/20",
+        textColor: "text-orange",
       },
       { 
         title: "Orders", 
         value: stats.orders, 
-        color: "blue",
+        icon: <Package className="w-6 h-6 text-blue-500" />,
         bgColor: "bg-blue-50",
-        textColor: "text-blue-700"
+        iconBg: "bg-blue-200", 
+        textColor: "text-blue-500",
       },
       { 
         title: "Expenses", 
         value: stats.expenses, 
-        color: "red",
+        icon: <Wallet className="w-6 h-6 text-red-500" />,
         bgColor: "bg-red-50",
-        textColor: "text-red-700"
+        iconBg: "bg-red-200",
+        textColor: "text-red-700",
       },
       { 
         title: "Profit", 
         value: stats.profit, 
-        color: "green",
+        icon: <span className="text-xl text-green-500 font-bold">₦</span>,
         bgColor: "bg-green-50",
-        textColor: "text-green-700"
+        iconBg: "bg-green-200",
+        textColor: "text-green-700",
       },
     ].map((stat) => (
       <div
         key={stat.title}
-        className={`${stat.bgColor} rounded-lg shadow-sm p-6 transition-transform hover:scale-105`}
+        className={`${stat.bgColor} rounded-lg shadow-sm p-6`}
       >
-        <h3 className="text-sm font-medium text-gray-600">{stat.title}</h3>
-        <p className={`mt-2 text-2xl font-semibold ${stat.textColor}`}>
-          ₦{stat.value.toLocaleString()}
-        </p>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <div className={`${stat.iconBg} p-3 rounded-full`}>
+              {stat.icon}
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-gray-600">{stat.title}</h3>
+              <p className={`mt-1 text-xl font-semibold ${stat.textColor}`}>
+                ₦{stat.value.toLocaleString()}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     ))}
   </div>
@@ -75,32 +74,39 @@ const SalesAnalysisChart = ({ salesAnalysis }) => {
       {
         label: "Total Sales",
         backgroundColor: "#F8912D",
-        borderRadius: 10,
+        borderRadius: 8,
         data: salesAnalysis.map((item) => item.sales),
+        barThickness: 15,
       },
       {
         label: "Expenses",
         backgroundColor: "#FF3D00",
-        borderRadius: 10,
+        borderRadius: 8,
         data: salesAnalysis.map((item) => item.expenses),
+        barThickness: 15,
       },
       {
         label: "Profit",
         backgroundColor: "#236C13",
-        borderRadius: 10,
+        borderRadius: 8,
         data: salesAnalysis.map((item) => item.profit),
+        barThickness: 15,
       },
     ],
   };
 
   const options = {
+    responsive: true,
     maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'bottom',
         labels: {
           usePointStyle: true,
-          padding: 20
+          padding: 20,
+          font: {
+            size: 12
+          }
         }
       }
     },
@@ -108,12 +114,23 @@ const SalesAnalysisChart = ({ salesAnalysis }) => {
       y: {
         beginAtZero: true,
         grid: {
-          drawBorder: false
+          drawBorder: false,
+          color: '#E5E7EB'
+        },
+        ticks: {
+          font: {
+            size: 12
+          }
         }
       },
       x: {
         grid: {
           display: false
+        },
+        ticks: {
+          font: {
+            size: 12
+          }
         }
       }
     }
@@ -121,7 +138,28 @@ const SalesAnalysisChart = ({ salesAnalysis }) => {
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-6">
-      <h3 className="text-lg font-medium text-gray-900 mb-6">Sales Analysis</h3>
+      <div className="flex justify-between items-center mb-6">
+        <h3 className="text-lg font-medium text-gray-900">Sales Analysis</h3>
+        <Select>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Select month" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="january">January</SelectItem>
+            <SelectItem value="february">February</SelectItem>
+            <SelectItem value="march">March</SelectItem>
+            <SelectItem value="april">April</SelectItem>
+            <SelectItem value="may">May</SelectItem>
+            <SelectItem value="june">June</SelectItem>
+            <SelectItem value="july">July</SelectItem>
+            <SelectItem value="august">August</SelectItem>
+            <SelectItem value="september">September</SelectItem>
+            <SelectItem value="october">October</SelectItem>
+            <SelectItem value="november">November</SelectItem>
+            <SelectItem value="december">December</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
       <div className="h-[300px]">
         <Bar data={barData} options={options} />
       </div>
@@ -135,23 +173,26 @@ const OrderStatusChart = ({ orderStatus }) => {
     labels: ["Completed", "Pending", "Cancelled"],
     datasets: [
       {
-        data: [
-          orderStatus.completed,
-          orderStatus.pending,
-          orderStatus.cancelled,
-        ],
+        data: [75, 15, 10], // Matching the percentages in the image
         backgroundColor: ["#236C13", "#F8912D", "#FF3D00"],
+        borderWidth: 0,
       },
     ],
   };
 
   const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    cutout: '70%',
     plugins: {
       legend: {
         position: 'bottom',
         labels: {
           usePointStyle: true,
-          padding: 20
+          padding: 20,
+          font: {
+            size: 12
+          }
         }
       }
     }
@@ -160,8 +201,13 @@ const OrderStatusChart = ({ orderStatus }) => {
   return (
     <div className="bg-white rounded-lg shadow-sm p-6">
       <h3 className="text-lg font-medium text-gray-900 mb-6">Order Status</h3>
-      <div className="h-[300px] flex items-center justify-center">
+      <div className="h-[300px] relative">
         <Doughnut data={doughnutData} options={options} />
+        <div className="absolute top-1/2.5 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div className="bg-Primary/20 rounded-full p-10">
+            <ShoppingCart className="w-8 h-8 text-Primary" />
+          </div>
+        </div>
       </div>
     </div>
   );

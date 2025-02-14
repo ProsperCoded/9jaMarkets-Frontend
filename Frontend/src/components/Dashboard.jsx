@@ -1,30 +1,8 @@
 import React, { useContext, useState } from "react";
-import { 
-  Trash, 
-  Store, 
-  UserRound, 
-  Pencil,
-  Home,
-  Package,
-  Users,
-  MessageSquare,
-  LogOut,
-  ChevronRight,
-  X
-} from "lucide-react";
-import { Button } from "./ui/button";
-import {
-  Link,
-  Outlet,
-  useParams,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
+import { Store, UserRound, Settings, Home, Package, Users, MessageSquare, LogOut, ChevronRight, X } from "lucide-react";
+import { Link, Outlet, useParams, useNavigate, useLocation } from "react-router-dom";
 import { Avatar } from "antd";
-import {
-  USER_PROFILE_CONTEXT,
-  LOGOUT_MODAL_CONTEXT,
-} from "@/contexts";
+import { USER_PROFILE_CONTEXT, LOGOUT_MODAL_CONTEXT } from "@/contexts";
 
 const Dashboard = () => {
   const { subpage } = useParams();
@@ -93,7 +71,7 @@ const Dashboard = () => {
             <div className="px-4">
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-lg"
+                className="absolute top-2 right-2 p-2 hover:bg-gray-100 rounded-lg"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -142,7 +120,7 @@ const SidebarContent = ({
       <div className="flex-1 overflow-y-auto">
         <div className="flex items-center mb-8 pt-8 rounded-lg transition-colors">
           <Avatar
-            style={{ backgroundColor: "#236C13", verticalAlign: "middle" }}
+            style={{ backgroundColor: "#F8912D", verticalAlign: "middle" }}
             size="large"
           >
             <span className="font-semibold">{name[0]}</span>
@@ -153,7 +131,7 @@ const SidebarContent = ({
               className="absolute -right-10 top-0 bg-Primary p-2 rounded-full transition-transform hover:scale-105"
               onClick={() => navigate("/dashboard/edit")}
             >
-              <Pencil className="w-4 h-4" color="white" />
+              <Settings className="w-4 h-4" color="white" />
             </button>
             <p className="text-sm">{userProfile.phoneNumbers[0].number}</p>
           </div>

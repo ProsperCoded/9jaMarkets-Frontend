@@ -1,8 +1,7 @@
 import { useState, useContext, useMemo } from "react";
-import searchIcon from "../assets/search.svg";
 import { Link } from "react-router-dom";
 import { STATES } from "../config";
-import { MapPin, Store, ShoppingBag, Filter, X, Building2, MapPinOff } from "lucide-react";
+import { MapPin, Store, ShoppingBag, Filter, X, Building2, MapPinOff, Search } from "lucide-react";
 import { MARKET_DATA_CONTEXT } from "@/contexts";
 
 const MarketPage = () => {
@@ -69,9 +68,10 @@ const MarketPage = () => {
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="border-2 border-Primary px-4 py-2.5 pr-12 pl-5 rounded-full focus:ring-2 focus:ring-Primary/20 w-full text-sm transition-all focus:outline-none"
                 />
-                <div className="top-1/2 right-4 absolute transform -translate-y-1/2">
-                  <img src={searchIcon} alt="Search" className="w-5 h-5" />
-                </div>
+                <Search
+                  size={20}
+                  className="absolute top-1/2 right-4 transform -translate-y-1/2 text-Primary pointer-events-none"
+                />
               </div>
               <button
                 onClick={() => setShowFilters(true)}
