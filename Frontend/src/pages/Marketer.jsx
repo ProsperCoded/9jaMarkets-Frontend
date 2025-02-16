@@ -11,7 +11,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
     },
     {
       title: "Refer Merchants",
-      description: "Introduce vendors, store owners, or entrepreneurs to 9ja Market and help them sign up.",
+      description: "Introduce vendors, store owners, or entrepreneurs to 9jaMarkets and help them sign up.",
       icon: <Users className="w-6 h-6 text-Primary" />,
     },
     {
