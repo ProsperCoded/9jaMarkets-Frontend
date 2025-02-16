@@ -9,8 +9,6 @@ import {
 } from "../lib/api/authApi";
 import { useNavigate } from "react-router-dom";
 import { storeAuth } from "../lib/util";
-import { ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
 import LoadingPage from "./LoadingPage";
 const GoogleSigninRedirect = () => {
   const location = useLocation();
@@ -52,7 +50,7 @@ const GoogleSigninRedirect = () => {
         storeAuth(data.id, data.accessToken, data.refreshToken, userType, true);
       }
       messageApi.success("Login successful");
-      navigate("/");
+      navigate("/mainpage");
     } catch (error) {
       errorLogger(error);
     }
