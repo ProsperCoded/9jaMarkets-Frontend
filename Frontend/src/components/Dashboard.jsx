@@ -60,18 +60,22 @@ const Dashboard = () => {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="lg:hidden fixed inset-0 z-50">
-          {/* Backdrop */}
+          {/* Backdrop with fade animation */}
           <div
-            className="fixed inset-0 bg-black/50"
+            className="fixed inset-0 bg-black/50 transition-opacity duration-300 ease-in-out"
             onClick={() => setIsMobileMenuOpen(false)}
           />
           
-          {/* Sidebar */}
-          <aside className="fixed top-0 left-0 w-64 h-screen bg-white shadow-lg">
+          {/* Sidebar with slide animation */}
+          <aside 
+            className={`fixed top-0 left-0 w-64 h-screen bg-white shadow-lg transform transition-transform duration-300 ease-out ${
+              isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+            }`}
+          >
             <div className="px-4">
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="absolute top-2 right-2 p-2 hover:bg-gray-100 rounded-lg"
+                className="absolute top-2 right-2 p-2 hover:bg-gray-100 rounded-lg transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -80,7 +84,10 @@ const Dashboard = () => {
                 userProfile={userProfile}
                 location={location}
                 menuItems={menuItems}
-                navigate={navigate}
+                navigate={(path) => {
+                  navigate(path);
+                  setIsMobileMenuOpen(false);
+                }}
                 setLogoutOpen={setLogoutOpen}
               />
             </div>
@@ -95,10 +102,10 @@ const Dashboard = () => {
         </div>
       </main>
 
-      {/* Mobile Menu Button */}
+      {/* Mobile Menu Button with slide animation */}
       <button
         onClick={() => setIsMobileMenuOpen(true)}
-        className="lg:hidden fixed left-0 top-1/3 bg-orange text-white p-2 py-5 rounded-r-xl shadow-lg flex items-center"
+        className="lg:hidden fixed left-0 top-1/3 bg-orange text-white p-2 py-5 rounded-r-xl shadow-lg flex items-center transform transition-transform duration-300 ease-in-out hover:translate-x-1"
       >
         <ChevronRight className="w-5 h-5" />
       </button>

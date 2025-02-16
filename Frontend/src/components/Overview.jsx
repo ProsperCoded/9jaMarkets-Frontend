@@ -130,7 +130,9 @@ const SalesAnalysisChart = ({ salesAnalysis }) => {
           font: {
             size: 11
           }
-        }
+        },
+        barPercentage: 0.8,
+        categoryPercentage: 0.7
       }
     }
   };
@@ -174,6 +176,7 @@ const OrderStatusChart = ({ orderStatus }) => {
       {
         data: [75, 15, 10],
         backgroundColor: ["#236C13", "#F8912D", "#FF3D00"],
+        borderWidth: 0,
       },
     ],
   };
@@ -181,34 +184,36 @@ const OrderStatusChart = ({ orderStatus }) => {
   const options = {
     responsive: true,
     maintainAspectRatio: false,
-    cutout: '70%',
+    cutout: '65%',
     plugins: {
       legend: {
         position: 'right',
         align: 'center',
         labels: {
           usePointStyle: true,
-          padding: 15,
-          boxWidth: 6,
+          padding: 20,
+          boxWidth: 8,
           font: {
             size: 11
           },
           generateLabels: function(chart) {
             const data = chart.data;
             if (data.labels.length && data.datasets.length) {
-              return data.labels.map((label, i) => {
-                const dataset = data.datasets[0];
-                return {
-                  text: `${label} ${dataset.data[i]}%`,
-                  fillStyle: dataset.backgroundColor[i],
-                  hidden: false,
-                  index: i
-                };
-              });
+              return data.labels.map((label, i) => ({
+                text: `${label} ${data.datasets[0].data[i]}%`,
+                fillStyle: data.datasets[0].backgroundColor[i],
+                hidden: false,
+                index: i
+              }));
             }
             return [];
           }
         }
+      }
+    },
+    layout: {
+      padding: {
+        right: 80
       }
     }
   };
@@ -218,11 +223,6 @@ const OrderStatusChart = ({ orderStatus }) => {
       <h3 className="text-base font-medium text-gray-900 mb-4">Order Status</h3>
       <div className="h-[250px] relative">
         <Doughnut data={doughnutData} options={options} />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div className="bg-Primary/20 rounded-full p-8">
-            <ShoppingCart className="w-6 h-6 text-Primary" />
-          </div>
-        </div>
       </div>
     </div>
   );

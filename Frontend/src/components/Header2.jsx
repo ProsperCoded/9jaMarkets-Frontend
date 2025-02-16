@@ -79,10 +79,18 @@ const Header2 = () => {
       {/* Add a spacer div to prevent content from going under the header */}
       <div className="h-14"></div>
 
-      {/* Mobile Side Panel (Only Nav Links) */}
+      {/* Mobile Side Panel */}
       {isMenuOpen && (
         <div className="z-[60] fixed inset-0">
-          <div className="top-0 right-0 absolute grid grid-rows-[auto_1fr_auto] bg-black bg-opacity-20 backdrop-blur-md p-6 w-1/2 h-full text-lg text-white overflow-y-auto">
+          <div 
+            className="fixed inset-0 bg-black/50 transition-opacity duration-300"
+            onClick={toggleMenu}
+          />
+          <div 
+            className={`fixed top-0 right-0 grid grid-rows-[auto_1fr_auto] bg-black bg-opacity-20 backdrop-blur-md p-6 w-1/2 h-full text-lg text-white overflow-y-auto transform transition-transform duration-300 ease-out ${
+              isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+            }`}
+          >
             {/* Close Button */}
             <div className="flex justify-end">
               <X
