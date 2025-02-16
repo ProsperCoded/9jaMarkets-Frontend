@@ -154,7 +154,7 @@ const SidebarContent = ({
                 <Link
                   to={item.path}
                   onClick={() => navigate(item.path)}
-                  className={`flex items-center space-x-3 p-2 rounded-lg transition-colors hover:bg-Primary hover:text-white ${
+                  className={`flex items-center space-x-3 p-2 rounded-lg transition-colors hover:bg-Primary/20 ${
                     location.pathname === item.path ? 'bg-Primary text-white' : ''
                   }`}
                 >
@@ -188,14 +188,14 @@ function UserOptions() {
         <div className="flex flex-col space-y-2">
           <Link
             to="/dashboard/products"
-            className="flex items-center space-x-2 p-2 rounded-lg hover:bg-Primary hover:text-white"
+            className="flex items-center space-x-2 p-2 rounded-lg hover:bg-Primary/20 "
           >
             <Store className="w-5 h-5" />
             <span>Sign in as Merchant</span>
           </Link>
           <Link
             to="/merchant-signup"
-            className="flex items-center space-x-2 p-2 rounded-lg hover:bg-Primary hover:text-white"
+            className="flex items-center space-x-2 p-2 rounded-lg hover:bg-Primary/20 "
           >
             <UserRound className="w-5 h-5" />
             <span>Sign up as Merchant</span>

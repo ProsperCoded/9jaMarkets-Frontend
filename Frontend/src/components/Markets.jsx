@@ -35,7 +35,7 @@ const MarketPage = () => {
   return (
     <div className="relative z-0 flex flex-col bg-gray-50 min-h-screen">
       {/* Header Navigation */}
-      <div className="top-0 z-[20] sticky bg-white shadow-sm">
+      <div className="top-0 z-20 sticky bg-white shadow-sm">
         {/* Market/Mall Switch */}
         <div className="absolute left-0 top-0 h-full flex items-center pl-8">
           <div className="flex items-center space-x-6">
@@ -86,14 +86,14 @@ const MarketPage = () => {
 
       {/* Mobile Filter Drawer */}
       <div
-        className={`fixed inset-0 bg-black/50 z-[40] transition-opacity duration-300 md:hidden ${
+        className={`fixed inset-0 bg-black/50 z-40 transition-opacity duration-300 md:hidden ${
           showFilters ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setShowFilters(false)}
       />
 
       <div
-        className={`fixed top-0 right-0 h-full w-[280px] bg-white z-[41] transform transition-transform duration-300 ease-in-out md:hidden ${
+        className={`fixed top-0 right-0 h-full w-[280px] bg-white z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
           showFilters ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -133,7 +133,7 @@ const MarketPage = () => {
       {/* Main Content */}
       <div className="flex flex-1">
         {/* Desktop Sidebar */}
-        <aside className="md:block top-[85px] sticky hidden bg-white p-6 w-72 lg:w-80 h-[calc(100vh-85px)] overflow-y-auto z-[16]">
+        <aside className="md:block top-[85px] sticky hidden bg-white p-6 w-72 lg:w-80 h-[calc(100vh-85px)] overflow-y-auto z-30">
           <h3 className="mb-4 font-semibold text-lg">Select State</h3>
           <div className="gap-2 grid">
             {STATES.map((state) => (

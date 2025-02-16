@@ -22,7 +22,7 @@ const Footer = () => {
         { name: "Safety Tips", href: "/safety" },
         { name: "Contact Us", href: "/contact" },
         { name: "FAQ", href: "/faq" },
-        { name: "Place Ads", href: "/ads" },
+        { name: "Become a Marketer", href: "/marketer" },
         { name: "Invest", href: "/invest" },
       ]
     },
@@ -34,7 +34,7 @@ const Footer = () => {
         <div className="flex flex-wrap justify-between gap-8">
           {/* Logo Section */}
           <div className="w-full md:w-auto flex justify-center md:justify-start">
-            <img src={logo} alt="9ja Markets Logo" className="h-10" />
+            <img src={logo} alt="9jaMarkets Logo" className="h-10" />
           </div>
           
           {/* About Us Section */}
@@ -107,7 +107,7 @@ const Footer = () => {
         <div className="mt-8 pt-6 border-t border-white/20">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-sm">
-              &copy; {new Date().getFullYear()} 9ja Markets. All rights reserved.
+              &copy; {new Date().getFullYear()} 9jaMarkets. All rights reserved.
             </div>
             <div className="flex space-x-4">
               <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-orange">

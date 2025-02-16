@@ -6,9 +6,9 @@ const FAQ = () => {
 
   const categories = {
     general: "General Questions",
-    buying: "Buying on 9ja Market",
+    buying: "Buying on 9jaMarkets",
     payments: "Payments & Refunds",
-    selling: "Selling on 9ja Market",
+    selling: "Selling on 9jaMarkets",
     shipping: "Shipping & Delivery",
     security: "Security & Support"
   };
@@ -16,19 +16,19 @@ const FAQ = () => {
   const faqs = {
     general: [
       {
-        question: "What is 9ja Market?",
-        answer: "9ja Market is Nigeria&apos;s premier online marketplace that connects buyers and sellers, making it easy to buy and sell goods securely."
+        question: "What is 9jaMarkets?",
+        answer: "9jaMarkets is Nigeria's premier online marketplace that connects buyers and sellers, making it easy to buy and sell goods securely."
       },
       {
-        question: "Do I need an account to shop on 9ja Market?",
+        question: "Do I need an account to shop on 9jaMarkets?",
         answer: "Yes, creating a free account allows you to track orders, communicate with sellers, and enjoy a personalized shopping experience."
       },
       {
-        question: "Is 9ja Market available nationwide?",
-        answer: "Yes, 9ja Market operates across Nigeria, allowing buyers and sellers to connect from different states."
+        question: "Is 9jaMarkets available nationwide?",
+        answer: "Yes, 9jaMarkets operates across Nigeria, allowing buyers and sellers to connect from different states."
       },
       {
-        question: "Is shopping on 9ja Market safe?",
+        question: "Is shopping on 9jaMarkets safe?",
         answer: "Absolutely! We use secure payment gateways and enforce strict seller verification to ensure safe transactions."
       }
     ],
@@ -39,7 +39,7 @@ const FAQ = () => {
       },
       {
         question: "How do I place an order?",
-        answer: "Browse or search for your desired product, click Buy Now or Add to Cart, proceed to checkout and complete payment, then wait for delivery confirmation."
+        answer: "Browse or search for your desired product, click Bthe bookmark icon, proceed to the bookmark page, contact the seller and make payment."
       },
       {
         question: "Can I cancel an order after placing it?",
@@ -70,12 +70,12 @@ const FAQ = () => {
         answer: "Click Sign Up as a Seller, provide business details, and upload your first product listing to start selling."
       },
       {
-        question: "Are there fees for selling on 9ja Market?",
+        question: "Are there fees for selling on 9jaMarkets?",
         answer: "Basic listings are free, but premium ads and featured placements come with a fee for better visibility."
       },
       {
         question: "How do I receive payments from customers?",
-        answer: "Payments are processed through 9ja Market's secure system and transferred to your registered bank account."
+        answer: "Payments are processed through 9jaMarkets's secure system and transferred to your registered bank account."
       }
     ],
     shipping: [
@@ -95,11 +95,11 @@ const FAQ = () => {
     security: [
       {
         question: "How do I report a fraudulent seller or scam?",
-        answer: "Click the Report User button on their profile or email report@9jamarket.com with details."
+        answer: "Click the Report User button on their profile or email report@9jaMarkets.com with details."
       },
       {
         question: "Can I delete my account?",
-        answer: "Yes, go to Account Settings and request account deletion, or contact support@9jamarket.com."
+        answer: "Yes, go to Account Settings and request account deletion, or contact support@9jaMarkets.com."
       },
       {
         question: "What should I do if I forget my password?",
@@ -155,8 +155,8 @@ const FAQ = () => {
           </p>
           <p className="text-gray-700">
             Contact our support team at{' '}
-            <a href="mailto:support@9jamarket.com" className="text-Primary hover:underline">
-              support@9jamarket.com
+            <a href="mailto:support@9jaMarkets.com" className="text-Primary hover:underline">
+              support@9jaMarkets.com
             </a>
             {' '}or call our helpline at +234 XXX-XXX-XXXX
           </p>
