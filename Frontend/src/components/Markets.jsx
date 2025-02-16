@@ -243,10 +243,10 @@ const MarketPage = () => {
                         Clear Search
                       </button>
                       <Link
-                        to="/markets"
+                        to="/include-market"
                         className="px-4 py-2 bg-Primary text-white rounded-full hover:bg-Primary/90 transition-colors text-sm whitespace-nowrap"
                       >
-                        Explore All Markets
+                        Include Your Market
                       </Link>
                     </div>
                   </div>
