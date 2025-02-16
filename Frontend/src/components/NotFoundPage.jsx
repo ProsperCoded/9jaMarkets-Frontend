@@ -74,12 +74,12 @@ const NotFoundPage = () => {
                 <span className="text-sm">Need help?</span>
               </div>
               <div className="mt-2 text-sm space-x-2">
-                <Link to="/support" className="text-Primary hover:underline">
-                  Support Page
-                </Link>
-                <span>•</span>
                 <Link to="/contact" className="text-Primary hover:underline">
                   Contact Us
+                </Link>
+                <span>•</span>
+                <Link to="/marketer" className="text-Primary hover:underline">
+                  Become a Marketer
                 </Link>
               </div>
             </div>

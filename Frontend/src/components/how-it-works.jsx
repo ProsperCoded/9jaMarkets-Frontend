@@ -12,17 +12,17 @@ const HowItWorksPage = () => {
 
   const testimonials = [
     {
-      quote: "I love how easy it is to find markets and products on 9ja Markets. It's my go-to for shopping local!",
+      quote: "I love how easy it is to find markets and products on 9jaMarkets. It's my go-to for shopping local!",
       author: "Ada",
       role: "Buyer"
     },
     {
-      quote: "Since joining 9ja Markets, my sales have doubled! It's easy to use, and buyers find me quickly.",
+      quote: "Since joining 9jaMarkets, my sales have doubled! It's easy to use, and buyers find me quickly.",
       author: "Chike",
       role: "Merchant"
     },
     {
-      quote: "9ja Markets helped me discover vendors I would never have found on my own. It's an amazing tool!",
+      quote: "9jaMarkets helped me discover vendors I would never have found on my own. It's an amazing tool!",
       author: "Tunde",
       role: "Buyer"
     },
@@ -61,7 +61,7 @@ const HowItWorksPage = () => {
         
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
-            How 9ja Markets Works
+            How 9jaMarkets Works
           </h1>
           <p className="text-xl text-white/90 mb-8">
             Your gateway to seamless market connections.
@@ -131,7 +131,7 @@ const HowItWorksPage = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">Create Your Profile</h3>
               <p className="text-gray-600">
-                Sign up for free and list your business on 9ja Markets.
+                Sign up for free and list your business on 9jaMarkets.
               </p>
             </div>
             

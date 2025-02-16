@@ -34,66 +34,83 @@ const MarketPage = () => {
 
   return (
     <div className="relative z-0 flex flex-col bg-gray-50 min-h-screen">
-      {/* Header Navigation */}
-      <div className="top-0 z-[20] sticky bg-white shadow-sm">
-        {/* Market/Mall Switch */}
-        <div className="absolute left-0 top-0 h-full flex items-center pl-8">
-          <div className="flex items-center space-x-6">
+      {/* Header Navigation - Updated positioning */}
+      <div className="sticky top-[55px] z-20 bg-white shadow-sm">
+        {/* Removed container class to allow full-width alignment */}
+        <div className="flex items-center h-16">
+          {/* Market/Mall Switch - Aligned exactly with sidebar */}
+          <div className="hidden md:flex items-center space-x-6 w-72 lg:w-80 pl-6">
             <Link
               to="/markets"
-              className="flex items-center gap-2 hover:opacity-90 font-bold text-lg text-Primary transition-opacity py-4"
+              className="flex items-center gap-2 hover:opacity-90 font-bold text-lg text-Primary transition-opacity"
             >
               <Store className="w-5 h-5" />
-              Markets
+              <span>Markets</span>
             </Link>
             <Link
               to="/malls"
-              className="flex items-center gap-2 text-gray-600 text-lg hover:text-Primary transition-colors py-4"
+              className="flex items-center gap-2 text-gray-600 text-lg hover:text-Primary transition-colors"
             >
               <ShoppingBag className="w-5 h-5" />
-              Malls
+              <span>Malls</span>
             </Link>
           </div>
-        </div>
 
-        {/* Search Bar - Centered */}
-        <div className="mx-auto px-4 container h-16">
-          <div className="flex justify-center items-center h-full">
-            <div className="flex items-center gap-2 max-w-2xl w-full">
-              <div className="relative flex-1">
+          {/* Mobile Market/Mall Switch */}
+          <div className="flex md:hidden items-center space-x-4 px-4">
+            <Link
+              to="/markets"
+              className="flex items-center gap-1 hover:opacity-90 font-bold text-Primary transition-opacity"
+            >
+              <Store className="w-5 h-5" />
+            </Link>
+            <Link
+              to="/malls"
+              className="flex items-center gap-1 text-gray-600 hover:text-Primary transition-colors"
+            >
+              <ShoppingBag className="w-5 h-5" />
+            </Link>
+          </div>
+
+          {/* Search Bar - Centered in remaining space */}
+          <div className="flex-1 flex justify-center px-4">
+            <div className="w-full max-w-xl">
+              <div className="relative">
                 <input
                   type="text"
                   placeholder={`Search ${selectedState} markets...`}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="border-2 border-Primary px-4 py-2.5 pr-12 pl-5 rounded-full focus:ring-2 focus:ring-Primary/20 w-full text-sm transition-all focus:outline-none"
+                  className="w-full border-2 border-Primary px-4 py-2 pr-12 pl-5 rounded-full focus:ring-2 focus:ring-Primary/20 text-sm transition-all focus:outline-none"
                 />
                 <Search
                   size={20}
                   className="absolute top-1/2 right-4 transform -translate-y-1/2 text-Primary pointer-events-none"
                 />
               </div>
-              <button
-                onClick={() => setShowFilters(true)}
-                className="flex justify-center items-center md:hidden bg-Primary rounded-full w-10 h-10 text-white"
-              >
-                <Filter size={20} />
-              </button>
             </div>
           </div>
+
+          {/* Filter Button */}
+          <button
+            onClick={() => setShowFilters(true)}
+            className="md:hidden flex items-center justify-center bg-Primary rounded-full w-10 h-10 text-white mr-4"
+          >
+            <Filter size={20} />
+          </button>
         </div>
       </div>
 
       {/* Mobile Filter Drawer */}
       <div
-        className={`fixed inset-0 bg-black/50 z-[40] transition-opacity duration-300 md:hidden ${
+        className={`fixed inset-0 bg-black/50 z-40 transition-opacity duration-300 md:hidden ${
           showFilters ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setShowFilters(false)}
       />
 
       <div
-        className={`fixed top-0 right-0 h-full w-[280px] bg-white z-[41] transform transition-transform duration-300 ease-in-out md:hidden ${
+        className={`fixed top-0 right-0 h-full w-[280px] bg-white z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
           showFilters ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -133,7 +150,14 @@ const MarketPage = () => {
       {/* Main Content */}
       <div className="flex flex-1">
         {/* Desktop Sidebar */}
-        <aside className="md:block top-[85px] sticky hidden bg-white p-6 w-72 lg:w-80 h-[calc(100vh-85px)] overflow-y-auto z-[16]">
+        <aside 
+          className="md:block hidden bg-white p-6 w-72 lg:w-80 overflow-y-auto"
+          style={{
+            position: 'sticky',
+            top: '119px', // 55px (Header2) + 64px (Market nav)
+            height: 'calc(100vh - 119px)', // Viewport - (Header2 + Market nav)
+          }}
+        >
           <h3 className="mb-4 font-semibold text-lg">Select State</h3>
           <div className="gap-2 grid">
             {STATES.map((state) => (
@@ -219,10 +243,10 @@ const MarketPage = () => {
                         Clear Search
                       </button>
                       <Link
-                        to="/markets"
+                        to="/include-market"
                         className="px-4 py-2 bg-Primary text-white rounded-full hover:bg-Primary/90 transition-colors text-sm whitespace-nowrap"
                       >
-                        Explore All Markets
+                        Include Your Market
                       </Link>
                     </div>
                   </div>

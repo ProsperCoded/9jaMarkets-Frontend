@@ -1,4 +1,4 @@
-/**
+/** 
  * The main navigation bar of the application, containing the logo, navigation
  * links, icons, and profile picture. On mobile devices, the navigation links
  * are hidden and can be accessed by clicking the burger menu icon on the right
@@ -20,6 +20,7 @@ function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { userProfile } = useContext(USER_PROFILE_CONTEXT);
+
   // Handle scroll behavior
   const handleScroll = () => {
     setIsScrolled(window.scrollY > 50);
@@ -89,56 +90,56 @@ function Header() {
         </div>
 
         {/* Mobile Side Panel */}
-        {isMenuOpen && (
-          <div className="z-30 fixed inset-0">
-            <div 
-              className="fixed inset-0 bg-black/50 transition-opacity duration-300"
-              onClick={toggleMenu}
-            />
-            <div 
-              className={`fixed top-0 right-0 grid grid-rows-[auto_1fr_auto] bg-black bg-opacity-20 backdrop-blur-md p-6 w-1/2 h-full text-lg text-white overflow-y-auto transform transition-transform duration-300 ease-out ${
-                isMenuOpen ? 'translate-x-0' : 'translate-x-full'
-              }`}
-            >
-              {/* Close Button */}
-              <div className="flex justify-end">
-                <button 
-                  onClick={toggleMenu}
-                  className="p-2 hover:bg-white/10 rounded-full transition-colors"
-                >
-                  <X className="w-6 h-6 cursor-pointer" />
-                </button>
-              </div>
-              {/* Nav Links */}
-              <div className="align-top justify-start space-y-4">
-                <Link
-                  to="/"
-                  onClick={toggleMenu}
-                  className="block hover:text-orange"
-                >
-                  Home
-                </Link>
-                <Link
-                  to="/how-it-works"
-                  onClick={toggleMenu}
-                  className="block hover:text-orange"
-                >
-                  What we do
-                </Link>
-                <Link
-                  to="/markets"
-                  onClick={toggleMenu}
-                  className="block hover:text-orange"
-                >
-                  Markets
-                </Link>
-              </div>
-              <div className="mt-auto">
-                <UserAvatar showName={true} auth={true} />
-              </div>
+        <div
+          className={`z-30 fixed inset-0 transform transition-transform duration-300 ${
+            isMenuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <div
+            className="fixed inset-0 bg-black/50 transition-opacity duration-300"
+            onClick={toggleMenu}
+          />
+          <div
+            className="fixed top-0 right-0 grid grid-rows-[auto_1fr_auto] bg-black bg-opacity-20 backdrop-blur-md p-6 w-1/2 h-full text-lg text-white overflow-y-auto"
+          >
+            {/* Close Button */}
+            <div className="flex justify-end">
+              <button
+                onClick={toggleMenu}
+                className="p-2 hover:bg-white/10 rounded-full transition-colors"
+              >
+                <X className="w-6 h-6 cursor-pointer" />
+              </button>
+            </div>
+            {/* Nav Links */}
+            <div className="align-top justify-start space-y-4">
+              <Link
+                to="/"
+                onClick={toggleMenu}
+                className="block hover:text-orange"
+              >
+                Home
+              </Link>
+              <Link
+                to="/how-it-works"
+                onClick={toggleMenu}
+                className="block hover:text-orange"
+              >
+                What we do
+              </Link>
+              <Link
+                to="/markets"
+                onClick={toggleMenu}
+                className="block hover:text-orange"
+              >
+                Markets
+              </Link>
+            </div>
+            <div className="mt-auto">
+              <UserAvatar showName={true} auth={true} />
             </div>
           </div>
-        )}
+        </div>
       </div>
     </header>
   );

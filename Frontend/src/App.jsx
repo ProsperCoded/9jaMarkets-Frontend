@@ -25,6 +25,8 @@ import ProductPage from "./components/Products/ProductPage";
 import EditProfile from "./components/EditProfile";
 import SelectPlan from "./components/Products/SelectPlan";
 import InvestPage from './pages/Invest';
+import MarketerPage from "./pages/Marketer";
+import IncludeMarket from "./pages/IncludeMarket";
 
 import { ConfigProvider } from "antd";
 import InitializeApp from "./InitializeApp";
@@ -111,6 +113,8 @@ function App() {
               <Route path="/bookmark" element={<Bookmark />} />
               <Route path="/auth" element={<GoogleSigninRedirect />} />
               <Route path="/invest" element={<InvestPage />} />
+              <Route path="/marketer" element={<MarketerPage />} />
+              <Route path="/include-market" element={<IncludeMarket />} />
 
               {/* Dashboard routes with Outlet */}
               <Route path="/dashboard" element={<Dashboard />}>

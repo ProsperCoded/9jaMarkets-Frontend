@@ -48,12 +48,9 @@ export default function ViewProducts() {
         </p>
         <Button
           onClick={() => {
-            const tabs = document.querySelector('[role="tablist"]');
-            if (tabs) {
-              const tabsInstance = Tabs.getInstance(tabs);
-              if (tabsInstance) {
-                tabsInstance.setValue('add');
-              }
+            const addTabTrigger = document.querySelector('[data-state][value="add"]');
+            if (addTabTrigger instanceof HTMLElement) {
+              addTabTrigger.click();
             }
           }}
           className="bg-Primary hover:bg-Primary/80 text-white inline-flex items-center gap-2"

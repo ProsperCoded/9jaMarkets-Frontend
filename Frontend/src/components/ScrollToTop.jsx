@@ -5,10 +5,13 @@ function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth" // Add smooth scrolling animation
+    });
   }, [pathname]);
 
   return null;
 }
 
-export default ScrollToTop; 
+export default ScrollToTop;

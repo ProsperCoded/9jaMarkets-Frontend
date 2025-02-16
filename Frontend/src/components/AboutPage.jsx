@@ -56,7 +56,7 @@ const AboutPage = () => {
   const storyPoints = [
     {
       title: "Our Founders' Vision",
-      content: "Founded by Mr. Chioma Achonu Ekenulo and Mr. Felix Agu, 9ja Markets was born from a vision to empower Nigerian entrepreneurs. Our platform is designed to help genuine business operators, regardless of size, reach new heights in the global marketplace."
+      content: "Founded by Mr. Chioma Achonu Ekenulo and Mr. Felix Agu, 9jaMarkets was born from a vision to empower Nigerian entrepreneurs. Our platform is designed to help genuine business operators, regardless of size, reach new heights in the global marketplace."
     },
     {
       title: "Our Mission",
@@ -64,11 +64,11 @@ const AboutPage = () => {
     },
     {
       title: "Empowering Growth",
-      content: "At 9ja Markets, we believe every business deserves to thrive, regardless of size or location. We're building more than a marketplace - we're creating a community where African entrepreneurs, traders, and innovators shape the continent's economic future."
+      content: "At 9jaMarkets, we believe every business deserves to thrive, regardless of size or location. We're building more than a marketplace - we're creating a community where African entrepreneurs, traders, and innovators shape the continent's economic future."
     },
     {
       title: "Global Connection",
-      content: "For Nigerians worldwide, we're breaking down barriers and unlocking new opportunities. Whether you're a local vendor or in the diaspora, 9ja Markets is your bridge to global commerce and cultural exchange."
+      content: "For Nigerians worldwide, we're breaking down barriers and unlocking new opportunities. Whether you're a local vendor or in the diaspora, 9jaMarkets is your bridge to global commerce and cultural exchange."
     }
   ];
 
@@ -78,7 +78,7 @@ const AboutPage = () => {
       <div className="bg-gradient-to-b from-Primary/10 to-transparent">
         <div className="container mx-auto px-4 py-16">
           <h1 className="text-4xl md:text-5xl font-bold text-Primary mb-6 text-center">
-            Welcome to 9ja Markets: Shaping Africa's Economic Future
+            Welcome to 9jaMarkets: Shaping Africa's Economic Future
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto text-center leading-relaxed">
             Nigeria's premier online marketplace dedicated to bridging the gap between 
@@ -149,11 +149,11 @@ const AboutPage = () => {
       <section className="container mx-auto px-4 py-16 text-center">
         <div className="bg-Primary rounded-2xl text-white p-8 md:p-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Join the 9ja Market Community
+            Join the 9jaMarkets Community
           </h2>
           <p className="text-lg mb-8 opacity-90">
             Whether you're a small business looking to scale or a shopper seeking 
-            authentic Nigerian products, 9ja Market is your destination for growth.
+            authentic Nigerian products, 9jaMarkets is your destination for growth.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild variant="secondary" size="lg" className=" rounded-full bg-orange hover:bg-orange/90">
