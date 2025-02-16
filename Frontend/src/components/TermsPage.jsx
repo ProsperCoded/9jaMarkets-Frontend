@@ -24,7 +24,7 @@ const TermsPage = () => {
       content: [
         "Users must provide accurate and up-to-date personal information during registration.",
         "You are responsible for maintaining the confidentiality of your account credentials.",
-        "9ja Market reserves the right to suspend or terminate accounts found to be fraudulent or violating platform policies."
+        "9jaMarkets reserves the right to suspend or terminate accounts found to be fraudulent or violating platform policies."
       ]
     },
     {
@@ -35,7 +35,7 @@ const TermsPage = () => {
         "All buyers and sellers must adhere to Nigerian trade regulations.",
         "Sellers are responsible for the quality, authenticity, and delivery of listed products.",
         "Buyers must ensure timely payment and verify product details before purchase.",
-        "9ja Market acts as a facilitator and holds no direct liability in transactions between users."
+        "9jaMarkets acts as a facilitator and holds no direct liability in transactions between users."
       ]
     },
     {
@@ -46,7 +46,7 @@ const TermsPage = () => {
         "Sale of counterfeit, illegal, or restricted items.",
         "Fraudulent activities, false advertising, or misrepresentation.",
         "Harassment, abuse, or unethical behavior towards other users.",
-        "Unauthorized use of 9ja Market's brand, trademarks, or intellectual property."
+        "Unauthorized use of 9jaMarkets's brand, trademarks, or intellectual property."
       ]
     },
     {
@@ -54,9 +54,9 @@ const TermsPage = () => {
       icon: <Wallet className="h-5 w-5"/>,
       title: "Payment, Refunds & Dispute Resolution",
       content: [
-        "All payments must be processed through 9ja Market's secure payment gateways.",
+        "All payments must be processed through 9jaMarkets's secure payment gateways.",
         "Refund policies vary by vendor and must be resolved within 7 days of purchase disputes.",
-        "9ja Market provides mediation support but does not bear responsibility for independent agreements between users."
+        "9jaMarkets provides mediation support but does not bear responsibility for independent agreements between users."
       ]
     }
   ];
@@ -74,7 +74,7 @@ const TermsPage = () => {
           </div>
           <p className="text-center text-gray-600 max-w-2xl mx-auto">
             These Terms and Conditions govern your access and use of our platform. 
-            By signing up and transacting on 9ja Market, you agree to comply with 
+            By signing up and transacting on 9jaMarkets, you agree to comply with 
             the following policies.
           </p>
         </div>
@@ -86,7 +86,7 @@ const TermsPage = () => {
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>Important Notice</AlertTitle>
           <AlertDescription>
-            By using 9ja Market, you automatically agree to these terms. Please read them carefully.
+            By using 9jaMarkets, you automatically agree to these terms. Please read them carefully.
           </AlertDescription>
         </Alert>
 
@@ -119,7 +119,7 @@ const TermsPage = () => {
           <ul className="space-y-2 text-gray-600">
             <li className="flex items-start gap-2">
               <span className="text-Primary mt-1">•</span>
-              <span>9ja Market reserves the right to update these terms to reflect operational improvements or regulatory changes.</span>
+              <span>9jaMarkets reserves the right to update these terms to reflect operational improvements or regulatory changes.</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-Primary mt-1">•</span>
