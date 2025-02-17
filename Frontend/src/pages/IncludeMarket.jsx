@@ -119,7 +119,7 @@ export default function IncludeMarket() {
             Help Us Map Your Market!
           </h1>
           <p className="text-lg sm:text-xl">
-            Can't find your market? Add it now and help us grow Nigeria's biggest market directory!
+            Can&apos;t find your market? Add it now and help us grow Nigeria&apos;s biggest market directory!
           </p>
         </div>
       </section>

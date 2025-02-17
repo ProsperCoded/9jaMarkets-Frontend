@@ -46,6 +46,8 @@ import SafetyTips from "./pages/SafetyTips";
 import FAQ from "./pages/FAQ";
 import ContactUs from "./pages/ContactUs";
 import ScrollToTop from "./components/ScrollToTop";
+import IntercomMessenger from "./components/IntercomMessenger";
+import PropTypes from 'prop-types';
 
 function AntDesignConfig({ children }) {
   return (
@@ -65,6 +67,10 @@ function AntDesignConfig({ children }) {
     </ConfigProvider>
   );
 }
+
+AntDesignConfig.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 function App() {
   const location = useLocation();
@@ -145,6 +151,7 @@ function App() {
 
             {/* Conditionally render footer */}
             {shouldShowFooter && <Footer />}
+            <IntercomMessenger />
           </InitializeApp>
         </ContextWrapper>
       </AntDesignConfig>
