@@ -155,10 +155,10 @@ const FAQ = () => {
           </p>
           <p className="text-gray-700">
             Contact our support team at{' '}
-            <a href="mailto:support@9jaMarkets.com" className="text-Primary hover:underline">
-              support@9jaMarkets.com
+            <a href="mailto:9ijamarkets@gmail.com" className="text-Primary hover:underline">
+              9ijamarkets@gmail.com
             </a>
-            {' '}or call our helpline at +234 XXX-XXX-XXXX
+            {' '}or try our live chat support in the bottom right corner.
           </p>
         </div>
       </div>

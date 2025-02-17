@@ -1,19 +1,5 @@
-import { 
-  Shield, 
-  Lock, 
-  Database, 
-  UserCog, 
-  Mail,
-  ShieldCheck,
-  UserCheck
-} from "lucide-react";
-import { 
-  Card, 
-  CardContent, 
-  CardDescription, 
-  CardHeader, 
-  CardTitle 
-} from "./ui/card";
+import { Shield, Lock, Database, UserCog, Mail, ShieldCheck, UserCheck } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Alert, AlertDescription } from "./ui/alert";
 import { Button } from "./ui/button";
 
@@ -93,7 +79,7 @@ const PrivacyPage = () => {
               Privacy Policy
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl">
-              At 9ja Market, we prioritize your privacy and are committed to 
+              At 9jaMarkets, we prioritize your privacy and are committed to 
               protecting your personal information.
             </p>
           </div>
@@ -174,11 +160,14 @@ const PrivacyPage = () => {
             <Button 
               variant="outline" 
               className="hover:bg-orange hover:text-white transition-all"
-              onClick={() => window.location.href = 'mailto:privacy@9jamarket.com'}
+              onClick={() => window.location.href = 'mailto:9ijamarkets@gmail.com'}
             >
               <Mail className="mr-2 h-4 w-4" />
-              privacy@9jamarket.com
+              9ijamarkets@gmail.com
             </Button>
+            <p className="mt-2 text-sm text-gray-500">
+              You can also use our live chat support for immediate assistance.
+            </p>
           </CardContent>
         </Card>
       </div>
