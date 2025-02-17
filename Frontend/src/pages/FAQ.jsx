@@ -119,20 +119,24 @@ const FAQ = () => {
         </div>
 
         {/* Category Navigation */}
-        <div className="overflow-x-auto pb-2 mb-8 -mx-4 px-4">
-          <div className="flex gap-2 w-max">
-            {Object.entries(categories).map(([key, value]) => (
-              <button
-                key={key}
-                onClick={() => setActiveCategory(key)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors whitespace-nowrap
-                  ${activeCategory === key 
-                    ? 'bg-Primary text-white' 
-                    : 'bg-white text-gray-700 hover:bg-gray-300'}`}
-              >
-                {value}
-              </button>
-            ))}
+        <div className="relative">
+          <div className="absolute left-0 right-0 h-12 pointer-events-none" />
+          <div className="absolute right-0 top-0 h-12 pointer-events-none" />
+          <div className="overflow-x-auto scrollbar-thin pb-2 mb-8 -mx-4 px-4">
+            <div className="flex gap-2 w-max">
+              {Object.entries(categories).map(([key, value]) => (
+                <button
+                  key={key}
+                  onClick={() => setActiveCategory(key)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors whitespace-nowrap
+                    ${activeCategory === key 
+                      ? 'bg-Primary text-white' 
+                      : 'bg-white text-gray-700 hover:bg-gray-300'}`}
+                >
+                  {value}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -151,7 +155,7 @@ const FAQ = () => {
         {/* Contact Support */}
         <div className="mt-12 bg-orange/10 rounded-lg p-6 text-center">
           <p className="text-gray-700 mb-2">
-            Can't find what you're looking for?
+            Can&apos;t find what you&apos;re looking for?
           </p>
           <p className="text-gray-700">
             Contact our support team at{' '}

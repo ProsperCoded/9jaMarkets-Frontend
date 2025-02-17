@@ -6,13 +6,6 @@ import { MARKET_DATA_CONTEXT } from "@/contexts";
 import LoadingPage from "@/componets-utils/LoadingPage";
 import NotFoundPage from "@/components/NotFoundPage";
 import { Search, Bookmark, BookmarkCheck, HelpCircle } from "lucide-react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 const PRODUCT_CATEGORIES = [
   "All Categories",
@@ -115,56 +108,87 @@ const Marketplace = () => {
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8">
-        {/* Horizontal Scrollable Categories */}
-        <div className="overflow-x-auto pb-4 mb-8 -mx-4 px-4 no-scrollbar">
-          <div className="flex gap-2 w-max">
-            {PRODUCT_CATEGORIES.map((category) => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors whitespace-nowrap
-                  ${selectedCategory === category 
-                    ? 'bg-Primary text-white' 
-                    : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'}`}
-              >
-                {category}
-              </button>
-            ))}
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Sidebar - Desktop */}
+          <div className="hidden lg:block w-[280px] shrink-0">
+            <div className="bg-white rounded-lg shadow-md p-4 sticky top-[72px] max-h-[calc(100vh-120px)] overflow-y-auto">
+              <h2 className="text-lg font-semibold mb-4">Categories</h2>
+              <ul className="space-y-2">
+                {PRODUCT_CATEGORIES.map((category) => (
+                  <li key={category}>
+                    <button
+                      onClick={() => setSelectedCategory(category)}
+                      className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
+                        selectedCategory === category
+                          ? "bg-Primary text-white"
+                          : "hover:bg-gray-100"
+                      }`}
+                    >
+                      {category}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-        </div>
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {filteredProducts.map((product) => (
-            <div
-              key={product.id}
-              className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-            >
-              <div className="aspect-square relative">
-                <img
-                  src={product.displayImage?.url || "/path/to/fallback.jpg"}
-                  alt={product.name}
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-                <button
-                  onClick={() => toggleBookmark(product.id)}
-                  className="absolute top-2 right-2 p-2 rounded-full bg-Primary/80 text-white hover:bg-Primary transition-colors"
-                >
-                  {bookmarkedProducts.has(product.id) ? (
-                    <BookmarkCheck className="w-4 h-4" />
-                  ) : (
-                    <Bookmark className="w-4 h-4" />
-                  )}
-                </button>
-              </div>
-              <div className="p-2">
-                <h3 className="font-medium text-sm truncate">{product.name}</h3>
-                <p className="text-Primary font-bold text-sm">
-                  ₦{product.price?.toLocaleString()}
-                </p>
+          {/* Mobile Categories - Horizontal Scroll */}
+          <div className="lg:hidden w-full">
+            <div className="relative">
+              <div className="overflow-x-auto scrollbar-thin">
+                <div className="flex gap-2 pb-4 min-w-max">
+                  {PRODUCT_CATEGORIES.map((category) => (
+                    <button
+                      key={category}
+                      onClick={() => setSelectedCategory(category)}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition-colors whitespace-nowrap
+                        ${selectedCategory === category 
+                          ? 'bg-Primary text-white' 
+                          : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'}`}
+                    >
+                      {category}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
-          ))}
+          </div>
+
+          {/* Products Grid */}
+          <div className="flex-1">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+              {filteredProducts.map((product) => (
+                <div
+                  key={product.id}
+                  className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+                >
+                  <div className="aspect-square relative">
+                    <img
+                      src={product.displayImage?.url || "/path/to/fallback.jpg"}
+                      alt={product.name}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <button
+                      onClick={() => toggleBookmark(product.id)}
+                      className="absolute top-2 right-2 p-2 rounded-full bg-Primary/80 text-white hover:bg-Primary transition-colors"
+                    >
+                      {bookmarkedProducts.has(product.id) ? (
+                        <BookmarkCheck className="w-4 h-4" />
+                      ) : (
+                        <Bookmark className="w-4 h-4" />
+                      )}
+                    </button>
+                  </div>
+                  <div className="p-2">
+                    <h3 className="font-medium text-sm truncate">{product.name}</h3>
+                    <p className="text-Primary font-bold text-sm">
+                      ₦{product.price?.toLocaleString()}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>

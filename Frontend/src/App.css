@@ -45,3 +45,28 @@
                0 10px 10px rgba(0,0,0,.2),
                0 20px 20px rgba(0,0,0,.15);
 }
+
+/* Custom Scrollbar Styles */
+.scrollbar-thin {
+  overflow-x: auto;
+  scrollbar-width: thin; /* Firefox */
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  height: 6px; /* Horizontal scrollbar height */
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 100vh;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 100vh;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}

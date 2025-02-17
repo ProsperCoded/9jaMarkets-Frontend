@@ -5,7 +5,10 @@ import {
   BadgeHelp,
   ShieldCheck,
   ArrowLeftRight,
-  Mail
+  Mail,
+  Wallet,
+  Building2,
+  SmartphoneNfc
 } from "lucide-react";
 import { 
   Card, 
@@ -15,7 +18,6 @@ import {
   CardTitle 
 } from "./ui/card";
 import { Button } from "./ui/button";
-import { Badge } from "../components/ui/badge";
 import InterswitchLogo from "../assets/billing/InterswitchLogo.svg";
 
 const BillingPolicyPage = () => {
@@ -78,6 +80,29 @@ const BillingPolicyPage = () => {
     }
   ];
 
+  const paymentMethods = [
+    {
+      icon: <CreditCard className="h-6 w-6" />,
+      title: "Cards",
+      description: "Pay securely with Verve, Mastercard, or Visa cards through Interswitch's payment gateway."
+    },
+    {
+      icon: <SmartphoneNfc className="h-6 w-6" />,
+      title: "USSD Payments",
+      description: "Quick and easy payments using bank-specific USSD codes for instant transactions."
+    },
+    {
+      icon: <Building2 className="h-6 w-6" />,
+      title: "Bank Transfers",
+      description: "Direct payments from any Nigerian bank account through secure bank transfer."
+    },
+    {
+      icon: <Wallet className="h-6 w-6" />,
+      title: "Digital Wallets",
+      description: "Convenient payments using supported digital wallet services."
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
@@ -87,7 +112,7 @@ const BillingPolicyPage = () => {
             <div className="p-3 bg-Primary/10 rounded-full mb-6">
               <CreditCard className="h-8 w-8 text-Primary"/>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-Primary mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold text-Primary">
               Billing Policy
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl">
@@ -99,30 +124,45 @@ const BillingPolicyPage = () => {
 
       {/* Payment Methods Section - Updated */}
       <div className="container mx-auto px-4 py-12">
-        <h2 className="text-2xl font-bold mb-6 text-center text-Primary">
-          Supported Payment Method
-        </h2>
-        <Card className="mb-12 max-w-2xl mx-auto hover:border-orange hover:shadow-lg transform hover:-translate-y-1 duration-200 transition-all">
-          <CardHeader className="text-center">
-            <div className="flex justify-center mb-4">
-              <img 
-                src={InterswitchLogo} 
-                alt="Interswitch Logo" 
-                className="h-16 object-contain"
-              />
-            </div>
-            <CardDescription className="text-base">
-              Currently, Interswitch is the only supported payment method. All transactions 
-              must be completed through Interswitch's secure payment gateway. Other payment 
-              methods may be introduced in the future.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="flex justify-center">
-            <Badge variant="outline" className="bg-orange/10">
-              Secure Payment Gateway
-            </Badge>
-          </CardContent>
-        </Card>
+        <div className="text-center mb-10">
+          <h2 className="text-2xl font-bold mb-4 text-Primary">
+            Accepted Payment Methods
+          </h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Currently powered by Interswitch's secure payment gateway
+          </p>
+          <div className="mt-4">
+            <img 
+              src={InterswitchLogo} 
+              alt="Interswitch Logo" 
+              className="h-6 mx-auto"
+            />
+          </div>
+        </div>
+
+        {/* Payment Method Cards */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          {paymentMethods.map((method, index) => (
+            <Card 
+              key={index}
+              className="border-2 hover:border-orange transition-all duration-300 hover:shadow-lg"
+            >
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <div className="p-3 bg-orange/10 rounded-lg text-orange">
+                    {method.icon}
+                  </div>
+                  <CardTitle className="text-lg">{method.title}</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600">
+                  {method.description}
+                </p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
 
         {/* Policy Details */}
         <div className="grid md:grid-cols-2 gap-8">
