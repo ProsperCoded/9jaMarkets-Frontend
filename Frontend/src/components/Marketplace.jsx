@@ -1,11 +1,11 @@
 import { useState, useContext, useEffect, useMemo } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useErrorLogger } from "@/hooks";
 import { getMarketProducts } from "@/lib/api/marketApi";
 import { MARKET_DATA_CONTEXT } from "@/contexts";
 import LoadingPage from "@/componets-utils/LoadingPage";
 import NotFoundPage from "@/components/NotFoundPage";
-import { Search, Bookmark, BookmarkCheck } from "lucide-react";
+import { Search, Bookmark, BookmarkCheck, HelpCircle } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -76,14 +76,14 @@ const Marketplace = () => {
   if (!market) return <LoadingPage message={"Market Could not be found"} />;
 
   return (
-    <div className="bg-gray-50 min-h-screen">
-      {/* Search Bar */}
-      <div className="sticky top-0 z-50 bg-white shadow-md py-2 text-Primary">
+    <div className="bg-gray-50 min-h-screen pt-16">
+      {/* Fixed Search Bar */}
+      <div className="fixed top-14 left-0 right-0 z-20 bg-white shadow-md py-3">
         <div className="container mx-auto px-4">
           <div className="relative w-full max-w-lg mx-auto">
             <input
               type="text"
-              placeholder="Search a vendor or category"
+              placeholder="Search a product..."
               className="border-Primary py-2 pr-4 pl-10 border rounded-full focus:ring-2 focus:ring-Primary w-full text-sm focus:outline-none placeholder-gray-400"
             />
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-Primary" />
@@ -91,7 +91,7 @@ const Marketplace = () => {
         </div>
       </div>
 
-      {/* Hero Section */}
+      {/* Hero Section with "Not your market?" link */}
       <div className="relative h-[200px] md:h-[200px] w-full">
         <img
           src={market.displayImage}
@@ -104,89 +104,67 @@ const Marketplace = () => {
             {market.name}
           </h1>
         </div>
+        <Link 
+          to="/include-market" 
+          className="absolute bottom-2 right-2 flex items-center gap-1 text-white hover:text-orange transition-colors underline"
+        >
+          <HelpCircle className="w-4 h-4" />
+          Not your market's picture?
+        </Link>
       </div>
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Sidebar - Desktop */}
-          <div className="hidden lg:block w-[280px] shrink-0">
-            <div className="bg-white rounded-lg shadow-md p-4 sticky top-[72px] max-h-[calc(100vh-120px)] overflow-y-auto">
-              <h2 className="text-lg font-semibold mb-4">Categories</h2>
-              <ul className="space-y-2">
-                {PRODUCT_CATEGORIES.map((category, index) => (
-                  <li key={index}>
-                    <button
-                      onClick={() => setSelectedCategory(category)}
-                      className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
-                        selectedCategory === category
-                          ? "bg-Primary text-white"
-                          : "hover:bg-gray-100"
-                      }`}
-                    >
-                      {category}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
+        {/* Horizontal Scrollable Categories */}
+        <div className="overflow-x-auto pb-4 mb-8 -mx-4 px-4 no-scrollbar">
+          <div className="flex gap-2 w-max">
+            {PRODUCT_CATEGORIES.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors whitespace-nowrap
+                  ${selectedCategory === category 
+                    ? 'bg-Primary text-white' 
+                    : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'}`}
+              >
+                {category}
+              </button>
+            ))}
           </div>
+        </div>
 
-          {/* Mobile Category Selector */}
-          <div className="lg:hidden w-full">
-            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger className="w-full focus:ring-Primary">
-                <SelectValue placeholder="Select a category" />
-              </SelectTrigger>
-              <SelectContent>
-                {PRODUCT_CATEGORIES.map((category) => (
-                  <SelectItem 
-                    key={category} 
-                    value={category}
-                    className="focus:bg-Primary/10 focus:text-Primary"
-                  >
-                    {category}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Products Grid */}
-          <div className="flex-1">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              {filteredProducts.map((product) => (
-                <div
-                  key={product.id}
-                  className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+        {/* Products Grid */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {filteredProducts.map((product) => (
+            <div
+              key={product.id}
+              className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+            >
+              <div className="aspect-square relative">
+                <img
+                  src={product.displayImage?.url || "/path/to/fallback.jpg"}
+                  alt={product.name}
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <button
+                  onClick={() => toggleBookmark(product.id)}
+                  className="absolute top-2 right-2 p-2 rounded-full bg-Primary/80 text-white hover:bg-Primary transition-colors"
                 >
-                  <div className="aspect-square relative">
-                    <img
-                      src={product.displayImage?.url || "/path/to/fallback.jpg"}
-                      alt={product.name}
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
-                    <button
-                      onClick={() => toggleBookmark(product.id)}
-                      className="absolute top-2 right-2 p-2 rounded-full bg-Primary/80 text-white hover:bg-Primary transition-colors"
-                    >
-                      {bookmarkedProducts.has(product.id) ? (
-                        <BookmarkCheck className="w-4 h-4" />
-                      ) : (
-                        <Bookmark className="w-4 h-4" />
-                      )}
-                    </button>
-                  </div>
-                  <div className="p-2">
-                    <h3 className="font-medium text-sm truncate">{product.name}</h3>
-                    <p className="text-Primary font-bold text-sm">
-                      ₦{product.price?.toLocaleString()}
-                    </p>
-                  </div>
-                </div>
-              ))}
+                  {bookmarkedProducts.has(product.id) ? (
+                    <BookmarkCheck className="w-4 h-4" />
+                  ) : (
+                    <Bookmark className="w-4 h-4" />
+                  )}
+                </button>
+              </div>
+              <div className="p-2">
+                <h3 className="font-medium text-sm truncate">{product.name}</h3>
+                <p className="text-Primary font-bold text-sm">
+                  ₦{product.price?.toLocaleString()}
+                </p>
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
