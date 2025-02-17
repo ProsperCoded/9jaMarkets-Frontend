@@ -1,16 +1,5 @@
-import { 
-  Copyright, 
-  FileText, 
-  Mail,
-  AlertTriangle
-} from "lucide-react";
-import { 
-  Card, 
-  CardContent, 
-  CardDescription, 
-  CardHeader, 
-  CardTitle 
-} from "./ui/card";
+import { Copyright, FileText, Mail, AlertTriangle } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Button } from "./ui/button";
 
 const CopyrightPage = () => {
@@ -36,7 +25,7 @@ const CopyrightPage = () => {
               Copyright Notice
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl">
-              © {new Date().getFullYear()} 9ja Market. All Rights Reserved.
+              © {new Date().getFullYear()} 9jaMarkets. All Rights Reserved.
             </p>
           </div>
         </div>
@@ -101,11 +90,14 @@ const CopyrightPage = () => {
             <Button 
               variant="outline" 
               className="hover:bg-Primary hover:text-white transition-all"
-              onClick={() => window.location.href = 'mailto:legal@9jamarket.com'}
+              onClick={() => window.location.href = 'mailto:9ijamarkets@gmail.com'}
             >
               <Mail className="mr-2 h-4 w-4" />
-              legal@9jamarket.com
+              9ijamarkets@gmail.com
             </Button>
+            <p className="mt-2 text-sm text-gray-500">
+              For immediate assistance, try our chat support in the bottom right corner.
+            </p>
           </CardContent>
         </Card>
       </div>

@@ -23,7 +23,7 @@ const SafetyTips = () => {
         </div>
         
         <p className="text-lg text-gray-600 mb-8">
-          At 9ja Market, your safety is our top priority. Whether you're buying or selling, 
+          At 9jaMarkets, your safety is our top priority. Whether you're buying or selling, 
           follow these guidelines to ensure a secure experience:
         </p>
 
@@ -62,9 +62,10 @@ const SafetyTips = () => {
           <p className="text-gray-700">
             If you notice fraudulent listings or users violating our policies, report them 
             immediately to our support team at{' '}
-            <a href="mailto:support@9jamarket.com" className="text-Primary hover:underline">
-              support@9jamarket.com
+            <a href="mailto:9ijamarkets@gmail.com" className="text-Primary hover:underline">
+              9ijamarkets@gmail.com
             </a>
+            {' '}or use our live chat support for immediate assistance.
           </p>
         </div>
       </div>

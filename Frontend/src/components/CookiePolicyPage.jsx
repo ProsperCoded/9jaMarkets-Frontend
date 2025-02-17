@@ -48,7 +48,7 @@ const CookiePolicyPage = () => {
               Cookie Policy
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl">
-              9ja Market uses cookies to enhance your browsing experience and 
+              9jaMarkets uses cookies to enhance your browsing experience and 
               improve platform performance.
             </p>
           </div>

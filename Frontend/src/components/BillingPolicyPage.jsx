@@ -184,11 +184,14 @@ const BillingPolicyPage = () => {
             <Button 
               variant="outline" 
               className="hover:bg-orange hover:text-white transition-all"
-              onClick={() => window.location.href = 'mailto:billing@9jamarket.com'}
+              onClick={() => window.location.href = 'mailto:9ijamarkets@gmail.com'}
             >
               <Mail className="mr-2 h-4 w-4" />
-              billing@9jamarket.com
+              9ijamarkets@gmail.com
             </Button>
+            <p className="mt-2 text-sm text-gray-500">
+              For immediate assistance, try our chat support in the bottom right corner.
+            </p>
           </CardContent>
         </Card>
       </div>

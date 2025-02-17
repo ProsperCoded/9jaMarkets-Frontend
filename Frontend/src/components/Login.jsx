@@ -58,6 +58,14 @@ const LoginModal = () => {
       );
       if (!userProfile_) return;
       setUserProfile(userProfile_);
+      if (window.Intercom) {
+        window.Intercom('update', {
+          name: userProfile_.name,
+          email: userProfile_.email,
+          created_at: userProfile_.createdAt,
+          user_id: userId
+        });
+      }
     } else if (loginAsMerchant) {
       const loginData = await loginMerchantApi(payload, errorLogger);
       if (!loginData) return;
@@ -70,6 +78,14 @@ const LoginModal = () => {
       );
       if (!userProfile_) return;
       setUserProfile(userProfile_);
+      if (window.Intercom) {
+        window.Intercom('update', {
+          name: userProfile_.name,
+          email: userProfile_.email,
+          created_at: userProfile_.createdAt,
+          user_id: userId
+        });
+      }
     }
     messageApi.success("Login successful");
     setLoginOpen(false);

@@ -33,8 +33,8 @@ const ContactUs = () => {
     {
       icon: <Mail className="h-6 w-6" />,
       title: "Email",
-      details: ["support@9jamarket.com", "info@9jamarket.com"],
-      action: "mailto:support@9jamarket.com"
+      details: ["9ijamarkets@gmail.com"],
+      action: "mailto:9ijamarkets@gmail.com"
     },
     {
       icon: <MapPin className="h-6 w-6" />,
@@ -78,8 +78,8 @@ const ContactUs = () => {
             Get in Touch
           </h1>
           <p className="text-xl opacity-90 max-w-2xl mx-auto text-center">
-            Have questions? We&apos;d love to hear from you. Send us a message and 
-            we&apos;ll respond as soon as possible.
+            Have questions? We&apos;d love to hear from you. Send us a message, use our live chat support, 
+            or email us and we&apos;ll respond as soon as possible.
           </p>
         </div>
       </div>

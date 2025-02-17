@@ -128,9 +128,10 @@ const TermsPage = () => {
           </ul>
           <div className="mt-6 text-sm text-gray-500">
             For inquiries, reach out to our support team at{" "}
-            <a href="mailto:support@9jamarket.com" className="text-Primary hover:underline">
-              support@9jamarket.com
+            <a href="mailto:9ijamarkets@gmail.com" className="text-Primary hover:underline">
+              9ijamarkets@gmail.com
             </a>
+            {" "}or use the chat messenger for quick responses.
           </div>
         </div>
       </div>
