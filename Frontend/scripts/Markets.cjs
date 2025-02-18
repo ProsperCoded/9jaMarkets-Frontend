@@ -110,8 +110,6 @@ AkwaIbom: [
 
   Borno: [
     { name: "Baga Market", img: "./markets/BodijaMarket.jpg" },
-    { name: "Bama Central Market", img: "./markets/BodijaMarket.jpg" },
-    { name: "Bama Fish Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Bama Main Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Bama Sunday Market", img: "./markets/BodijaMarket.jpg" },
     { name: "Biu Central Market", img: "./markets/BodijaMarket.jpg" },
@@ -264,19 +262,14 @@ AkwaIbom: [
   Ekiti: [
     { name: "Aramoko Market", img: "./markets/ekiti/aramoko.jpg", address:"Aramoko-Ekiti" },
     { name: "Bisi Market", img: "./markets/ekiti/bisi.jpg", address:"Ado-Ekiti" },
-    { name: "Efon Alaye Market", img: "./markets/ekiti/efon-alaye.jpg", address:"Efon Alaye" },
     { name: "Erekesan Market", img: "./markets/ekiti/erekesan.jpg", address:"Ado-Ekiti" },
-    { name: "Ifaki Market", img: "./markets/ekiti/ifaki.jpg", address:"Ifaki-Ekiti" },
+    { name: "Ifaki Market", img: "./markets/ekiti/ifaki.jpeg", address:"Ifaki-Ekiti" },
     { name: "Igede Market", img: "./markets/ekiti/igede.jpg", address:"Igede-Ekiti" },
-    { name: "Ikere Ekiti Market", img: "./markets/ekiti/ikere.jpg", address:"Ikere-Ekiti" },
-    { name: "Ikogosi Market", img: "./markets/ekiti/ikogosi.jpg", address:"Ikogosi-Ekiti" },
-    { name: "Ilawe Ekiti Market", img: "./markets/ekiti/ilawe.jpg", address:"Ilawe-Ekiti" },
-    { name: "Iye Ekiti Market", img: "./markets/ekiti/iye.jpg", address:"Iye-Ekiti" },
-    { name: "Oja Ilupeju Market", img: "./markets/ekiti/ilupeju.jpg", address:"Ilupeju-Ekiti" },
+    { name: "Ikere Ekiti Market", img: "./markets/ekiti/ikere.jpeg", address:"Ikere-Ekiti" },
+    { name: "Iye Ekiti Market", img: "./markets/ekiti/iye.jpeg", address:"Iye-Ekiti" },
     { name: "Oja Oba Market", img: "./markets/ekiti/oja-oba.jpg", address:"Ado-Ekiti" },
     { name: "Oja Odo Oro Market", img: "./markets/ekiti/odo-oro.jpg", address:"Odo Oro-Ekiti" },
-    { name: "Omuo Ekiti Market", img: "./markets/ekiti/omuo.jpg", address:"Omuo-Ekiti" },
-    { name: "Otun Ekiti Market", img: "./markets/ekiti/otun.jpg", address:"Otun-Ekiti" },
+    { name: "Otun Ekiti Market", img: "./markets/ekiti/otun.jpeg", address:"Otun-Ekiti" },
   ],
 };
 

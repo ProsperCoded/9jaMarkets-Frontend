@@ -48,6 +48,7 @@ import ContactUs from "./pages/ContactUs";
 import ScrollToTop from "./components/ScrollToTop";
 import IntercomMessenger from "./components/IntercomMessenger";
 import PropTypes from 'prop-types';
+import ProductDetails from "./components/ProductDetails";
 
 function AntDesignConfig({ children }) {
   return (
@@ -145,6 +146,9 @@ function App() {
               <Route path="/safety" element={<SafetyTips />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/contact" element={<ContactUs />} />
+
+              <Route path="/markets/:marketId" element={<Marketplace />} />
+              <Route path="/markets/:marketId/products/:productId" element={<ProductDetails />} />
 
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
