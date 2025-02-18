@@ -77,6 +77,7 @@ export function ContextWrapper({ children }) {
         value={{ merchantProfile, setMerchantProfile }}
       >
         <MESSAGE_API_CONTEXT.Provider value={messageApi}>
+          {contextHolder}
           <MERCHANT_SIGNUP_MODAL_CONTEXT.Provider
             value={{ merchantSignupOpen, setMerchantSignupOpen }}
           >
@@ -91,7 +92,7 @@ export function ContextWrapper({ children }) {
                     logoutOpen={logoutOpen}
                     setLogoutOpen={setLogoutOpen}
                   />
-                  {contextHolder}
+
                   <MARKET_DATA_CONTEXT.Provider
                     value={{ marketsData, setMarketsData }}
                   >
