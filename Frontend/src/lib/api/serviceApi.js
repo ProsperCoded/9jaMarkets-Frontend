@@ -64,3 +64,27 @@ export async function updateCustomerProfileApi(
   successLogger(responseData.message);
   return responseData.data;
 }
+
+export async function updateMerchantProfileApi(
+  payload,
+  errorLogger = () => {},
+  successLogger = () => {}
+) {
+  const { userId, accessToken } = getAuth();
+  const url = new URL(`merchant/${userId}`, SERVER_URL);
+  const response = await fetch(url, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+  const responseData = await response.json();
+  if (!response.ok) {
+    errorLogger(responseData.message);
+    return;
+  }
+  successLogger(responseData.message);
+  return responseData.data;
+}
