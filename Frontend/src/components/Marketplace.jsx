@@ -162,29 +162,34 @@ const Marketplace = () => {
                   key={product.id}
                   className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
                 >
-                  <div className="aspect-square relative">
-                    <img
-                      src={product.displayImage?.url || "/path/to/fallback.jpg"}
-                      alt={product.name}
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
-                    <button
-                      onClick={() => toggleBookmark(product.id)}
-                      className="absolute top-2 right-2 p-2 rounded-full bg-Primary/80 text-white hover:bg-Primary transition-colors"
-                    >
-                      {bookmarkedProducts.has(product.id) ? (
-                        <BookmarkCheck className="w-4 h-4" />
-                      ) : (
-                        <Bookmark className="w-4 h-4" />
-                      )}
-                    </button>
-                  </div>
-                  <div className="p-2">
-                    <h3 className="font-medium text-sm truncate">{product.name}</h3>
-                    <p className="text-Primary font-bold text-sm">
-                      ₦{product.price?.toLocaleString()}
-                    </p>
-                  </div>
+                  <Link to={`/markets/${marketId}/products/${product.id}`}>
+                    <div className="aspect-square relative">
+                      <img
+                        src={product.displayImage?.url || "/path/to/fallback.jpg"}
+                        alt={product.name}
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          toggleBookmark(product.id);
+                        }}
+                        className="absolute top-2 right-2 p-2 rounded-full bg-Primary/80 text-white hover:bg-Primary transition-colors"
+                      >
+                        {bookmarkedProducts.has(product.id) ? (
+                          <BookmarkCheck className="w-4 h-4" />
+                        ) : (
+                          <Bookmark className="w-4 h-4" />
+                        )}
+                      </button>
+                    </div>
+                    <div className="p-2">
+                      <h3 className="font-medium text-sm truncate">{product.name}</h3>
+                      <p className="text-Primary font-bold text-sm">
+                        ₦{product.price?.toLocaleString()}
+                      </p>
+                    </div>
+                  </Link>
                 </div>
               ))}
             </div>
