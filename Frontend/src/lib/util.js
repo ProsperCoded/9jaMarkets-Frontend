@@ -48,5 +48,5 @@ export function formatPrice(value = "") {
 }
 
 export function removeCommas(value = "") {
-  return value.replace(/,/g, "");
+  return value.toString().replace(/,/g, "");
 }
