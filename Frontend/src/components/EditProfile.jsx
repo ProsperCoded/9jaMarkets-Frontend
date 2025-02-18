@@ -108,7 +108,7 @@ export default function EditProfile() {
         postalCode,
       })
     );
-    const updatedProfile = await updateCustomerProfileApi(
+    const updatedProfile = await updateProfileApi(
       { addresses: extracted },
       errorLogger,
       (msg) => {
@@ -821,6 +821,9 @@ export function AddressForm({ address, onUpdate, onDelete }) {
   const [formData, setFormData] = useState(address);
   const [isLoading, setIsLoading] = useState(false);
 
+  useEffect(() => {
+    setFormData(address);
+  }, [address]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
