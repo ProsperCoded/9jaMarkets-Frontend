@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ProductCard } from "./Product";
+import { ProductCard } from "./ProductCard";
 import { useEffect } from "react";
 import { getProductsApi } from "@/lib/api/productApi";
 import { Package, Plus } from "lucide-react";
@@ -30,30 +30,35 @@ export default function ViewProducts() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-pulse text-gray-400">Loading products...</div>
+      <div className="flex justify-center items-center min-h-[400px]">
+        <div className="text-gray-400 animate-pulse">Loading products...</div>
       </div>
     );
   }
 
   if (!products || products.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[400px] text-center p-8">
-        <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+      <div className="flex flex-col justify-center items-center p-8 min-h-[400px] text-center">
+        <div className="flex justify-center items-center bg-gray-100 mb-4 rounded-full w-16 h-16">
           <Package className="w-8 h-8 text-gray-400" />
         </div>
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">No Products Yet</h3>
-        <p className="text-gray-500 mb-6 max-w-sm">
-          You haven&apos;t added any products to your store. Start selling by adding your first product.
+        <h3 className="mb-2 font-semibold text-gray-900 text-lg">
+          No Products Yet
+        </h3>
+        <p className="mb-6 max-w-sm text-gray-500">
+          You haven&apos;t added any products to your store. Start selling by
+          adding your first product.
         </p>
         <Button
           onClick={() => {
-            const addTabTrigger = document.querySelector('[data-state][value="add"]');
+            const addTabTrigger = document.querySelector(
+              '[data-state][value="add"]'
+            );
             if (addTabTrigger instanceof HTMLElement) {
               addTabTrigger.click();
             }
           }}
-          className="bg-Primary hover:bg-Primary/80 text-white inline-flex items-center gap-2"
+          className="inline-flex items-center gap-2 bg-Primary hover:bg-Primary/80 text-white"
         >
           <Plus className="w-4 h-4" />
           Add Your First Product
@@ -65,13 +70,15 @@ export default function ViewProducts() {
   return (
     <div className="py-6">
       <div className="flex flex-col gap-4 lg:grid grid-cols-2 grid-flow-row">
-        {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            getProducts={getProducts}
-          />
-        ))}
+        {products.map((product) => {
+          return (
+            <ProductCard
+              key={product.id}
+              product={product}
+              getProducts={getProducts}
+            />
+          );
+        })}
       </div>
     </div>
   );
