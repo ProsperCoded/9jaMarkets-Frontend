@@ -74,7 +74,7 @@ const MARKETS = {
   Bayelsa: [
     { name: "Agudama Market", img: "./markets/bayelsa/agudama.jpg", address: "Agudama Town" },
     { name: "Amassoma Market", img: "./markets/bayelsa/amassoma.jpg", address: "Amassoma Town" },
-    { name: "Brass Market", img: "./markets/bayelsa/brass.jpg", address: "Brass Town" },
+    { name: "Brass Market", img: "./markets/bayelsa/brass.jpeg", address: "Brass Town" },
     { name: "Ekeremor Market", img: "./markets/bayelsa/ekeremor.jpg", address: "Ekeremor Town" },
     { name: "Kaiama Market", img: "./markets/bayelsa/kaiama.jpg", address: "Kaiama Town" },
     { name: "Nembe Market", img: "./markets/bayelsa/nembe.jpg", address: "Nembe Town" },
