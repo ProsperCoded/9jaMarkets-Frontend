@@ -192,15 +192,12 @@ const MARKETS = {
   ],
 
   Imo: [
-    { name: "Afo-Li ogwugwu Market", img: "./markets/imo/afo-iyiogwugwu.jpg", address: "Mbaise" },
     { name: "Afor Ogbe Market", img: "./markets/imo/afor-ogbe.jpg", address: "Ahiazu Mbaise" },
     { name: "Anhara Market", img: "./markets/imo/anhara.jpg", address: "Isiala Mbano" },
-    { name: "Central Market", img: "./markets/imo/central.jpg", address: "New Owerri" },
     { name: "Christ Church Market", img: "./markets/imo/christ-church.jpg", address: "Owerri" },
     { name: "Eke Onuwa Market", img: "./markets/imo/eke-onuwa.jpg", address: "Owerri" },
-    { name: "Ekeukwu Owerri Market", img: "./markets/imo/ekeukwu.jpg", address: "Owerri" },
-    { name: "Ekpeikpa Market", img: "./markets/imo/ekpeikpa.jpg", address: "Isinweke" },
-    { name: "International Electrical Market", img: "./markets/imo/inteeamark.jpg", address: "Naze" },
+    { name: "Eke Ukwu Owerri Market", img: "./markets/imo/ekeukwu.jpg", address: "Owerri" },
+    { name: "Ekpe Ikpa Market", img: "./markets/imo/ekpeikpa.jpg", address: "Isinweke" },
     { name: "International Market", img: "./markets/imo/international.jpg", address: "Orlu" },
     { name: "Okigwe Market", img: "./markets/imo/okigwe.jpg", address: "Okigwe" },
     { name: "Orie Agu Nsu Market", img: "./markets/imo/orie-agu.jpg", address: "Ehime Mbano" },
