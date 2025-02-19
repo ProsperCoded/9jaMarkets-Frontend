@@ -162,7 +162,7 @@ const MARKETS = {
   ],
 
   Enugu: [
-    { name: "9th Mile Corner Market", img: "./markets/enugu/9th-mile.jpg", address: "Ngwo" },
+    { name: "9th Mile Corner Market", img: "./markets/enugu/9th-mile.jpg", address: "Udi" },
     { name: "Abakpa Market", img: "./markets/enugu/abakpa.jpg", address: "Abakpa, Enugu" },
     { name: "Akwata Market", img: "./markets/enugu/akwata.jpg", address: "Enugu" },
     { name: "Artisan Market", img: "./markets/enugu/artisan.jpg", address: "Enugu" },
@@ -172,11 +172,10 @@ const MARKETS = {
     { name: "Garki Market", img: "./markets/enugu/garki.jpg", address: "Enugu" },
     { name: "Kenyatta Market", img: "./markets/enugu/kenyatta.jpg", address: "Uwani, Enugu" },
     { name: "Mayor Market", img: "./markets/enugu/mayor.jpg", address: "Enugu" },
-    { name: "New Market", img: "./markets/enugu/new-market.jpg", address: "Enugu" },
+    { name: "New Market", img: "./markets/enugu/new.jpg", address: "Enugu" },
     { name: "Nsukka Market", img: "./markets/enugu/nsukka.jpg", address: "Nsukka" },
     { name: "Ogbete Main Market", img: "./markets/enugu/ogbete.jpg", address: "Enugu" },
     { name: "Orie Orba Market", img: "./markets/enugu/orie-orba.jpg", address: "Orba" },
-    { name: "Thinkers Corner Market", img: "./markets/enugu/thinkers-corner.jpg", address: "Enugu" },
   ],
 
   Ekiti: [
