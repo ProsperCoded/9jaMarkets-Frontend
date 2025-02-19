@@ -11,7 +11,9 @@ export default {
       animation: {
         "caret-blink": "caret-blink 1.25s ease-out infinite",
         'spin-slow': 'spin 3s linear infinite',
+        'spin-reverse': 'spin-backwards 2s linear infinite',
         'bounce': 'bounce 1s infinite',
+        'progress-infinite': 'progress 2s ease-in-out infinite',
       },
       colors: {
         orange: "#F8912D",
@@ -70,6 +72,15 @@ export default {
           "0%,70%,100%": { opacity: "1" },
           "20%,50%": { opacity: "0" },
         },
+        'spin-backwards': {
+          '0%': { transform: 'rotate(360deg)' },
+          '100%': { transform: 'rotate(0deg)' },
+        },
+        'progress': {
+          '0%': { transform: 'translateX(-100%)' },
+          '50%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(100%)' },
+        }
       },
     },
   },

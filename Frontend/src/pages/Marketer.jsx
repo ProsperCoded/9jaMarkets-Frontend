@@ -16,7 +16,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
     },
     {
       title: "Get Paid!",
-      description: "Every time your referred merchant runs an ad, you earn 10% of their ad spend—tracked manually by our team.",
+      description: "Every time your referred merchant runs an ad, you earn a percentage of their ad spend, tracked manually by our team.",
       icon: <Banknote className="w-6 h-6 text-Primary" />,
     },
   ];
@@ -71,7 +71,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
           <div className="absolute inset-0 bg-[url('/pattern.svg')] opacity-10"></div>
           <div className="container mx-auto text-center max-w-4xl relative z-10">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6">
-              Become a 9jaMarket Marketer & Earn 10% on Ads!
+              Become a 9jaMarket Marketer & Earn a percentage on Ads!
             </h1>
             <p className="text-lg sm:text-xl mb-8">
               Turn Your Network into Cash! 

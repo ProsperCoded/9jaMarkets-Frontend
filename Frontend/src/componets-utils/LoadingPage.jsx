@@ -1,75 +1,65 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, ShoppingBag } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import PropTypes from 'prop-types';
 
 export default function LoadingPage({ message = "Loading..." }) {
+  const [dots, setDots] = useState("");
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDots(prev => prev.length >= 3 ? "" : prev + ".");
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="min-h-screen w-full flex items-center justify-center p-4 bg-gradient-to-br from-white to-gray-50">
-      <div className="flex flex-col items-center max-w-md w-full">
-        {/* Logo and Loader Container */}
-        <div className="relative">
-          {/* Animated Logo */}
-          <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 flex items-center justify-center">
-            <ShoppingBag className="w-full h-full text-Primary animate-pulse" />
-          </div>
+    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-b from-gray-50 to-white">
+      <div className="w-full max-w-md mx-auto p-4">
+        {/* Main Loading Animation */}
+        <div className="relative w-full aspect-square max-w-[200px] mx-auto">
+          {/* Outer rotating ring */}
+          <div className="absolute inset-0 rounded-full border-4 border-t-Primary border-r-Primary/30 border-b-Primary/10 border-l-Primary/60 
+                        animate-spin-slow" />
           
-          {/* Circular Progress */}
-          <div className="absolute inset-0 animate-spin-slow">
-            <svg className="w-full h-full" viewBox="0 0 100 100">
-              <circle
-                cx="50"
-                cy="50"
-                r="45"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="4"
-                className="text-Primary/20"
-              />
-              <circle
-                cx="50"
-                cy="50"
-                r="45"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="4"
-                strokeLinecap="round"
-                className="text-Primary"
-                strokeDasharray="283"
-                strokeDashoffset="100"
-              />
-            </svg>
+          {/* Middle pulsing ring */}
+          <div className="absolute inset-4 rounded-full border-4 border-t-P2 border-r-P2/30 border-b-P2/10 border-l-P2/60 
+                        animate-pulse" />
+          
+          {/* Inner spinning ring */}
+          <div className="absolute inset-8 rounded-full border-4 border-t-Primary border-r-Primary/30 border-b-Primary/10 border-l-Primary/60 
+                        animate-spin-reverse" />
+          
+          {/* Center static dot */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-4 h-4 rounded-full bg-Primary animate-pulse" />
           </div>
         </div>
 
-        {/* Loading Message */}
-        <div className="mt-8 text-center space-y-4">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-Primary to-orange bg-clip-text text-transparent">
-            {message}
-          </h2>
-          <p className="text-gray-500 text-sm sm:text-base max-w-[250px] mx-auto">
-            We're preparing something amazing for you...
-          </p>
+        {/* Loading Text */}
+        <div className="mt-8 text-center space-y-3">
+          <div className="relative">
+            <h2 className="text-2xl font-semibold bg-gradient-to-r from-Primary to-P2 bg-clip-text text-transparent">
+              {message}{dots}
+            </h2>
+            
+            {/* Progress bar */}
+            <div className="mt-4 h-1 w-full bg-gray-100 rounded-full overflow-hidden">
+              <div className="h-full bg-gradient-to-r from-Primary to-P2 rounded-full 
+                            animate-progress-infinite" />
+            </div>
+          </div>
         </div>
 
-        {/* Progress Dots */}
-        <div className="flex space-x-2 mt-6">
-          <div className="w-2 h-2 rounded-full bg-Primary animate-bounce" style={{ animationDelay: "0ms" }}></div>
-          <div className="w-2 h-2 rounded-full bg-Primary animate-bounce" style={{ animationDelay: "150ms" }}></div>
-          <div className="w-2 h-2 rounded-full bg-Primary animate-bounce" style={{ animationDelay: "300ms" }}></div>
-        </div>
-
-        {/* Footer Section */}
-        <div className="mt-12 flex flex-col sm:flex-row items-center gap-3 sm:gap-6">
-          <span className="text-gray-500 flex items-center text-sm sm:text-base">
-            Taking too long?
-          </span>
+        {/* Return Home Link */}
+        <div className="mt-12 text-center">
           <Link 
             to="/" 
-            className="flex items-center gap-2 text-Primary hover:text-P2 transition-colors duration-200 group"
+            className="inline-flex items-center gap-2 text-gray-500 hover:text-Primary transition-colors"
           >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            <span className="font-medium">Return Home</span>
+            <ArrowLeft className="w-4 h-4" />
+            <span>Return Home</span>
           </Link>
         </div>
       </div>
@@ -77,7 +67,6 @@ export default function LoadingPage({ message = "Loading..." }) {
   );
 }
 
-// Add PropTypes validation
 LoadingPage.propTypes = {
   message: PropTypes.string
 };
