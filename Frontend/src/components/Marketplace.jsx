@@ -5,7 +5,7 @@ import { getMarketProducts } from "@/lib/api/marketApi";
 import { MARKET_DATA_CONTEXT } from "@/contexts";
 import LoadingPage from "@/componets-utils/LoadingPage";
 import NotFoundPage from "@/components/NotFoundPage";
-import { Search, Bookmark, BookmarkCheck, HelpCircle } from "lucide-react";
+import { Search, Bookmark, BookmarkCheck, HelpCircle, X } from "lucide-react";
 import { PRODUCT_CATEGORIES } from "@/config";
 import { faMapMarkerAlt, faMap } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -32,10 +32,19 @@ const Marketplace = () => {
   );
   const filteredProducts = useMemo(() => {
     if (!products) return [];
-    return selectedCategory === "All"
-      ? products
-      : products.filter((product) => product.category === selectedCategory);
-  }, [products, selectedCategory]);
+    let filtered =
+      selectedCategory === MARKET_CATEGORIES[0]
+        ? products
+        : products.filter((product) => product.category === selectedCategory);
+
+    if (searchQuery) {
+      filtered = filtered.filter((product) =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    return filtered;
+  }, [products, selectedCategory, searchQuery]);
 
   useEffect(() => {
     fetchProducts();
@@ -65,6 +74,8 @@ const Marketplace = () => {
             <input
               type="text"
               placeholder="Search a product..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="border-Primary py-2 pr-4 pl-10 border rounded-full focus:ring-2 focus:ring-Primary w-full text-sm focus:outline-none placeholder-gray-400"
             />
             <Search className="top-1/2 left-3 absolute w-5 h-5 text-Primary -translate-y-1/2" />
@@ -103,7 +114,7 @@ const Marketplace = () => {
             <div className="top-[72px] sticky bg-white shadow-md p-4 rounded-lg max-h-[calc(100vh-120px)] overflow-y-auto">
               <h2 className="mb-4 font-semibold text-lg">Categories</h2>
               <ul className="space-y-2">
-                {PRODUCT_CATEGORIES.map((category) => (
+                {MARKET_CATEGORIES.map((category) => (
                   <li key={category}>
                     <button
                       onClick={() => setSelectedCategory(category)}
@@ -147,47 +158,84 @@ const Marketplace = () => {
 
           {/* Products Grid */}
           <div className="flex-1">
-            <div className="gap-4 grid grid-cols-2 lg:grid-cols-4">
-              {filteredProducts.map((product) => (
-                <div
-                  key={product.id}
-                  className="bg-white shadow-md hover:shadow-lg rounded-lg transition-shadow overflow-hidden"
-                >
-                  <Link to={`/markets/${marketId}/products/${product.id}`}>
-                    <div className="relative aspect-square">
-                      <img
-                        src={
-                          product.displayImage?.url || "/path/to/fallback.jpg"
-                        }
-                        alt={product.name}
-                        className="absolute inset-0 w-full h-full object-cover"
-                      />
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          toggleBookmark(product.id);
-                        }}
-                        className="top-2 right-2 absolute bg-Primary/80 hover:bg-Primary p-2 rounded-full text-white transition-colors"
-                      >
-                        {bookmarkedProducts.has(product.id) ? (
-                          <BookmarkCheck className="w-4 h-4" />
-                        ) : (
-                          <Bookmark className="w-4 h-4" />
-                        )}
-                      </button>
-                    </div>
-                    <div className="p-2">
-                      <h3 className="font-medium text-sm truncate">
-                        {product.name}
-                      </h3>
-                      <p className="font-bold text-Primary text-sm">
-                        ₦{product.price?.toLocaleString()}
-                      </p>
-                    </div>
-                  </Link>
+            {filteredProducts.length > 0 ? (
+              <div className="gap-4 grid grid-cols-2 lg:grid-cols-4">
+                {filteredProducts.map((product) => (
+                  <div
+                    key={product.id}
+                    className="bg-white shadow-md hover:shadow-lg rounded-lg transition-shadow overflow-hidden"
+                  >
+                    <Link to={`/markets/${marketId}/products/${product.id}`}>
+                      <div className="relative aspect-square">
+                        <img
+                          src={
+                            product.displayImage?.url || "/path/to/fallback.jpg"
+                          }
+                          alt={product.name}
+                          className="absolute inset-0 w-full h-full object-cover"
+                        />
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            toggleBookmark(product.id);
+                          }}
+                          className="top-2 right-2 absolute bg-Primary/80 hover:bg-Primary p-2 rounded-full text-white transition-colors"
+                        >
+                          {bookmarkedProducts.has(product.id) ? (
+                            <BookmarkCheck className="w-4 h-4" />
+                          ) : (
+                            <Bookmark className="w-4 h-4" />
+                          )}
+                        </button>
+                      </div>
+                      <div className="p-2">
+                        <h3 className="font-medium text-sm truncate">
+                          {product.name}
+                        </h3>
+                        <p className="font-bold text-Primary text-sm">
+                          ₦{product.price?.toLocaleString()}
+                        </p>
+                      </div>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col justify-center items-center px-4 py-12 text-center">
+                <div className="relative mb-4">
+                  <Search className="w-16 h-16 text-gray-200" />
+                  <div className="-right-2 -bottom-2 absolute">
+                    <X className="w-8 h-8 text-Primary" />
+                  </div>
                 </div>
-              ))}
-            </div>
+                <h3 className="mb-2 font-semibold text-gray-800 text-xl">
+                  No Products Found
+                </h3>
+                <p className="max-w-md text-gray-600">
+                  {searchQuery ? (
+                    <>
+                      We couldn't find any products matching "{searchQuery}" in
+                      the {selectedCategory.toLowerCase()} category. Try
+                      adjusting your search or selecting a different category.
+                    </>
+                  ) : (
+                    <>
+                      No products available in the{" "}
+                      {selectedCategory.toLowerCase()} category. Try selecting a
+                      different category.
+                    </>
+                  )}
+                </p>
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery("")}
+                    className="border-2 border-Primary hover:bg-Primary/5 mt-4 px-4 py-2 rounded-full text-Primary text-sm transition-colors"
+                  >
+                    Clear Search
+                  </button>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
