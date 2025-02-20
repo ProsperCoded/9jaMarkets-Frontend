@@ -40,7 +40,7 @@ const ProductDetails = () => {
   if (!product) return <LoadingPage message="Loading product details..." />;
 
   return (
-    <div className="bg-gray-50 pt-16 min-h-screen">
+    <div className="bg-gray-50 pt-2 min-h-screen">
       <div className="mx-auto px-4 py-8 container">
         {/* Back Button */}
         <button
@@ -72,7 +72,7 @@ const ProductDetails = () => {
                     <button
                       key={index}
                       onClick={() => setSelectedImage(index)}
-                      className={`aspect-square rounded-lg overflow-hidden border-2 ${
+                      className={`aspect-square rounded-lg overflow-hidden border-4 ${
                         selectedImage === index
                           ? "border-Primary"
                           : "border-transparent"
