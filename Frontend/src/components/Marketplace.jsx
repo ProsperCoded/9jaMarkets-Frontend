@@ -26,12 +26,13 @@ const Marketplace = () => {
     setProducts(marketProducts);
   };
 
+  const MARKET_CATEGORIES = ["All", ...PRODUCT_CATEGORIES];
   const [selectedCategory, setSelectedCategory] = useState(
-    PRODUCT_CATEGORIES[0]
+    MARKET_CATEGORIES[0]
   );
   const filteredProducts = useMemo(() => {
     if (!products) return [];
-    return selectedCategory === "All Categories"
+    return selectedCategory === "All"
       ? products
       : products.filter((product) => product.category === selectedCategory);
   }, [products, selectedCategory]);
@@ -125,7 +126,7 @@ const Marketplace = () => {
             <div className="relative">
               <div className="overflow-x-auto scrollbar-thin">
                 <div className="flex gap-2 pb-4 min-w-max">
-                  {PRODUCT_CATEGORIES.map((category) => (
+                  {MARKET_CATEGORIES.map((category) => (
                     <button
                       key={category}
                       onClick={() => setSelectedCategory(category)}

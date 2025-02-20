@@ -11,7 +11,6 @@ import {
   Phone,
   PackageSearch,
   Tags,
-  MessageCircleQuestion,
   ShoppingBasket,
   Mail,
 } from "lucide-react";
@@ -34,14 +33,6 @@ const ProductDetails = () => {
         setProduct(productDetails);
         setSelectedImage(0);
       }
-      // const merchantInfo = await getMerchantProfileApi(
-      //   product.merchant.id,
-      //   errorLogger
-      // );
-      // if (merchantInfo) {
-      //   console.log("merchant info", merchantInfo);
-      //   setMerchant(merchantInfo);
-      // }
     };
     fetchProductDetails();
   }, [marketId, productId]);
@@ -134,9 +125,19 @@ const ProductDetails = () => {
                     <Phone className="text-Primary size-5" />
                     <span className="font-semibold">Contact:</span>
                     <span className="font-medium">
-                      {product.merchant.phone}
+                      {product.merchant.phoneNumbers[0].number}
                     </span>
                   </div>
+                  {product.merchant.phoneNumbers[1] &&
+                    product.merchant.phoneNumbers[1].number && (
+                      <div className="flex items-center gap-2 text-gray-800">
+                        <Phone className="text-Primary size-5" />
+                        <span className="font-semibold">Contact 2:</span>
+                        <span className="font-medium">
+                          {product.merchant.phoneNumbers[1].number}
+                        </span>
+                      </div>
+                    )}
                 </div>
 
                 <div className="flex flex-col gap-3 bg-gray-50 p-4 rounded-lg">
@@ -175,15 +176,9 @@ const ProductDetails = () => {
                     className="flex justify-center items-center gap-2 bg-[#25D366] hover:bg-[#128C7E] py-6 rounded-full w-full font-medium text-base text-white lg:text-lg"
                     onClick={() => {
                       window.open(
-                        `https://wa.me/${product.merchant.phone}`,
+                        `https://wa.me/${product.merchant.phoneNumbers[0].number}`,
                         "_blank"
                       );
-                      // if (merchant) {
-                      //   window.open(
-                      //     `https://wa.me/${merchant.phoneNumbers[0].number}`,
-                      //     "_blank"
-                      //   );
-                      // }
                     }}
                   >
                     <img src={WhatsappIcon} alt="WhatsApp" className="size-6" />
