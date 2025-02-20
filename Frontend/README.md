@@ -30,56 +30,63 @@ A comprehensive e-commerce platform connecting Nigerian markets, merchants, and 
 - **Code Quality**: ESLint
 
 ## 📁 Project Structure 
+```
 Frontend/
 ├── src/
-│ ├── components/ # Reusable UI components
-│ ├── componets-utils/ # Utility components
-│ ├── contexts/ # React Context providers
-│ ├── hooks/ # Custom React hooks
-│ ├── lib/ # Utility functions and API calls
-│ ├── pages/ # Page components
-│ └── assets/ # Static assets
-├── scripts/ # Build and utility scripts
-├── public/ # Public assets
-└── config/ # Configuration files
-
+│   ├── components/         # Reusable UI components
+│   ├── components-utils/   # Utility components
+│   ├── contexts/           # React Context providers
+│   ├── hooks/              # Custom React hooks
+│   ├── lib/                # Utility functions and API calls
+│   ├── pages/              # Page components
+│   └── assets/             # Static assets
+├── scripts/                # Build and utility scripts
+├── public/                 # Public assets
+└── config/                 # Configuration files
+```
 
 ## 🚀 Getting Started
 
 1. **Clone the repository**
 
-bash
-git clone <repository-url>
+```bash
+git clone https://github.com/Psybah/9ja_markets.git
 cd Frontend
+```
 
 2. **Install dependencies**
-bash
-npm install
 
+```bash
+npm install
+```
 
 3. **Set up environment variables**
 Create a `.env` file:
 
-env
+```env
 VITE_SERVER_URL=your_backend_url
 VITE_GOOGLE_CLIENT_ID=your_google_client_id
-
+```
 
 4. **Start development server**
-bash
-npm run dev
 
+```bash
+npm run dev
+```
 
 ## 📦 Build
-bash
-npm run build
 
+```bash
+npm run build
+```
 
 The build artifacts will be stored in the `dist/` directory.
 
 ## 🧪 Testing
-bash
+
+```bash
 npm run test
+```
 
 ## 🔑 Environment Variables
 
@@ -123,15 +130,6 @@ npm run test
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 👥 Team
-
-- Mr. Chioma Achonu Ekenulo - Project Lead
-- Mr. Felix Agu - Technical Lead
-
 ## 📞 Support
 
-For support, email support@9jamarkets.com or join our Slack channel. 
+For support, email 9ijamarkets@gmail.com.
