@@ -255,21 +255,17 @@ const MARKETS = {
   ],
 
   Kaduna: [
-    { name: "Birnin Gwari Market", img: "./markets/kaduna/birnin-gwari.jpg", address: "Birnin Gwari town" },
-    { name: "Giwa Market", img: "./markets/kaduna/giwa.jpg", address: "Giwa town" },
+    { name: "Birnin Gwari Market", img: "./markets/kaduna/birnin-gwari.jpeg", address: "Birnin Gwari town" },
+    { name: "Giwa Market", img: "./markets/kaduna/giwa.jpeg", address: "Giwa town" },
     { name: "Hunkuyi Market", img: "./markets/kaduna/hunkuyi.jpg", address: "Hunkuyi town" },
-    { name: "Ikara Market", img: "./markets/kaduna/ikara.jpg", address: "Ikara town" },
-    { name: "Kafanchan Market", img: "./markets/kaduna/kafanchan.jpg", address: "Kafanchan town" },
-    { name: "Kasuwan Magani Market", img: "./markets/kaduna/kasuwan-magani.jpg", address: "Kasuwan Magani town" },
-    { name: "Kawo Market", img: "./markets/kaduna/kawo.jpg", address: "Kawo area, Kaduna city" },
+    { name: "Ikara Market", img: "./markets/kaduna/ikara.jpeg", address: "Ikara town" },
+    { name: "Kafanchan Market", img: "./markets/kaduna/kafanchan.jpeg", address: "Kafanchan town" },
+    { name: "Kawo Market", img: "./markets/kaduna/kawo.jpeg", address: "Kawo area, Kaduna city" },
     { name: "Kujama Market", img: "./markets/kaduna/kujama.jpg", address: "Kujama town" },
     { name: "Makarfi Market", img: "./markets/kaduna/makarfi.jpg", address: "Makarfi town" },
-    { name: "Maƙarfi Market", img: "./markets/kaduna/makarfi.jpg", address: "Maƙarfi town" },
-    { name: "Pambegua Market", img: "./markets/kaduna/pambegua.jpg", address: "Pambegua town" },
+    { name: "Pambegua Market", img: "./markets/kaduna/pambegua.jpeg", address: "Pambegua town" },
     { name: "Sabo Market", img: "./markets/kaduna/sabo.jpg", address: "Sabo area, Kaduna city" },
     { name: "Saminaka Market", img: "./markets/kaduna/saminaka.jpg", address: "Saminaka town" },
-    { name: "Unguwar Rimi Market", img: "./markets/kaduna/unguwar-rimi.jpg", address: "Unguwar Rimi area, Kaduna city" },
-    { name: "Zaria City Market", img: "./markets/kaduna/zaria.jpg", address: "Zaria city" },
   ],
 
   Kano: [
