@@ -104,8 +104,99 @@ const Marketplace = () => {
           Not your market's picture?
         </Link>
       </div>
-      <div className="bg-white rounded-md">{/* Market details here  */}</div>
+      <div className="bg-white shadow-md">
+        <div className="mx-auto container">
+          {/* Desktop View */}
+          <div className="md:block hidden px-4 py-6">
+            <div className="gap-6 grid md:grid-cols-2">
+              {/* Market Info */}
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <FontAwesomeIcon
+                    icon={faMapMarkerAlt}
+                    className="mt-1 w-5 h-5 text-Primary"
+                  />
+                  <div>
+                    <h3 className="font-semibold text-gray-700">Location</h3>
+                    <p className="text-gray-600">
+                      {market.address}, {market.city}, {market.state} State
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <FontAwesomeIcon
+                    icon={faMap}
+                    className="mt-1 w-5 h-5 text-Primary"
+                  />
+                  <div>
+                    <h3 className="font-semibold text-gray-700">
+                      About {market.name}
+                    </h3>
+                    <p className="text-gray-600">{market.description}</p>
+                  </div>
+                </div>
+              </div>
 
+              {/* Market Stats */}
+              <div className="gap-4 grid grid-cols-2">
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <p className="text-gray-500 text-sm">Market Type</p>
+                  <p className="font-semibold text-gray-700">
+                    {market.isMall ? "Shopping Mall" : "Traditional Market"}
+                  </p>
+                </div>
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <p className="text-gray-500 text-sm">State</p>
+                  <p className="font-semibold text-gray-700">{market.state}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile View */}
+          <div className="md:hidden">
+            {/* Quick Info Bar */}
+            <div className="flex justify-between items-center px-4 py-3 border-b">
+              <div className="flex items-center gap-2">
+                <FontAwesomeIcon
+                  icon={faMapMarkerAlt}
+                  className="w-4 h-4 text-Primary"
+                />
+                <span className="text-gray-600 text-sm">
+                  {market.city}, {market.state}
+                </span>
+              </div>
+              <span className="font-medium text-Primary text-sm">
+                {market.isMall ? "Shopping Mall" : "Traditional Market"}
+              </span>
+            </div>
+
+            {/* Collapsible Details */}
+            <details className="group">
+              <summary className="flex justify-between items-center px-4 py-3 cursor-pointer list-none">
+                <span className="font-medium text-gray-700">
+                  View Market Details
+                </span>
+                <div className="group-open:rotate-180 flex justify-center items-center border-[1.5px] border-gray-500 rounded-full w-4 h-4 transition-transform">
+                  <div className="border-gray-500 border-r-[1.5px] border-b-[1.5px] w-1.5 h-1.5 translate-y-[-2px] rotate-45"></div>
+                </div>
+              </summary>
+              <div className="space-y-4 px-4 pb-4">
+                <div className="space-y-2">
+                  <h3 className="font-semibold text-gray-700 text-sm">
+                    Address
+                  </h3>
+                  <p className="text-gray-600 text-sm">{market.address}</p>
+                </div>
+                <div className="space-y-2">
+                  <h3 className="font-semibold text-gray-700 text-sm">About</h3>
+                  <p className="text-gray-600 text-sm">{market.description}</p>
+                </div>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
       {/* Main Content */}
       <div className="mx-auto px-4 py-8 container">
         <div className="flex lg:flex-row flex-col gap-8">
