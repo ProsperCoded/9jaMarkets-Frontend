@@ -138,11 +138,11 @@ const MARKETS = {
   ],
 
   Delta: [
-    { name: "Abraka Market", img: "./markets/delta/abraka.jpg", address: "Abraka" },
+    { name: "Abraka Market", img: "./markets/delta/abraka.jpg", address: "Asaba" },
     { name: "Bomadi Market", img: "./markets/delta/bomadi.jpg", address: "Bomadi" },
     { name: "Burutu Market", img: "./markets/delta/burutu.jpg", address: "Burutu" },
     { name: "Igbudu Market", img: "./markets/delta/igbudu.jpg", address: "Warri" },
-    { name: "Issele-Uku Market", img: "./markets/delta/issele-uku.jpg", address: "Issele-Uku" },
+    { name: "Issele-Uku Market", img: "./markets/delta/issele-uku.jpeg", address: "Issele-Uku" },
     { name: "Koko Market", img: "./markets/delta/koko.jpg", address: "Koko" },
     { name: "Kwale Market", img: "./markets/delta/kwale.jpg", address: "Kwale" },
     { name: "Ogbe-Ijoh Market", img: "./markets/delta/ogbe-ijoh.jpg", address: "Warri" },
@@ -151,7 +151,7 @@ const MARKETS = {
     { name: "Oleh Market", img: "./markets/delta/oleh.jpg", address: "Oleh" },
     { name: "Ozoro Market", img: "./markets/delta/ozoro.jpg", address: "Ozoro" },
     { name: "Patani Market", img: "./markets/delta/patani.jpg", address: "Patani" },
-    { name: "Sapele Main Market", img: "./markets/delta/sapele.jpg", address: "Sapele" },
+    { name: "Sapele Main Market", img: "./markets/delta/sapele-main.jpg", address: "Sapele" },
     { name: "Ughelli Main Market", img: "./markets/delta/ughelli.jpg", address: "Ughelli" },
   ],
 
