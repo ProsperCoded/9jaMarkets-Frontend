@@ -7,22 +7,34 @@ export const ACCESS_TOKEN_DURATION = 3;
 // 14 Days for refresh token
 export const REFRESH_TOKEN_DURATION = 14;
 
+// ? This is what the server current supports
 export const PRODUCT_CATEGORIES = [
-  "EDUCATION & STATIONERY",
-  "REAL ESTATE & HOUSING",
-  "EVENTS & ENTERTAINMENT",
-  "TECHNOLOGY SERVICES",
-  "CULTURAL EXPERIENCES",
-  "FOOD & GROCERIES",
-  "ELECTRONICS & GADGETS",
-  "FASHION & ACCESSORIES", 
-  "HEALTH & WELLNESS",
-  "HOME & LIVING",
-  "AUTOMOBILE NEEDS",
-  "TRADITIONAL CRAFTS",
-  "SPORTS & OUTDOOR",
-  "KIDS & BABY PRODUCTS"
+  "ELECTRONICS",
+  "FASHION",
+  "FOOD",
+  "HEALTH",
+  "HOME",
+  "SPORTS",
+  "TOYS",
 ];
+
+// ! The server doesn't support this yet
+// export const PRODUCT_CATEGORIES = [
+//   "EDUCATION & STATIONERY",
+//   "REAL ESTATE & HOUSING",
+//   "EVENTS & ENTERTAINMENT",
+//   "TECHNOLOGY SERVICES",
+//   "CULTURAL EXPERIENCES",
+//   "FOOD & GROCERIES",
+//   "ELECTRONICS & GADGETS",
+//   "FASHION & ACCESSORIES",
+//   "HEALTH & WELLNESS",
+//   "HOME & LIVING",
+//   "AUTOMOBILE NEEDS",
+//   "TRADITIONAL CRAFTS",
+//   "SPORTS & OUTDOOR",
+//   "KIDS & BABY PRODUCTS",
+// ];
 export const plans = {
   standard: {
     id: "standard",
@@ -59,6 +71,7 @@ export const plans = {
   },
 };
 
+// ! Not been used
 export const MARKETS = {
   Abia: [
     { name: "Ariaria International Market (Aba)", img: "/path/to/ariaria.jpg" },

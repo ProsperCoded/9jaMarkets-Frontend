@@ -5,25 +5,10 @@ import { getMarketProducts } from "@/lib/api/marketApi";
 import { MARKET_DATA_CONTEXT } from "@/contexts";
 import LoadingPage from "@/componets-utils/LoadingPage";
 import NotFoundPage from "@/components/NotFoundPage";
-import { Search, Bookmark, BookmarkCheck, HelpCircle } from "lucide-react";
-
-const PRODUCT_CATEGORIES = [
-  "All Categories",
-  "Education & Stationery",
-  "Real Estate & Housing",
-  "Events & Entertainment",
-  "Technology Services",
-  "Cultural Experiences",
-  "Food & Groceries",
-  "Electronics & Gadgets",
-  "Fashion & Accessories",
-  "Health & Wellness",
-  "Home & Living",
-  "Automobile Needs",
-  "Traditional Crafts",
-  "Sports & Outdoor",
-  "Kids & Baby Products"
-];
+import { Search, Bookmark, BookmarkCheck, HelpCircle, X } from "lucide-react";
+import { PRODUCT_CATEGORIES } from "@/config";
+import { faMapMarkerAlt, faMap } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Marketplace = () => {
   const errorLogger = useErrorLogger();
@@ -41,20 +26,32 @@ const Marketplace = () => {
     setProducts(marketProducts);
   };
 
-  const [selectedCategory, setSelectedCategory] = useState(PRODUCT_CATEGORIES[0]);
+  const MARKET_CATEGORIES = ["All", ...PRODUCT_CATEGORIES];
+  const [selectedCategory, setSelectedCategory] = useState(
+    MARKET_CATEGORIES[0]
+  );
   const filteredProducts = useMemo(() => {
     if (!products) return [];
-    return selectedCategory === "All Categories" 
-      ? products 
-      : products.filter((product) => product.category === selectedCategory);
-  }, [products, selectedCategory]);
+    let filtered =
+      selectedCategory === MARKET_CATEGORIES[0]
+        ? products
+        : products.filter((product) => product.category === selectedCategory);
+
+    if (searchQuery) {
+      filtered = filtered.filter((product) =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    return filtered;
+  }, [products, selectedCategory, searchQuery]);
 
   useEffect(() => {
     fetchProducts();
   }, [marketId]);
 
   const toggleBookmark = (productId) => {
-    setBookmarkedProducts(prev => {
+    setBookmarkedProducts((prev) => {
       const newBookmarks = new Set(prev);
       if (newBookmarks.has(productId)) {
         newBookmarks.delete(productId);
@@ -69,56 +66,59 @@ const Marketplace = () => {
   if (!market) return <LoadingPage message={"Could not be found"} />;
 
   return (
-    <div className="bg-gray-50 min-h-screen pt-16">
+    <div className="bg-gray-50 pt-16 min-h-screen">
       {/* Fixed Search Bar */}
-      <div className="fixed top-14 left-0 right-0 z-20 bg-white shadow-md py-3">
-        <div className="container mx-auto px-4">
-          <div className="relative w-full max-w-lg mx-auto">
+      <div className="top-14 right-0 left-0 z-20 fixed bg-white shadow-md py-3">
+        <div className="mx-auto px-4 container">
+          <div className="relative mx-auto w-full max-w-lg">
             <input
               type="text"
               placeholder="Search a product..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="border-Primary py-2 pr-4 pl-10 border rounded-full focus:ring-2 focus:ring-Primary w-full text-sm focus:outline-none placeholder-gray-400"
             />
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-Primary" />
+            <Search className="top-1/2 left-3 absolute w-5 h-5 text-Primary -translate-y-1/2" />
           </div>
         </div>
       </div>
 
       {/* Hero Section with "Not your market?" link */}
-      <div className="relative h-[200px] md:h-[200px] w-full">
+      <div className="relative w-full h-[200px] md:h-[200px]">
         <img
           src={market.displayImage}
           alt={market.name}
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/50"></div>
-        <div className="relative flex flex-col justify-center items-center h-full text-center text-white px-4">
+        <div className="relative flex flex-col justify-center items-center px-4 h-full text-center text-white">
           <h1 className="font-[400] text-3xl sm:text-4xl md:text-6xl lg:text-7xl uppercase leading-tight otto">
             {market.name}
           </h1>
         </div>
-        <Link 
-          to="/include-market" 
-          className="absolute bottom-2 right-2 flex items-center gap-1 text-white hover:text-orange transition-colors underline"
+        <Link
+          to="/include-market"
+          className="right-2 bottom-2 absolute flex items-center gap-1 text-white hover:text-orange underline transition-colors"
         >
           <HelpCircle className="w-4 h-4" />
           Not your market's picture?
         </Link>
       </div>
+      <div className="bg-white rounded-md">{/* Market details here  */}</div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col lg:flex-row gap-8">
+      <div className="mx-auto px-4 py-8 container">
+        <div className="flex lg:flex-row flex-col gap-8">
           {/* Sidebar - Desktop */}
-          <div className="hidden lg:block w-[280px] shrink-0">
-            <div className="bg-white rounded-lg shadow-md p-4 sticky top-[72px] max-h-[calc(100vh-120px)] overflow-y-auto">
-              <h2 className="text-lg font-semibold mb-4">Categories</h2>
+          <div className="lg:block hidden w-[280px] shrink-0">
+            <div className="top-[72px] sticky bg-white shadow-md p-4 rounded-lg max-h-[calc(100vh-120px)] overflow-y-auto">
+              <h2 className="mb-4 font-semibold text-lg">Categories</h2>
               <ul className="space-y-2">
-                {PRODUCT_CATEGORIES.map((category) => (
+                {MARKET_CATEGORIES.map((category) => (
                   <li key={category}>
                     <button
                       onClick={() => setSelectedCategory(category)}
-                      className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
+                      className={`w-full text-left px-4 py-2 rounded-lg transition-colors text-gray-700 ${
                         selectedCategory === category
                           ? "bg-Primary text-white"
                           : "hover:bg-gray-100"
@@ -137,14 +137,16 @@ const Marketplace = () => {
             <div className="relative">
               <div className="overflow-x-auto scrollbar-thin">
                 <div className="flex gap-2 pb-4 min-w-max">
-                  {PRODUCT_CATEGORIES.map((category) => (
+                  {MARKET_CATEGORIES.map((category) => (
                     <button
                       key={category}
                       onClick={() => setSelectedCategory(category)}
                       className={`px-4 py-2 rounded-full text-sm font-medium transition-colors whitespace-nowrap
-                        ${selectedCategory === category 
-                          ? 'bg-Primary text-white' 
-                          : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'}`}
+                        ${
+                          selectedCategory === category
+                            ? "bg-Primary text-white"
+                            : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
+                        }`}
                     >
                       {category}
                     </button>
@@ -156,43 +158,84 @@ const Marketplace = () => {
 
           {/* Products Grid */}
           <div className="flex-1">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              {filteredProducts.map((product) => (
-                <div
-                  key={product.id}
-                  className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-                >
-                  <Link to={`/markets/${marketId}/products/${product.id}`}>
-                    <div className="aspect-square relative">
-                      <img
-                        src={product.displayImage?.url || "/path/to/fallback.jpg"}
-                        alt={product.name}
-                        className="absolute inset-0 w-full h-full object-cover"
-                      />
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          toggleBookmark(product.id);
-                        }}
-                        className="absolute top-2 right-2 p-2 rounded-full bg-Primary/80 text-white hover:bg-Primary transition-colors"
-                      >
-                        {bookmarkedProducts.has(product.id) ? (
-                          <BookmarkCheck className="w-4 h-4" />
-                        ) : (
-                          <Bookmark className="w-4 h-4" />
-                        )}
-                      </button>
-                    </div>
-                    <div className="p-2">
-                      <h3 className="font-medium text-sm truncate">{product.name}</h3>
-                      <p className="text-Primary font-bold text-sm">
-                        ₦{product.price?.toLocaleString()}
-                      </p>
-                    </div>
-                  </Link>
+            {filteredProducts.length > 0 ? (
+              <div className="gap-4 grid grid-cols-2 lg:grid-cols-4">
+                {filteredProducts.map((product) => (
+                  <div
+                    key={product.id}
+                    className="bg-white shadow-md hover:shadow-lg rounded-lg transition-shadow overflow-hidden"
+                  >
+                    <Link to={`/markets/${marketId}/products/${product.id}`}>
+                      <div className="relative aspect-square">
+                        <img
+                          src={
+                            product.displayImage?.url || "/path/to/fallback.jpg"
+                          }
+                          alt={product.name}
+                          className="absolute inset-0 w-full h-full object-cover"
+                        />
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            toggleBookmark(product.id);
+                          }}
+                          className="top-2 right-2 absolute bg-Primary/80 hover:bg-Primary p-2 rounded-full text-white transition-colors"
+                        >
+                          {bookmarkedProducts.has(product.id) ? (
+                            <BookmarkCheck className="w-4 h-4" />
+                          ) : (
+                            <Bookmark className="w-4 h-4" />
+                          )}
+                        </button>
+                      </div>
+                      <div className="p-2">
+                        <h3 className="font-medium text-sm truncate">
+                          {product.name}
+                        </h3>
+                        <p className="font-bold text-Primary text-sm">
+                          ₦{product.price?.toLocaleString()}
+                        </p>
+                      </div>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col justify-center items-center px-4 py-12 text-center">
+                <div className="relative mb-4">
+                  <Search className="w-16 h-16 text-gray-200" />
+                  <div className="-right-2 -bottom-2 absolute">
+                    <X className="w-8 h-8 text-Primary" />
+                  </div>
                 </div>
-              ))}
-            </div>
+                <h3 className="mb-2 font-semibold text-gray-800 text-xl">
+                  No Products Found
+                </h3>
+                <p className="max-w-md text-gray-600">
+                  {searchQuery ? (
+                    <>
+                      We couldn't find any products matching "{searchQuery}" in
+                      the {selectedCategory.toLowerCase()} category. Try
+                      adjusting your search or selecting a different category.
+                    </>
+                  ) : (
+                    <>
+                      No products available in the{" "}
+                      {selectedCategory.toLowerCase()} category. Try selecting a
+                      different category.
+                    </>
+                  )}
+                </p>
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery("")}
+                    className="border-2 border-Primary hover:bg-Primary/5 mt-4 px-4 py-2 rounded-full text-Primary text-sm transition-colors"
+                  >
+                    Clear Search
+                  </button>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>

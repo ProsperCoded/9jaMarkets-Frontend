@@ -11,7 +11,6 @@ import {
   Phone,
   PackageSearch,
   Tags,
-  MessageCircleQuestion,
   ShoppingBasket,
   Mail,
 } from "lucide-react";
@@ -23,14 +22,15 @@ const ProductDetails = () => {
   const errorLogger = useErrorLogger();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
+  const [merchant, setMerchant] = useState(null);
   const [selectedImage, setSelectedImage] = useState(0);
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   useEffect(() => {
     const fetchProductDetails = async () => {
-      const details = await getProduct(productId, errorLogger);
-      if (details) {
-        setProduct(details);
+      const productDetails = await getProduct(productId, errorLogger);
+      if (productDetails) {
+        setProduct(productDetails);
         setSelectedImage(0);
       }
     };
@@ -125,9 +125,19 @@ const ProductDetails = () => {
                     <Phone className="text-Primary size-5" />
                     <span className="font-semibold">Contact:</span>
                     <span className="font-medium">
-                      {product.merchant.phone}
+                      {product.merchant.phoneNumbers[0].number}
                     </span>
                   </div>
+                  {product.merchant.phoneNumbers[1] &&
+                    product.merchant.phoneNumbers[1].number && (
+                      <div className="flex items-center gap-2 text-gray-800">
+                        <Phone className="text-Primary size-5" />
+                        <span className="font-semibold">Contact 2:</span>
+                        <span className="font-medium">
+                          {product.merchant.phoneNumbers[1].number}
+                        </span>
+                      </div>
+                    )}
                 </div>
 
                 <div className="flex flex-col gap-3 bg-gray-50 p-4 rounded-lg">
@@ -166,7 +176,7 @@ const ProductDetails = () => {
                     className="flex justify-center items-center gap-2 bg-[#25D366] hover:bg-[#128C7E] py-6 rounded-full w-full font-medium text-base text-white lg:text-lg"
                     onClick={() => {
                       window.open(
-                        `https://wa.me/${product.merchant.phone}`,
+                        `https://wa.me/${product.merchant.phoneNumbers[0].number}`,
                         "_blank"
                       );
                     }}
@@ -184,6 +194,13 @@ const ProductDetails = () => {
                     <Mail className="size-6" />
                     Email
                   </Button>
+                  {/* <a
+                    className="flex justify-center items-center gap-2 bg-Primary hover:bg-P2 py-6 rounded-full w-full font-medium text-base text-white lg:text-lg"
+                    href={`mailto:${product.merchant.email}`}
+                  >
+                    <Mail className="size-6" />
+                    Email
+                  </a> */}
                 </div>
               </div>
             </div>

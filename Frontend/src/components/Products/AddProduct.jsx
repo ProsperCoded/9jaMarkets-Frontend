@@ -39,7 +39,9 @@ export default function AddProduct() {
   const handleFiles = (files) => {
     const validFiles = files.filter((file) => file.size <= 5 * 1024 * 1024); // 5MB in bytes
     if (validFiles.length < files.length) {
-      messageApi.warning("Some files were not uploaded because they exceed the 5MB size limit.");
+      messageApi.warning(
+        "Some files were not uploaded because they exceed the 5MB size limit."
+      );
     }
     const newImages = validFiles.map((file) => ({
       file,
@@ -97,25 +99,21 @@ export default function AddProduct() {
         stock,
         productDetails,
         productDescription,
-        images: selectedImages.map((img) => img.file),
+        selectedImages,
       };
 
-      const response = await uploadProductApi(
-        payload,
-        (error) => {
-          messageApi.error("Failed to upload product");
-          console.error(error);
-        },
-        (msg) => {
-          messageApi.success(msg);
-          resetStates();
-        }
-      );
+      const response = await uploadProductApi(payload, (error) => {
+        messageApi.error("Failed to upload product");
+        console.error(error);
+      });
 
       if (!response) return;
+      messageApi.success("Successfully uploaded product");
+      resetStates();
     } catch (error) {
       messageApi.error("An error occurred while uploading the product");
       console.error(error);
+      console.log(selectedImages);
     } finally {
       setIsSubmitting(false);
     }
@@ -126,13 +124,17 @@ export default function AddProduct() {
       {/* Image Upload Section */}
       <div className="space-y-4">
         <div>
-          <h3 className="text-lg font-medium">Product Images</h3>
-          <p className="text-sm text-gray-500">Add up to 5 images for your product</p>
+          <h3 className="font-medium text-lg">Product Images</h3>
+          <p className="text-gray-500 text-sm">
+            Add up to 5 images for your product
+          </p>
         </div>
 
         <div
           className={`border-2 border-dashed rounded-lg p-6 ${
-            selectedImages.length === 0 ? 'border-gray-300' : 'border-Primary/20'
+            selectedImages.length === 0
+              ? "border-gray-300"
+              : "border-Primary/20"
           }`}
           onDrop={handleDrop}
           onDragOver={(e) => e.preventDefault()}
@@ -148,40 +150,44 @@ export default function AddProduct() {
 
           {selectedImages.length === 0 ? (
             <div className="text-center">
-              <ImagePlus className="mx-auto h-12 w-12 text-gray-400" />
-              <div className="mt-4 flex text-sm items-center justify-center leading-6 text-gray-600">
-                <label className="relative cursor-pointer rounded-md bg-white font-semibold text-Primary focus-within:outline-none focus-within:ring-2 focus-within:ring-Primary focus-within:ring-offset-2 hover:text-Primary/90">
+              <ImagePlus className="mx-auto w-12 h-12 text-gray-400" />
+              <div className="flex justify-center items-center mt-4 text-gray-600 text-sm leading-6">
+                <label className="relative bg-white rounded-md focus-within:ring-2 focus-within:ring-Primary focus-within:ring-offset-2 font-semibold text-Primary hover:text-Primary/90 cursor-pointer focus-within:outline-none">
                   <span onClick={handleUploadClick}>Upload images</span>
                   <p className="pl-1">or drag and drop</p>
                 </label>
               </div>
-              <p className="text-xs leading-5 text-gray-600">PNG, JPG up to 5MB</p>
+              <p className="text-gray-600 text-xs leading-5">
+                PNG, JPG up to 5MB
+              </p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            <div className="gap-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
               {selectedImages.map((image, index) => (
                 <div key={index} className="relative group">
                   <img
                     src={image.url}
                     alt={`Preview ${index + 1}`}
-                    className="h-24 w-full object-cover rounded-lg"
+                    className="rounded-lg w-full h-24 object-cover"
                   />
                   <button
                     onClick={() => removeImage(index)}
-                    className="absolute -top-2 -right-2 p-1 bg-red-100 rounded-full text-red-600 opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="-top-2 -right-2 absolute bg-red-100 opacity-0 group-hover:opacity-100 p-1 rounded-full text-red-600 transition-opacity"
                   >
-                    <X className="h-4 w-4" />
+                    <X className="w-4 h-4" />
                   </button>
-                  <p className="mt-1 text-xs text-gray-500">{image.size}</p>
+                  <p className="mt-1 text-gray-500 text-xs">{image.size}</p>
                 </div>
               ))}
               {selectedImages.length < 5 && (
                 <button
                   onClick={handleUploadClick}
-                  className="h-24 rounded-lg border-2 border-dashed border-gray-300 p-4 text-center hover:border-Primary/50 transition-colors"
+                  className="border-2 border-gray-300 hover:border-Primary/50 p-4 border-dashed rounded-lg h-24 text-center transition-colors"
                 >
-                  <Upload className="h-8 w-8 mx-auto text-gray-400" />
-                  <span className="mt-2 block text-sm text-gray-600">Add more</span>
+                  <Upload className="mx-auto w-8 h-8 text-gray-400" />
+                  <span className="block mt-2 text-gray-600 text-sm">
+                    Add more
+                  </span>
                 </button>
               )}
             </div>
@@ -190,7 +196,7 @@ export default function AddProduct() {
       </div>
 
       {/* Product Details Form */}
-      <div className="grid gap-6 sm:grid-cols-2">
+      <div className="gap-6 grid sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="productName">Product Name</Label>
           <Input
@@ -208,11 +214,13 @@ export default function AddProduct() {
               <SelectValue placeholder="Select a category" />
             </SelectTrigger>
             <SelectContent>
-              {PRODUCT_CATEGORIES.filter(cat => cat !== 'All Categories').map((category) => (
-                <SelectItem key={category} value={category}>
-                  {category}
-                </SelectItem>
-              ))}
+              {PRODUCT_CATEGORIES.filter((cat) => cat !== "All Categories").map(
+                (category) => (
+                  <SelectItem key={category} value={category}>
+                    {category}
+                  </SelectItem>
+                )
+              )}
             </SelectContent>
           </Select>
         </div>
@@ -268,7 +276,7 @@ export default function AddProduct() {
       <div className="flex justify-end">
         <Button
           onClick={handleSubmit}
-          className="w-full bg-Primary text-white hover:bg-Primary/80 sm:w-auto"
+          className="bg-Primary hover:bg-Primary/80 w-full sm:w-auto text-white"
           disabled={isSubmitting}
         >
           {isSubmitting ? "Adding Product..." : "Add Product"}
