@@ -306,7 +306,7 @@ const MARKETS = {
     { name: "Aliero Market", img: "./markets/kebbi/aliero.jpg", address: "Aliero" },
     { name: "Argungu Central Market", img: "./markets/kebbi/argungu.jpg", address: "Argungu" },
     { name: "Augie Market", img: "./markets/kebbi/augie.jpg", address: "Augie" },
-    { name: "Besse Market", img: "./markets/kebbi/besse.jpg", address: "Besse" },
+    { name: "Besse Market", img: "./markets/kebbi/besse.jpeg", address: "Besse" },
     { name: "Bunza Market", img: "./markets/kebbi/bunza.jpg", address: "Bunza" },
     { name: "Central Market", img: "./markets/kebbi/central.jpg", address: "Birnin Kebbi" },
     { name: "Dodoru Market", img: "./markets/kebbi/dodoru.jpg", address: "Dodoru" },
