@@ -34,7 +34,7 @@ const MARKETS = {
   ],
 
   Anambra: [
-    { name: "Afor Igwe Market", img: "./markets/anambra/afor-igwe.jpg", address:"Afor Igwe, Anambra" },
+    { name: "Afor Igwe Market", img: "./markets/anambra/afor-igwe.jpg", address:"Afor Igwe", city:"Anambra", description:"Lorem Ipsum" },
     { name: "Amaenyi Market", img: "./markets/anambra/amaenyi.jpeg", address:"Amaenyi, Anambra" },
     { name: "Bridgehead Market", img: "./markets/anambra/bridgehead.jpg", address:"Bridgehead, Anambra" },
     { name: "Eke Amaobi Market", img: "./markets/anambra/ekeamaobi.jpg", address:"Eke Amaobi, Anambra" },

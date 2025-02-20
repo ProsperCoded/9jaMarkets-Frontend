@@ -5,10 +5,8 @@ import { getMarketProducts } from "@/lib/api/marketApi";
 import { MARKET_DATA_CONTEXT } from "@/contexts";
 import LoadingPage from "@/componets-utils/LoadingPage";
 import NotFoundPage from "@/components/NotFoundPage";
-import { Search, Bookmark, BookmarkCheck, HelpCircle, X } from "lucide-react";
+import { Search, SearchX, Bookmark, BookmarkCheck, HelpCircle, MapPin, Info, Building2, Globe } from "lucide-react";
 import { PRODUCT_CATEGORIES } from "@/config";
-import { faMapMarkerAlt, faMap } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Marketplace = () => {
   const errorLogger = useErrorLogger();
@@ -19,6 +17,7 @@ const Marketplace = () => {
   const { marketsData } = useContext(MARKET_DATA_CONTEXT);
   const market = marketsData.find((market) => market.id === marketId);
   const [bookmarkedProducts, setBookmarkedProducts] = useState(new Set());
+  const [showDescription, setShowDescription] = useState(false);
 
   const fetchProducts = async () => {
     const marketProducts = await getMarketProducts(marketId, errorLogger);
@@ -104,64 +103,55 @@ const Marketplace = () => {
           Not your market's picture?
         </Link>
       </div>
+
+      {/* Market Details */}
       <div className="bg-white shadow-md">
         <div className="mx-auto container">
           {/* Desktop View */}
           <div className="md:block hidden px-4 py-6">
-            <div className="gap-6 grid md:grid-cols-2">
-              {/* Market Info */}
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <FontAwesomeIcon
-                    icon={faMapMarkerAlt}
-                    className="mt-1 w-5 h-5 text-Primary"
-                  />
-                  <div>
-                    <h3 className="font-semibold text-gray-700">Location</h3>
-                    <p className="text-gray-600">
-                      {market.address}, {market.city}, {market.state} State
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <FontAwesomeIcon
-                    icon={faMap}
-                    className="mt-1 w-5 h-5 text-Primary"
-                  />
-                  <div>
-                    <h3 className="font-semibold text-gray-700">
-                      About {market.name}
-                    </h3>
-                    <p className="text-gray-600">{market.description}</p>
-                  </div>
-                </div>
+            <div className="flex items-center justify-between border-b pb-4">
+              <div className="flex items-center gap-2">
+                <MapPin className="w-5 h-5 text-Primary" />
+                <span className="text-gray-600">
+                  {market.address}, {market.city}, {market.state} State
+                </span>
               </div>
 
-              {/* Market Stats */}
-              <div className="gap-4 grid grid-cols-2">
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <p className="text-gray-500 text-sm">Market Type</p>
-                  <p className="font-semibold text-gray-700">
-                    {market.isMall ? "Shopping Mall" : "Traditional Market"}
-                  </p>
-                </div>
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <p className="text-gray-500 text-sm">State</p>
-                  <p className="font-semibold text-gray-700">{market.state}</p>
-                </div>
+              <div className="relative">
+                <button 
+                  onClick={() => setShowDescription(prev => !prev)}
+                  className="flex items-center gap-2 hover:text-Primary transition-colors underline">
+                  <Info className="w-5 h-5 text-Primary" />
+                  <span className="text-gray-600">
+                    About {market.name}
+                  </span>
+                </button>
+                {showDescription && (
+                  <div className="absolute top-full mt-2 right-0 w-80 bg-white shadow-lg rounded-lg p-4 z-30">
+                    <p className="text-gray-600 text-sm">{market.description}</p>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Building2 className="w-5 h-5 text-Primary" />
+                <span className="text-gray-600">
+                  {market.isMall ? "Shopping Mall" : "Traditional Market"}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Globe className="w-5 h-5 text-Primary" />
+                <span className="text-gray-600">{market.state}</span>
               </div>
             </div>
           </div>
 
           {/* Mobile View */}
           <div className="md:hidden">
-            {/* Quick Info Bar */}
             <div className="flex justify-between items-center px-4 py-3 border-b">
               <div className="flex items-center gap-2">
-                <FontAwesomeIcon
-                  icon={faMapMarkerAlt}
-                  className="w-4 h-4 text-Primary"
-                />
+                <MapPin className="w-4 h-4 text-Primary" />
                 <span className="text-gray-600 text-sm">
                   {market.city}, {market.state}
                 </span>
@@ -174,18 +164,14 @@ const Marketplace = () => {
             {/* Collapsible Details */}
             <details className="group">
               <summary className="flex justify-between items-center px-4 py-3 cursor-pointer list-none">
-                <span className="font-medium text-gray-700">
-                  View Market Details
-                </span>
+                <span className="font-medium text-gray-700">View Market Details</span>
                 <div className="group-open:rotate-180 flex justify-center items-center border-[1.5px] border-gray-500 rounded-full w-4 h-4 transition-transform">
                   <div className="border-gray-500 border-r-[1.5px] border-b-[1.5px] w-1.5 h-1.5 translate-y-[-2px] rotate-45"></div>
                 </div>
               </summary>
               <div className="space-y-4 px-4 pb-4">
                 <div className="space-y-2">
-                  <h3 className="font-semibold text-gray-700 text-sm">
-                    Address
-                  </h3>
+                  <h3 className="font-semibold text-gray-700 text-sm">Address</h3>
                   <p className="text-gray-600 text-sm">{market.address}</p>
                 </div>
                 <div className="space-y-2">
@@ -294,10 +280,7 @@ const Marketplace = () => {
             ) : (
               <div className="flex flex-col justify-center items-center px-4 py-12 text-center">
                 <div className="relative mb-4">
-                  <Search className="w-16 h-16 text-gray-200" />
-                  <div className="-right-2 -bottom-2 absolute">
-                    <X className="w-8 h-8 text-Primary" />
-                  </div>
+                  <SearchX className="w-16 h-16 text-orange/55 animate-bounce" />
                 </div>
                 <h3 className="mb-2 font-semibold text-gray-800 text-xl">
                   No Products Found

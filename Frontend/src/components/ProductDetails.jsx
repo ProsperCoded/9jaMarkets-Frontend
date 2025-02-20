@@ -186,7 +186,7 @@ const ProductDetails = () => {
                   </Button>
 
                   <Button
-                    className="flex justify-center items-center gap-2 bg-Primary hover:bg-P2 py-6 rounded-full w-full font-medium text-base text-white lg:text-lg"
+                    className="flex justify-center items-center gap-2 bg-Primary hover:bg-orange py-6 rounded-full w-full font-medium text-base text-white lg:text-lg"
                     onClick={() => {
                       window.open(`mailto:${product.merchant.email}`, "_blank");
                     }}
