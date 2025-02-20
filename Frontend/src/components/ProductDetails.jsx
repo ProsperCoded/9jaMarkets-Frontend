@@ -23,16 +23,25 @@ const ProductDetails = () => {
   const errorLogger = useErrorLogger();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
+  const [merchant, setMerchant] = useState(null);
   const [selectedImage, setSelectedImage] = useState(0);
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   useEffect(() => {
     const fetchProductDetails = async () => {
-      const details = await getProduct(productId, errorLogger);
-      if (details) {
-        setProduct(details);
+      const productDetails = await getProduct(productId, errorLogger);
+      if (productDetails) {
+        setProduct(productDetails);
         setSelectedImage(0);
       }
+      // const merchantInfo = await getMerchantProfileApi(
+      //   product.merchant.id,
+      //   errorLogger
+      // );
+      // if (merchantInfo) {
+      //   console.log("merchant info", merchantInfo);
+      //   setMerchant(merchantInfo);
+      // }
     };
     fetchProductDetails();
   }, [marketId, productId]);
@@ -169,6 +178,12 @@ const ProductDetails = () => {
                         `https://wa.me/${product.merchant.phone}`,
                         "_blank"
                       );
+                      // if (merchant) {
+                      //   window.open(
+                      //     `https://wa.me/${merchant.phoneNumbers[0].number}`,
+                      //     "_blank"
+                      //   );
+                      // }
                     }}
                   >
                     <img src={WhatsappIcon} alt="WhatsApp" className="size-6" />
@@ -184,6 +199,13 @@ const ProductDetails = () => {
                     <Mail className="size-6" />
                     Email
                   </Button>
+                  {/* <a
+                    className="flex justify-center items-center gap-2 bg-Primary hover:bg-P2 py-6 rounded-full w-full font-medium text-base text-white lg:text-lg"
+                    href={`mailto:${product.merchant.email}`}
+                  >
+                    <Mail className="size-6" />
+                    Email
+                  </a> */}
                 </div>
               </div>
             </div>

@@ -15,13 +15,13 @@ export const PRODUCT_CATEGORIES = [
   "CULTURAL EXPERIENCES",
   "FOOD & GROCERIES",
   "ELECTRONICS & GADGETS",
-  "FASHION & ACCESSORIES", 
+  "FASHION & ACCESSORIES",
   "HEALTH & WELLNESS",
   "HOME & LIVING",
   "AUTOMOBILE NEEDS",
   "TRADITIONAL CRAFTS",
   "SPORTS & OUTDOOR",
-  "KIDS & BABY PRODUCTS"
+  "KIDS & BABY PRODUCTS",
 ];
 export const plans = {
   standard: {
@@ -59,6 +59,7 @@ export const plans = {
   },
 };
 
+// ! Not been used
 export const MARKETS = {
   Abia: [
     { name: "Ariaria International Market (Aba)", img: "/path/to/ariaria.jpg" },
