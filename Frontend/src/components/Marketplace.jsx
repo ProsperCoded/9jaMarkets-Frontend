@@ -66,7 +66,7 @@ const Marketplace = () => {
   };
 
   if (!market && marketsData.length > 0) return <NotFoundPage />;
-  if (!market) return <LoadingPage message={"Market Could not be found"} />;
+  if (!market) return <LoadingPage message={"Could not be found"} />;
 
   return (
     <div className="bg-gray-50 min-h-screen pt-16">
@@ -156,7 +156,7 @@ const Marketplace = () => {
 
           {/* Products Grid */}
           <div className="flex-1">
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {filteredProducts.map((product) => (
                 <div
                   key={product.id}
