@@ -32,14 +32,3 @@ export async function getMarketProducts(marketId, errorLogger = () => {}) {
   }
   return responseData.data;
 }
-
-export async function getProductDetails(marketId, productId, errorLogger = () => {}) {
-  const url = new URL(`product/market/${marketId}/${productId}`, SERVER_URL);
-  const response = await fetch(url);
-  const responseData = await response.json();
-  if (!response.ok) {
-    errorLogger(responseData.message);
-    return;
-  }
-  return responseData.data;
-}

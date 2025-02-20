@@ -1,1 +1,9 @@
 process.excalidraw
+node_modules/
+dist/
+.env
+.DS_Store
+.idea/
+.vscode/
+*.log
+*.tmp
