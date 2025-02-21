@@ -8,7 +8,7 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, Bookmark } from "lucide-react";
-import { BOOKMARK_CONTEXT, USER_PROFILE_CONTEXT, LOGIN_MODAL_CONTEXT, SIGNUP_MODAL_CONTEXT } from "@/contexts";
+import { BOOKMARK_CONTEXT, USER_PROFILE_CONTEXT, LOGIN_MODAL_CONTEXT } from "@/contexts";
 import logo from "../assets/Logo.svg";
 import { UserAvatar } from "../componets-utils/UserAvatar";
 
@@ -17,7 +17,6 @@ const Header2 = () => {
   const { bookmarkCount } = useContext(BOOKMARK_CONTEXT);
   const { userProfile } = useContext(USER_PROFILE_CONTEXT);
   const { setLoginOpen } = useContext(LOGIN_MODAL_CONTEXT);
-  const { setSignupOpen } = useContext(SIGNUP_MODAL_CONTEXT);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
