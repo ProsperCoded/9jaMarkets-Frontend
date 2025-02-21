@@ -24,7 +24,7 @@ import Overview from "./components/Overview";
 import ProductPage from "./components/Products/ProductPage";
 import EditProfile from "./components/EditProfile";
 import SelectPlan from "./components/Products/SelectPlan";
-import InvestPage from './pages/Invest';
+import InvestPage from "./pages/Invest";
 import MarketerPage from "./pages/Marketer";
 import IncludeMarket from "./pages/IncludeMarket";
 
@@ -47,7 +47,7 @@ import FAQ from "./pages/FAQ";
 import ContactUs from "./pages/ContactUs";
 import ScrollToTop from "./components/ScrollToTop";
 import IntercomMessenger from "./components/IntercomMessenger";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import ProductDetails from "./components/ProductDetails";
 
 function AntDesignConfig({ children }) {
@@ -76,19 +76,21 @@ AntDesignConfig.propTypes = {
 function App() {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
-  
+
   const hideFooterPaths = [
-    '/markets', 
-    '/malls',
-    '/dashboard',
-    '/dashboard/overview',
-    '/dashboard/products',
-    '/dashboard/customers',
-    '/dashboard/messages',
-    '/dashboard/edit'
+    "/markets",
+    "/malls",
+    "/dashboard",
+    "/dashboard/overview",
+    "/dashboard/products",
+    "/dashboard/customers",
+    "/dashboard/messages",
+    "/dashboard/edit",
   ];
-  
-  const shouldShowFooter = !hideFooterPaths.some(path => location.pathname.startsWith(path));
+
+  const shouldShowFooter = !hideFooterPaths.some((path) =>
+    location.pathname.startsWith(path)
+  );
 
   return (
     <div className="app">
@@ -148,7 +150,7 @@ function App() {
               <Route path="/contact" element={<ContactUs />} />
 
               <Route path="/markets/:marketId" element={<Marketplace />} />
-              <Route path="/markets/:marketId/products/:productId" element={<ProductDetails />} />
+              <Route path="/products/:productId" element={<ProductDetails />} />
 
               <Route path="*" element={<NotFoundPage />} />
             </Routes>

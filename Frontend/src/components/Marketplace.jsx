@@ -24,7 +24,6 @@ const Marketplace = () => {
   const { id: marketId } = useParams();
   const [products, setProducts] = useState();
   const [searchQuery, setSearchQuery] = useState("");
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { marketsData } = useContext(MARKET_DATA_CONTEXT);
   const market = marketsData.find((market) => market.id === marketId);
   const { userProfile } = useContext(USER_PROFILE_CONTEXT);
@@ -328,7 +327,7 @@ const Marketplace = () => {
                     key={product.id}
                     className="bg-white shadow-md hover:shadow-lg rounded-lg transition-shadow overflow-hidden"
                   >
-                    <Link to={`/markets/${marketId}/products/${product.id}`}>
+                    <Link to={`/products/${product.id}`}>
                       <div className="relative aspect-square">
                         <img
                           src={
