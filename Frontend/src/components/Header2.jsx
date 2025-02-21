@@ -30,12 +30,6 @@ const Header2 = () => {
     }
   };
 
-  const handleSignupClick = () => {
-    if (!userProfile) {
-      setSignupOpen(true);
-    }
-  };
-
   return (
     <>
       <header className="top-0 z-[15] fixed bg-Primary shadow px-4 w-full text-white">
