@@ -407,7 +407,6 @@ const MARKETS = {
   ],
 
   Sokoto: [
-    { name: "Binji Market", img: "./markets/sokoto/binji.jpg", address: "Binji" },
     { name: "Bodinga Market", img: "./markets/sokoto/bodinga.jpg", address: "Bodinga" },
     { name: "Dange Market", img: "./markets/sokoto/dange.jpg", address: "Dange" },
     { name: "Goronyo Market", img: "./markets/sokoto/goronyo.jpg", address: "Goronyo" },
