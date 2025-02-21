@@ -1,12 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import {
-  Bookmark,
-  BookmarkCheck,
-  Trash2,
-  RefreshCw,
-  ShoppingBag,
-} from "lucide-react";
+import { BookmarkCheck, Trash2, RefreshCw, ShoppingBag } from "lucide-react";
 import {
   getBookmarks,
   clearBookmarks,
