@@ -13,6 +13,8 @@ import {
   Tags,
   ShoppingBasket,
   Mail,
+  Copy,
+  Check,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { getProduct } from "@/lib/api/productApi";
@@ -25,6 +27,7 @@ const ProductDetails = () => {
   const [merchant, setMerchant] = useState(null);
   const [selectedImage, setSelectedImage] = useState(0);
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [copiedPhone, setCopiedPhone] = useState(null);
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -36,6 +39,12 @@ const ProductDetails = () => {
     };
     fetchProductDetails();
   }, [productId]);
+
+  const handleCopyPhone = (phone) => {
+    navigator.clipboard.writeText(phone);
+    setCopiedPhone(phone);
+    setTimeout(() => setCopiedPhone(null), 2000);
+  };
 
   if (!product) return <LoadingPage message="Loading product details..." />;
 
@@ -127,6 +136,17 @@ const ProductDetails = () => {
                     <span className="font-medium">
                       {product.merchant.phoneNumbers[0].number}
                     </span>
+                    <button
+                      onClick={() => handleCopyPhone(product.merchant.phoneNumbers[0].number)}
+                      className="ml-auto hover:bg-gray-100 p-1.5 rounded-full transition-colors"
+                      title="Copy phone number"
+                    >
+                      {copiedPhone === product.merchant.phoneNumbers[0].number ? (
+                        <Check className="size-4 text-Primary" />
+                      ) : (
+                        <Copy className="size-4 text-orange" />
+                      )}
+                    </button>
                   </div>
                   {product.merchant.phoneNumbers[1] &&
                     product.merchant.phoneNumbers[1].number && (
@@ -136,6 +156,17 @@ const ProductDetails = () => {
                         <span className="font-medium">
                           {product.merchant.phoneNumbers[1].number}
                         </span>
+                        <button
+                          onClick={() => handleCopyPhone(product.merchant.phoneNumbers[1].number)}
+                          className="ml-auto hover:bg-gray-100 p-1.5 rounded-full transition-colors"
+                          title="Copy phone number"
+                        >
+                          {copiedPhone === product.merchant.phoneNumbers[1].number ? (
+                            <Check className="size-4 text-green-600" />
+                          ) : (
+                            <Copy className="size-4 text-gray-500" />
+                          )}
+                        </button>
                       </div>
                     )}
                 </div>
