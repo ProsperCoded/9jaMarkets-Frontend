@@ -1,4 +1,4 @@
-/** 
+/**
  * The top navigation bar of the application, containing the logo, navigation
  * links, icons, and profile picture. On mobile devices, the navigation links
  * are hidden and can be accessed by clicking the burger menu icon on the right
@@ -6,11 +6,13 @@
  * the icon is clicked.
  */
 import { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, Bookmark } from "lucide-react";
 import { BOOKMARK_CONTEXT } from "@/contexts";
 import logo from "../assets/Logo.svg";
 import { UserAvatar } from "../componets-utils/UserAvatar";
+import { USER_PROFILE_CONTEXT } from "@/contexts";
 
 const Header2 = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,10 +22,11 @@ const Header2 = () => {
     setIsMenuOpen(!isMenuOpen);
     document.body.style.overflow = isMenuOpen ? "auto" : "hidden";
   };
+  const { userProfile } = useContext(USER_PROFILE_CONTEXT);
 
   return (
     <>
-      <header className="fixed top-0 z-[15] bg-Primary shadow px-4 w-full text-white">
+      <header className="top-0 z-[15] fixed bg-Primary shadow px-4 w-full text-white">
         <div className="flex justify-between items-center mx-auto p-2 h-14 container">
           {/* Logo and Nav */}
           <div className="flex items-center">
@@ -63,7 +66,7 @@ const Header2 = () => {
             </div>
 
             {/* Mobile Avatar and Menu */}
-            <div className="md:hidden flex items-center gap-4">
+            <div className="flex items-center gap-4 md:hidden">
               <Link
                 to="/bookmark"
                 className="relative flex items-center p-2 hover:bg-white hover:text-Primary rounded-full transition-colors"
@@ -102,15 +105,10 @@ const Header2 = () => {
           className="fixed inset-0 bg-black/50 transition-opacity duration-300"
           onClick={toggleMenu}
         />
-        <div
-          className="fixed top-0 right-0 grid grid-rows-[auto_1fr_auto] bg-black bg-opacity-20 backdrop-blur-md p-6 w-1/2 h-full text-lg text-white overflow-y-auto"
-        >
+        <div className="top-0 right-0 fixed grid grid-rows-[auto_1fr_auto] bg-black bg-opacity-20 backdrop-blur-md p-6 w-1/2 h-full text-lg text-white overflow-y-auto">
           {/* Close Button */}
           <div className="flex justify-end">
-            <X
-              className="w-6 h-6 cursor-pointer"
-              onClick={toggleMenu}
-            />
+            <X className="w-6 h-6 cursor-pointer" onClick={toggleMenu} />
           </div>
           {/* Nav Links */}
           <div className="align-top justify-start space-y-4">

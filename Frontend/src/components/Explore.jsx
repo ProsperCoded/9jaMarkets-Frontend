@@ -10,7 +10,7 @@
  *
  * @returns {JSX.Element} the explore page component
  */
-import React from 'react';
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
@@ -51,10 +51,10 @@ import Sports from "../assets/optimized/categories/sports&outdoor.jpg";
 import Kids from "../assets/optimized/categories/kids&babyproducts.png";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faStore } from "@fortawesome/free-solid-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { MALLS, MARKETS } from "../config";
 
-import { 
+import {
   GraduationCap, // Education
   Building2, // Real Estate
   Music, // Events
@@ -68,38 +68,38 @@ import {
   Car, // Automobile
   Paintbrush, // Traditional
   Trophy, // Sports
-  Baby // Kids
-} from 'lucide-react';
+  Baby, // Kids
+} from "lucide-react";
+import { useContext } from "react";
+import { MALLS_DATA_CONTEXT, MARKET_DATA_CONTEXT } from "@/contexts";
 
-const allMarkets = Object.values(MARKETS).flat();
-const allMalls = Object.values(MALLS).flat();
-const featuredMarkets = [
-  { name: "Alaba Market", location: "Lagos State", imageUrl: AlabaMarket },
-  { name: "Bodija Market", location: "Oyo State", imageUrl: BodijaMarket },
-  {
-    name: "Oil Mill Market",
-    location: "Rivers State",
-    imageUrl: OilMillMarket,
-  },
-  {
-    name: "Computer Village",
-    location: "Lagos State",
-    imageUrl: ComputerVillage,
-  },
-  {
-    name: "Onitsha Main Market",
-    location: "Anambra State",
-    imageUrl: OnitshaMarket,
-  },
-];
+// const featuredMarkets = [
+//   { name: "Alaba Market", location: "Lagos State", imageUrl: AlabaMarket },
+//   { name: "Bodija Market", location: "Oyo State", imageUrl: BodijaMarket },
+//   {
+//     name: "Oil Mill Market",
+//     location: "Rivers State",
+//     imageUrl: OilMillMarket,
+//   },
+//   {
+//     name: "Computer Village",
+//     location: "Lagos State",
+//     imageUrl: ComputerVillage,
+//   },
+//   {
+//     name: "Onitsha Main Market",
+//     location: "Anambra State",
+//     imageUrl: OnitshaMarket,
+//   },
+// ];
 
-const featuredMalls = [
-  { name: "Ikeja City Mall", location: "Lagos State", imageUrl: IkejaMall },
-  { name: "Palms Shopping Mall", location: "Oyo State", imageUrl: PalmsMall },
-  { name: "Onitsha Mall", location: "Anambra State", imageUrl: OnitshaMall },
-  { name: "Ado Bayero Mall", location: "Kano State", imageUrl: AdoBayeroMall },
-  { name: "Jabi Lake Mall", location: "Abuja", imageUrl: JabiLakeMall },
-];
+// const featuredMalls = [
+//   { name: "Ikeja City Mall", location: "Lagos State", imageUrl: IkejaMall },
+//   { name: "Palms Shopping Mall", location: "Oyo State", imageUrl: PalmsMall },
+//   { name: "Onitsha Mall", location: "Anambra State", imageUrl: OnitshaMall },
+//   { name: "Ado Bayero Mall", location: "Kano State", imageUrl: AdoBayeroMall },
+//   { name: "Jabi Lake Mall", location: "Abuja", imageUrl: JabiLakeMall },
+// ];
 
 // Update the categoryIcons mapping
 const categoryIcons = {
@@ -116,7 +116,7 @@ const categoryIcons = {
   "Automobile Needs": Car,
   "Traditional Crafts": Paintbrush,
   "Sports & Outdoor": Trophy,
-  "Kids & Baby Products": Baby
+  "Kids & Baby Products": Baby,
 };
 
 // Update the categories object with new image mappings
@@ -140,7 +140,16 @@ const categories = {
 function ExploreSection() {
   const [searchQuery, setSearchQuery] = useState("");
   const [cardNumber, setCardNumber] = useState(1);
+  const { marketsData } = useContext(MARKET_DATA_CONTEXT);
+  const { mallsData } = useContext(MALLS_DATA_CONTEXT);
 
+  const [featuredMarkets, setFeaturedMarkets] = useState([]);
+  const [featuredMalls, setFeaturedMalls] = useState([]);
+  // ! For Testing Purposes
+  useEffect(() => {
+    setFeaturedMarkets(marketsData.slice(0, 5));
+    setFeaturedMalls(mallsData.slice(0, 5));
+  }, [marketsData, mallsData]);
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value.toLowerCase());
   };
@@ -150,9 +159,9 @@ function ExploreSection() {
       const isMobile = window.innerWidth < 600;
       const isIPad = window.innerWidth >= 600 && window.innerWidth < 1024;
       const isDesktop = window.innerWidth >= 1024;
-      
+
       const newCardNumber = isDesktop
-        ? 4  // Show 4 cards on desktop
+        ? 4 // Show 4 cards on desktop
         : isIPad
         ? 3
         : isMobile
@@ -167,38 +176,38 @@ function ExploreSection() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const marketsData = useMemo(() => {
+  const filteredMarkets = useMemo(() => {
     if (!searchQuery) return featuredMarkets;
-    return allMarkets
+    return marketsData
       .filter((market) => market.name.toLowerCase().includes(searchQuery))
-      .slice(0, 20);
-  }, [searchQuery]);
+      .slice(0, cardNumber * 5);
+  }, [searchQuery, featuredMarkets, cardNumber]);
 
-  const mallsData = useMemo(() => {
+  const filteredMalls = useMemo(() => {
     if (!searchQuery) return featuredMalls;
-    return allMalls
+    return mallsData
       .filter((mall) => mall.name.toLowerCase().includes(searchQuery))
-      .slice(0, 20);
-  }, [searchQuery]);
+      .slice(0, cardNumber * 5);
+  }, [searchQuery, featuredMalls, cardNumber]);
 
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-white py-12 lg:py-16">
-      <div className="container mx-auto px-4 max-w-6xl">
+    <div className="bg-white py-12 lg:py-16 min-h-screen">
+      <div className="mx-auto px-4 max-w-6xl container">
         {/* Search Section */}
         <div className="flex flex-col items-center space-y-6">
-          <div className="relative flex w-full max-w-3xl items-center">
+          <div className="relative flex items-center w-full max-w-3xl">
             <input
               type="text"
               placeholder="Search by state, market, or category..."
               value={searchQuery}
               onChange={handleSearchChange}
-              className="w-full rounded-full border-2 border-Primary px-6 py-3 pr-[100px] text-sm focus:outline-none focus:ring-2 focus:ring-Primary/20 md:py-4 md:text-base"
+              className="border-2 border-Primary px-6 py-3 md:py-4 pr-[100px] rounded-full focus:ring-2 focus:ring-Primary/20 w-full text-sm md:text-base focus:outline-none"
             />
-            <button className="absolute right-2 flex items-center justify-center rounded-full bg-[#F8912D] px-4 py-2 text-white transition-colors hover:bg-[#F8912D]/90 md:px-6 md:py-2.5">
-              <Search className="h-5 w-5" />
-              <span className="ml-2 hidden md:inline">Search</span>
+            <button className="right-2 absolute flex justify-center items-center bg-[#F8912D] hover:bg-[#F8912D]/90 px-4 md:px-6 py-2 md:py-2.5 rounded-full text-white transition-colors">
+              <Search className="w-5 h-5" />
+              <span className="md:inline hidden ml-2">Search</span>
             </button>
           </div>
         </div>
@@ -207,28 +216,28 @@ function ExploreSection() {
         <div className="mt-12">
           {/* Mobile: Place Ad Button */}
           <div className="md:hidden mb-6">
-            <button 
-              onClick={() => navigate('/ad')}
-              className="w-full h-full bg-[#F8912D] hover:bg-[#F8912D]/90 text-white rounded-xl p-4 shadow-lg transition-all duration-200 flex items-center justify-center gap-3"
+            <button
+              onClick={() => navigate("/ad")}
+              className="flex justify-center items-center gap-3 bg-[#F8912D] hover:bg-[#F8912D]/90 shadow-lg p-4 rounded-xl w-full h-full text-white transition-all duration-200"
             >
               <FontAwesomeIcon icon={faPlus} className="text-xl" />
               <span className="font-semibold">Place Your Ad</span>
             </button>
           </div>
 
-          <h2 className="mb-6 font-bold text-center text-xl md:text-2xl text-Primary">
+          <h2 className="mb-6 font-bold text-center text-Primary text-xl md:text-2xl">
             Categories
           </h2>
 
-          <div className="flex flex-col md:flex-row gap-4">
+          <div className="flex md:flex-row flex-col gap-4">
             {/* Desktop: Place Ad Button */}
-            <div className="hidden md:block">
-              <button 
-                onClick={() => navigate('/ad')}
-                className="w-[200px] h-[200px] bg-orange hover:bg-orange/90 text-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 group"
+            <div className="md:block hidden">
+              <button
+                onClick={() => navigate("/ad")}
+                className="bg-orange hover:bg-orange/90 shadow-sm hover:shadow-md rounded-xl w-[200px] h-[200px] text-white transition-all duration-200 group"
               >
-                <div className="p-4 flex flex-col items-center justify-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+                <div className="flex flex-col justify-center items-center gap-3 p-4">
+                  <div className="group-hover:scale-110 flex justify-center items-center bg-white/20 rounded-full w-10 h-10 transition-transform duration-200">
                     <FontAwesomeIcon icon={faPlus} className="text-xl" />
                   </div>
                   <div className="text-center">
@@ -252,22 +261,29 @@ function ExploreSection() {
               >
                 {Object.entries(categories).map(([name, imageUrl]) => (
                   <SwiperSlide key={name}>
-                    <Link to={`/category/${name.toLowerCase().replace(/\s+/g, '-')}`}>
-                      <div className="group cursor-pointer h-[200px]">
-                        <div className="relative h-full rounded-xl overflow-hidden">
+                    <Link
+                      to={`/category/${name
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}`}
+                    >
+                      <div className="h-[200px] cursor-pointer group">
+                        <div className="relative rounded-xl h-full overflow-hidden">
                           <img
                             src={imageUrl}
                             alt={name}
                             className="w-full h-full object-cover"
                           />
-                          <div className="absolute inset-0 bg-black/50 group-hover:bg-black/60 transition-colors duration-200" />
-                          <div className="absolute inset-0 p-4 flex flex-col items-center justify-center text-white">
-                            {React.createElement(categoryIcons[name], { 
-                              className: "w-6 h-6 mb-2 group-hover:scale-110 transition-transform duration-200" 
+                          <div className="group-hover:bg-black/60 absolute inset-0 bg-black/50 transition-colors duration-200" />
+                          <div className="absolute inset-0 flex flex-col justify-center items-center p-4 text-white">
+                            {React.createElement(categoryIcons[name], {
+                              className:
+                                "w-6 h-6 mb-2 group-hover:scale-110 transition-transform duration-200",
                             })}
-                            <h3 className="text-center text-sm font-medium">{name}</h3>
+                            <h3 className="font-medium text-center text-sm">
+                              {name}
+                            </h3>
                           </div>
-                          <h3 className="text-white text-center font-semibold text-sm md:text-base">
+                          <h3 className="font-semibold text-center text-sm text-white md:text-base">
                             {name}
                           </h3>
                         </div>
@@ -282,10 +298,10 @@ function ExploreSection() {
 
         {/* Markets Section */}
         <div className="mb-16">
-          <h2 className="mb-8 font-bold text-center text-xl md:text-2xl text-Primary">
+          <h2 className="mb-8 font-bold text-center text-Primary text-xl md:text-2xl">
             Featured Markets
           </h2>
-          <div className="max-w-6xl mx-auto">
+          <div className="mx-auto max-w-6xl">
             <Swiper
               slidesPerView={cardNumber}
               spaceBetween={24}
@@ -295,23 +311,25 @@ function ExploreSection() {
               modules={[Pagination]}
               className="custom-swiper-pagination pb-10"
             >
-              {marketsData.map((market) => (
+              {filteredMarkets.map((market) => (
                 <SwiperSlide key={market.name}>
-                  <div className="bg-white shadow-lg rounded-xl overflow-hidden transition-all duration-200 hover:shadow-xl hover:scale-105">
-                    <img
-                      src={market.imageUrl}
-                      alt={market.name}
-                      className="w-full aspect-[4/3] object-cover"
-                      loading="lazy"
-                    />
-                    <div className="p-4">
-                      <h3 className="font-bold text-gray-800 text-base md:text-lg mb-1">
-                        {market.name}
-                      </h3>
-                      <p className="text-gray-600 text-sm md:text-base">
-                        {market.location}
-                      </p>
-                    </div>
+                  <div className="bg-white shadow-lg hover:shadow-xl rounded-xl transition-all duration-200 overflow-hidden hover:scale-105">
+                    <Link to={`/markets/${market.id}`}>
+                      <img
+                        src={market.displayImage}
+                        alt={market.name}
+                        className="w-full aspect-[4/3] object-cover"
+                        loading="lazy"
+                      />
+                      <div className="p-4">
+                        <h3 className="mb-1 font-bold text-base text-gray-800 md:text-lg">
+                          {market.name}
+                        </h3>
+                        <p className="text-gray-600 text-sm md:text-base">
+                          {market.address}
+                        </p>
+                      </div>
+                    </Link>
                   </div>
                 </SwiperSlide>
               ))}
@@ -321,10 +339,10 @@ function ExploreSection() {
 
         {/* Malls Section */}
         <div>
-          <h2 className="mb-8 font-bold text-center text-xl md:text-2xl text-Primary">
+          <h2 className="mb-8 font-bold text-center text-Primary text-xl md:text-2xl">
             Featured Malls
           </h2>
-          <div className="max-w-6xl mx-auto">
+          <div className="mx-auto max-w-6xl">
             <Swiper
               slidesPerView={cardNumber}
               spaceBetween={24}
@@ -334,23 +352,25 @@ function ExploreSection() {
               modules={[Pagination]}
               className="custom-swiper-pagination pb-10"
             >
-              {mallsData.map((mall) => (
+              {filteredMalls.map((mall) => (
                 <SwiperSlide key={mall.name}>
-                  <div className="bg-white shadow-lg rounded-xl overflow-hidden transition-all duration-200 hover:shadow-xl hover:scale-105">
-                    <img
-                      src={mall.imageUrl}
-                      alt={mall.name}
-                      className="w-full aspect-[4/3] object-cover"
-                      loading="lazy"
-                    />
-                    <div className="p-4">
-                      <h3 className="font-bold text-gray-800 text-base md:text-lg mb-1">
-                        {mall.name}
-                      </h3>
-                      <p className="text-gray-600 text-sm md:text-base">
-                        {mall.location}
-                      </p>
-                    </div>
+                  <div className="bg-white shadow-lg hover:shadow-xl rounded-xl transition-all duration-200 overflow-hidden hover:scale-105">
+                    <Link to={`/markets/${mall.id}`}>
+                      <img
+                        src={mall.displayImage}
+                        alt={mall.name}
+                        className="w-full aspect-[4/3] object-cover"
+                        loading="lazy"
+                      />
+                      <div className="p-4">
+                        <h3 className="mb-1 font-bold text-base text-gray-800 md:text-lg">
+                          {mall.name}
+                        </h3>
+                        <p className="text-gray-600 text-sm md:text-base">
+                          {mall.address}
+                        </p>
+                      </div>
+                    </Link>
                   </div>
                 </SwiperSlide>
               ))}

@@ -26,7 +26,6 @@ const ProductDetails = () => {
   const errorLogger = useErrorLogger();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
-  const [merchant, setMerchant] = useState(null);
   const [selectedImage, setSelectedImage] = useState(0);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(null);
