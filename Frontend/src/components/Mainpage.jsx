@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { 
   Search,
   Bookmark, 
@@ -20,12 +20,17 @@ import {
   CardContent,
 } from "./ui/card";
 import { Button } from "./ui/button";
+import { USER_PROFILE_CONTEXT, MESSAGE_API_CONTEXT, BOOKMARK_CONTEXT } from "@/contexts";
+import { addToBookmarks, removeFromBookmarks } from "@/lib/api/bookmarkApi";
 
 const MainPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
   const [bookmarkedProducts, setBookmarkedProducts] = useState(new Set());
+  const { userProfile } = useContext(USER_PROFILE_CONTEXT);
+  const messageApi = useContext(MESSAGE_API_CONTEXT);
+  const { updateBookmarkCount } = useContext(BOOKMARK_CONTEXT);
 
   // Simulated Product Data - In real app, this would come from an API
   const products = [
@@ -59,16 +64,35 @@ const MainPage = () => {
     setFilteredProducts(filtered);
   };
 
-  const toggleBookmark = (productId) => {
-    setBookmarkedProducts(prev => {
-      const newBookmarks = new Set(prev);
-      if (newBookmarks.has(productId)) {
-        newBookmarks.delete(productId);
+  const toggleBookmark = async (productId) => {
+    if (!userProfile) {
+      messageApi.error("Please login to bookmark products");
+      return;
+    }
+
+    try {
+      if (bookmarkedProducts.has(productId)) {
+        const result = await removeFromBookmarks(productId, messageApi.error);
+        if (result) {
+          setBookmarkedProducts(prev => {
+            const newSet = new Set(prev);
+            newSet.delete(productId);
+            return newSet;
+          });
+          messageApi.success("Product removed from bookmarks");
+          updateBookmarkCount();
+        }
       } else {
-        newBookmarks.add(productId);
+        const result = await addToBookmarks(productId, messageApi.error);
+        if (result) {
+          setBookmarkedProducts(prev => new Set(prev).add(productId));
+          messageApi.success("Product added to bookmarks");
+          updateBookmarkCount();
+        }
       }
-      return newBookmarks;
-    });
+    } catch (err) {
+      messageApi.error("Failed to update bookmark");
+    }
   };
 
   return (

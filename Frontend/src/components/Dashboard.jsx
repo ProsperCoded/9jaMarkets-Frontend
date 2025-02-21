@@ -1,36 +1,10 @@
 import React, { useContext, useState } from "react";
-import {
-  Store,
-  UserRound,
-  Settings,
-  Home,
-  Package,
-  Users,
-  MessageSquare,
-  LogOut,
-  ChevronRight,
-  X,
-} from "lucide-react";
-import {
-  Link,
-  Outlet,
-  useParams,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
+import { Store, UserRound, Settings, Home, Package, Users, MessageSquare, LogOut, ChevronRight, X } from "lucide-react";
+import { Link, Outlet, useParams, useNavigate, useLocation } from "react-router-dom";
 import { Avatar } from "antd";
-import {
-  USER_PROFILE_CONTEXT,
-  LOGOUT_MODAL_CONTEXT,
-  LOGIN_MODAL_CONTEXT,
-  SIGNUP_MODAL_CONTEXT,
-} from "@/contexts";
+import { USER_PROFILE_CONTEXT, LOGOUT_MODAL_CONTEXT, LOGIN_MODAL_CONTEXT, SIGNUP_MODAL_CONTEXT } from "@/contexts";
 import { Button } from "./ui/button";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "./ui/collapsible";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
 import { ChevronsUpDown } from "lucide-react";
 
 const Dashboard = () => {
@@ -168,7 +142,7 @@ const SidebarContent = ({
           <div className="relative ml-3">
             <h2 className="font-semibold text-lg">{name}</h2>
             <button
-              className="top-0 right-3 absolute bg-Primary p-2 rounded-full transition-transform hover:scale-105"
+              className="top-2 left-32 absolute bg-Primary p-2 rounded-full transition-transform hover:scale-105"
               onClick={() => navigate("/dashboard/edit")}
             >
               <Settings className="w-4 h-4" color="white" />

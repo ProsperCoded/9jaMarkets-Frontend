@@ -5,14 +5,17 @@
  * side of the header. The navigation links will slide in from the right when
  * the icon is clicked.
  */
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, Bookmark } from "lucide-react";
+import { BOOKMARK_CONTEXT } from "@/contexts";
 import logo from "../assets/Logo.svg";
 import { UserAvatar } from "../componets-utils/UserAvatar";
 
 const Header2 = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { bookmarkCount } = useContext(BOOKMARK_CONTEXT);
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
     document.body.style.overflow = isMenuOpen ? "auto" : "hidden";
@@ -47,9 +50,14 @@ const Header2 = () => {
             <div className="md:flex space-x-4 hidden">
               <Link
                 to="/bookmark"
-                className="flex items-center p-2 hover:bg-white hover:text-Primary rounded-full transition-colors"
+                className="relative flex items-center p-2 hover:bg-white hover:text-Primary rounded-full transition-colors"
               >
                 <Bookmark className="w-6 h-6" />
+                {bookmarkCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-orange text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
+                    {bookmarkCount}
+                  </span>
+                )}
               </Link>
               <UserAvatar showName={true} auth={true} />
             </div>
@@ -58,9 +66,14 @@ const Header2 = () => {
             <div className="md:hidden flex items-center gap-4">
               <Link
                 to="/bookmark"
-                className="flex items-center p-2 hover:bg-white hover:text-Primary rounded-full transition-colors"
+                className="relative flex items-center p-2 hover:bg-white hover:text-Primary rounded-full transition-colors"
               >
                 <Bookmark className="w-6 h-6" />
+                {bookmarkCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-orange text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
+                    {bookmarkCount}
+                  </span>
+                )}
               </Link>
               <div className="flex items-center">
                 <UserAvatar showName={false} auth={true} />

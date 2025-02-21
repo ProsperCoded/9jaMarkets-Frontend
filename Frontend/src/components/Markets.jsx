@@ -1,7 +1,7 @@
 import { useState, useContext, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { STATES } from "../config";
-import { MapPin, Store, ShoppingBag, Filter, X, Building2, MapPinOff, Search } from "lucide-react";
+import { MapPin, Store, ShoppingBag, ListFilter, X, Building2, MapPinOff, Search } from "lucide-react";
 import { MARKET_DATA_CONTEXT } from "@/contexts";
 
 const MarketPage = () => {
@@ -94,9 +94,9 @@ const MarketPage = () => {
           {/* Filter Button */}
           <button
             onClick={() => setShowFilters(true)}
-            className="md:hidden flex items-center justify-center bg-Primary rounded-full w-10 h-10 text-white mr-4"
+            className="md:hidden flex items-center justify-center w-10 h-10 text-Primary mr-4"
           >
-            <Filter size={20} />
+            <ListFilter size={20} />
           </button>
         </div>
       </div>
