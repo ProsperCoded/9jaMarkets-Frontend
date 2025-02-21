@@ -18,7 +18,7 @@ import { Button } from "./ui/button";
 import { getProduct } from "@/lib/api/productApi";
 
 const ProductDetails = () => {
-  const { marketId, productId } = useParams();
+  const { productId } = useParams();
   const errorLogger = useErrorLogger();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
@@ -35,7 +35,7 @@ const ProductDetails = () => {
       }
     };
     fetchProductDetails();
-  }, [marketId, productId]);
+  }, [productId]);
 
   if (!product) return <LoadingPage message="Loading product details..." />;
 
@@ -48,7 +48,7 @@ const ProductDetails = () => {
           className="flex items-center gap-2 mb-6 text-gray-600 hover:text-Primary"
         >
           <ArrowLeft className="w-5 h-5" />
-          Back to Market
+          Back
         </button>
 
         <div className="bg-white shadow-md p-6 rounded-lg">
