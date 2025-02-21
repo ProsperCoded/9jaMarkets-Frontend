@@ -6,8 +6,6 @@ const FormData = require("form-data");
 const MARKETS = require("./Markets.cjs");
 
 const apiUrl = "https://safe-lindsy-obiken-415ef84b.koyeb.app/api/v1/market";
-// const apiUrl = "https://safe-lindsy-obiken-415ef84b.koyeb";
-// const apiUrl = "https://lnczzhnm-3000.euw.devtunnels.ms/api/v1/market";
 const defaultCity = "Ibadan";
 const defaultAddress = "moniya market, moniya, Ibadan";
 const defaultDescription = "Best Market in town, located in Ibadan";

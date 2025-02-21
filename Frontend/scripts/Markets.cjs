@@ -34,7 +34,7 @@ const MARKETS = {
   ],
 
   Anambra: [
-    { name: "Afor Igwe Market", img: "./markets/anambra/afor-igwe.jpg", address:"Afor Igwe, Anambra" },
+    { name: "Afor Igwe Market", img: "./markets/anambra/afor-igwe.jpg", address:"Afor Igwe", city:"Anambra", description:"Lorem Ipsum" },
     { name: "Amaenyi Market", img: "./markets/anambra/amaenyi.jpeg", address:"Amaenyi, Anambra" },
     { name: "Bridgehead Market", img: "./markets/anambra/bridgehead.jpg", address:"Bridgehead, Anambra" },
     { name: "Eke Amaobi Market", img: "./markets/anambra/ekeamaobi.jpg", address:"Eke Amaobi, Anambra" },
@@ -303,7 +303,7 @@ const MARKETS = {
     { name: "Aliero Market", img: "./markets/kebbi/aliero.jpg", address: "Aliero" },
     { name: "Argungu Central Market", img: "./markets/kebbi/argungu.jpg", address: "Argungu" },
     { name: "Augie Market", img: "./markets/kebbi/augie.jpg", address: "Augie" },
-    { name: "Besse Market", img: "./markets/kebbi/besse.jpg", address: "Besse" },
+    { name: "Besse Market", img: "./markets/kebbi/besse.jpeg", address: "Besse" },
     { name: "Bunza Market", img: "./markets/kebbi/bunza.jpg", address: "Bunza" },
     { name: "Central Market", img: "./markets/kebbi/central.jpg", address: "Birnin Kebbi" },
     { name: "Dodoru Market", img: "./markets/kebbi/dodoru.jpg", address: "Dodoru" },

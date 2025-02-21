@@ -8,8 +8,6 @@ import {
 } from "react-router-dom";
 import Header from "./components/Header";
 import Header2 from "./components/Header2";
-import Hero from "./components/Hero";
-import ExploreSection from "./components/Explore";
 import Footer from "./components/Footer";
 import HowItWorks from "./components/how-it-works";
 import MarketPage from "./components/Markets";
@@ -17,14 +15,13 @@ import MallPage from "./components/Malls";
 import Dashboard from "./components/Dashboard";
 import AdPayment from "./components/Products/AdPayment";
 import NotFoundPage from "./components/NotFoundPage";
-import MainPage from "./components/Mainpage";
 import Bookmark from "./components/Bookmarkpage";
 import BillingPage from "./components/BillingPage";
 import Overview from "./components/Overview";
 import ProductPage from "./components/Products/ProductPage";
 import EditProfile from "./components/EditProfile";
 import SelectPlan from "./components/Products/SelectPlan";
-import InvestPage from './pages/Invest';
+import InvestPage from "./pages/Invest";
 import MarketerPage from "./pages/Marketer";
 import IncludeMarket from "./pages/IncludeMarket";
 
@@ -47,8 +44,9 @@ import FAQ from "./pages/FAQ";
 import ContactUs from "./pages/ContactUs";
 import ScrollToTop from "./components/ScrollToTop";
 import IntercomMessenger from "./components/IntercomMessenger";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import ProductDetails from "./components/ProductDetails";
+import LandingPage from "./pages/landingPages/LandingPage";
 
 function AntDesignConfig({ children }) {
   return (
@@ -76,19 +74,21 @@ AntDesignConfig.propTypes = {
 function App() {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
-  
+
   const hideFooterPaths = [
-    '/markets', 
-    '/malls',
-    '/dashboard',
-    '/dashboard/overview',
-    '/dashboard/products',
-    '/dashboard/customers',
-    '/dashboard/messages',
-    '/dashboard/edit'
+    "/markets",
+    "/malls",
+    "/dashboard",
+    "/dashboard/overview",
+    "/dashboard/products",
+    "/dashboard/customers",
+    "/dashboard/messages",
+    "/dashboard/edit",
   ];
-  
-  const shouldShowFooter = !hideFooterPaths.some(path => location.pathname.startsWith(path));
+
+  const shouldShowFooter = !hideFooterPaths.some((path) =>
+    location.pathname.startsWith(path)
+  );
 
   return (
     <div className="app">
@@ -100,15 +100,7 @@ function App() {
             {isHomePage ? <Header /> : <Header2 />}
 
             <Routes>
-              <Route
-                path="/"
-                element={
-                  <>
-                    <Hero />
-                    <ExploreSection />
-                  </>
-                }
-              />
+              <Route path="/" element={<LandingPage />} />
               <Route path="/how-it-works" element={<HowItWorks />} />
               <Route path="/markets" element={<MarketPage />} />
               <Route path="/markets/:id" element={<Marketplace />} />
@@ -116,7 +108,6 @@ function App() {
               <Route path="/merchant-signup" element={<MerchantSignup />} />
               <Route path="/billing" element={<BillingPage />} />
               <Route path="/forget-password" element={<ForgetPassword />} />
-              <Route path="/mainpage" element={<MainPage />} />
               <Route path="/bookmark" element={<Bookmark />} />
               <Route path="/auth" element={<GoogleSigninRedirect />} />
               <Route path="/invest" element={<InvestPage />} />
@@ -148,7 +139,7 @@ function App() {
               <Route path="/contact" element={<ContactUs />} />
 
               <Route path="/markets/:marketId" element={<Marketplace />} />
-              <Route path="/markets/:marketId/products/:productId" element={<ProductDetails />} />
+              <Route path="/products/:productId" element={<ProductDetails />} />
 
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
