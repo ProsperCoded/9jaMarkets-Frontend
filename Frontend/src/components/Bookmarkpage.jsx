@@ -39,12 +39,12 @@ const BookmarksPage = () => {
       );
       if (bookmarksData) {
         setBookmarks(bookmarksData);
-        updateBookmarkCount(); // Update count when fetching
+        updateBookmarkCount();
         bookmarksData.forEach((bookmark) => {
           fetchProductDetails(bookmark.productId);
         });
       }
-    } catch (_err) { // Use underscore to indicate intentionally unused parameter
+    } catch {
       messageApi.error("Failed to fetch bookmarks");
     } finally {
       setLoading(false);
@@ -60,9 +60,9 @@ const BookmarksPage = () => {
         messageApi.success("Bookmark removed successfully");
         updateBookmarkCount();
       } else {
-        await fetchBookmarks(); // Wait for fetch to complete
+        await fetchBookmarks();
       }
-    } catch (_err) {
+    } catch {
       await fetchBookmarks();
       messageApi.error("Failed to remove bookmark");
     }
@@ -74,16 +74,16 @@ const BookmarksPage = () => {
     try {
       const result = await clearBookmarks(messageApi.error);
       if (result) {
-        setBookmarks([]); // Update state after successful API call
+        setBookmarks([]);
         messageApi.success("All bookmarks cleared");
-        updateBookmarkCount(); // Update the badge count
+        updateBookmarkCount();
       } else {
         messageApi.error("Failed to clear bookmarks");
-        await fetchBookmarks(); // Refresh from server if API call failed
+        await fetchBookmarks();
       }
-    } catch (_err) {
+    } catch {
       messageApi.error("Failed to clear bookmarks");
-      await fetchBookmarks(); // Refresh from server on error
+      await fetchBookmarks();
     }
   };
 

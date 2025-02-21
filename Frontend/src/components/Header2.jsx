@@ -8,7 +8,7 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, Bookmark } from "lucide-react";
-import { BOOKMARK_CONTEXT, USER_PROFILE_CONTEXT } from "@/contexts";
+import { BOOKMARK_CONTEXT, USER_PROFILE_CONTEXT, LOGIN_MODAL_CONTEXT, SIGNUP_MODAL_CONTEXT } from "@/contexts";
 import logo from "../assets/Logo.svg";
 import { UserAvatar } from "../componets-utils/UserAvatar";
 
@@ -16,10 +16,24 @@ const Header2 = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { bookmarkCount } = useContext(BOOKMARK_CONTEXT);
   const { userProfile } = useContext(USER_PROFILE_CONTEXT);
+  const { setLoginOpen } = useContext(LOGIN_MODAL_CONTEXT);
+  const { setSignupOpen } = useContext(SIGNUP_MODAL_CONTEXT);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
     document.body.style.overflow = isMenuOpen ? "auto" : "hidden";
+  };
+
+  const handleAuthClick = () => {
+    if (!userProfile) {
+      setLoginOpen(true);
+    }
+  };
+
+  const handleSignupClick = () => {
+    if (!userProfile) {
+      setSignupOpen(true);
+    }
   };
 
   return (
@@ -50,7 +64,8 @@ const Header2 = () => {
             {/* Desktop Icons */}
             <div className="md:flex space-x-4 hidden">
               <Link
-                to="/bookmark"
+                to={userProfile ? "/bookmark" : "#"}
+                onClick={handleAuthClick}
                 className="relative flex items-center p-2 hover:bg-white hover:text-Primary rounded-full transition-colors"
               >
                 <Bookmark className="w-6 h-6" />
@@ -66,7 +81,8 @@ const Header2 = () => {
             {/* Mobile Avatar and Menu */}
             <div className="flex items-center gap-4 md:hidden">
               <Link
-                to="/bookmark"
+                to={userProfile ? "/bookmark" : "#"}
+                onClick={handleAuthClick}
                 className="relative flex items-center p-2 hover:bg-white hover:text-Primary rounded-full transition-colors"
               >
                 <Bookmark className="w-6 h-6" />
