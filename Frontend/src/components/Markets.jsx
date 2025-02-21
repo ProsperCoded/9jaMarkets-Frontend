@@ -1,7 +1,7 @@
 import { useState, useContext, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { STATES } from "../config";
-import { MapPin, Store, ShoppingBag, Filter, X, Building2, MapPinOff, Search } from "lucide-react";
+import { MapPin, Store, ShoppingBag, ListFilter, X, Building2, MapPinOff, Search } from "lucide-react";
 import { MARKET_DATA_CONTEXT } from "@/contexts";
 
 const MarketPage = () => {
@@ -94,9 +94,9 @@ const MarketPage = () => {
           {/* Filter Button */}
           <button
             onClick={() => setShowFilters(true)}
-            className="md:hidden flex items-center justify-center bg-Primary rounded-full w-10 h-10 text-white mr-4"
+            className="md:hidden flex items-center justify-center w-10 h-10 text-Primary mr-4"
           >
-            <Filter size={20} />
+            <ListFilter size={20} />
           </button>
         </div>
       </div>
@@ -235,16 +235,16 @@ const MarketPage = () => {
                         </>
                       )}
                     </p>
-                    <div className="pt-6 flex flex-row gap-3 justify-center">
+                    <div className="pt-6 flex flex-col sm:flex-row gap-3 justify-center">
                       <button
                         onClick={() => setSearchTerm("")}
-                        className="px-4 py-2 text-Primary border-2 border-Primary rounded-full hover:bg-Primary/5 transition-colors text-sm"
+                        className="w-full sm:w-auto px-4 py-2 text-Primary border-2 border-Primary rounded-full hover:bg-Primary/5 transition-colors text-sm"
                       >
                         Clear Search
                       </button>
                       <Link
                         to="/include-market"
-                        className="px-4 py-2 bg-Primary text-white rounded-full hover:bg-Primary/90 transition-colors text-sm whitespace-nowrap"
+                        className="w-full sm:w-auto px-4 py-2 bg-Primary text-white rounded-full hover:bg-Primary/90 transition-colors text-sm whitespace-nowrap"
                       >
                         Include Your Market
                       </Link>

@@ -7,7 +7,7 @@ import {
   ArrowLeftRight,
   Mail,
   Wallet,
-  Building2,
+  Landmark,
   SmartphoneNfc
 } from "lucide-react";
 import { 
@@ -92,7 +92,7 @@ const BillingPolicyPage = () => {
       description: "Quick and easy payments using bank-specific USSD codes for instant transactions."
     },
     {
-      icon: <Building2 className="h-6 w-6" />,
+      icon: <Landmark className="h-6 w-6" />,
       title: "Bank Transfers",
       description: "Direct payments from any Nigerian bank account through secure bank transfer."
     },

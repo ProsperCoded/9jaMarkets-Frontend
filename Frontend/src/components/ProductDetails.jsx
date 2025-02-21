@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useErrorLogger } from "@/hooks";
 import WhatsappIcon from "@/assets/whatsapp-icon.svg";
@@ -18,6 +18,8 @@ import {
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { getProduct } from "@/lib/api/productApi";
+import { USER_PROFILE_CONTEXT, MESSAGE_API_CONTEXT, BOOKMARK_CONTEXT } from "@/contexts";
+import { addToBookmarks, removeFromBookmarks, getBookmarks } from "@/lib/api/bookmarkApi";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -27,6 +29,9 @@ const ProductDetails = () => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(null);
+  const { userProfile } = useContext(USER_PROFILE_CONTEXT);
+  const messageApi = useContext(MESSAGE_API_CONTEXT);
+  const { updateBookmarkCount } = useContext(BOOKMARK_CONTEXT);
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -39,10 +44,50 @@ const ProductDetails = () => {
     fetchProductDetails();
   }, [productId]);
 
+  useEffect(() => {
+    const checkBookmarkStatus = async () => {
+      if (!userProfile) return;
+      try {
+        const bookmarks = await getBookmarks(userProfile.id, messageApi.error);
+        setIsBookmarked(bookmarks?.some(b => b.productId === productId) || false);
+      } catch (err) {
+        console.error('Failed to check bookmark status:', err);
+      }
+    };
+    checkBookmarkStatus();
+  }, [productId, userProfile]);
+
   const handleCopyPhone = (phone) => {
     navigator.clipboard.writeText(phone);
     setCopiedPhone(phone);
     setTimeout(() => setCopiedPhone(null), 2000);
+  };
+
+  const handleBookmarkToggle = async () => {
+    if (!userProfile) {
+      messageApi.error("Please login to bookmark products");
+      return;
+    }
+
+    try {
+      if (isBookmarked) {
+        const result = await removeFromBookmarks(productId, messageApi.error);
+        if (result) {
+          setIsBookmarked(false);
+          messageApi.success("Product removed from bookmarks");
+          updateBookmarkCount();
+        }
+      } else {
+        const result = await addToBookmarks(productId, messageApi.error);
+        if (result) {
+          setIsBookmarked(true);
+          messageApi.success("Product added to bookmarks");
+          updateBookmarkCount();
+        }
+      }
+    } catch (err) {
+      messageApi.error("Failed to update bookmark");
+    }
   };
 
   if (!product) return <LoadingPage message="Loading product details..." />;
@@ -104,7 +149,7 @@ const ProductDetails = () => {
                   {product.name}
                 </h1>
                 <button
-                  onClick={() => setIsBookmarked(!isBookmarked)}
+                  onClick={handleBookmarkToggle}
                   className="hover:bg-gray-100 p-2 rounded-full transition-colors"
                 >
                   {isBookmarked ? (
