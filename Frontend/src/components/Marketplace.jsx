@@ -9,17 +9,7 @@ import {
 } from "@/contexts";
 import LoadingPage from "@/componets-utils/LoadingPage";
 import NotFoundPage from "@/components/NotFoundPage";
-import {
-  Search,
-  SearchX,
-  Bookmark,
-  BookmarkCheck,
-  HelpCircle,
-  MapPin,
-  Info,
-  Building2,
-  Globe,
-} from "lucide-react";
+import { Search, SearchX, Bookmark, BookmarkCheck, HelpCircle, MapPin, Info, Building2, Globe } from "lucide-react";
 import { PRODUCT_CATEGORIES } from "@/config";
 import { faMapMarkerAlt, faMap } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -202,18 +192,17 @@ const Marketplace = () => {
               </div>
 
               <div className="relative">
-                <button
-                  onClick={() => setShowDescription((prev) => !prev)}
-                  className="flex items-center gap-2 hover:text-Primary underline transition-colors"
-                >
+                <button 
+                  onClick={() => setShowDescription(prev => !prev)}
+                  className="flex items-center gap-2 hover:text-Primary underline transition-colors">
                   <Info className="w-5 h-5 text-Primary" />
-                  <span className="text-gray-600">About {market.name}</span>
+                  <span className="text-gray-600">
+                    About {market.name}
+                  </span>
                 </button>
                 {showDescription && (
                   <div className="top-full right-0 z-30 absolute bg-white shadow-lg mt-2 p-4 rounded-lg w-80">
-                    <p className="text-gray-600 text-sm">
-                      {market.description}
-                    </p>
+                    <p className="text-gray-600 text-sm">{market.description}</p>
                   </div>
                 )}
               </div>
@@ -249,18 +238,14 @@ const Marketplace = () => {
             {/* Collapsible Details */}
             <details className="group">
               <summary className="flex justify-between items-center px-4 py-3 cursor-pointer list-none">
-                <span className="font-medium text-gray-700">
-                  View Market Details
-                </span>
+                <span className="font-medium text-gray-700">View Market Details</span>
                 <div className="group-open:rotate-180 flex justify-center items-center border-[1.5px] border-gray-500 rounded-full w-4 h-4 transition-transform">
                   <div className="border-gray-500 border-r-[1.5px] border-b-[1.5px] w-1.5 h-1.5 translate-y-[-2px] rotate-45"></div>
                 </div>
               </summary>
               <div className="space-y-4 px-4 pb-4">
                 <div className="space-y-2">
-                  <h3 className="font-semibold text-gray-700 text-sm">
-                    Address
-                  </h3>
+                  <h3 className="font-semibold text-gray-700 text-sm">Address</h3>
                   <p className="text-gray-600 text-sm">{market.address}</p>
                 </div>
                 <div className="space-y-2">
