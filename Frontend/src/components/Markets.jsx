@@ -235,16 +235,16 @@ const MarketPage = () => {
                         </>
                       )}
                     </p>
-                    <div className="pt-6 flex flex-row gap-3 justify-center">
+                    <div className="pt-6 flex flex-col sm:flex-row gap-3 justify-center">
                       <button
                         onClick={() => setSearchTerm("")}
-                        className="px-4 py-2 text-Primary border-2 border-Primary rounded-full hover:bg-Primary/5 transition-colors text-sm"
+                        className="w-full sm:w-auto px-4 py-2 text-Primary border-2 border-Primary rounded-full hover:bg-Primary/5 transition-colors text-sm"
                       >
                         Clear Search
                       </button>
                       <Link
                         to="/include-market"
-                        className="px-4 py-2 bg-Primary text-white rounded-full hover:bg-Primary/90 transition-colors text-sm whitespace-nowrap"
+                        className="w-full sm:w-auto px-4 py-2 bg-Primary text-white rounded-full hover:bg-Primary/90 transition-colors text-sm whitespace-nowrap"
                       >
                         Include Your Market
                       </Link>

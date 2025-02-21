@@ -236,16 +236,16 @@ const MallPage = () => {
                         </>
                       )}
                     </p>
-                    <div className= "pt-6 flex flex-row gap-3 justify-center">
+                    <div className="pt-6 flex flex-col sm:flex-row gap-3 justify-center">
                       <button
                         onClick={() => setSearchTerm("")}
-                        className="px-4 py-2 text-Primary border-2 border-Primary rounded-full hover:bg-Primary/5 transition-colors text-sm"
+                        className="w-full sm:w-auto px-4 py-2 text-Primary border-2 border-Primary rounded-full hover:bg-Primary/5 transition-colors text-sm"
                       >
                         Reset Search
                       </button>
                       <Link
                         to="/markets"
-                        className="px-4 py-2 bg-Primary text-white rounded-full hover:bg-Primary/90 transition-colors text-sm whitespace-nowrap flex items-center justify-center gap-2"
+                        className="w-full sm:w-auto px-4 py-2 bg-Primary text-white rounded-full hover:bg-Primary/90 transition-colors text-sm whitespace-nowrap flex items-center justify-center gap-2"
                       >
                         <Store className="w-4 h-4" />
                         Try Markets Instead
