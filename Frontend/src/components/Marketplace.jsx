@@ -29,6 +29,7 @@ const Marketplace = () => {
   const { userProfile } = useContext(USER_PROFILE_CONTEXT);
   const [bookmarkedProducts, setBookmarkedProducts] = useState(new Set());
   const [showDescription, setShowDescription] = useState(false);
+  const [showDescription, setShowDescription] = useState(false);
 
   const [pendingBookmarks, setPendingBookmarks] = useState(new Set());
   const messageApi = useContext(MESSAGE_API_CONTEXT);
@@ -179,6 +180,8 @@ const Marketplace = () => {
       </div>
 
       {/* Market Details */}
+
+      {/* Market Details */}
       <div className="bg-white shadow-md">
         <div className="mx-auto container">
           {/* Desktop View */}
@@ -205,8 +208,19 @@ const Marketplace = () => {
                     <p className="text-gray-600 text-sm">{market.description}</p>
                   </div>
                 )}
+                )}
               </div>
 
+              <div className="flex items-center gap-2">
+                <Building2 className="w-5 h-5 text-Primary" />
+                <span className="text-gray-600">
+                  {market.isMall ? "Shopping Mall" : "Traditional Market"}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Globe className="w-5 h-5 text-Primary" />
+                <span className="text-gray-600">{market.state}</span>
               <div className="flex items-center gap-2">
                 <Building2 className="w-5 h-5 text-Primary" />
                 <span className="text-gray-600">
@@ -226,6 +240,7 @@ const Marketplace = () => {
             <div className="flex justify-between items-center px-4 py-3 border-b">
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-Primary" />
+                <MapPin className="w-4 h-4 text-Primary" />
                 <span className="text-gray-600 text-sm">
                   {market.city}, {market.state}
                 </span>
@@ -239,12 +254,14 @@ const Marketplace = () => {
             <details className="group">
               <summary className="flex justify-between items-center px-4 py-3 cursor-pointer list-none">
                 <span className="font-medium text-gray-700">View Market Details</span>
+                <span className="font-medium text-gray-700">View Market Details</span>
                 <div className="group-open:rotate-180 flex justify-center items-center border-[1.5px] border-gray-500 rounded-full w-4 h-4 transition-transform">
                   <div className="border-gray-500 border-r-[1.5px] border-b-[1.5px] w-1.5 h-1.5 translate-y-[-2px] rotate-45"></div>
                 </div>
               </summary>
               <div className="space-y-4 px-4 pb-4">
                 <div className="space-y-2">
+                  <h3 className="font-semibold text-gray-700 text-sm">Address</h3>
                   <h3 className="font-semibold text-gray-700 text-sm">Address</h3>
                   <p className="text-gray-600 text-sm">{market.address}</p>
                 </div>
