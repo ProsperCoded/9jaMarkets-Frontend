@@ -4,7 +4,11 @@ import { getAuth } from "../util";
 
 export async function getBookmarks(customerId, errorLogger = () => {}) {
   const url = new URL(`customer/cart/${customerId}`, SERVER_URL);
-  const response = await fetch(url);
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${getAuth().accessToken}`,
+    },
+  });
   const responseData = await response.json();
   if (!response.ok) {
     errorLogger(responseData.message);
@@ -18,8 +22,10 @@ export async function addToBookmarks(productId, errorLogger = () => {}) {
   const { accessToken } = getAuth();
   const response = await fetch(url, {
     method: "PUT",
+    body: JSON.stringify({ quantity: 1 }),
     headers: {
       Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
     },
   });
 
@@ -40,12 +46,11 @@ export async function removeFromBookmarks(productId, errorLogger = () => {}) {
     },
   });
 
-  const responseData = await response.json();
   if (!response.ok) {
-    errorLogger(responseData.message);
+    errorLogger("Failed to remove from bookmarks");
     return;
   }
-  return responseData.data;
+  return { message: "Successfully removed from bookmarks" };
 }
 
 export async function clearBookmarks(errorLogger = () => {}) {

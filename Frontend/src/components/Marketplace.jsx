@@ -2,13 +2,22 @@ import { useState, useContext, useEffect, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useErrorLogger } from "@/hooks";
 import { getMarketProducts } from "@/lib/api/marketApi";
-import { MARKET_DATA_CONTEXT } from "@/contexts";
+import {
+  MARKET_DATA_CONTEXT,
+  MESSAGE_API_CONTEXT,
+  USER_PROFILE_CONTEXT,
+} from "@/contexts";
 import LoadingPage from "@/componets-utils/LoadingPage";
 import NotFoundPage from "@/components/NotFoundPage";
 import { Search, Bookmark, BookmarkCheck, HelpCircle, X } from "lucide-react";
 import { PRODUCT_CATEGORIES } from "@/config";
 import { faMapMarkerAlt, faMap } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  addToBookmarks,
+  removeFromBookmarks,
+  getBookmarks,
+} from "@/lib/api/bookmarkApi";
 
 const Marketplace = () => {
   const errorLogger = useErrorLogger();
@@ -18,18 +27,28 @@ const Marketplace = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { marketsData } = useContext(MARKET_DATA_CONTEXT);
   const market = marketsData.find((market) => market.id === marketId);
+  const { userProfile } = useContext(USER_PROFILE_CONTEXT);
   const [bookmarkedProducts, setBookmarkedProducts] = useState(new Set());
-
+  const [pendingBookmarks, setPendingBookmarks] = useState(new Set());
+  const messageApi = useContext(MESSAGE_API_CONTEXT);
   const fetchProducts = async () => {
     const marketProducts = await getMarketProducts(marketId, errorLogger);
     if (!marketProducts) return;
     setProducts(marketProducts);
   };
 
+  const fetchBookmarks = async () => {
+    if (!userProfile) return;
+    const bookmarks = await getBookmarks(userProfile.id, errorLogger);
+    if (!bookmarks) return;
+    setBookmarkedProducts(new Set(bookmarks.map((item) => item.productId)));
+  };
+
   const MARKET_CATEGORIES = ["All", ...PRODUCT_CATEGORIES];
   const [selectedCategory, setSelectedCategory] = useState(
     MARKET_CATEGORIES[0]
   );
+
   const filteredProducts = useMemo(() => {
     if (!products) return [];
     let filtered =
@@ -46,21 +65,74 @@ const Marketplace = () => {
     return filtered;
   }, [products, selectedCategory, searchQuery]);
 
+  const handleBookmarkToggle = async (productId, e) => {
+    e.preventDefault();
+    if (!userProfile) {
+      errorLogger("Please login to bookmark products");
+      return;
+    }
+    // prevent merchant from bookmarking
+    if (userProfile && userProfile.userType === "merchant") {
+      messageApi.warning("Sorry Merchants can't bookmark, Login as Customer");
+      return;
+    }
+    // Prevent duplicate operations
+    if (pendingBookmarks.has(productId)) return;
+
+    // Add to pending set
+    setPendingBookmarks((prev) => new Set([...prev, productId]));
+
+    // Optimistically update UI
+    const isCurrentlyBookmarked = bookmarkedProducts.has(productId);
+    setBookmarkedProducts((prev) => {
+      const newSet = new Set(prev);
+      if (isCurrentlyBookmarked) {
+        newSet.delete(productId);
+      } else {
+        newSet.add(productId);
+      }
+      return newSet;
+    });
+
+    try {
+      // Attempt server operation
+      const result = isCurrentlyBookmarked
+        ? await removeFromBookmarks(productId, errorLogger)
+        : await addToBookmarks(productId, errorLogger);
+
+      if (!result) throw new Error("Server operation failed");
+    } catch (error) {
+      // Revert optimistic update on failure
+      setBookmarkedProducts((prev) => {
+        const newSet = new Set(prev);
+        if (isCurrentlyBookmarked) {
+          newSet.add(productId);
+        } else {
+          newSet.delete(productId);
+        }
+        return newSet;
+      });
+      errorLogger(
+        isCurrentlyBookmarked
+          ? "Failed to remove from bookmarks"
+          : "Failed to add to bookmarks"
+      );
+    } finally {
+      // Remove from pending set
+      setPendingBookmarks((prev) => {
+        const newSet = new Set(prev);
+        newSet.delete(productId);
+        return newSet;
+      });
+    }
+  };
+
   useEffect(() => {
     fetchProducts();
-  }, [marketId]);
-
-  const toggleBookmark = (productId) => {
-    setBookmarkedProducts((prev) => {
-      const newBookmarks = new Set(prev);
-      if (newBookmarks.has(productId)) {
-        newBookmarks.delete(productId);
-      } else {
-        newBookmarks.add(productId);
-      }
-      return newBookmarks;
-    });
-  };
+    if (userProfile && userProfile.userType !== "merchant") {
+      fetchBookmarks();
+    }
+  }, [marketId, userProfile]);
 
   if (!market && marketsData.length > 0) return <NotFoundPage />;
   if (!market) return <LoadingPage message={"Could not be found"} />;
@@ -266,24 +338,29 @@ const Marketplace = () => {
                           className="absolute inset-0 w-full h-full object-cover"
                         />
                         <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleBookmark(product.id);
-                          }}
-                          className="top-2 right-2 absolute bg-Primary/80 hover:bg-Primary p-2 rounded-full text-white transition-colors"
+                          onClick={(e) => handleBookmarkToggle(product.id, e)}
+                          disabled={pendingBookmarks.has(product.id)}
+                          className={`top-2 right-2 absolute p-2 rounded-full text-white transition-colors
+                            ${
+                              pendingBookmarks.has(product.id)
+                                ? "bg-gray-400"
+                                : "bg-Primary/80 hover:bg-Primary"
+                            }`}
                         >
-                          {bookmarkedProducts.has(product.id) ? (
-                            <BookmarkCheck className="w-4 h-4" />
+                          {pendingBookmarks.has(product.id) ? (
+                            <div className="animate-pulse">
+                              <Bookmark className="size-6" />
+                            </div>
+                          ) : bookmarkedProducts.has(product.id) ? (
+                            <BookmarkCheck className="size-6" />
                           ) : (
-                            <Bookmark className="w-4 h-4" />
+                            <Bookmark className="size-6" />
                           )}
                         </button>
                       </div>
                       <div className="p-2">
-                        <h3 className="font-medium text-sm truncate">
-                          {product.name}
-                        </h3>
-                        <p className="font-bold text-Primary text-sm">
+                        <h3 className="font-medium truncate">{product.name}</h3>
+                        <p className="font-bold text-Primary text">
                           ₦{product.price?.toLocaleString()}
                         </p>
                       </div>
