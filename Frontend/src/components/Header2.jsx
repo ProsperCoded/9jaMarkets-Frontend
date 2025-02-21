@@ -54,7 +54,7 @@ const Header2 = () => {
               >
                 <Bookmark className="w-6 h-6" />
                 {bookmarkCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-orange text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
+                  <span className="absolute top-1 right-1 bg-orange text-white text-xs rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
                     {bookmarkCount}
                   </span>
                 )}
@@ -70,7 +70,7 @@ const Header2 = () => {
               >
                 <Bookmark className="w-6 h-6" />
                 {bookmarkCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-orange text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
+                  <span className="absolute top-1 right-1 bg-orange text-white text-xs rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
                     {bookmarkCount}
                   </span>
                 )}
