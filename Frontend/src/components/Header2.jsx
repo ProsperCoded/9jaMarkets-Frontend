@@ -6,23 +6,21 @@
  * the icon is clicked.
  */
 import { useState, useContext } from "react";
-import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, Bookmark } from "lucide-react";
-import { BOOKMARK_CONTEXT } from "@/contexts";
+import { BOOKMARK_CONTEXT, USER_PROFILE_CONTEXT } from "@/contexts";
 import logo from "../assets/Logo.svg";
 import { UserAvatar } from "../componets-utils/UserAvatar";
-import { USER_PROFILE_CONTEXT } from "@/contexts";
 
 const Header2 = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { bookmarkCount } = useContext(BOOKMARK_CONTEXT);
+  const { userProfile } = useContext(USER_PROFILE_CONTEXT);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
     document.body.style.overflow = isMenuOpen ? "auto" : "hidden";
   };
-  const { userProfile } = useContext(USER_PROFILE_CONTEXT);
 
   return (
     <>
