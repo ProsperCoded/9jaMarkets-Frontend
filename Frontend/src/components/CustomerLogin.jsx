@@ -182,7 +182,7 @@ const CustomerLogin = () => {
               </Link>
             </p>
             <p>
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <button
                 onClick={() => {
                   setLoginOpen(false);
@@ -190,7 +190,7 @@ const CustomerLogin = () => {
                 }}
                 className="font-semibold text-Primary hover:text-Primary/80"
               >
-                Sign Up
+                Create an account
               </button>
             </p>
             <p className="text-gray-500 text-xs pt-2">

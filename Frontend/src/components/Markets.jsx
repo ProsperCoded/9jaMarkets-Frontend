@@ -1,8 +1,58 @@
 import { useState, useContext, useMemo } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 import { STATES } from "../config";
 import { MapPin, Store, ShoppingBag, ListFilter, X, Building2, MapPinOff, Search } from "lucide-react";
 import { MARKET_DATA_CONTEXT } from "@/contexts";
+
+// MarketCard component with PropTypes
+const MarketCard = ({ market }) => {
+  const [imageLoading, setImageLoading] = useState(true);
+
+  return (
+    <Link
+      to={`/markets/${market.id}`}
+      className="bg-white shadow-sm hover:shadow-md rounded-xl transition-all duration-300 overflow-hidden group"
+    >
+      <div className="overflow-hidden aspect-video relative">
+        {/* Skeleton loader */}
+        {imageLoading && (
+          <div className="absolute inset-0 bg-gray-200 animate-pulse" />
+        )}
+        <img
+          src={market.displayImage}
+          alt={market.name}
+          loading="lazy"
+          className={`w-full h-full transform transition-all duration-300 object-cover ${
+            imageLoading ? 'opacity-0' : 'opacity-100 group-hover:scale-105'
+          }`}
+          onLoad={() => setImageLoading(false)}
+          onError={() => setImageLoading(false)}
+        />
+      </div>
+      <div className="p-3 md:p-4">
+        <h3 className="group-hover:text-Primary line-clamp-1 font-semibold text-gray-800 text-sm md:text-lg transition-colors">
+          {market.name}
+        </h3>
+        <div className="flex items-start gap-2 mt-2 text-gray-600">
+          <MapPin size={16} className="flex-shrink-0 mt-1" />
+          <p className="line-clamp-2 text-xs md:text-sm">
+            {market.address}
+          </p>
+        </div>
+      </div>
+    </Link>
+  );
+};
+
+MarketCard.propTypes = {
+  market: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    displayImage: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    address: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 const MarketPage = () => {
   const [selectedState, setSelectedState] = useState("Abuja");
@@ -186,31 +236,7 @@ const MarketPage = () => {
             <div className="gap-3 md:gap-6 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {filteredMarkets.length > 0 ? (
                 filteredMarkets.map((market, index) => (
-                  <Link
-                    to={`/markets/${market.id}`}
-                    key={index}
-                    className="bg-white shadow-sm hover:shadow-md rounded-xl transition-all duration-300 overflow-hidden group"
-                  >
-                    <div className="overflow-hidden aspect-video">
-                      <img
-                        src={market.displayImage}
-                        alt={market.name}
-                        loading="lazy"
-                        className="group-hover:scale-105 w-full h-full transform transition-transform duration-300 object-cover"
-                      />
-                    </div>
-                    <div className="p-3 md:p-4">
-                      <h3 className="group-hover:text-Primary line-clamp-1 font-semibold text-gray-800 text-sm md:text-lg transition-colors">
-                        {market.name}
-                      </h3>
-                      <div className="flex items-start gap-2 mt-2 text-gray-600">
-                        <MapPin size={16} className="flex-shrink-0 mt-1" />
-                        <p className="line-clamp-2 text-xs md:text-sm">
-                          {market.address}
-                        </p>
-                      </div>
-                    </div>
-                  </Link>
+                  <MarketCard key={index} market={market} />
                 ))
               ) : (
                 <div className="col-span-full flex flex-col items-center justify-center py-12 px-4">
@@ -222,19 +248,19 @@ const MarketPage = () => {
                     <h3 className="text-xl font-semibold text-gray-800">
                       No Markets Found in {selectedState}
                     </h3>
-                    <p className="text-gray-600">
+                    <div className="text-gray-600">
                       {searchTerm ? (
                         <>
-                          We couldn't find any markets matching "{searchTerm}" in {selectedState}.
+                          We couldn&apos;t find any markets matching &quot;{searchTerm}&quot; in {selectedState}.
                           Try adjusting your search or exploring a different state.
                         </>
                       ) : (
                         <>
-                          We're still mapping markets in {selectedState}. 
+                          We&apos;re still mapping markets in {selectedState}. 
                           Try exploring markets in a different state or check back later.
                         </>
                       )}
-                    </p>
+                    </div>
                     <div className="pt-6 flex flex-col sm:flex-row gap-3 justify-center">
                       <button
                         onClick={() => setSearchTerm("")}
