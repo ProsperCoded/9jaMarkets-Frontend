@@ -66,13 +66,13 @@ export async function deleteProductApi(productId, errorLogger = () => {}) {
   return "Deleted";
 }
 
-export const getMerchantProducts = async (merchantId) => {
-  try {
-    const response = await fetch(`${SERVER_URL}/merchants/${merchantId}/products`);
-    if (!response.ok) throw new Error('Failed to fetch merchant products');
-    const data = await response.json();
-    return data;
-  } catch {
-    return null;
+export async function getMerchantProducts(merchantId, errorLogger = () => {}) {
+  const url = new URL(`product/merchant/${merchantId}`, SERVER_URL);
+  const response = await fetch(url);
+  const responseData = await response.json();
+  if (!response.ok) {
+    errorLogger(responseData.message);
+    return;
   }
-};
+  return responseData.data;
+}

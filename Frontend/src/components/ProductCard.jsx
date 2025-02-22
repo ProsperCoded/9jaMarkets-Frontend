@@ -8,14 +8,14 @@ const ProductCard = ({ product }) => {
   return (
     <Link
       to={`/products/${product.id}`}
-      className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group"
+      className="bg-white shadow-sm hover:shadow-md rounded-lg transition-all duration-300 overflow-hidden group"
     >
-      <div className="aspect-square relative">
+      <div className="relative aspect-square">
         {imageLoading && (
           <div className="absolute inset-0 bg-gray-200 animate-pulse" />
         )}
         <img
-          src={product.displayImage}
+          src={product.displayImage.url}
           alt={product.name}
           className={`w-full h-full object-cover transition-opacity duration-300 ${
             imageLoading ? "opacity-0" : "opacity-100"
@@ -25,10 +25,10 @@ const ProductCard = ({ product }) => {
         />
       </div>
       <div className="p-3">
-        <h3 className="font-medium text-gray-900 group-hover:text-Primary transition-colors line-clamp-2">
+        <h3 className="group-hover:text-Primary line-clamp-2 font-medium text-gray-900 transition-colors">
           {product.name}
         </h3>
-        <p className="text-Primary font-bold mt-1">
+        <p className="mt-1 font-bold text-Primary">
           ₦{product.price?.toLocaleString()}
         </p>
       </div>
@@ -45,4 +45,4 @@ ProductCard.propTypes = {
   }).isRequired,
 };
 
-export default ProductCard; 
+export default ProductCard;

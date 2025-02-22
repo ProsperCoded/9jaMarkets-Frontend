@@ -128,7 +128,6 @@ const MerchantSignup = () => {
     storeAuth(userId, accessToken, refreshToken, "merchant");
     const userProfile = await getMerchantProfileApi(
       userId,
-      accessToken,
       errorLogger
     );
     if (!userProfile) return;
