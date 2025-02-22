@@ -18,8 +18,16 @@ import {
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { getProduct } from "@/lib/api/productApi";
-import { USER_PROFILE_CONTEXT, MESSAGE_API_CONTEXT, BOOKMARK_CONTEXT } from "@/contexts";
-import { addToBookmarks, removeFromBookmarks, getBookmarks } from "@/lib/api/bookmarkApi";
+import {
+  USER_PROFILE_CONTEXT,
+  MESSAGE_API_CONTEXT,
+  BOOKMARK_CONTEXT,
+} from "@/contexts";
+import {
+  addToBookmarks,
+  removeFromBookmarks,
+  getBookmarks,
+} from "@/lib/api/bookmarkApi";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -49,9 +57,11 @@ const ProductDetails = () => {
       if (!userProfile) return;
       try {
         const bookmarks = await getBookmarks(userProfile.id, messageApi.error);
-        setIsBookmarked(bookmarks?.some(b => b.productId === productId) || false);
+        setIsBookmarked(
+          bookmarks?.some((b) => b.productId === productId) || false
+        );
       } catch (err) {
-        console.error('Failed to check bookmark status:', err);
+        console.error("Failed to check bookmark status:", err);
       }
     };
     checkBookmarkStatus();
@@ -181,14 +191,17 @@ const ProductDetails = () => {
                       {product.merchant.phoneNumbers[0].number}
                     </span>
                     <button
-                      onClick={() => handleCopyPhone(product.merchant.phoneNumbers[0].number)}
-                      className="ml-auto hover:bg-gray-100 p-1.5 rounded-full transition-colors"
+                      onClick={() =>
+                        handleCopyPhone(product.merchant.phoneNumbers[0].number)
+                      }
+                      className="hover:bg-gray-100 ml-auto p-1.5 rounded-full transition-colors"
                       title="Copy phone number"
                     >
-                      {copiedPhone === product.merchant.phoneNumbers[0].number ? (
-                        <Check className="size-4 text-Primary" />
+                      {copiedPhone ===
+                      product.merchant.phoneNumbers[0].number ? (
+                        <Check className="text-Primary size-4" />
                       ) : (
-                        <Copy className="size-4 text-orange" />
+                        <Copy className="text-orange size-4" />
                       )}
                     </button>
                   </div>
@@ -201,14 +214,19 @@ const ProductDetails = () => {
                           {product.merchant.phoneNumbers[1].number}
                         </span>
                         <button
-                          onClick={() => handleCopyPhone(product.merchant.phoneNumbers[1].number)}
-                          className="ml-auto hover:bg-gray-100 p-1.5 rounded-full transition-colors"
+                          onClick={() =>
+                            handleCopyPhone(
+                              product.merchant.phoneNumbers[1].number
+                            )
+                          }
+                          className="hover:bg-gray-100 ml-auto p-1.5 rounded-full transition-colors"
                           title="Copy phone number"
                         >
-                          {copiedPhone === product.merchant.phoneNumbers[1].number ? (
-                            <Check className="size-4 text-green-600" />
+                          {copiedPhone ===
+                          product.merchant.phoneNumbers[1].number ? (
+                            <Check className="text-green-600 size-4" />
                           ) : (
-                            <Copy className="size-4 text-gray-500" />
+                            <Copy className="text-gray-500 size-4" />
                           )}
                         </button>
                       </div>
@@ -269,13 +287,6 @@ const ProductDetails = () => {
                     <Mail className="size-6" />
                     Email
                   </Button>
-                  {/* <a
-                    className="flex justify-center items-center gap-2 bg-Primary hover:bg-P2 py-6 rounded-full w-full font-medium text-base text-white lg:text-lg"
-                    href={`mailto:${product.merchant.email}`}
-                  >
-                    <Mail className="size-6" />
-                    Email
-                  </a> */}
                 </div>
               </div>
             </div>
