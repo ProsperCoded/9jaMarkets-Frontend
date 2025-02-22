@@ -63,10 +63,9 @@ export async function clearBookmarks(errorLogger = () => {}) {
     },
   });
 
-  const responseData = await response.json();
   if (!response.ok) {
-    errorLogger(responseData.message);
+    errorLogger("Failed to clear bookmarks");
     return;
   }
-  return responseData.data;
+  return { message: "Successfully cleared bookmarks" };
 }
