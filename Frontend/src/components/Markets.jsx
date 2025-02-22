@@ -2,7 +2,7 @@ import { useState, useContext, useMemo } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { STATES } from "../config";
-import { MapPin, Store, ShoppingBag, ListFilter, X, Building2, MapPinOff, Search } from "lucide-react";
+import { MapPin, Store, ShoppingBag, SlidersHorizontal, X, Building2, MapPinOff, Search } from "lucide-react";
 import { MARKET_DATA_CONTEXT } from "@/contexts";
 
 // MarketCard component with PropTypes
@@ -146,7 +146,7 @@ const MarketPage = () => {
             onClick={() => setShowFilters(true)}
             className="md:hidden flex items-center justify-center w-10 h-10 text-Primary mr-4"
           >
-            <ListFilter size={20} />
+            <SlidersHorizontal size={20} />
           </button>
         </div>
       </div>

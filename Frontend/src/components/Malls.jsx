@@ -1,6 +1,6 @@
 import { useState, useContext, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { Store, ShoppingBag, MapPin, ListFilter, X, ShoppingCart, SearchX, Search } from "lucide-react";
+import { Store, ShoppingBag, MapPin, SlidersHorizontal, X, ShoppingCart, SearchX, Search } from "lucide-react";
 import { STATES } from "../config";
 import { MALLS_DATA_CONTEXT } from "@/contexts";
 
@@ -97,7 +97,7 @@ const MallPage = () => {
             onClick={() => setShowFilters(true)}
             className="md:hidden flex items-center justify-center rounded-full w-10 h-10 text-Primary mr-4"
           >
-            <ListFilter size={20} />
+            <SlidersHorizontal size={20} />
           </button>
         </div>
       </div>
