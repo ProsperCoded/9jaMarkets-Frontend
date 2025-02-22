@@ -13,11 +13,12 @@ import { getMerchantProfileApi } from "../lib/api/serviceApi";
 import { loginMerchantApi, signupMerchantApi } from "../lib/api/authApi.js";
 import { storeAuth } from "../lib/util";
 import Loading from "../componets-utils/Loading.jsx";
-import { GOOGLE_URL, PRODUCT_CATEGORIES } from "@/config";
 import { LOGIN_MODAL_CONTEXT } from "../contexts";
 import { useNavigate } from "react-router-dom";
 import { isStrongPassword } from "../lib/util";
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "./ui/tabs";
+import { PRODUCT_CATEGORIES } from "@/config";
+import { Combobox } from "./ui/Combobox";
 
 const MerchantSignup = () => {
   const [email, setEmail] = useState("");
@@ -31,7 +32,7 @@ const MerchantSignup = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [brandName, setBrandName] = useState("");
-  const [merchantCategories, setMerchantCategories] = useState([]);
+  const [merchantCategory, setMerchantCategories] = useState([]);
   const [marketName, setMarketName] = useState("");
   const [mallName, setMallName] = useState("");
   const { marketsData } = useContext(MARKET_DATA_CONTEXT);
@@ -109,7 +110,7 @@ const MerchantSignup = () => {
       phoneNumbers: [phone1, phone2],
       password,
       brandName,
-      merchantCategories,
+      merchantCategories: merchantCategory,
       // ? the backend only accept marketName, weather mall or market
       marketName: marketName || mallName,
       addresses,
@@ -141,25 +142,25 @@ const MerchantSignup = () => {
     text-base py-3 px-4 selection:bg-Primary selection:text-white`;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
+    <div className="bg-gradient-to-b from-gray-50 to-white px-4 sm:px-6 lg:px-8 py-8 min-h-screen">
+      <div className="mx-auto max-w-4xl">
         {/* Header */}
-        <div className="text-center mb-8">
+        <div className="mb-8 text-center">
           <img
             src={logo}
             alt="9ja Markets Logo"
-            className="mx-auto h-12 w-auto"
+            className="mx-auto w-auto h-12"
           />
-          <h2 className="mt-6 text-3xl font-bold text-gray-900">
+          <h2 className="mt-6 font-bold text-3xl text-gray-900">
             Join 9ja Markets as a Merchant
           </h2>
-          <p className="mt-2 text-sm text-gray-600">
+          <p className="mt-2 text-gray-600 text-sm">
             Start selling your products to millions of customers today
           </p>
         </div>
 
         {/* Main Form */}
-        <div className="bg-white shadow-sm rounded-xl p-8">
+        <div className="bg-white shadow-sm p-8 rounded-xl">
           <form
             className="space-y-6"
             onSubmit={async (e) => {
@@ -169,13 +170,13 @@ const MerchantSignup = () => {
           >
             {/* Basic Information */}
             <div className="space-y-6">
-              <h3 className="text-lg font-medium text-gray-900 border-b border-Primary pb-2">
+              <h3 className="border-Primary pb-2 border-b font-medium text-gray-900 text-lg">
                 Basic Information
               </h3>
-              
-              <div className="grid grid-cols-1 gap-6">
+
+              <div className="gap-6 grid grid-cols-1">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block font-medium text-gray-700 text-sm">
                     Email Address
                   </label>
                   <input
@@ -188,9 +189,9 @@ const MerchantSignup = () => {
                   />
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="gap-4 grid grid-cols-1 sm:grid-cols-2">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label className="block font-medium text-gray-700 text-sm">
                       Primary Phone
                     </label>
                     <input
@@ -202,7 +203,7 @@ const MerchantSignup = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label className="block font-medium text-gray-700 text-sm">
                       Secondary Phone
                     </label>
                     <input
@@ -216,7 +217,7 @@ const MerchantSignup = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block font-medium text-gray-700 text-sm">
                     Brand Name
                   </label>
                   <input
@@ -233,121 +234,105 @@ const MerchantSignup = () => {
 
             {/* Business Information */}
             <div className="space-y-6">
-              <h3 className="text-lg font-medium text-gray-900 border-b border-Primary pb-2">
+              <h3 className="border-Primary pb-2 border-b font-medium text-gray-900 text-lg">
                 Business Information
               </h3>
-              
+
               <div className="space-y-4">
                 <Tabs defaultValue="market" className="w-full">
                   <TabsList className="w-full">
-                    <TabsTrigger value="market" className="flex-1">Market</TabsTrigger>
-                    <TabsTrigger value="malls" className="flex-1">Malls</TabsTrigger>
+                    <TabsTrigger value="market" className="flex-1">
+                      Market
+                    </TabsTrigger>
+                    <TabsTrigger value="malls" className="flex-1">
+                      Malls
+                    </TabsTrigger>
                   </TabsList>
                   <TabsContent value="market" className="mt-4">
-                    <select
+                    <Combobox
+                      options={availableMarkets.map((m) => {
+                        return { value: m, label: m };
+                      })}
                       value={marketName}
-                      onChange={(e) => setMarketName(e.target.value)}
-                      className={inputClassName}
-                      required
-                    >
-                      <option value="">Select a Market</option>
-                      {availableMarkets.map((market) => (
-                        <option key={market} value={market}>{market}</option>
-                      ))}
-                    </select>
+                      handleSelect={setMarketName}
+                      message="Select a Market"
+                    />
                   </TabsContent>
                   <TabsContent value="malls" className="mt-4">
-                    <select
+                    <Combobox
+                      options={availableMalls.map((m) => {
+                        return { value: m, label: m };
+                      })}
                       value={mallName}
-                      onChange={(e) => setMallName(e.target.value)}
-                      className={inputClassName}
-                      required
-                    >
-                      <option value="">Select a Mall</option>
-                      {availableMalls.map((mall) => (
-                        <option key={mall} value={mall}>{mall}</option>
-                      ))}
-                    </select>
+                      handleSelect={setMallName}
+                      message="Select a Mall"
+                    />
                   </TabsContent>
                 </Tabs>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block mb-2 font-medium text-gray-700 text-sm">
                     Business Categories
                   </label>
                   <select
-                    multiple
-                    value={merchantCategories}
+                    value={merchantCategory}
                     onChange={handleMerchantCategoriesChange}
-                    className="mt-1 block w-full h-48 rounded-md border-gray-300 shadow-sm 
-                      focus:border-Primary focus:ring-Primary focus:ring-opacity-50 
-                      text-base py-2"
+                    className="border-gray-300 focus:border-Primary focus:ring-opacity-50 shadow-sm mt-1 py-2 p-2 rounded-md focus:ring-Primary w-full text-base"
                     required
                   >
-                    {[
-                      "Education & Stationery",
-                      "Real Estate & Housing",
-                      "Events & Entertainment",
-                      "Technology Services",
-                      "Cultural Experiences",
-                      "Food & Groceries",
-                      "Electronics & Gadgets",
-                      "Fashion & Accessories",
-                      "Health & Wellness",
-                      "Home & Living",
-                      "Automobile Needs",
-                      "Traditional Crafts",
-                      "Sports & Outdoor",
-                      "Kids & Baby Products"
-                    ].map((category) => (
-                      <option 
-                        key={category} 
-                        value={category} 
+                    {PRODUCT_CATEGORIES.map((category) => (
+                      <option
+                        key={category}
+                        value={category}
                         className={`py-2 px-3 ${
-                          merchantCategories.includes(category) 
-                            ? 'bg-Primary text-white' 
-                            : 'hover:bg-Primary/10'
+                          merchantCategory.includes(category)
+                            ? "bg-Primary text-white"
+                            : "hover:bg-Primary/10"
                         }`}
                       >
                         {category}
                       </option>
                     ))}
                   </select>
-                  <p className="mt-2 text-xs text-gray-500">
-                    Hold Ctrl (Windows) or Command (Mac) to select multiple categories
-                  </p>
                 </div>
               </div>
             </div>
 
             {/* Addresses */}
             <div className="space-y-6">
-              <div className="flex justify-between items-center border-b pb-2">
-                <h3 className="text-lg font-medium text-gray-900 border-b border-Primary pb-2">
+              <div className="flex justify-between items-center pb-2 border-b">
+                <h3 className="border-Primary pb-2 border-b font-medium text-gray-900 text-lg">
                   Business Addresses
                 </h3>
                 <button
                   type="button"
                   onClick={handleAddAddress}
-                  className="text-sm text-Primary hover:text-Primary/90"
+                  className="text-Primary text-sm hover:text-Primary/90"
                 >
                   + Add Another Address
                 </button>
               </div>
-              
+
               <div className="space-y-4">
                 {addresses.map((address, index) => (
-                  <div key={index} className="p-4 bg-gray-50 rounded-lg space-y-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div
+                    key={index}
+                    className="space-y-4 bg-gray-50 p-4 rounded-lg"
+                  >
+                    <div className="gap-4 grid grid-cols-1 sm:grid-cols-2">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700">
+                        <label className="block font-medium text-gray-700 text-sm">
                           Address
                         </label>
                         <input
                           type="text"
                           value={address.address}
                           onChange={(e) =>
-                            handleAddressChange(index, "address", e.target.value)
+                            handleAddressChange(
+                              index,
+                              "address",
+                              e.target.value
+                            )
                           }
                           className={inputClassName}
                           placeholder="Street address"
@@ -355,7 +340,7 @@ const MerchantSignup = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700">
+                        <label className="block font-medium text-gray-700 text-sm">
                           Name
                         </label>
                         <input
@@ -370,7 +355,7 @@ const MerchantSignup = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700">
+                        <label className="block font-medium text-gray-700 text-sm">
                           City
                         </label>
                         <input
@@ -384,7 +369,7 @@ const MerchantSignup = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700">
+                        <label className="block font-medium text-gray-700 text-sm">
                           State
                         </label>
                         <input
@@ -398,28 +383,36 @@ const MerchantSignup = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700">
+                        <label className="block font-medium text-gray-700 text-sm">
                           Zip Code
                         </label>
                         <input
                           type="text"
                           value={address.zipCode}
                           onChange={(e) =>
-                            handleAddressChange(index, "zipCode", e.target.value)
+                            handleAddressChange(
+                              index,
+                              "zipCode",
+                              e.target.value
+                            )
                           }
                           className={inputClassName}
                           required
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700">
+                        <label className="block font-medium text-gray-700 text-sm">
                           Country
                         </label>
                         <input
                           type="text"
                           value={address.country}
                           onChange={(e) =>
-                            handleAddressChange(index, "country", e.target.value)
+                            handleAddressChange(
+                              index,
+                              "country",
+                              e.target.value
+                            )
                           }
                           className={inputClassName}
                           required
@@ -433,13 +426,13 @@ const MerchantSignup = () => {
 
             {/* Security */}
             <div className="space-y-6">
-              <h3 className="text-lg font-medium text-gray-900 border-b border-Primary pb-2">
+              <h3 className="border-Primary pb-2 border-b font-medium text-gray-900 text-lg">
                 Security
               </h3>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+              <div className="gap-6 grid grid-cols-1 sm:grid-cols-2">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block font-medium text-gray-700 text-sm">
                     Password
                   </label>
                   <div className="relative">
@@ -453,7 +446,7 @@ const MerchantSignup = () => {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute inset-y-0 right-0 flex items-center pr-3"
+                      className="right-0 absolute inset-y-0 flex items-center pr-3"
                     >
                       {showPassword ? (
                         // Open eye icon for showing password
@@ -487,7 +480,7 @@ const MerchantSignup = () => {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block font-medium text-gray-700 text-sm">
                     Confirm Password
                   </label>
                   <div className="relative">
@@ -499,8 +492,10 @@ const MerchantSignup = () => {
                     />
                     <button
                       type="button"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      className="absolute inset-y-0 right-0 flex items-center pr-3"
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
+                      className="right-0 absolute inset-y-0 flex items-center pr-3"
                     >
                       {showConfirmPassword ? (
                         // Open eye icon for showing confirm password
@@ -537,14 +532,14 @@ const MerchantSignup = () => {
             </div>
 
             {error && (
-              <div className="rounded-md bg-red-50 p-4">
-                <p className="text-sm text-red-700">{error}</p>
+              <div className="bg-red-50 p-4 rounded-md">
+                <p className="text-red-700 text-sm">{error}</p>
               </div>
             )}
 
             <button
               type="submit"
-              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-Primary hover:bg-Primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-Primary"
+              className="flex justify-center bg-Primary hover:bg-Primary/90 shadow-sm px-4 py-3 border border-transparent rounded-md focus:ring-2 focus:ring-Primary focus:ring-offset-2 w-full font-medium text-sm text-white focus:outline-none"
               disabled={loading}
             >
               {loading ? (
@@ -559,7 +554,7 @@ const MerchantSignup = () => {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
+            <p className="text-gray-600 text-sm">
               Already have an account?{" "}
               <button
                 onClick={() => setLoginOpen(true)}
@@ -574,16 +569,16 @@ const MerchantSignup = () => {
 
       <style jsx global>{`
         select option:checked {
-          background: #236C13 !important;
+          background: #236c13 !important;
           color: white !important;
         }
-        
+
         select option:hover {
           background: rgba(35, 108, 19, 0.1) !important;
         }
-        
+
         select:focus option:checked {
-          background: #236C13 !important;
+          background: #236c13 !important;
           color: white !important;
         }
       `}</style>
