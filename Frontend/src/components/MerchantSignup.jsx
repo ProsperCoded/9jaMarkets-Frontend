@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { isStrongPassword } from "../lib/util";
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "./ui/tabs";
 import { PRODUCT_CATEGORIES } from "@/config";
-import { ComboboxDemo } from "./ui/Combobox";
+import { Combobox } from "./ui/Combobox";
 
 const MerchantSignup = () => {
   const [email, setEmail] = useState("");
@@ -249,42 +249,24 @@ const MerchantSignup = () => {
                     </TabsTrigger>
                   </TabsList>
                   <TabsContent value="market" className="mt-4">
-                    <select
-                      value={marketName}
-                      onChange={(e) => setMarketName(e.target.value)}
-                      className={inputClassName}
-                      required
-                    >
-                      <option value="">Select a Market</option>
-                      {availableMarkets.map((market) => (
-                        <option key={market} value={market}>
-                          {market}
-                        </option>
-                      ))}
-                    </select>
-
-                    <ComboboxDemo
+                    <Combobox
                       options={availableMarkets.map((m) => {
                         return { value: m, label: m };
                       })}
                       value={marketName}
                       handleSelect={setMarketName}
+                      message="Select a Market"
                     />
                   </TabsContent>
                   <TabsContent value="malls" className="mt-4">
-                    <select
+                    <Combobox
+                      options={availableMalls.map((m) => {
+                        return { value: m, label: m };
+                      })}
                       value={mallName}
-                      onChange={(e) => setMallName(e.target.value)}
-                      className={inputClassName}
-                      required
-                    >
-                      <option value="">Select a Mall</option>
-                      {availableMalls.map((mall) => (
-                        <option key={mall} value={mall}>
-                          {mall}
-                        </option>
-                      ))}
-                    </select>
+                      handleSelect={setMallName}
+                      message="Select a Mall"
+                    />
                   </TabsContent>
                 </Tabs>
 

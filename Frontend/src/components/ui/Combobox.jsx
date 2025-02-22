@@ -19,29 +19,29 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-export function ComboboxDemo(options, value, handleSelect) {
+export function Combobox({ options, value, handleSelect, message }) {
   const [open, setOpen] = React.useState(false);
   console.log({ options });
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={setOpen} trigger="hover">
       <PopoverTrigger asChild>
         <Button
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="justify-between w-[200px]"
+          className="justify-between w-full"
         >
           {value
             ? options.find((framework) => framework.value === value)?.label
-            : "Select framework..."}
+            : message || "Select Option..."}
           <ChevronsUpDown className="opacity-50 ml-2 w-4 h-4 shrink-0" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="p-0 w-[200px]">
+      <PopoverContent className="p-0 w-max" align="start" side="bottom">
         <Command>
           <CommandInput placeholder="Search framework..." />
           <CommandList>
-            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandEmpty>No Option Available.</CommandEmpty>
             <CommandGroup>
               {options.map((option) => (
                 <CommandItem
