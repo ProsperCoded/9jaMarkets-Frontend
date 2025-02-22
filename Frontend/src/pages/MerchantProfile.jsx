@@ -38,13 +38,13 @@ const MerchantProfile = () => {
   if (!merchant) return <div>Merchant not found</div>;
 
   return (
-    <div className="bg-gray-50 min-h-screen pt-4">
-      <div className="container mx-auto px-4">
+    <div className="bg-gray-50 pt-4 min-h-screen">
+      <div className="mx-auto px-4 container">
         {/* Merchant Header */}
-        <div className="bg-white rounded-xl shadow-sm p-6 mb-6">
-          <div className="flex flex-col md:flex-row gap-6">
+        <div className="bg-white shadow-sm mb-6 p-6 rounded-xl">
+          <div className="flex md:flex-row flex-col gap-6">
             {/* Merchant Logo/Image */}
-            <div className="w-32 h-32 rounded-xl overflow-hidden flex-shrink-0">
+            <div className="flex-shrink-0 rounded-xl w-32 h-32 overflow-hidden">
               <img
                 src={merchant.logo || "/default-store.png"}
                 alt={merchant.brandName}
@@ -54,11 +54,11 @@ const MerchantProfile = () => {
 
             {/* Merchant Info */}
             <div className="flex-grow">
-              <h1 className="text-2xl font-bold text-gray-900 mb-2">
+              <h1 className="mb-2 font-bold text-2xl text-gray-900">
                 {merchant.brandName}
               </h1>
-              
-              <div className="flex flex-wrap gap-4 text-gray-600 mb-4">
+
+              <div className="flex flex-wrap gap-4 mb-4 text-gray-600">
                 <div className="flex items-center gap-2">
                   <MapPin className="w-5 h-5" />
                   <span>{merchant.address}</span>
@@ -84,7 +84,9 @@ const MerchantProfile = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <Clock className="w-5 h-5 text-Primary" />
-                  <span>Member since {new Date(merchant.createdAt).getFullYear()}</span>
+                  <span>
+                    Member since {new Date(merchant.createdAt).getFullYear()}
+                  </span>
                 </div>
               </div>
             </div>
@@ -92,7 +94,7 @@ const MerchantProfile = () => {
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex border-b border-gray-200 mb-6">
+        <div className="flex border-gray-200 mb-6 border-b">
           <button
             onClick={() => setActiveTab("products")}
             className={`px-6 py-3 font-medium text-sm transition-colors ${
@@ -127,32 +129,42 @@ const MerchantProfile = () => {
 
         {/* Content Sections */}
         {activeTab === "products" && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="gap-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
             {products.length === 0 && (
-              <div className="col-span-full text-center py-12">
-                <Store className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-gray-900">No Products Yet</h3>
-                <p className="text-gray-500">This merchant hasn't added any products yet.</p>
+              <div className="col-span-full py-12 text-center">
+                <Store className="mx-auto mb-4 w-16 h-16 text-gray-300" />
+                <h3 className="font-medium text-gray-900 text-lg">
+                  No Products Yet
+                </h3>
+                <p className="text-gray-500">
+                  This merchant hasn't added any products yet.
+                </p>
               </div>
             )}
           </div>
         )}
 
         {activeTab === "about" && (
-          <div className="bg-white rounded-xl p-6">
-            <h2 className="text-xl font-semibold mb-4">About {merchant.brandName}</h2>
-            <p className="text-gray-600 whitespace-pre-line">{merchant.description}</p>
+          <div className="bg-white p-6 rounded-xl">
+            <h2 className="mb-4 font-semibold text-xl">
+              About {merchant.brandName}
+            </h2>
+            <p className="text-gray-600 whitespace-pre-line">
+              {merchant.description}
+            </p>
           </div>
         )}
 
         {activeTab === "reviews" && (
-          <div className="bg-white rounded-xl p-6">
-            <h2 className="text-xl font-semibold mb-4">Customer Reviews</h2>
+          <div className="bg-white p-6 rounded-xl">
+            <h2 className="mb-4 font-semibold text-xl">Customer Reviews</h2>
             {/* Add reviews component here */}
-            <p className="text-gray-500 text-center py-8">Reviews coming soon</p>
+            <p className="py-8 text-center text-gray-500">
+              Reviews coming soon
+            </p>
           </div>
         )}
       </div>
@@ -160,4 +172,4 @@ const MerchantProfile = () => {
   );
 };
 
-export default MerchantProfile; 
+export default MerchantProfile;
