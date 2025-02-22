@@ -46,7 +46,7 @@ const MerchantProfile = () => {
             {/* Merchant Logo/Image */}
             <div className="flex-shrink-0 rounded-xl w-32 h-32 overflow-hidden">
               <img
-                src={merchant.logo || "/https://api.dicebear.com/7.x/avataaars/svg?seed=Chioma"}
+                src={merchant.logo || "/merchant.png"}
                 alt={merchant.brandName}
                 className="w-full h-full object-cover"
               />
