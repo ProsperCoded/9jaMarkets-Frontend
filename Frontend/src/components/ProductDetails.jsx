@@ -183,6 +183,15 @@ const ProductDetails = () => {
                     <span className="font-medium">
                       {product.merchant.brandName}
                     </span>
+                    <Button
+                      variant="link"
+                      className="ml-auto text-Primary hover:text-Primary/80"
+                      onClick={() =>
+                        navigate(`/merchant/${product.merchant.id}`)
+                      }
+                    >
+                      View Merchant
+                    </Button>
                   </div>
                   <div className="flex items-center gap-2 text-gray-800">
                     <Phone className="text-Primary size-5" />
