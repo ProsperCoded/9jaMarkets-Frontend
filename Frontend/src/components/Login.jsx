@@ -72,7 +72,6 @@ const LoginModal = () => {
       storeAuth(userId, accessToken, refreshToken, "customer", rememberMe);
       const userProfile_ = await getCustomerProfileApi(
         userId,
-        accessToken,
         errorLogger
       );
       if (!userProfile_) return;
@@ -92,7 +91,6 @@ const LoginModal = () => {
       storeAuth(userId, accessToken, refreshToken, "merchant", rememberMe);
       const userProfile_ = await getMerchantProfileApi(
         userId,
-        accessToken,
         errorLogger
       );
       if (!userProfile_) return;
@@ -115,18 +113,18 @@ const LoginModal = () => {
       <div className="relative bg-white shadow-lg p-4 sm:p-6 rounded-2xl w-[95%] max-w-md max-h-[90vh] overflow-y-auto">
         <button
           onClick={() => setLoginOpen(false)}
-          className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 p-2"
+          className="top-3 right-3 absolute p-2 text-gray-500 hover:text-gray-700"
         >
           <span className="text-2xl">&times;</span>
         </button>
 
-        <div className="text-center mb-6">
+        <div className="mb-6 text-center">
           <img
             src={logo}
             alt="9ja Markets Logo"
             className="mx-auto h-12 sm:h-14"
           />
-          <h2 className="mt-2 font-bold text-Primary text-lg sm:text-xl">
+          <h2 className="mt-2 font-bold text-lg text-Primary sm:text-xl">
             Hello! Welcome back
           </h2>
         </div>
@@ -139,7 +137,7 @@ const LoginModal = () => {
           }}
         >
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="email" className="block font-medium text-gray-700 text-sm">
               Email
             </label>
             <input
@@ -155,7 +153,7 @@ const LoginModal = () => {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="password" className="block font-medium text-gray-700 text-sm">
               Password
             </label>
             <div className="relative">
@@ -172,7 +170,7 @@ const LoginModal = () => {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                className="top-1/2 right-2 absolute text-gray-500 hover:text-gray-700 -translate-y-1/2"
               >
                 {showPassword ? (
                   <Eye className="w-5 h-5" />
@@ -218,16 +216,16 @@ const LoginModal = () => {
           </div>
 
           {error && (
-            <p className="text-red-500 text-sm text-center">{error}</p>
+            <p className="text-center text-red-500 text-sm">{error}</p>
           )}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-Primary text-white p-2.5 rounded-lg font-medium hover:bg-Primary/90 transition-colors"
+            className="bg-Primary hover:bg-Primary/90 p-2.5 rounded-lg w-full font-medium text-white transition-colors"
           >
             {loading ? (
-              <div className="flex items-center justify-center gap-2">
+              <div className="flex justify-center items-center gap-2">
                 <Loading />
                 <span>Logging in...</span>
               </div>
@@ -238,16 +236,16 @@ const LoginModal = () => {
 
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
+              <div className="border-gray-300 border-t w-full"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 text-gray-500 bg-white">Or</span>
+              <span className="bg-white px-2 text-gray-500">Or</span>
             </div>
           </div>
 
           <a
             href={GOOGLE_URL}
-            className="flex items-center justify-center gap-3 w-full border border-gray-300 p-2.5 rounded-lg hover:bg-gray-50 transition-colors"
+            className="flex justify-center items-center gap-3 border-gray-300 hover:bg-gray-50 p-2.5 border rounded-lg w-full transition-colors"
           >
             <img src={googleLogo} alt="Google" className="w-5 h-5" />
             <span className="text-gray-700">Continue with Google</span>
@@ -267,7 +265,7 @@ const LoginModal = () => {
                 Create an account
               </button>
             </p>
-            <p className="text-gray-500 text-xs pt-2">
+            <p className="pt-2 text-gray-500 text-xs">
               By continuing you agree to the{" "}
               <button
                 type="button"

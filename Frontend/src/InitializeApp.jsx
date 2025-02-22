@@ -57,21 +57,13 @@ function InitializeApp({ children }) {
       }
     }
     if (userType === "customer") {
-      const userProfile_ = await getCustomerProfileApi(
-        userId,
-        accessToken,
-        errorLogger
-      );
+      const userProfile_ = await getCustomerProfileApi(userId, errorLogger);
       if (!userProfile_) {
         return;
       }
       setUserProfile(userProfile_);
     } else if (userType === "merchant") {
-      const userProfile_ = await getMerchantProfileApi(
-        userId,
-        accessToken,
-        errorLogger
-      );
+      const userProfile_ = await getMerchantProfileApi(userId, errorLogger);
       if (!userProfile_) {
         return;
       }
@@ -86,18 +78,6 @@ function InitializeApp({ children }) {
     setMarketsData(markets);
     if (!malls) return;
     setMallsData(malls);
-    // group malls and market into separate arrays
-    // const grouped = markets.reduce(
-    //   (acc, marketOrMall) => {
-    //     if (marketOrMall.isMall) {
-    //       acc.malls.push(marketOrMall);
-    //     } else {
-    //       acc.markets.push(marketOrMall);
-    //     }
-    //     return acc;
-    //   },
-    //   { malls: [], markets: [] }
-    // );
   }
   useEffect(() => {
     fetchUserProfile();
