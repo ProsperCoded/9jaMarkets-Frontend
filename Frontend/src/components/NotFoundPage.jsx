@@ -53,14 +53,14 @@ const NotFoundPage = () => {
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link
                 to="/"
-                className="flex items-center gap-2 px-6 py-2.5 bg-Primary text-white rounded-full hover:bg-Primary/90 transition-colors w-full sm:w-auto justify-center group"
+                className="w-full sm:w-auto flex items-center gap-2 px-6 py-2.5 bg-Primary text-white rounded-full hover:bg-Primary/90 transition-colors justify-center group"
               >
                 <Home size={18} className="group-hover:scale-110 transition-transform" />
                 <span>Go Home</span>
               </Link>
               <button
                 onClick={() => window.history.back()}
-                className="flex items-center gap-2 px-6 py-2.5 bg-white border-2 border-Primary text-Primary rounded-full hover:bg-Primary/5 transition-colors w-full sm:w-auto justify-center group"
+                className="w-full sm:w-auto flex items-center gap-2 px-6 py-2.5 bg-white border-2 border-Primary text-Primary rounded-full hover:bg-Primary/5 transition-colors justify-center group"
               >
                 <ArrowLeft size={18} className="group-hover:translate-x-[-4px] transition-transform" />
                 <span>Go Back</span>

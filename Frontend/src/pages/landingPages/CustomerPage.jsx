@@ -130,7 +130,7 @@ const CustomerPage = () => {
 
         <div className="relative flex flex-col justify-center items-center space-y-6 px-4 h-full">
           {/* Search Bar */}
-          <div className="flex items-center bg-white shadow-lg rounded-full w-full max-w-[500px]">
+          <div className="flex items-center bg-white shadow-lg md:py-2 rounded-full w-full max-w-[700px]">
             <Search className="ml-4 w-5 h-5 text-gray-400" />
             <input
               type="text"

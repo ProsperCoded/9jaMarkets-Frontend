@@ -1,6 +1,6 @@
 import { useState, useContext, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { Store, ShoppingBag, MapPin, Filter, X, ShoppingCart, SearchX, Search } from "lucide-react";
+import { Store, ShoppingBag, MapPin, SlidersHorizontal, X, ShoppingCart, SearchX, Search } from "lucide-react";
 import { STATES } from "../config";
 import { MALLS_DATA_CONTEXT } from "@/contexts";
 
@@ -95,9 +95,9 @@ const MallPage = () => {
           {/* Filter Button */}
           <button
             onClick={() => setShowFilters(true)}
-            className="md:hidden flex items-center justify-center bg-Primary rounded-full w-10 h-10 text-white mr-4"
+            className="md:hidden flex items-center justify-center rounded-full w-10 h-10 text-Primary mr-4"
           >
-            <Filter size={20} />
+            <SlidersHorizontal size={20} />
           </button>
         </div>
       </div>
@@ -236,16 +236,16 @@ const MallPage = () => {
                         </>
                       )}
                     </p>
-                    <div className= "pt-6 flex flex-row gap-3 justify-center">
+                    <div className="pt-6 flex flex-col sm:flex-row gap-3 justify-center">
                       <button
                         onClick={() => setSearchTerm("")}
-                        className="px-4 py-2 text-Primary border-2 border-Primary rounded-full hover:bg-Primary/5 transition-colors text-sm"
+                        className="w-full sm:w-auto px-4 py-2 text-Primary border-2 border-Primary rounded-full hover:bg-Primary/5 transition-colors text-sm"
                       >
                         Reset Search
                       </button>
                       <Link
                         to="/markets"
-                        className="px-4 py-2 bg-Primary text-white rounded-full hover:bg-Primary/90 transition-colors text-sm whitespace-nowrap flex items-center justify-center gap-2"
+                        className="w-full sm:w-auto px-4 py-2 bg-Primary text-white rounded-full hover:bg-Primary/90 transition-colors text-sm whitespace-nowrap flex items-center justify-center gap-2"
                       >
                         <Store className="w-4 h-4" />
                         Try Markets Instead

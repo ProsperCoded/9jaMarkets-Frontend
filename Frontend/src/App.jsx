@@ -47,6 +47,7 @@ import IntercomMessenger from "./components/IntercomMessenger";
 import PropTypes from "prop-types";
 import ProductDetails from "./components/ProductDetails";
 import LandingPage from "./pages/landingPages/LandingPage";
+import MerchantProfile from "./pages/MerchantProfile";
 
 function AntDesignConfig({ children }) {
   return (
@@ -140,6 +141,8 @@ function App() {
 
               <Route path="/markets/:marketId" element={<Marketplace />} />
               <Route path="/products/:productId" element={<ProductDetails />} />
+
+              <Route path="/merchant/:merchantId" element={<MerchantProfile />} />
 
               <Route path="*" element={<NotFoundPage />} />
             </Routes>

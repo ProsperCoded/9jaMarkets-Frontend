@@ -2,10 +2,10 @@ import { SERVER_URL } from "../../config";
 import { getAuth } from "../util";
 export async function getMerchantProfileApi(
   userId,
-  accessToken,
   errorLogger = () => {},
   successLogger = () => {}
 ) {
+  const { accessToken } = getAuth();
   const url = new URL(`merchant/${userId}`, SERVER_URL);
   const userProfile = await fetch(url, {
     headers: {
@@ -23,10 +23,10 @@ export async function getMerchantProfileApi(
 
 export async function getCustomerProfileApi(
   userId,
-  accessToken,
   errorLogger = () => {},
   successLogger = () => {}
 ) {
+  const { accessToken } = getAuth();
   const url = new URL(`customer/profile/${userId}`, SERVER_URL);
   const userProfile = await fetch(url, {
     headers: {

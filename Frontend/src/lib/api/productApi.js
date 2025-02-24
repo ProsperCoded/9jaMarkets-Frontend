@@ -65,3 +65,14 @@ export async function deleteProductApi(productId, errorLogger = () => {}) {
   }
   return "Deleted";
 }
+
+export async function getMerchantProducts(merchantId, errorLogger = () => {}) {
+  const url = new URL(`product/merchant/${merchantId}`, SERVER_URL);
+  const response = await fetch(url);
+  const responseData = await response.json();
+  if (!response.ok) {
+    errorLogger(responseData.message);
+    return;
+  }
+  return responseData.data;
+}

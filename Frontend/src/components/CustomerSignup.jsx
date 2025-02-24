@@ -1,8 +1,7 @@
-import React, { useContext, useState, useRef } from "react";
+import { useContext, useState, useRef } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import logo from "../assets/Logo.svg";
 import googleLogo from "../assets/Google Icon.svg";
-import facebookLogo from "../assets/facebook.png";
-import appleLogo from "../assets/apple.svg";
 import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "../contexts";
 import { getCustomerProfileApi } from "../lib/api/serviceApi";
 import { loginCustomerApi, signUpApi } from "../lib/api/authApi.js";
@@ -12,7 +11,8 @@ import { useEffect } from "react";
 import { GOOGLE_URL } from "@/config";
 import { LOGIN_MODAL_CONTEXT, SIGNUP_MODAL_CONTEXT } from "../contexts";
 import { isStrongPassword } from "../lib/util";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+
 const CustomerSignup = () => {
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -30,31 +30,37 @@ const CustomerSignup = () => {
   const { signupOpen, setSignupOpen } = useContext(SIGNUP_MODAL_CONTEXT);
   const { setLoginOpen } = useContext(LOGIN_MODAL_CONTEXT);
   const navigate = useNavigate();
+
   useEffect(() => {
-    if (modalRef.current & signupOpen) modalRef.current.focus();
-    if (signupOpen) {
-      document.body.style.overflow = "hidden";
-      modalRef.current.addEventListener("keypress", (e) => {
-        console.log(e.key);
+    if (!signupOpen) {
+      document.body.style.overflow = "auto";
+      return;
+    }
+
+    document.body.style.overflow = "hidden";
+    
+    const currentRef = modalRef.current;
+    if (currentRef) {
+      currentRef.focus();
+      const handleKeyPress = (e) => {
         if (e.key === "Escape") {
           setSignupOpen(false);
         }
-      });
-    } else {
-      document.body.style.overflow = "auto";
+      };
+      currentRef.addEventListener("keypress", handleKeyPress);
+      
+      return () => {
+        currentRef.removeEventListener("keypress", handleKeyPress);
+        document.body.style.overflow = "auto";
+      };
     }
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [signupOpen]);
-  // userP
+  }, [signupOpen, setSignupOpen]);
+
   const { setUserProfile } = useContext(USER_PROFILE_CONTEXT);
 
   if (!signupOpen) return null; // Don't render if modal is hidden
 
   const handleSignUp = async (e) => {
-    // Handle sign up logic here
-
     e.preventDefault();
     if (password !== confirmPassword) {
       setError("Passwords do not match");
@@ -75,10 +81,7 @@ const CustomerSignup = () => {
       console.error(error);
       setError(error);
     };
-    const signUp = await signUpApi(formData, (error) => {
-      console.error(error);
-      setError(error);
-    });
+    const signUp = await signUpApi(formData, errorLogger);
 
     if (!signUp) return;
     const loginData = await loginCustomerApi({ email, password }, errorLogger);
@@ -97,41 +100,34 @@ const CustomerSignup = () => {
   };
 
   return (
-    <div
-      className="z-50 fixed inset-0 flex justify-center items-center bg-black bg-opacity-50"
-      ref={modalRef}
-      tabIndex={0}
-    >
-      <div className="relative bg-white shadow-lg px-4 sm:px-8 p-3 rounded-[5%] w-[90%] max-w-md md:max-w-lg lg:max-w-xl">
+    <div className="z-50 fixed inset-0 flex justify-center items-center bg-black/50">
+      <div className="relative bg-white shadow-lg p-4 sm:p-6 rounded-2xl w-[95%] max-w-md max-h-[90vh] overflow-y-auto">
         <button
           onClick={() => setSignupOpen(false)}
-          className="top-2 right-4 absolute text-4xl text-gray-600 lg:text-3xl hover:text-gray-900"
+          className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 p-2"
         >
-          &times;
+          <span className="text-2xl">&times;</span>
         </button>
-        <img
-          src={logo}
-          alt="9ja Markets Logo"
-          className="mx-auto mb-2 h-10 md:h-14 lg:h-20"
-        />
-        <h2 className="mb-2 font-bold text-base text-center text-Primary lg:text-xl">
-          Welcome to 9ja Markets
-        </h2>
+        <div className="text-center mb-6">
+          <img
+            src={logo}
+            alt="9ja Markets Logo"
+            className="mx-auto h-12 sm:h-14"
+          />
+          <h2 className="mt-2 font-bold text-Primary text-lg sm:text-xl">
+            Welcome to 9ja Markets
+          </h2>
+        </div>
         <form
           className="space-y-4"
           onSubmit={async (e) => {
             setLoading(true);
-            await handleSignUp(e).then(() => {
-              setLoading(false);
-            });
+            await handleSignUp(e).finally(() => setLoading(false));
           }}
         >
-          <div className="flex justify-between gap-2 wrap">
+          <div className="grid grid-cols-2 gap-4">
             <div>
-              <label
-                htmlFor="firstName"
-                className="block font-medium text-gray-700 text-sm"
-              >
+              <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
                 First Name
               </label>
               <input
@@ -140,14 +136,11 @@ const CustomerSignup = () => {
                 id="firstName"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
-                className="border-gray-300 p-2 border rounded-lg focus:ring-Primary focus:ring-2 w-full focus:outline-none"
+                className="mt-1 w-full rounded-lg border border-gray-300 p-2 focus:ring-2 focus:ring-Primary focus:outline-none"
               />
             </div>
             <div>
-              <label
-                htmlFor="lastName"
-                className="block font-medium text-gray-700 text-sm"
-              >
+              <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
                 Last Name
               </label>
               <input
@@ -156,243 +149,167 @@ const CustomerSignup = () => {
                 id="lastName"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
-                className="border-gray-300 p-2 border rounded-lg focus:ring-Primary focus:ring-2 w-full focus:outline-none"
+                className="mt-1 w-full rounded-lg border border-gray-300 p-2 focus:ring-2 focus:ring-Primary focus:outline-none"
               />
             </div>
           </div>
           <div>
-            <label
-              htmlFor="email"
-              className="block font-medium text-gray-700 text-sm"
-            >
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Email
             </label>
             <input
               type="email"
               id="email"
-              value={email}
               required
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="border-gray-300 p-2 border rounded-lg focus:ring-Primary focus:ring-2 w-full focus:outline-none"
+              className="mt-1 w-full rounded-lg border border-gray-300 p-2 focus:ring-2 focus:ring-Primary focus:outline-none"
             />
           </div>
-          <div className="flex justify-between gap-2 wrap">
+          <div className="grid grid-cols-2 gap-4">
             <div>
-              <label
-                htmlFor="Phone"
-                className="block font-medium text-gray-700 text-sm"
-              >
-                Tel 1:
+              <label htmlFor="phone1" className="block text-sm font-medium text-gray-700">
+                Phone 1
               </label>
               <input
-                type="text"
-                id="phone"
-                min={10}
-                max={11}
+                type="tel"
+                id="phone1"
                 value={phone1}
                 onChange={(e) => setPhone1(e.target.value)}
-                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-Primary w-full focus:outline-none"
+                className="mt-1 w-full rounded-lg border border-gray-300 p-2 focus:ring-2 focus:ring-Primary focus:outline-none"
               />
             </div>
             <div>
-              <label
-                htmlFor="Phone"
-                className="block font-medium text-gray-700 text-sm"
-              >
-                Tel 2:
+              <label htmlFor="phone2" className="block text-sm font-medium text-gray-700">
+                Phone 2 (Optional)
               </label>
               <input
-                type="text"
+                type="tel"
                 id="phone2"
-                min={10}
-                max={11}
                 value={phone2}
                 onChange={(e) => setPhone2(e.target.value)}
-                className="border-gray-300 mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-Primary w-full focus:outline-none"
+                className="mt-1 w-full rounded-lg border border-gray-300 p-2 focus:ring-2 focus:ring-Primary focus:outline-none"
               />
             </div>
           </div>
-
-          <div>
-            <label
-              htmlFor="password"
-              className="block font-medium text-gray-700 text-sm"
-            >
-              Password
-            </label>
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                id="password"
-                value={password}
-                required
-                onChange={(e) => setPassword(e.target.value)}
-                className={`mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-Primary ${
-                  password ? "border-green-500" : "border-gray-300"
-                }`}
-              />
-
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="right-0 absolute inset-y-0 flex items-center pr-3"
-              >
-                {showPassword ? (
-                  // Open eye icon for showing password
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="#236C13"
-                    className="size-5"
-                  >
-                    <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                    <path
-                      fillRule="evenodd"
-                      d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                ) : (
-                  // Closed eye icon for hiding password
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill={password ? "#236C13" : "#9CA3AF"}
-                    className="size-5"
-                  >
-                    <path d="M3.53 2.47a.75.75 0 0 0-1.06 1.06l18 18a.75.75 0 1 0 1.06-1.06l-18-18ZM22.676 12.553a11.249 11.249 0 0 1-2.631 4.31l-3.099-3.099a5.25 5.25 0 0 0-6.71-6.71L7.759 4.577a11.217 11.217 0 0 1 4.242-.827c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113Z" />
-                    <path d="M15.75 12c0 .18-.013.357-.037.53l-4.244-4.243A3.75 3.75 0 0 1 15.75 12ZM12.53 15.713l-4.243-4.244a3.75 3.75 0 0 0 4.244 4.243Z" />
-                    <path d="M6.75 12c0-.619.107-1.213.304-1.764l-3.1-3.1a11.25 11.25 0 0 0-2.63 4.31c-.12.362-.12.752 0 1.114 1.489 4.467 5.704 7.69 10.675 7.69 1.5 0 2.933-.294 4.242-.827l-2.477-2.477A5.25 5.25 0 0 1 6.75 12Z" />
-                  </svg>
-                )}
-              </button>
+          <div className="space-y-4">
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className={`mt-1 w-full rounded-lg border p-2 focus:ring-2 focus:ring-Primary focus:outline-none ${
+                    password ? "border-green-500" : "border-gray-300"
+                  }`}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                >
+                  {showPassword ? (
+                    <Eye className="w-5 h-5" />
+                  ) : (
+                    <EyeOff className="w-5 h-5" />
+                  )}
+                </button>
+              </div>
             </div>
-          </div>
-          <div>
-            <label
-              htmlFor="confirmPassword"
-              className="block font-medium text-gray-700 text-sm"
-            >
-              Confirm Password
-            </label>
-            <div className="relative">
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                id="confirmPassword"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className={`mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-Primary ${
-                  confirmPassword ? "border-green-500" : "border-gray-300"
-                }`}
-              />
-              <button
-                type="button"
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="right-0 absolute inset-y-0 flex items-center pr-3"
-              >
-                {showConfirmPassword ? (
-                  // Open eye icon for showing confirm password
-                  <svg viewBox="0 0 24 24" fill="#236C13" className="size-5">
-                    <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                    <path
-                      fillRule="evenodd"
-                      d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                ) : (
-                  // Closed eye icon for hiding confirm password
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill={confirmPassword ? "#236C13" : "#9CA3AF"}
-                    className="size-5"
-                  >
-                    <path d="M3.53 2.47a.75.75 0 0 0-1.06 1.06l18 18a.75.75 0 1 0 1.06-1.06l-18-18ZM22.676 12.553a11.249 11.249 0 0 1-2.631 4.31l-3.099-3.099a5.25 5.25 0 0 0-6.71-6.71L7.759 4.577a11.217 11.217 0 0 1 4.242-.827c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113Z" />
-                    <path d="M15.75 12c0 .18-.013.357-.037.53l-4.244-4.243A3.75 3.75 0 0 1 15.75 12ZM12.53 15.713l-4.243-4.244a3.75 3.75 0 0 0 4.244 4.243Z" />
-                    <path d="M6.75 12c0-.619.107-1.213.304-1.764l-3.1-3.1a11.25 11.25 0 0 0-2.63 4.31c-.12.362-.12.752 0 1.114 1.489 4.467 5.704 7.69 10.675 7.69 1.5 0 2.933-.294 4.242-.827l-2.477-2.477A5.25 5.25 0 0 1 6.75 12Z" />
-                  </svg>
-                )}
-              </button>
+            <div>
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+                Confirm Password
+              </label>
+              <div className="relative">
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  id="confirmPassword"
+                  required
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="mt-1 w-full rounded-lg border border-gray-300 p-2 focus:ring-2 focus:ring-Primary focus:outline-none"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                >
+                  {showConfirmPassword ? (
+                    <Eye className="w-5 h-5" />
+                  ) : (
+                    <EyeOff className="w-5 h-5" />
+                  )}
+                </button>
+              </div>
             </div>
           </div>
           {error && (
-            <p className="font-semibold text-center text-red-500 text-sm">
-              {error}
-            </p>
+            <p className="text-red-500 text-sm text-center">{error}</p>
           )}
           <button
             type="submit"
-            className="bg-Primary p-2 rounded-lg w-full text-white"
+            disabled={loading}
+            className="w-full bg-Primary text-white p-2.5 rounded-lg font-medium hover:bg-Primary/90 transition-colors"
           >
             {loading ? (
-              <>
+              <div className="flex items-center justify-center gap-2">
                 <Loading />
-                Sign Up...
-              </>
+                <span>Signing Up...</span>
+              </div>
             ) : (
               "Sign Up"
             )}
           </button>
-        </form>
-        <div className="lg:flex items-center hidden my-2 text-center">
-          <div className="flex-grow border-gray-300 border-t"></div>
-          <span className="px-4 text-gray-700 text-sm">Or</span>
-          <div className="flex-grow border-gray-300 border-t"></div>
-        </div>
-        <div className="flex justify-center space-x-16 mt-2 md:mt-3">
-          <button className="text-lg">
-            <a href={GOOGLE_URL} target="_blank">
-              <img src={googleLogo} alt="Google Login" className="h-6" />
-            </a>
-          </button>
-          <button className="text-lg">
-            <a
-              href="https://www.facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img src={facebookLogo} alt="Facebook Login" className="h-6" />
-            </a>
-          </button>
-          <button className="text-lg">
-            <a
-              href="https://appleid.apple.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img src={appleLogo} alt="Apple Login" className="h-6" />
-            </a>
-          </button>
-        </div>
-        <p className="mt-2 text-center text-sm md:text-base">
-          Already have an account?{" "}
-          <button
-            onClick={() => setLoginOpen(true)}
-            className="font-bold text-Primary"
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 text-gray-500 bg-white">Or</span>
+            </div>
+          </div>
+          <a
+            href={GOOGLE_URL}
+            className="flex items-center justify-center gap-3 w-full border border-gray-300 p-2.5 rounded-lg hover:bg-gray-50 transition-colors"
           >
-            Login
-          </button>
-        </p>
-        <p className="mt-2 text-center text-sm md:text-base">
-          Want to Sell ?{" "}
-          <button
-            onClick={() => {
-              navigate("/merchant-signup");
-              setSignupOpen(false);
-            }}
-            className="font-bold text-Primary cursor-pointer"
-          >
-            Create Merchant Account
-          </button>
-        </p>
-
-        <p className="mt-4 text-center text-gray-600 text-xs">
-          By continuing you agree to the{" "}
-          <a href="/" className="font-bold text-Primary">
-            Policy and Rules
+            <img src={googleLogo} alt="Google" className="w-5 h-5" />
+            <span className="text-gray-700">Sign up with Google</span>
           </a>
-        </p>
+          <div className="space-y-3 text-center text-sm">
+            <p>
+              Already have an account?{" "}
+              <button
+                onClick={() => setLoginOpen(true)}
+                className="font-semibold text-Primary hover:text-Primary/80"
+              >
+                Login
+              </button>
+            </p>
+            <p>
+              Want to Sell?{" "}
+              <button
+                onClick={() => {
+                  navigate("/merchant-signup");
+                  setSignupOpen(false);
+                }}
+                className="font-semibold text-Primary hover:text-Primary/80"
+              >
+                Create Merchant Account
+              </button>
+            </p>
+            <p className="text-gray-500 text-xs pt-2">
+              By continuing you agree to the{" "}
+              <Link to="/terms" className="text-Primary hover:underline">
+                Policy and Rules
+              </Link>
+            </p>
+          </div>
+        </form>
       </div>
     </div>
   );
