@@ -158,12 +158,12 @@ const ProductDetails = () => {
                 </h1>
                 <button
                   onClick={handleBookmarkToggle}
-                  className="hover:bg-gray-100 p-2 rounded-full transition-colors"
+                  className={`bg-Primary text-white hover:bg-Primary p-2 rounded-full transition-colors`}
                 >
                   {isBookmarked ? (
-                    <BookmarkCheck className="w-6 h-6 text-Primary" />
+                    <BookmarkCheck className="w-6 h-6" />
                   ) : (
-                    <Bookmark className="w-6 h-6 text-gray-400" />
+                    <Bookmark className="w-6 h-6" />
                   )}
                 </button>
               </div>
