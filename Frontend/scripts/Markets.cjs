@@ -130,14 +130,11 @@ const MARKETS = {
     { name: "Monguno Market", img: "./markets/borno/monguno.jpg", address: "Monguno Town, Monguno LGA" },
     { name: "Dikwa Market", img: "./markets/borno/dikwa.jpg", address: "Dikwa Town, Dikwa LGA" },
     { name: "Gwoza Market", img: "./markets/borno/gwoza.jpg", address: "Gwoza Town, Gwoza LGA" },
-    { name: "Chibok Market", img: "./markets/borno/chibok.jpg", address: "Chibok Town, Chibok LGA" },
-    { name: "Askira/Uba Market", img: "./markets/borno/askira.jpg", address: "Askira Town, Askira/Uba LGA" },
+    { name: "Chibok Market", img: "./markets/borno/chibok.jpeg", address: "Chibok Town, Chibok LGA" },
+    { name: "Askira/Uba Market", img: "./markets/borno/uba.jpg", address: "Askira Town, Askira/Uba LGA" },
     { name: "Konduga Market", img: "./markets/borno/konduga.jpg", address: "Konduga Town, Konduga LGA" },
-    { name: "Kwaya Kusar Market", img: "./markets/borno/kwaya-kusar.jpg", address: "Kwaya Kusar Town, Kwaya Kusar LGA" },
     { name: "Mafa Market", img: "./markets/borno/mafa.jpg", address: "Mafa Town, Mafa LGA" },
     { name: "Nganzai Market", img: "./markets/borno/nganzai.jpg", address: "Nganzai Town, Nganzai LGA" },
-    { name: "Kala-Balge Market", img: "./markets/borno/kala-balge.jpg", address: "Rann Town, Kala-Balge LGA" },
-    { name: "Shani Market", img: "./markets/borno/shani.jpg", address: "Shani Town, Shani LGA" },
   ],
 
   CrossRiver: [
