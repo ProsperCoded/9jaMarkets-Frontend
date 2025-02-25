@@ -15,7 +15,7 @@ const MARKETS = {
     { name: "Uzuakoli Market", img: "./markets/abia/uzuakoli.jpeg", address:"Uzuakoli" },
   ],
 
-  AkwaIbom: [
+  "Akwa-Ibom": [
     { name: "Akamkpa Timber Market", img: "./markets/akwa-ibom/akamkpa.jpg", address:"Akamkpa" },
     { name: "Akpabuyo Main Market", img: "./markets/akwa-ibom/akpabuyo.jpg", address:"Akpabuyo" },
     { name: "Boki Market", img: "./markets/akwa-ibom/boki.jpg", address:"Boki" },
@@ -35,9 +35,9 @@ const MARKETS = {
   
   Adamawa: [
     { name: "Demsa Market", img: "./markets/adamawa/demsa.jpg", address: "Demsa Town, Demsa LGA" },
-    { name: "Fufore Market", img: "./markets/adamawa/fufore.jpg", address: "Fufore Town, Fufore LGA" },
     { name: "Ganye Market", img: "./markets/adamawa/ganye.jpg", address: "Ganye Town, Ganye LGA" },
-    { name: "Gombi Market", img: "./markets/adamawa/gombi.jpg", address: "Gombi Town, Gombi LGA" },
+    { name: "Gombi Market", img: "./markets/adamawa/gombi.jpg", address: "Gombi Town, Gombi LGA" },    
+    { name: "Gurin Market", img: "./markets/adamawa/gurin.jpg", address: "Gurin Town, Gurin LGA" },
     { name: "Hong Market", img: "./markets/adamawa/hong.jpg", address: "Hong Town, Hong LGA" },
     { name: "Jimeta Main Market", img: "./markets/adamawa/jimeta.jpg", address: "Jimeta, Yola North LGA" },
     { name: "Lamurde Market", img: "./markets/adamawa/lamurde.jpg", address: "Lamurde Town, Lamurde LGA" },
@@ -47,8 +47,6 @@ const MARKETS = {
     { name: "Numan Market", img: "./markets/adamawa/numan.jpg", address: "Numan Town, Numan LGA" },
     { name: "Shelleng Market", img: "./markets/adamawa/shelleng.jpg", address: "Shelleng Town, Shelleng LGA" },
     { name: "Song Market", img: "./markets/adamawa/song.jpg", address: "Song Town, Song LGA" },
-    { name: "Toungo Market", img: "./markets/adamawa/toungo.jpg", address: "Toungo Town, Toungo LGA" },
-    { name: "Yola Market", img: "./markets/adamawa/yola.jpg", address: "Yola Town, Yola South LGA" },
   ],
 
   Anambra: [
@@ -73,7 +71,6 @@ const MARKETS = {
     { name: "Alkaleri Market", img: "./markets/bauchi/alkaleri.jpg", address: "Alkaleri Town, Alkaleri LGA" },
     { name: "Azare Market", img: "./markets/bauchi/azare.jpg", address: "Azare Town, Katagum LGA" },
     { name: "Bogoro Market", img: "./markets/bauchi/bogoro.jpg", address: "Bogoro Town, Bogoro LGA" },
-    { name: "Darazo Market", img: "./markets/bauchi/darazo.jpg", address: "Darazo Town, Darazo LGA" },
     { name: "Dass Market", img: "./markets/bauchi/dass.jpg", address: "Dass Town, Dass LGA" },
     { name: "Ganjuwa Market", img: "./markets/bauchi/ganjuwa.jpg", address: "Ganjuwa Town, Ganjuwa LGA" },
     { name: "Itas/Gadau Market", img: "./markets/bauchi/itas-gadau.jpg", address: "Itas Town, Itas/Gadau LGA" },
@@ -138,7 +135,7 @@ const MARKETS = {
     { name: "Nganzai Market", img: "./markets/borno/nganzai.jpg", address: "Nganzai Town, Nganzai LGA" },
   ],
 
-  CrossRiver: [
+  "Cross-River": [
     { name: "Akamkpa Timber Market", img: "./markets/cross-river/akamkpa.jpg", address: "Akamkpa" },
     { name: "Akpabuyo Main Market", img: "./markets/cross-river/akpabuyo.jpg", address: "Akpabuyo" },
     { name: "Boki Market", img: "./markets/cross-river/boki.jpg", address: "Boki" },

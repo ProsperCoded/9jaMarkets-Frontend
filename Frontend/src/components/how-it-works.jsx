@@ -156,12 +156,12 @@ const HowItWorksPage = () => {
             </div>
           </div>
           <div className="text-center mt-8">
-            <button 
-              onClick={() => setSignupOpen(true)}
+            <Link 
+              to="/merchant-signup"
               className="inline-flex items-center px-8 py-3 bg-Primary hover:bg-Primary/90 text-white rounded-full transition-colors"
             >
               Sign Up as a Merchant
-            </button>
+            </Link>
           </div>
         </div>
       </div>
