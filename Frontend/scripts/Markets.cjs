@@ -530,7 +530,7 @@ const MARKETS = {
     { name: "Potatoes Market", img: "./markets/plateau/potatoes.jpg", address: "Bokkos LGA, Plateau State" },
     { name: "Rukuba Road Market", img: "./markets/plateau/rukuba-road.jpg", address: "Jos, Plateau State" },
     { name: "Shendam Market", img: "./markets/plateau/shendam.jpg", address: "Shendam, Plateau State" },
-    { name: "Terminus Market (Jos Main Market)", img: "./markets/plateau/terminus.jpg", address: "Jos, Plateau State" },
+    { name: "Terminus Market", img: "./markets/plateau/terminus.jpg", address: "Jos, Plateau State" },
   ],
 
   Rivers: [
