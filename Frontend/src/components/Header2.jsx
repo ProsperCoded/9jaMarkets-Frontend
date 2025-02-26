@@ -59,11 +59,11 @@ const Header2 = () => {
               <Link
                 to={userProfile ? "/bookmark" : "#"}
                 onClick={handleAuthClick}
-                className="relative flex items-center p-2 hover:bg-white hover:text-Primary rounded-full transition-colors"
+                className="relative flex items-center p-2 bg-P2/35 rounded-full transition-colors"
               >
                 <Bookmark className="w-6 h-6" />
                 {bookmarkCount > 0 && (
-                  <span className="absolute top-1 right-1 bg-orange text-white text-xs rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
+                  <span className="absolute -top-1 -right-1 bg-orange text-white text-xs rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
                     {bookmarkCount}
                   </span>
                 )}

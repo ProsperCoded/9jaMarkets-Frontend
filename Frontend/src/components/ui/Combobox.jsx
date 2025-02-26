@@ -39,7 +39,7 @@ export function Combobox({ options, value, handleSelect, message }) {
       </PopoverTrigger>
       <PopoverContent className="p-0 w-max" align="start" side="bottom">
         <Command>
-          <CommandInput placeholder="Search framework..." />
+          <CommandInput placeholder="Search..." />
           <CommandList>
             <CommandEmpty>No Option Available.</CommandEmpty>
             <CommandGroup>
