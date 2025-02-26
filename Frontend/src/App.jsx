@@ -48,6 +48,7 @@ import PropTypes from "prop-types";
 import ProductDetails from "./components/ProductDetails";
 import LandingPage from "./pages/landingPages/LandingPage";
 import MerchantProfile from "./pages/MerchantProfile";
+import LoadingPage from "./componets-utils/LoadingPage";
 
 function AntDesignConfig({ children }) {
   return (
@@ -143,6 +144,12 @@ function App() {
               <Route path="/products/:productId" element={<ProductDetails />} />
 
               <Route path="/merchant/:merchantId" element={<MerchantProfile />} />
+
+              {/* Test route for LoadingPage */}
+              <Route 
+                path="/test-loading" 
+                element={<LoadingPage message="Testing Loading Page" />} 
+              />
 
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
