@@ -502,6 +502,23 @@ const MARKETS = {
     { name: "Owode Ede Market", img: "./markets/osun/owode-ede.jpg", address:"Ede" },
   ],
 
+  Oyo: [
+    { name: "Agbeni Market", img: "./markets/oyo/agbeni.jpg", address: "Ibadan, Oyo State" },
+    { name: "Aleshinloye Market", img: "./markets/oyo/aleshinloye.jpg", address: "Ibadan, Oyo State" },
+    { name: "Apata Market", img: "./markets/oyo/apata.jpg", address: "Ibadan, Oyo State" },
+    { name: "Beere Market", img: "./markets/oyo/beere.jpg", address: "Ibadan, Oyo State" },
+    { name: "Bodija Market", img: "./markets/BodijaMarket.jpg", address: "Ibadan, Oyo State" },
+    { name: "Dugbe Market", img: "./markets/oyo/dugbe.jpg", address: "Ibadan, Oyo State" },
+    { name: "Gbagi International Market", img: "./markets/oyo/gbagi-international.jpg", address: "Ibadan, Oyo State" },
+    { name: "Iseyin Market", img: "./markets/oyo/iseyin.jpg", address: "Iseyin, Oyo State" },
+    { name: "Iso Adiye Market", img: "./markets/oyo/iso-adiye.jpg", address: "Ibadan, Oyo State" },
+    { name: "New Waso Market", img: "./markets/oyo/new-waso.jpg", address: "Ibadan, Oyo State" },
+    { name: "Ogunpa Market", img: "./markets/oyo/ogunpa.jpg", address: "Ibadan, Oyo State" },
+    { name: "Oja Oba Market", img: "./markets/oyo/oja-oba.jpg", address: "Ibadan, Oyo State" },
+    { name: "Oje Market", img: "./markets/oyo/oje.jpg", address: "Ibadan, Oyo State" },
+    
+  ],
+
   Plateau: [
     { name: "Abattoir Market", img: "./markets/plateau/abattoir.jpg", address: "Jos, Plateau State" },
     { name: "Barkin Ladi Market", img: "./markets/plateau/barkin-ladi.jpg", address: "Barkin Ladi, Plateau State" },
