@@ -30,7 +30,7 @@ allMarkets = allMarkets.map((market) => {
   };
 });
 const uploadMarket = async (market) => {
-  try {
+  try {tail
     // * Using formData when market image is available and supported
     const formData = new FormData();
     formData.append("name", market.name);
