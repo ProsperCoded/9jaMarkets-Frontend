@@ -83,7 +83,7 @@ const HowItWorksPage = () => {
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center p-6 rounded-lg bg-white shadow-sm">
               <div className="w-12 h-12 bg-orange/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Search className="text-orange" />
+                <Store className="text-orange" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Explore Markets and Products</h3>
               <p className="text-gray-600">
