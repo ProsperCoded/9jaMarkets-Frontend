@@ -50,3 +50,10 @@ export function formatPrice(value = "") {
 export function removeCommas(value = "") {
   return value.toString().replace(/,/g, "");
 }
+
+export function replaceSpacesWithUnderscore(value = "") {
+  return value.replace(/\s/g, "_");
+}
+export function replaceUnderscoresWithSpaces(value = "") {
+  return value.replace(/_/g, " ");
+}

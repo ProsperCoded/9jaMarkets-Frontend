@@ -3,11 +3,33 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useErrorLogger } from "@/hooks";
 import WhatsappIcon from "@/assets/whatsapp-icon.svg";
 import LoadingPage from "@/componets-utils/LoadingPage";
-import { ArrowLeft, Bookmark, BookmarkCheck, Store, Phone, PackageSearch, Tags, ShoppingBasket, Mail, Copy, Check, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  ArrowLeft,
+  Bookmark,
+  BookmarkCheck,
+  Store,
+  Phone,
+  PackageSearch,
+  Tags,
+  ShoppingBasket,
+  Mail,
+  Copy,
+  Check,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import { Button } from "./ui/button";
 import { getProduct } from "@/lib/api/productApi";
-import { USER_PROFILE_CONTEXT, MESSAGE_API_CONTEXT, BOOKMARK_CONTEXT } from "@/contexts";
-import { addToBookmarks, removeFromBookmarks, getBookmarks } from "@/lib/api/bookmarkApi";
+import {
+  USER_PROFILE_CONTEXT,
+  MESSAGE_API_CONTEXT,
+  BOOKMARK_CONTEXT,
+} from "@/contexts";
+import {
+  addToBookmarks,
+  removeFromBookmarks,
+  getBookmarks,
+} from "@/lib/api/bookmarkApi";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -98,7 +120,7 @@ const ProductDetails = () => {
           <div className="gap-8 grid grid-cols-1 lg:grid-cols-2">
             {/* Image Gallery */}
             <div className="space-y-4">
-              <div className="rounded-lg overflow-hidden aspect-square relative">
+              <div className="relative rounded-lg overflow-hidden aspect-square">
                 <img
                   src={
                     product.images?.[selectedImage]?.url ||
@@ -107,19 +129,27 @@ const ProductDetails = () => {
                   alt={product.name}
                   className="w-full h-full object-cover"
                 />
-                
+
                 {/* Image Navigation Arrows */}
                 {product.images && product.images.length > 1 && (
                   <>
                     <button
-                      onClick={() => setSelectedImage((prev) => (prev === 0 ? product.images.length - 1 : prev - 1))}
-                      className="absolute left-1 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
+                      onClick={() =>
+                        setSelectedImage((prev) =>
+                          prev === 0 ? product.images.length - 1 : prev - 1
+                        )
+                      }
+                      className="top-1/2 left-1 absolute bg-black/50 hover:bg-black/70 p-2 rounded-full text-white transition-colors -translate-y-1/2"
                     >
                       <ChevronLeft className="w-6 h-6" />
                     </button>
                     <button
-                      onClick={() => setSelectedImage((prev) => (prev === product.images.length - 1 ? 0 : prev + 1))}
-                      className="absolute right-1 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
+                      onClick={() =>
+                        setSelectedImage((prev) =>
+                          prev === product.images.length - 1 ? 0 : prev + 1
+                        )
+                      }
+                      className="top-1/2 right-1 absolute bg-black/50 hover:bg-black/70 p-2 rounded-full text-white transition-colors -translate-y-1/2"
                     >
                       <ChevronRight className="w-6 h-6" />
                     </button>
@@ -170,16 +200,18 @@ const ProductDetails = () => {
 
               <div className="space-y-4">
                 <p className="flex items-center gap-2 font-bold text-Primary text-xl lg:text-2xl truncate">
-                  <Tags className="size-6 flex-shrink-0" />
-                  <span className="truncate">₦{product.price?.toLocaleString()}</span>
+                  <Tags className="flex-shrink-0 size-6" />
+                  <span className="truncate">
+                    ₦{product.price?.toLocaleString()}
+                  </span>
                 </p>
 
                 {/* Merchant Info Card */}
-                <div className="bg-gradient-to-br from-Primary/5 to-Primary/10 rounded-xl p-4 sm:p-6 border border-Primary/20">
-                  <div className="flex flex-col xl:flex-row gap-4 sm:gap-6">
+                <div className="border-Primary/20 bg-gradient-to-br from-Primary/5 to-Primary/10 p-4 sm:p-6 border rounded-xl">
+                  <div className="flex xl:flex-row flex-col gap-4 sm:gap-6">
                     {/* Merchant Logo & Basic Info */}
-                    <div className="flex flex-col text-left xl:w-1/2 xl:items-start">
-                      <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-lg overflow-hidden border-2 border-Primary/20">
+                    <div className="flex flex-col xl:items-start xl:w-1/2 text-left">
+                      <div className="border-2 border-Primary/20 rounded-lg w-20 sm:w-24 h-20 sm:h-24 overflow-hidden">
                         <img
                           src={product.merchant.logo || "/merchant-image.png"}
                           alt={product.merchant.brandName}
@@ -187,12 +219,14 @@ const ProductDetails = () => {
                         />
                       </div>
                       <div className="mt-3">
-                        <h3 className="font-semibold text-base sm:text-lg text-gray-900">
+                        <h3 className="font-semibold text-base text-gray-900 sm:text-lg">
                           {product.merchant.brandName}
                         </h3>
                         <button
-                          onClick={() => navigate(`/merchant/${product.merchant.id}`)}
-                          className="flex items-center gap-1.5 text-Primary hover:text-Primary/80 font-medium text-sm mt-1"
+                          onClick={() =>
+                            navigate(`/merchant/${product.merchantId}`)
+                          }
+                          className="flex items-center gap-1.5 mt-1 font-medium text-Primary text-sm hover:text-Primary/80"
                         >
                           <Store className="w-4 h-4" />
                           Visit Store
@@ -203,22 +237,27 @@ const ProductDetails = () => {
                     {/* Contact Info */}
                     <div className="flex flex-col gap-2 sm:gap-3 xl:w-1/2">
                       {/* Primary Phone */}
-                      <div className="flex items-center justify-between gap-2 bg-white/60 p-2 sm:p-2.5 rounded-lg">
+                      <div className="flex justify-between items-center gap-2 bg-white/60 p-2 sm:p-2.5 rounded-lg">
                         <div className="flex items-center gap-2 min-w-0">
-                          <Phone className="w-4 h-4 text-Primary flex-shrink-0" />
-                          <span className="text-gray-700 font-medium truncate">
+                          <Phone className="flex-shrink-0 w-4 h-4 text-Primary" />
+                          <span className="font-medium text-gray-700 truncate">
                             {product.merchant.phoneNumbers[0].number}
                           </span>
                         </div>
                         <button
                           onClick={() => {
-                            handleCopyPhone(product.merchant.phoneNumbers[0].number);
-                            messageApi.success("Phone number copied to clipboard");
+                            handleCopyPhone(
+                              product.merchant.phoneNumbers[0].number
+                            );
+                            messageApi.success(
+                              "Phone number copied to clipboard"
+                            );
                           }}
-                          className="hover:bg-white p-1.5 rounded-md transition-colors flex-shrink-0"
+                          className="flex-shrink-0 hover:bg-white p-1.5 rounded-md transition-colors"
                           title="Copy phone number"
                         >
-                          {copiedPhone === product.merchant.phoneNumbers[0].number ? (
+                          {copiedPhone ===
+                          product.merchant.phoneNumbers[0].number ? (
                             <Check className="w-4 h-4 text-Primary" />
                           ) : (
                             <Copy className="w-4 h-4 text-orange" />
@@ -228,22 +267,27 @@ const ProductDetails = () => {
 
                       {/* Secondary Phone (only if exists and has a number) */}
                       {product.merchant.phoneNumbers[1]?.number && (
-                        <div className="flex items-center justify-between gap-2 bg-white/60 p-2 sm:p-2.5 rounded-lg">
+                        <div className="flex justify-between items-center gap-2 bg-white/60 p-2 sm:p-2.5 rounded-lg">
                           <div className="flex items-center gap-2 min-w-0">
-                            <Phone className="w-4 h-4 text-Primary flex-shrink-0" />
-                            <span className="text-gray-700 font-medium truncate">
+                            <Phone className="flex-shrink-0 w-4 h-4 text-Primary" />
+                            <span className="font-medium text-gray-700 truncate">
                               {product.merchant.phoneNumbers[1].number}
                             </span>
                           </div>
                           <button
                             onClick={() => {
-                              handleCopyPhone(product.merchant.phoneNumbers[1].number);
-                              messageApi.success("Phone number copied to clipboard");
+                              handleCopyPhone(
+                                product.merchant.phoneNumbers[1].number
+                              );
+                              messageApi.success(
+                                "Phone number copied to clipboard"
+                              );
                             }}
-                            className="hover:bg-white p-1.5 rounded-md transition-colors flex-shrink-0"
+                            className="flex-shrink-0 hover:bg-white p-1.5 rounded-md transition-colors"
                             title="Copy phone number"
                           >
-                            {copiedPhone === product.merchant.phoneNumbers[1].number ? (
+                            {copiedPhone ===
+                            product.merchant.phoneNumbers[1].number ? (
                               <Check className="w-4 h-4 text-Primary" />
                             ) : (
                               <Copy className="w-4 h-4 text-orange" />
@@ -253,23 +297,25 @@ const ProductDetails = () => {
                       )}
 
                       {/* Email */}
-                      <div className="flex items-center justify-between gap-2 bg-white/60 p-2 sm:p-2.5 rounded-lg">
+                      <div className="flex justify-between items-center gap-2 bg-white/60 p-2 sm:p-2.5 rounded-lg">
                         <div className="flex items-center gap-2 min-w-0">
-                          <Mail className="w-4 h-4 text-Primary flex-shrink-0" />
-                          <span className="text-gray-700 font-medium truncate">
+                          <Mail className="flex-shrink-0 w-4 h-4 text-Primary" />
+                          <span className="font-medium text-gray-700 truncate">
                             {product.merchant.email}
                           </span>
                         </div>
                         <button
                           onClick={() => {
-                            navigator.clipboard.writeText(product.merchant.email);
-                            setCopiedPhone('email');
+                            navigator.clipboard.writeText(
+                              product.merchant.email
+                            );
+                            setCopiedPhone("email");
                             messageApi.success("Email copied to clipboard");
                           }}
-                          className="hover:bg-white p-1.5 rounded-md transition-colors flex-shrink-0"
+                          className="flex-shrink-0 hover:bg-white p-1.5 rounded-md transition-colors"
                           title="Copy email"
                         >
-                          {copiedPhone === 'email' ? (
+                          {copiedPhone === "email" ? (
                             <Check className="w-4 h-4 text-Primary" />
                           ) : (
                             <Copy className="w-4 h-4 text-orange" />
@@ -280,7 +326,7 @@ const ProductDetails = () => {
                   </div>
 
                   {/* Quick Action Buttons */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-3 sm:gap-4 mt-4 sm:mt-6">
+                  <div className="gap-3 sm:gap-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 mt-4 sm:mt-6">
                     <Button
                       onClick={() => {
                         window.open(
@@ -288,17 +334,23 @@ const ProductDetails = () => {
                           "_blank"
                         );
                       }}
-                      className="flex justify-center items-center gap-2 bg-[#25D366] hover:bg-[#128C7E] py-4 sm:py-6 rounded-xl w-full font-medium text-white text-sm sm:text-base"
+                      className="flex justify-center items-center gap-2 bg-[#25D366] hover:bg-[#128C7E] py-4 sm:py-6 rounded-xl w-full font-medium text-sm text-white sm:text-base"
                     >
-                      <img src={WhatsappIcon} alt="WhatsApp" className="w-5 h-5 sm:w-6 sm:h-6" />
+                      <img
+                        src={WhatsappIcon}
+                        alt="WhatsApp"
+                        className="w-5 sm:w-6 h-5 sm:h-6"
+                      />
                       Chat on WhatsApp
                     </Button>
 
                     <Button
-                      onClick={() => navigate(`/merchant/${product.merchant.id}`)}
-                      className="flex justify-center items-center gap-2 bg-Primary hover:bg-Primary/90 py-4 sm:py-6 rounded-xl w-full font-medium text-white text-sm sm:text-base"
+                      onClick={() =>
+                        navigate(`/merchant/${product.merchant.id}`)
+                      }
+                      className="flex justify-center items-center gap-2 bg-Primary hover:bg-Primary/90 py-4 sm:py-6 rounded-xl w-full font-medium text-sm text-white sm:text-base"
                     >
-                      <Store className="w-5 h-5 sm:w-6 sm:h-6" />
+                      <Store className="w-5 sm:w-6 h-5 sm:h-6" />
                       View All Products
                     </Button>
                   </div>

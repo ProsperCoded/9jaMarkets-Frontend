@@ -44,7 +44,7 @@ export default defineConfig({
     },
   },
   server: {
-    port: 3000,
+    port: 3100,
   },
   optimizeDeps: {
     include: ["react", "react-dom", "react-router-dom", "antd", "lucide-react"],

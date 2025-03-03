@@ -15,7 +15,7 @@ import { LOGIN_MODAL_CONTEXT } from "../contexts";
 import { useNavigate } from "react-router-dom";
 import { isStrongPassword } from "../lib/util";
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "./ui/tabs";
-import { PRODUCT_CATEGORIES } from "@/config";
+import { MERCHANT_CATEGORIES } from "@/config";
 import { Combobox } from "./ui/Combobox";
 import {
   Select,
@@ -131,10 +131,7 @@ const MerchantSignup = () => {
     if (!loginData) return;
     const { accessToken, refreshToken, id: userId } = loginData;
     storeAuth(userId, accessToken, refreshToken, "merchant");
-    const userProfile = await getMerchantProfileApi(
-      userId,
-      errorLogger
-    );
+    const userProfile = await getMerchantProfileApi(userId, errorLogger);
     if (!userProfile) return;
     setUserProfile(userProfile);
     messageApi.success("Merchant SignUp Successful");
@@ -278,8 +275,8 @@ const MerchantSignup = () => {
                   <label className="block mb-2 font-medium text-gray-700 text-sm">
                     Business Categories
                   </label>
-                  <Select 
-                    value={merchantCategory} 
+                  <Select
+                    value={merchantCategory}
                     onValueChange={(value) => setMerchantCategories([value])}
                     required
                   >
@@ -287,9 +284,9 @@ const MerchantSignup = () => {
                       <SelectValue placeholder="Select a category" />
                     </SelectTrigger>
                     <SelectContent>
-                      {PRODUCT_CATEGORIES.map((category) => (
-                        <SelectItem 
-                          key={category} 
+                      {MERCHANT_CATEGORIES.map((category) => (
+                        <SelectItem
+                          key={category}
                           value={category}
                           className="py-2.5 cursor-pointer"
                         >
@@ -473,7 +470,9 @@ const MerchantSignup = () => {
                     />
                     <button
                       type="button"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
                       className="right-0 absolute inset-y-0 flex items-center pr-3"
                     >
                       {showConfirmPassword ? (
