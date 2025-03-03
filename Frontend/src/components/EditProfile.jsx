@@ -24,7 +24,9 @@ import { Popconfirm, ConfigProvider } from "antd";
 import OTPModal from "@/componets-utils/OTPModal";
 import {
   sendVerificationCustomerEmailApi,
-  verifyEmailOtp,
+  sendVerificationMerchantEmailApi,
+  verifyCustomerEmailOtp,
+  verifyMerchantEmailOtp,
 } from "@/lib/api/authApi";
 
 // Add PropTypes for form components
@@ -484,16 +486,23 @@ export function EmailField({
   const [OTP2ModalOpen, setOTP2ModalOpen] = useState(false);
   const [OTPModalOpen, setOTPModalOpen] = useState(false);
   const messageApi = useContext(MESSAGE_API_CONTEXT);
-  // const [popConfirmOpen, setPopConfirmOpen] = useState(false);
-  const sendVerificationEmail = async () => {
+  const { userProfile } = useContext(USER_PROFILE_CONTEXT);
+  // userProfile.userType = "merchant" | "customer"
+
+  const sendVerificationApi =
+    userProfile.userType === "merchant"
+      ? sendVerificationMerchantEmailApi
+      : sendVerificationCustomerEmailApi;
+  const verifyEmailOtp =
+    userProfile.userType === "merchant"
+      ? verifyMerchantEmailOtp
+      : verifyCustomerEmailOtp;
+  const sendVerification = async () => {
     const email = value;
-    const response = await sendVerificationCustomerEmailApi(
-      email,
-      (message) => {
-        messageApi.error("Failed to send Verification");
-        console.error(message);
-      }
-    );
+    const response = await sendVerificationApi(email, (message) => {
+      messageApi.error("Failed to send Verification");
+      console.error(message);
+    });
     if (response) {
       console.log(response);
       messageApi.success("Email Verification Sent");
@@ -503,13 +512,10 @@ export function EmailField({
   const sendVerificationEmail2 = async () => {
     if (!editValue) return;
     const email = editValue;
-    const response = await sendVerificationCustomerEmailApi(
-      email,
-      (message) => {
-        messageApi.error("Failed to send Verification");
-        console.error(message);
-      }
-    );
+    const response = await sendVerificationApi(email, (message) => {
+      messageApi.error("Failed to send Verification");
+      console.error(message);
+    });
     if (response) {
       console.log(response);
       messageApi.success("Email Verification Sent");
@@ -549,7 +555,7 @@ export function EmailField({
             setIsEditing(true);
           }
         }}
-        sendVerificationEmail={sendVerificationEmail}
+        sendVerificationEmail={sendVerification}
       />
       <OTPModal
         title="VERIFY NEW EMAIL"
@@ -585,7 +591,7 @@ export function EmailField({
             <Popconfirm
               title="Are you sure you want to change your email?"
               description="New Email will Serve as New Identification "
-              onConfirm={() => sendVerificationEmail()}
+              onConfirm={() => sendVerification()}
               // onCancel={() => setPopConfirmOpen(false)}
               // open={popConfirmOpen}
               okText="Change Email"

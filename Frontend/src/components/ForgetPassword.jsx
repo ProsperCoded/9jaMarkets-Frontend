@@ -10,13 +10,19 @@ import {
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { resetPassword, sendForgetPassword } from "@/lib/api/authApi";
+import {
+  resetPasswordCustomerApi,
+  sendForgetPasswordCustomerApi,
+  sendForgetPasswordMerchantApi,
+  resetPasswordMerchantApi,
+} from "@/lib/api/authApi";
 import { MESSAGE_API_CONTEXT } from "@/contexts";
 import OTPModal from "@/componets-utils/OTPModal";
 import { useNavigate } from "react-router-dom";
 import { deleteAuth, isStrongPassword } from "@/lib/util";
 import { AlertCircle } from "lucide-react";
 import { USER_PROFILE_CONTEXT } from "@/contexts";
+import { send } from "vite";
 function ForgetPassword() {
   const [email, setEmail] = useState("");
   const messageApi = useContext(MESSAGE_API_CONTEXT);
@@ -28,6 +34,15 @@ function ForgetPassword() {
   const [resetCode, setResetCode] = useState("");
   const { userProfile, setUserProfile } = useContext(USER_PROFILE_CONTEXT);
   const navigate = useNavigate();
+  const sendForgetPasswordApi =
+    userProfile.userType === "merchant"
+      ? sendForgetPasswordMerchantApi
+      : sendForgetPasswordCustomerApi;
+
+  const resetPasswordApi =
+    userProfile.userType === "merchant"
+      ? resetPasswordMerchantApi
+      : resetPasswordCustomerApi;
   function quickLogout() {
     // This is only useful when the user is already signed in
     setUserProfile(null);
@@ -35,7 +50,7 @@ function ForgetPassword() {
     navigate("/");
   }
   const sendVerificationEmail = async () => {
-    const response = await sendForgetPassword(email, (message) => {
+    const response = await sendForgetPasswordApi(email, (message) => {
       messageApi.error("Failed to send Verification");
       console.error(message);
     });
@@ -67,7 +82,7 @@ function ForgetPassword() {
       console.error(msg);
     };
     const payload = { email, resetCode, newPassword };
-    const response = await resetPassword(payload, errorLogger);
+    const response = await resetPasswordApi(payload, errorLogger);
     if (!response) return;
     messageApi.success("Password Changed Successfully");
     quickLogout();
