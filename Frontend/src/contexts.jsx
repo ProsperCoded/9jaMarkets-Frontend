@@ -6,7 +6,7 @@ import { message } from "antd";
 import { useEffect, useState } from "react";
 import { getAuth } from "./lib/util";
 import { getBookmarks } from "@/lib/api/bookmarkApi";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 // Contexts
 export const USER_PROFILE_CONTEXT = createContext({
@@ -64,17 +64,17 @@ export function ContextWrapper({ children }) {
   const [bookmarkCount, setBookmarkCount] = useState(0);
 
   const updateBookmarkCount = async () => {
-    if (!userProfile) {
+    if (!userProfile || userProfile.userType === "merchant") {
       setBookmarkCount(0);
       return;
     }
-    
+
     try {
       const bookmarks = await getBookmarks(userProfile.id, messageApi.error);
       setBookmarkCount(bookmarks?.length || 0);
     } catch (err) {
-      console.error('Failed to fetch bookmark count:', err);
-      messageApi.error('Failed to fetch bookmarks');
+      console.error("Failed to fetch bookmark count:", err);
+      messageApi.error("Failed to fetch bookmarks");
     }
   };
 
@@ -112,7 +112,9 @@ export function ContextWrapper({ children }) {
                 <LOGOUT_MODAL_CONTEXT.Provider
                   value={{ logoutOpen, setLogoutOpen }}
                 >
-                  <BOOKMARK_CONTEXT.Provider value={{ bookmarkCount, updateBookmarkCount }}>
+                  <BOOKMARK_CONTEXT.Provider
+                    value={{ bookmarkCount, updateBookmarkCount }}
+                  >
                     <Logout
                       logoutOpen={logoutOpen}
                       setLogoutOpen={setLogoutOpen}
@@ -141,5 +143,5 @@ export function ContextWrapper({ children }) {
 }
 
 ContextWrapper.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
