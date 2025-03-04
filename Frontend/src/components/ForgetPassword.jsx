@@ -22,7 +22,6 @@ import { useNavigate } from "react-router-dom";
 import { deleteAuth, isStrongPassword } from "@/lib/util";
 import { AlertCircle } from "lucide-react";
 import { USER_PROFILE_CONTEXT } from "@/contexts";
-import { send } from "vite";
 function ForgetPassword() {
   const [email, setEmail] = useState("");
   const messageApi = useContext(MESSAGE_API_CONTEXT);

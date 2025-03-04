@@ -21,7 +21,6 @@ import {
 
 export function Combobox({ options, value, handleSelect, message }) {
   const [open, setOpen] = React.useState(false);
-  console.log({ options });
   return (
     <Popover open={open} onOpenChange={setOpen} trigger="hover">
       <PopoverTrigger asChild>
