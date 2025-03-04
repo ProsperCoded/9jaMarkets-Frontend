@@ -250,7 +250,7 @@ export async function verifyMerchantEmailOtp(
   code,
   errorLogger = () => {}
 ) {
-  const endpoint = "auth/market/verify-email";
+  const endpoint = "auth/merchant/verify-email";
   return verifyEmailOtp(email, code, endpoint, errorLogger);
 }
 export async function sendForgetPasswordApi(

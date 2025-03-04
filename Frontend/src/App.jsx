@@ -24,6 +24,7 @@ import SelectPlan from "./components/Products/SelectPlan";
 import InvestPage from "./pages/Invest";
 import MarketerPage from "./pages/Marketer";
 import IncludeMarket from "./pages/IncludeMarket";
+import MerchantEmailVerification from "./pages/MerchantEmailVerification";
 
 import { ConfigProvider } from "antd";
 import InitializeApp from "./InitializeApp";
@@ -115,6 +116,10 @@ function App() {
               <Route path="/invest" element={<InvestPage />} />
               <Route path="/marketer" element={<MarketerPage />} />
               <Route path="/include-market" element={<IncludeMarket />} />
+              <Route
+                path="/verify-email"
+                element={<MerchantEmailVerification />}
+              />
 
               {/* Dashboard routes with Outlet */}
               <Route path="/dashboard" element={<Dashboard />}>
@@ -143,12 +148,15 @@ function App() {
               <Route path="/markets/:marketId" element={<Marketplace />} />
               <Route path="/products/:productId" element={<ProductDetails />} />
 
-              <Route path="/merchant/:merchantId" element={<MerchantProfile />} />
+              <Route
+                path="/merchant/:merchantId"
+                element={<MerchantProfile />}
+              />
 
               {/* Test route for LoadingPage */}
-              <Route 
-                path="/test-loading" 
-                element={<LoadingPage message="Testing Loading Page" />} 
+              <Route
+                path="/test-loading"
+                element={<LoadingPage message="Testing Loading Page" />}
               />
 
               <Route path="*" element={<NotFoundPage />} />

@@ -185,6 +185,7 @@ const MerchantSignup = () => {
                     type="email"
                     value={email}
                     required
+                    name="email"
                     onChange={(e) => setEmail(e.target.value)}
                     className={inputClassName}
                     placeholder="Enter your email address"
@@ -199,6 +200,7 @@ const MerchantSignup = () => {
                     <input
                       type="tel"
                       value={phone1}
+                      name="phone1"
                       onChange={(e) => setPhone1(e.target.value)}
                       className={inputClassName}
                       placeholder="Enter primary phone number"
@@ -211,6 +213,7 @@ const MerchantSignup = () => {
                     <input
                       type="tel"
                       value={phone2}
+                      name="phone2"
                       onChange={(e) => setPhone2(e.target.value)}
                       className={inputClassName}
                       placeholder="Enter secondary phone number"
@@ -225,6 +228,7 @@ const MerchantSignup = () => {
                   <input
                     type="text"
                     value={brandName}
+                    name="brandName"
                     onChange={(e) => setBrandName(e.target.value)}
                     className={inputClassName}
                     placeholder="Enter your brand name"
@@ -352,6 +356,7 @@ const MerchantSignup = () => {
                         <input
                           type="text"
                           value={address.address}
+                          name={`address-${index}`}
                           onChange={(e) =>
                             handleAddressChange(
                               index,
@@ -371,6 +376,7 @@ const MerchantSignup = () => {
                         <input
                           type="text"
                           value={address.name}
+                          name={`location-name-${index}`}
                           onChange={(e) =>
                             handleAddressChange(index, "name", e.target.value)
                           }
@@ -386,6 +392,7 @@ const MerchantSignup = () => {
                         <input
                           type="text"
                           value={address.city}
+                          name={`city-${index}`}
                           onChange={(e) =>
                             handleAddressChange(index, "city", e.target.value)
                           }
@@ -400,6 +407,7 @@ const MerchantSignup = () => {
                         <input
                           type="text"
                           value={address.state}
+                          name={`state-${index}`}
                           onChange={(e) =>
                             handleAddressChange(index, "state", e.target.value)
                           }
@@ -414,6 +422,7 @@ const MerchantSignup = () => {
                         <input
                           type="text"
                           value={address.zipCode}
+                          name={`zipCode-${index}`}
                           onChange={(e) =>
                             handleAddressChange(
                               index,
@@ -432,6 +441,7 @@ const MerchantSignup = () => {
                         <input
                           type="text"
                           value={address.country}
+                          name={`country-${index}`}
                           onChange={(e) =>
                             handleAddressChange(
                               index,
@@ -464,6 +474,7 @@ const MerchantSignup = () => {
                     <input
                       type={showPassword ? "text" : "password"}
                       value={password}
+                      name="password"
                       required
                       onChange={(e) => setPassword(e.target.value)}
                       className={inputClassName}
@@ -489,6 +500,7 @@ const MerchantSignup = () => {
                     <input
                       type={showConfirmPassword ? "text" : "password"}
                       value={confirmPassword}
+                      name="confirmPassword"
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       className={inputClassName}
                     />
