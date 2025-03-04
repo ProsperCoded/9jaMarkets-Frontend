@@ -45,8 +45,15 @@ export default defineConfig({
   },
   server: {
     port: 3000,
+    hmr: {
+      overlay: true,
+    },
+    force: true, // Force dependency pre-optimization
   },
   optimizeDeps: {
+    force: true, // Force dependencies optimization
     include: ["react", "react-dom", "react-router-dom", "antd", "lucide-react"],
   },
+  // Clear cache on startup
+  // cacheDir: ".vite",
 });

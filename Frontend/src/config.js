@@ -1,40 +1,45 @@
-// export const SERVER_URL = "https://lnczzhnm-3000.euw.devtunnels.ms/api/v1/";
+// export const SERVER_URL =
+//   "https://safe-lindsy-obiken-415ef84b.koyeb.app/api/v1/";
 export const SERVER_URL =
-  "https://safe-lindsy-obiken-415ef84b.koyeb.app/api/v1/";
+  "https://tricky-carmine-prosper-coded-9jamarket-35d50fa1.koyeb.app/api/v1/";
+// export const SERVER_URL = "http://localhost:3100/api/v1/";
 export const GOOGLE_URL = `${SERVER_URL}auth/customer/google`;
 // 3 Days for access token
 export const ACCESS_TOKEN_DURATION = 3;
 // 14 Days for refresh token
 export const REFRESH_TOKEN_DURATION = 14;
 
-// ? This is what the server current supports
-export const PRODUCT_CATEGORIES = [
+// ? This is what the server currently supports
+export const MERCHANT_CATEGORIES = [
+  "GROCERY",
+  "PHARMACY",
+  "RESTAURANT",
+  "BAKERY",
+  "CLOTHING",
   "ELECTRONICS",
-  "FASHION",
-  "FOOD",
-  "HEALTH",
-  "HOME",
+  "FURNITURE",
+  "HARDWARE",
   "SPORTS",
   "TOYS",
 ];
 
-// ! The server doesn't support this yet
-// export const PRODUCT_CATEGORIES = [
-//   "EDUCATION & STATIONERY",
-//   "REAL ESTATE & HOUSING",
-//   "EVENTS & ENTERTAINMENT",
-//   "TECHNOLOGY SERVICES",
-//   "CULTURAL EXPERIENCES",
-//   "FOOD & GROCERIES",
-//   "ELECTRONICS & GADGETS",
-//   "FASHION & ACCESSORIES",
-//   "HEALTH & WELLNESS",
-//   "HOME & LIVING",
-//   "AUTOMOBILE NEEDS",
-//   "TRADITIONAL CRAFTS",
-//   "SPORTS & OUTDOOR",
-//   "KIDS & BABY PRODUCTS",
-// ];
+// !Don't change AND => &
+export const PRODUCT_CATEGORIES = [
+  "EDUCATION AND STATIONERY",
+  "REAL ESTATE AND HOUSING",
+  "EVENTS AND ENTERTAINMENT",
+  "TECHNOLOGY SERVICES",
+  "CULTURAL EXPERIENCES",
+  "FOOD AND GROCERIES",
+  "ELECTRONICS AND GADGETS",
+  "FASHION AND ACCESSORIES",
+  "HEALTH AND WELLNESS",
+  "HOME AND LIVING",
+  "AUTOMOBILE NEEDS",
+  "TRADITIONAL CRAFTS",
+  "SPORTS AND OUTDOOR",
+  "KIDS AND BABY PRODUCTS",
+];
 export const plans = {
   standard: {
     id: "standard",

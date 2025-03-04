@@ -11,7 +11,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Upload, X, ImagePlus } from "lucide-react";
 import { Label } from "@/components/ui/label";
-import { formatPrice, removeCommas } from "@/lib/util";
+import {
+  formatPrice,
+  removeCommas,
+  replaceSpacesWithUnderscore,
+} from "@/lib/util";
 import { useContext } from "react";
 import { MESSAGE_API_CONTEXT } from "@/contexts";
 import { uploadProductApi } from "@/lib/api/productApi";
@@ -94,7 +98,7 @@ export default function AddProduct() {
     try {
       const payload = {
         productName,
-        category,
+        category: replaceSpacesWithUnderscore(category),
         price: removeCommas(price),
         stock,
         productDetails,

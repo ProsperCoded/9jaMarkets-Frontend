@@ -1,6 +1,6 @@
 import React, { useContext, useState, useRef } from "react";
 import logo from "../assets/Logo.svg";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Check, X } from "lucide-react";
 import {
   MARKET_DATA_CONTEXT,
   MESSAGE_API_CONTEXT,
@@ -15,15 +15,9 @@ import { LOGIN_MODAL_CONTEXT } from "../contexts";
 import { useNavigate } from "react-router-dom";
 import { isStrongPassword } from "../lib/util";
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "./ui/tabs";
-import { PRODUCT_CATEGORIES } from "@/config";
+import { MERCHANT_CATEGORIES } from "@/config";
 import { Combobox } from "./ui/Combobox";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
 
 const MerchantSignup = () => {
   const [email, setEmail] = useState("");
@@ -84,23 +78,21 @@ const MerchantSignup = () => {
     setAddresses(updatedAddresses);
   };
 
-  const handleMerchantCategoriesChange = (e) => {
-    const { options } = e.target;
-    const selectedCategories = [];
-    for (let i = 0; i < options.length; i++) {
-      if (options[i].selected) {
-        selectedCategories.push(options[i].value);
+  // Handle category selection toggle
+  const handleCategoryToggle = (category) => {
+    setMerchantCategories((current) => {
+      if (current.includes(category)) {
+        return current.filter((c) => c !== category);
       }
-    }
-    setMerchantCategories(selectedCategories);
+      return [...current, category];
+    });
   };
 
   const handleSignUp = async (e) => {
-    // Handle sign up logic here
-
     e.preventDefault();
     if (addresses.length === 0) {
       setError("At least one address is required");
+      return;
     }
     if (password !== confirmPassword) {
       setError("Passwords do not match");
@@ -110,13 +102,20 @@ const MerchantSignup = () => {
       setError("Password is too weak. Please choose a stronger password.");
       return;
     }
+
+    // Validate that at least one category is selected
+    if (merchantCategory.length === 0) {
+      setError("Please select at least one business category");
+      return;
+    }
+
     const formData = {
       email,
       phoneNumbers: [phone1, phone2],
       password,
       brandName,
       merchantCategories: merchantCategory,
-      // ? the backend only accept marketName, weather mall or market
+      // the backend only accepts marketName, whether mall or market
       marketName: marketName || mallName,
       addresses,
     };
@@ -131,10 +130,7 @@ const MerchantSignup = () => {
     if (!loginData) return;
     const { accessToken, refreshToken, id: userId } = loginData;
     storeAuth(userId, accessToken, refreshToken, "merchant");
-    const userProfile = await getMerchantProfileApi(
-      userId,
-      errorLogger
-    );
+    const userProfile = await getMerchantProfileApi(userId, errorLogger);
     if (!userProfile) return;
     setUserProfile(userProfile);
     messageApi.success("Merchant SignUp Successful");
@@ -169,7 +165,9 @@ const MerchantSignup = () => {
             className="space-y-6"
             onSubmit={async (e) => {
               setLoading(true);
-              await handleSignUp(e).then(() => setLoading(false));
+              await handleSignUp(e)
+                .catch(() => {})
+                .finally(() => setLoading(false));
             }}
           >
             {/* Basic Information */}
@@ -187,6 +185,7 @@ const MerchantSignup = () => {
                     type="email"
                     value={email}
                     required
+                    name="email"
                     onChange={(e) => setEmail(e.target.value)}
                     className={inputClassName}
                     placeholder="Enter your email address"
@@ -201,6 +200,7 @@ const MerchantSignup = () => {
                     <input
                       type="tel"
                       value={phone1}
+                      name="phone1"
                       onChange={(e) => setPhone1(e.target.value)}
                       className={inputClassName}
                       placeholder="Enter primary phone number"
@@ -213,6 +213,7 @@ const MerchantSignup = () => {
                     <input
                       type="tel"
                       value={phone2}
+                      name="phone2"
                       onChange={(e) => setPhone2(e.target.value)}
                       className={inputClassName}
                       placeholder="Enter secondary phone number"
@@ -227,6 +228,7 @@ const MerchantSignup = () => {
                   <input
                     type="text"
                     value={brandName}
+                    name="brandName"
                     onChange={(e) => setBrandName(e.target.value)}
                     className={inputClassName}
                     placeholder="Enter your brand name"
@@ -276,28 +278,51 @@ const MerchantSignup = () => {
 
                 <div>
                   <label className="block mb-2 font-medium text-gray-700 text-sm">
-                    Business Categories
+                    Business Categories (Select multiple)
                   </label>
-                  <Select 
-                    value={merchantCategory} 
-                    onValueChange={(value) => setMerchantCategories([value])}
-                    required
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Select a category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {PRODUCT_CATEGORIES.map((category) => (
-                        <SelectItem 
-                          key={category} 
-                          value={category}
-                          className="py-2.5 cursor-pointer"
-                        >
-                          {category}
-                        </SelectItem>
+
+                  {/* Simple multi-select checkboxes instead of the complex Popover */}
+                  <div className="bg-white p-4 border rounded-md max-h-48 overflow-y-auto">
+                    <div className="space-y-2">
+                      {MERCHANT_CATEGORIES.map((category) => (
+                        <div key={category} className="flex items-center">
+                          <input
+                            type="checkbox"
+                            id={`category-${category}`}
+                            checked={merchantCategory.includes(category)}
+                            onChange={() => handleCategoryToggle(category)}
+                            className="border-gray-300 mr-2 rounded focus:ring-Primary text-Primary"
+                          />
+                          <label
+                            htmlFor={`category-${category}`}
+                            className="text-gray-700 text-sm cursor-pointer"
+                          >
+                            {category}
+                          </label>
+                        </div>
                       ))}
-                    </SelectContent>
-                  </Select>
+                    </div>
+                  </div>
+
+                  {/* Display selected categories */}
+                  {merchantCategory.length > 0 && (
+                    <div className="mt-3">
+                      <div className="mb-2 text-gray-500 text-sm">
+                        Selected categories:
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {merchantCategory.map((category) => (
+                          <Badge
+                            key={category}
+                            className="bg-Primary text-white cursor-pointer"
+                            onClick={() => handleCategoryToggle(category)}
+                          >
+                            {category} <X className="ml-1 w-3 h-3" />
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -331,6 +356,7 @@ const MerchantSignup = () => {
                         <input
                           type="text"
                           value={address.address}
+                          name={`address-${index}`}
                           onChange={(e) =>
                             handleAddressChange(
                               index,
@@ -350,6 +376,7 @@ const MerchantSignup = () => {
                         <input
                           type="text"
                           value={address.name}
+                          name={`location-name-${index}`}
                           onChange={(e) =>
                             handleAddressChange(index, "name", e.target.value)
                           }
@@ -365,6 +392,7 @@ const MerchantSignup = () => {
                         <input
                           type="text"
                           value={address.city}
+                          name={`city-${index}`}
                           onChange={(e) =>
                             handleAddressChange(index, "city", e.target.value)
                           }
@@ -379,6 +407,7 @@ const MerchantSignup = () => {
                         <input
                           type="text"
                           value={address.state}
+                          name={`state-${index}`}
                           onChange={(e) =>
                             handleAddressChange(index, "state", e.target.value)
                           }
@@ -393,6 +422,7 @@ const MerchantSignup = () => {
                         <input
                           type="text"
                           value={address.zipCode}
+                          name={`zipCode-${index}`}
                           onChange={(e) =>
                             handleAddressChange(
                               index,
@@ -411,6 +441,7 @@ const MerchantSignup = () => {
                         <input
                           type="text"
                           value={address.country}
+                          name={`country-${index}`}
                           onChange={(e) =>
                             handleAddressChange(
                               index,
@@ -443,6 +474,7 @@ const MerchantSignup = () => {
                     <input
                       type={showPassword ? "text" : "password"}
                       value={password}
+                      name="password"
                       required
                       onChange={(e) => setPassword(e.target.value)}
                       className={inputClassName}
@@ -468,12 +500,15 @@ const MerchantSignup = () => {
                     <input
                       type={showConfirmPassword ? "text" : "password"}
                       value={confirmPassword}
+                      name="confirmPassword"
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       className={inputClassName}
                     />
                     <button
                       type="button"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
                       className="right-0 absolute inset-y-0 flex items-center pr-3"
                     >
                       {showConfirmPassword ? (

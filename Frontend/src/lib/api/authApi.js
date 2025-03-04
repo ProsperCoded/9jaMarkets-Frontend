@@ -179,11 +179,12 @@ export async function signupMerchantApi(
   console.log({ responseData });
   return responseData;
 }
-export async function sendVerificationCustomerEmailApi(
+export async function sendVerificationEmailApi(
   email,
+  endpoint,
   errorLogger = () => {}
 ) {
-  const url = new URL("auth/customer/email-verification", SERVER_URL);
+  const url = new URL(endpoint, SERVER_URL);
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -198,8 +199,30 @@ export async function sendVerificationCustomerEmailApi(
   }
   return responseData.message;
 }
-export async function verifyEmailOtp(email, code, errorLogger = () => {}) {
-  const url = new URL("auth/customer/verify-email", SERVER_URL);
+
+export async function sendVerificationCustomerEmailApi(
+  email,
+  errorLogger = () => {}
+) {
+  const endpoint = "auth/customer/email-verification";
+  return sendVerificationEmailApi(email, endpoint, errorLogger);
+}
+
+export async function sendVerificationMerchantEmailApi(
+  email,
+  errorLogger = () => {}
+) {
+  const endpoint = "auth/market/email-verification";
+  return sendVerificationEmailApi(email, endpoint, errorLogger);
+}
+
+export async function verifyEmailOtp(
+  email,
+  code,
+  endpoint,
+  errorLogger = () => {}
+) {
+  const url = new URL(endpoint, SERVER_URL);
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -214,8 +237,28 @@ export async function verifyEmailOtp(email, code, errorLogger = () => {}) {
   }
   return responseData.message;
 }
-export async function sendForgetPassword(email, errorLogger = () => {}) {
-  const url = new URL("auth/customer/forgot-password", SERVER_URL);
+export async function verifyCustomerEmailOtp(
+  email,
+  code,
+  errorLogger = () => {}
+) {
+  const endpoint = "auth/customer/verify-email";
+  return verifyEmailOtp(email, code, endpoint, errorLogger);
+}
+export async function verifyMerchantEmailOtp(
+  email,
+  code,
+  errorLogger = () => {}
+) {
+  const endpoint = "auth/merchant/verify-email";
+  return verifyEmailOtp(email, code, endpoint, errorLogger);
+}
+export async function sendForgetPasswordApi(
+  email,
+  endpoint,
+  errorLogger = () => {}
+) {
+  const url = new URL(endpoint, SERVER_URL);
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -230,8 +273,29 @@ export async function sendForgetPassword(email, errorLogger = () => {}) {
   }
   return responseData.message;
 }
-export async function resetPassword(payload, errorLogger = () => {}) {
-  const url = new URL("auth/customer/reset-password", SERVER_URL);
+
+export async function sendForgetPasswordCustomerApi(
+  email,
+  errorLogger = () => {}
+) {
+  const endpoint = "auth/customer/forgot-password";
+  return sendForgetPasswordApi(email, endpoint, errorLogger);
+}
+
+export async function sendForgetPasswordMerchantApi(
+  email,
+  errorLogger = () => {}
+) {
+  const endpoint = "auth/market/forgot-password";
+  return sendForgetPasswordApi(email, endpoint, errorLogger);
+}
+
+export async function resetPasswordApi(
+  payload,
+  endpoint,
+  errorLogger = () => {}
+) {
+  const url = new URL(endpoint, SERVER_URL);
   const response = await fetch(url, {
     method: "PUT",
     headers: {
@@ -245,4 +309,20 @@ export async function resetPassword(payload, errorLogger = () => {}) {
     return;
   }
   return responseData.message;
+}
+
+export async function resetPasswordCustomerApi(
+  payload,
+  errorLogger = () => {}
+) {
+  const endpoint = "auth/customer/reset-password";
+  return resetPasswordApi(payload, endpoint, errorLogger);
+}
+
+export async function resetPasswordMerchantApi(
+  payload,
+  errorLogger = () => {}
+) {
+  const endpoint = "auth/market/reset-password";
+  return resetPasswordApi(payload, endpoint, errorLogger);
 }

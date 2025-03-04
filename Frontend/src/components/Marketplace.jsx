@@ -2,12 +2,32 @@ import { useState, useContext, useEffect, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useErrorLogger } from "@/hooks";
 import { getMarketProducts } from "@/lib/api/marketApi";
-import { MARKET_DATA_CONTEXT, MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT, BOOKMARK_CONTEXT } from "@/contexts";
+import {
+  MARKET_DATA_CONTEXT,
+  MESSAGE_API_CONTEXT,
+  USER_PROFILE_CONTEXT,
+  BOOKMARK_CONTEXT,
+} from "@/contexts";
 import LoadingPage from "@/componets-utils/LoadingPage";
 import NotFoundPage from "@/components/NotFoundPage";
-import { Search, SearchX, Bookmark, BookmarkCheck, HelpCircle, MapPin, Info, Building2, MapPinned } from "lucide-react";
+import {
+  Search,
+  SearchX,
+  Bookmark,
+  BookmarkCheck,
+  HelpCircle,
+  MapPin,
+  Info,
+  Building2,
+  MapPinned,
+} from "lucide-react";
 import { PRODUCT_CATEGORIES } from "@/config";
-import { addToBookmarks, removeFromBookmarks, getBookmarks } from "@/lib/api/bookmarkApi";
+import {
+  addToBookmarks,
+  removeFromBookmarks,
+  getBookmarks,
+} from "@/lib/api/bookmarkApi";
+import { replaceUnderscoresWithSpaces } from "@/lib/util";
 
 const Marketplace = () => {
   const errorLogger = useErrorLogger();
@@ -46,7 +66,11 @@ const Marketplace = () => {
     let filtered =
       selectedCategory === MARKET_CATEGORIES[0]
         ? products
-        : products.filter((product) => product.category === selectedCategory);
+        : products.filter(
+            (product) =>
+              replaceUnderscoresWithSpaces(product.category) ===
+              selectedCategory
+          );
 
     if (searchQuery) {
       filtered = filtered.filter((product) =>
@@ -67,7 +91,7 @@ const Marketplace = () => {
       if (bookmarkedProducts.has(productId)) {
         const result = await removeFromBookmarks(productId, messageApi.error);
         if (result) {
-          setBookmarkedProducts(prev => {
+          setBookmarkedProducts((prev) => {
             const newSet = new Set(prev);
             newSet.delete(productId);
             return newSet;
@@ -78,7 +102,7 @@ const Marketplace = () => {
       } else {
         const result = await addToBookmarks(productId, messageApi.error);
         if (result) {
-          setBookmarkedProducts(prev => new Set(prev).add(productId));
+          setBookmarkedProducts((prev) => new Set(prev).add(productId));
           messageApi.success("Product added to bookmarks");
           updateBookmarkCount();
         }
@@ -94,10 +118,10 @@ const Marketplace = () => {
       try {
         const bookmarks = await getBookmarks(userProfile.id, messageApi.error);
         if (bookmarks) {
-          setBookmarkedProducts(new Set(bookmarks.map(b => b.productId)));
+          setBookmarkedProducts(new Set(bookmarks.map((b) => b.productId)));
         }
       } catch (err) {
-        console.error('Failed to load bookmarks:', err);
+        console.error("Failed to load bookmarks:", err);
       }
     };
 
@@ -141,7 +165,7 @@ const Marketplace = () => {
         </div>
         <Link
           to="/include-market"
-          className="right-2 bottom-2 text-xs absolute flex items-center gap-1 text-white hover:text-orange underline transition-colors"
+          className="right-2 bottom-2 absolute flex items-center gap-1 text-white text-xs hover:text-orange underline transition-colors"
         >
           <HelpCircle className="w-4 h-4" />
           Not your market's picture?
@@ -152,7 +176,7 @@ const Marketplace = () => {
       <div className="bg-white shadow-md">
         <div className="mx-auto container">
           {/* Desktop View */}
-          <div className="hidden md:block px-4 py-6">
+          <div className="md:block hidden px-4 py-6">
             <div className="flex justify-between items-center pb-4 border-b">
               <div className="flex items-center gap-2">
                 <MapPin className="w-5 h-5 text-Primary" />
@@ -170,7 +194,7 @@ const Marketplace = () => {
                   <span className="text-gray-600">About {market.name}</span>
                 </button>
                 {showDescription && (
-                  <div className="absolute top-full right-0 z-30 bg-white shadow-lg mt-2 p-4 rounded-lg w-80">
+                  <div className="top-full right-0 z-30 absolute bg-white shadow-lg mt-2 p-4 rounded-lg w-80">
                     <p className="text-gray-600 text-sm">
                       {market.description}
                     </p>
@@ -201,7 +225,7 @@ const Marketplace = () => {
                   {market.city}, {market.state}
                 </span>
               </div>
-              <span className="text-Primary text-sm font-medium">
+              <span className="font-medium text-Primary text-sm">
                 {market.isMall ? "Shopping Mall" : "Traditional Market"}
               </span>
             </div>
@@ -209,7 +233,9 @@ const Marketplace = () => {
             {/* Collapsible Details */}
             <details className="group">
               <summary className="flex justify-between items-center px-4 py-3 cursor-pointer list-none">
-                <span className="font-medium text-gray-700">View Market Details</span>
+                <span className="font-medium text-gray-700">
+                  View Market Details
+                </span>
                 <div className="group-open:rotate-180 flex justify-center items-center border-[1.5px] border-gray-500 rounded-full w-4 h-4 transition-transform">
                   <div className="border-gray-500 border-r-[1.5px] border-b-[1.5px] w-1.5 h-1.5 translate-y-[-2px] rotate-45"></div>
                 </div>
@@ -222,12 +248,8 @@ const Marketplace = () => {
                   <p className="text-gray-600 text-sm">{market.address}</p>
                 </div>
                 <div className="space-y-2">
-                  <h3 className="font-semibold text-gray-700 text-sm">
-                    About
-                  </h3>
-                  <p className="text-gray-600 text-sm">
-                    {market.description}
-                  </p>
+                  <h3 className="font-semibold text-gray-700 text-sm">About</h3>
+                  <p className="text-gray-600 text-sm">{market.description}</p>
                 </div>
               </div>
             </details>
@@ -253,7 +275,7 @@ const Marketplace = () => {
                           : "hover:bg-gray-100"
                       }`}
                     >
-                      {category}
+                      {category.replace(" AND ", " & ")}
                     </button>
                   </li>
                 ))}
@@ -288,7 +310,7 @@ const Marketplace = () => {
           {/* Products Grid */}
           <div className="flex-1">
             {filteredProducts.length > 0 ? (
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              <div className="gap-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
                 {filteredProducts.map((product) => (
                   <div
                     key={product.id}
@@ -298,7 +320,10 @@ const Marketplace = () => {
                       <Link to={`/products/${product.id}`}>
                         <div className="aspect-square">
                           <img
-                            src={product.displayImage?.url || "/path/to/fallback.jpg"}
+                            src={
+                              product.displayImage?.url ||
+                              "/path/to/fallback.jpg"
+                            }
                             alt={product.name}
                             className="w-full h-full object-cover"
                           />
@@ -309,7 +334,7 @@ const Marketplace = () => {
                           e.stopPropagation();
                           handleBookmarkToggle(product.id);
                         }}
-                        className="absolute top-2 right-2 p-2 rounded-full bg-Primary/80 hover:bg-Primary transition-colors"
+                        className="top-2 right-2 absolute bg-Primary/80 hover:bg-Primary p-2 rounded-full transition-colors"
                       >
                         {bookmarkedProducts.has(product.id) ? (
                           <BookmarkCheck className="w-5 h-5 text-white" />
@@ -340,15 +365,15 @@ const Marketplace = () => {
                 <p className="max-w-md text-gray-600">
                   {searchQuery ? (
                     <>
-                      We couldn't find any products matching "{searchQuery}"
-                      in the {selectedCategory.toLowerCase()} category. Try
+                      We couldn't find any products matching "{searchQuery}" in
+                      the {selectedCategory.toLowerCase()} category. Try
                       adjusting your search or selecting a different category.
                     </>
                   ) : (
                     <>
                       No products available in the{" "}
-                      {selectedCategory.toLowerCase()} category. Try selecting
-                      a different category.
+                      {selectedCategory.toLowerCase()} category. Try selecting a
+                      different category.
                     </>
                   )}
                 </p>
