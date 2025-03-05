@@ -1,6 +1,16 @@
 import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { MapPin, Phone, Mail, Store, Package, Star, Clock, AlertCircle, ArrowLeft } from "lucide-react";
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Store,
+  Package,
+  Star,
+  Clock,
+  AlertCircle,
+  ArrowLeft,
+} from "lucide-react";
 import { MESSAGE_API_CONTEXT } from "@/contexts";
 import { getMerchantProfileApi } from "@/lib/api/serviceApi";
 import { getMerchantProducts } from "@/lib/api/productApi";
@@ -9,9 +19,8 @@ import ProductCard from "@/components/ProductCard";
 import { useErrorLogger } from "@/hooks";
 
 const MerchantProfile = () => {
-  // const { merchantId } = useParams();
+  const { merchantId } = useParams();
   // ! for testing
-  const merchantId = "00fa223c-5dff-4de5-ae2f-a36d474de195";
   const [merchant, setMerchant] = useState(null);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -45,44 +54,45 @@ const MerchantProfile = () => {
   if (loading) return <LoadingPage />;
   if (!merchant) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-Primary/5 to-transparent pt-20">
-        <div className="container mx-auto px-4">
+      <div className="bg-gradient-to-b from-Primary/5 to-transparent pt-20 min-h-screen">
+        <div className="mx-auto px-4 container">
           {/* Back Button */}
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-gray-600 hover:text-Primary transition-colors mb-8"
+            className="flex items-center gap-2 mb-8 text-gray-600 hover:text-Primary transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
             Go Back
           </button>
 
-          <div className="max-w-md mx-auto text-center">
-            <div className="bg-white rounded-xl shadow-sm p-8">
+          <div className="mx-auto max-w-md text-center">
+            <div className="bg-white shadow-sm p-8 rounded-xl">
               {/* Icon */}
-              <div className="mb-6 relative">
-                <Store className="w-16 h-16 text-gray-200 mx-auto" />
-                <AlertCircle className="w-8 h-8 text-orange absolute bottom-0 right-1/2 translate-x-8" />
+              <div className="relative mb-6">
+                <Store className="mx-auto w-16 h-16 text-gray-200" />
+                <AlertCircle className="right-1/2 bottom-0 absolute w-8 h-8 text-orange translate-x-8" />
               </div>
 
               {/* Text Content */}
-              <h1 className="text-2xl font-semibold text-gray-900 mb-3">
+              <h1 className="mb-3 font-semibold text-2xl text-gray-900">
                 Merchant Not Found
               </h1>
-              <p className="text-gray-600 mb-8">
-                We couldn't find the merchant you're looking for. They may have moved or no longer exist.
+              <p className="mb-8 text-gray-600">
+                We couldn't find the merchant you're looking for. They may have
+                moved or no longer exist.
               </p>
 
               {/* Action Buttons */}
               <div className="space-y-3">
                 <button
                   onClick={() => navigate("/markets")}
-                  className="w-full bg-Primary text-white py-2.5 px-4 rounded-lg hover:bg-Primary/90 transition-colors"
+                  className="bg-Primary hover:bg-Primary/90 px-4 py-2.5 rounded-lg w-full text-white transition-colors"
                 >
                   Explore Markets
                 </button>
                 <button
                   onClick={() => navigate("/")}
-                  className="w-full bg-gray-50 text-gray-700 py-2.5 px-4 rounded-lg hover:bg-gray-100 transition-colors"
+                  className="bg-gray-50 hover:bg-gray-100 px-4 py-2.5 rounded-lg w-full text-gray-700 transition-colors"
                 >
                   Return Home
                 </button>
