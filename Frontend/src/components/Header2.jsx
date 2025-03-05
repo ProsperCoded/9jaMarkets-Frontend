@@ -57,10 +57,11 @@ const Header2 = () => {
           </div>
 
           {/* Icons and Profile (Always visible) */}
-          {userProfile && userProfile.userType === "customer" && (
-            <div className="flex items-center space-x-4 md:space-x-6">
-              {/* Desktop Icons */}
-              <div className="md:flex space-x-4 hidden">
+
+          <div className="flex items-center space-x-4 md:space-x-6">
+            {/* Desktop Icons */}
+            <div className="md:flex space-x-4 hidden">
+              {userProfile && userProfile.userType === "customer" && (
                 <Link
                   to={userProfile ? "/bookmark" : "#"}
                   onClick={handleAuthClick}
@@ -73,11 +74,13 @@ const Header2 = () => {
                     </span>
                   )}
                 </Link>
-                <UserAvatar showName={true} auth={true} />
-              </div>
+              )}
+              <UserAvatar showName={true} auth={true} />
+            </div>
 
-              {/* Mobile Avatar and Menu */}
-              <div className="flex items-center gap-4 md:hidden">
+            {/* Mobile Avatar and Menu */}
+            <div className="flex items-center gap-4 md:hidden">
+              {userProfile && userProfile.userType === "customer" && (
                 <Link
                   to={userProfile ? "/bookmark" : "#"}
                   onClick={handleAuthClick}
@@ -90,19 +93,19 @@ const Header2 = () => {
                     </span>
                   )}
                 </Link>
-                <div className="flex items-center">
-                  <UserAvatar showName={false} auth={true} />
-                </div>
-                <button onClick={toggleMenu}>
-                  {isMenuOpen ? (
-                    <X className="w-6 h-6" />
-                  ) : (
-                    <Menu className="w-6 h-6" />
-                  )}
-                </button>
+              )}
+              <div className="flex items-center">
+                <UserAvatar showName={false} auth={true} />
               </div>
+              <button onClick={toggleMenu}>
+                {isMenuOpen ? (
+                  <X className="w-6 h-6" />
+                ) : (
+                  <Menu className="w-6 h-6" />
+                )}
+              </button>
             </div>
-          )}
+          </div>
         </div>
       </header>
       {/* Add a spacer div to prevent content from going under the header */}
