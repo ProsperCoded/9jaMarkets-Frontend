@@ -11,7 +11,7 @@ import {
   refreshMerchantTokenApi,
 } from "./lib/api/authApi";
 import { getMarketsApi } from "./lib/api/marketApi";
-import { getAuth, storeAuth } from "./lib/util";
+import { deleteAuth, getAuth, storeAuth } from "./lib/util";
 import { useErrorLogger } from "./hooks";
 import { getMallsApi } from "./lib/api/mallApi";
 function InitializeApp({ children }) {
@@ -53,6 +53,8 @@ function InitializeApp({ children }) {
       } else {
         // refresh token has expired
         console.log("refresh token has expired");
+        // ensure to delete all other auth data
+        deleteAuth();
         return;
       }
     }
