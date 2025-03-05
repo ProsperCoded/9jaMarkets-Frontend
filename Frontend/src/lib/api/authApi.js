@@ -212,7 +212,7 @@ export async function sendVerificationMerchantEmailApi(
   email,
   errorLogger = () => {}
 ) {
-  const endpoint = "auth/market/email-verification";
+  const endpoint = "auth/merchant/email-verification";
   return sendVerificationEmailApi(email, endpoint, errorLogger);
 }
 
@@ -286,7 +286,7 @@ export async function sendForgetPasswordMerchantApi(
   email,
   errorLogger = () => {}
 ) {
-  const endpoint = "auth/market/forgot-password";
+  const endpoint = "auth/merchant/forgot-password";
   return sendForgetPasswordApi(email, endpoint, errorLogger);
 }
 

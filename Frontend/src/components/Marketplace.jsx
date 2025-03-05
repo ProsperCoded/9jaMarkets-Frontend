@@ -39,7 +39,6 @@ const Marketplace = () => {
   const { userProfile } = useContext(USER_PROFILE_CONTEXT);
   const [bookmarkedProducts, setBookmarkedProducts] = useState(new Set());
   const [showDescription, setShowDescription] = useState(false);
-  const [pendingBookmarks, setPendingBookmarks] = useState(new Set());
   const messageApi = useContext(MESSAGE_API_CONTEXT);
   const { updateBookmarkCount } = useContext(BOOKMARK_CONTEXT);
 
@@ -47,13 +46,6 @@ const Marketplace = () => {
     const marketProducts = await getMarketProducts(marketId, errorLogger);
     if (!marketProducts) return;
     setProducts(marketProducts);
-  };
-
-  const fetchBookmarks = async () => {
-    if (!userProfile) return;
-    const bookmarks = await getBookmarks(userProfile.id, errorLogger);
-    if (!bookmarks) return;
-    setBookmarkedProducts(new Set(bookmarks.map((item) => item.productId)));
   };
 
   const MARKET_CATEGORIES = ["All", ...PRODUCT_CATEGORIES];
@@ -115,6 +107,7 @@ const Marketplace = () => {
   useEffect(() => {
     const loadBookmarks = async () => {
       if (!userProfile) return;
+      if (userProfile.userType === "merchant") return;
       try {
         const bookmarks = await getBookmarks(userProfile.id, messageApi.error);
         if (bookmarks) {

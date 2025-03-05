@@ -8,7 +8,11 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, Bookmark } from "lucide-react";
-import { BOOKMARK_CONTEXT, USER_PROFILE_CONTEXT, LOGIN_MODAL_CONTEXT } from "@/contexts";
+import {
+  BOOKMARK_CONTEXT,
+  USER_PROFILE_CONTEXT,
+  LOGIN_MODAL_CONTEXT,
+} from "@/contexts";
 import logo from "../assets/Logo.svg";
 import { UserAvatar } from "../componets-utils/UserAvatar";
 
@@ -53,38 +57,43 @@ const Header2 = () => {
           </div>
 
           {/* Icons and Profile (Always visible) */}
+
           <div className="flex items-center space-x-4 md:space-x-6">
             {/* Desktop Icons */}
             <div className="md:flex space-x-4 hidden">
-              <Link
-                to={userProfile ? "/bookmark" : "#"}
-                onClick={handleAuthClick}
-                className="relative flex items-center p-2 bg-P2/35 rounded-full transition-colors"
-              >
-                <Bookmark className="w-6 h-6" />
-                {bookmarkCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-orange text-white text-xs rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
-                    {bookmarkCount}
-                  </span>
-                )}
-              </Link>
+              {userProfile && userProfile.userType === "customer" && (
+                <Link
+                  to={userProfile ? "/bookmark" : "#"}
+                  onClick={handleAuthClick}
+                  className="relative flex items-center bg-P2/35 p-2 rounded-full transition-colors"
+                >
+                  <Bookmark className="w-6 h-6" />
+                  {bookmarkCount > 0 && (
+                    <span className="-top-1 -right-1 absolute flex justify-center items-center bg-orange px-1 rounded-full min-w-[18px] h-[18px] text-white text-xs">
+                      {bookmarkCount}
+                    </span>
+                  )}
+                </Link>
+              )}
               <UserAvatar showName={true} auth={true} />
             </div>
 
             {/* Mobile Avatar and Menu */}
             <div className="flex items-center gap-4 md:hidden">
-              <Link
-                to={userProfile ? "/bookmark" : "#"}
-                onClick={handleAuthClick}
-                className="relative flex items-center p-2 hover:bg-white hover:text-Primary rounded-full transition-colors"
-              >
-                <Bookmark className="w-6 h-6" />
-                {bookmarkCount > 0 && (
-                  <span className="absolute top-1 right-1 bg-orange text-white text-xs rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
-                    {bookmarkCount}
-                  </span>
-                )}
-              </Link>
+              {userProfile && userProfile.userType === "customer" && (
+                <Link
+                  to={userProfile ? "/bookmark" : "#"}
+                  onClick={handleAuthClick}
+                  className="relative flex items-center hover:bg-white p-2 rounded-full hover:text-Primary transition-colors"
+                >
+                  <Bookmark className="w-6 h-6" />
+                  {bookmarkCount > 0 && (
+                    <span className="top-1 right-1 absolute flex justify-center items-center bg-orange px-1 rounded-full min-w-[18px] h-[18px] text-white text-xs">
+                      {bookmarkCount}
+                    </span>
+                  )}
+                </Link>
+              )}
               <div className="flex items-center">
                 <UserAvatar showName={false} auth={true} />
               </div>
