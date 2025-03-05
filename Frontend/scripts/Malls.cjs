@@ -103,112 +103,28 @@ const MALLS = {
   Ogun: [
     {
       name: "Abeokuta City Mall",
-      img: "./malls/lagos/AbeokutaCityMall.jpg",
+      img: "./malls/ogun/abeokutamall.jpg",
       address: "125 Osoba Road, Oke-Mosan, Abeokuta",
       city: "Abeokuta",
       description: "A central shopping area with multiple shops, eateries, cinema, and recreational facilities."
     },
     {
       name: "Modu Shopping Mall",
-      img: "./malls/lagos/ModuShoppingMall.jpg",
+      img: "./malls/ogun/modumall.jpeg",
       address: "Alabata Road, Abeokuta",
       city: "Abeokuta",
       description: "A vibrant retail destination offering shopping, dining, and local cultural experiences."
     },
     {
-      name: "FCE Osiele Shopping Mall",
-      img: "./malls/lagos/FCEOsieleShoppingMall.jpg",
-      address: "Alabata Road, Osiele, Abeokuta",
-      city: "Abeokuta",
-      description: "A shopping mall offering various retail options in the Osiele area."
-    },
-    {
-      name: "Unique Mall",
-      img: "./malls/lagos/UniqueMall.jpg",
-      address: "Abeokuta",
-      city: "Abeokuta",
-      description: "A vibrant women's clothing store offering trendy apparel and accessories."
-    },
-    {
-      name: "Rojabs Babies And Children Store",
-      img: "./malls/lagos/RojabsStore.jpg",
-      address: "Abeokuta",
-      city: "Abeokuta",
-      description: "A beloved gift shop for families, offering a range of baby and children's products."
-    },
-    {
-      name: "Moyinsworld Party Shop",
-      img: "./malls/lagos/MoyinsworldPartyShop.jpg",
-      address: "Abeokuta",
-      city: "Abeokuta",
-      description: "A treasure trove for unique souvenirs and local crafts."
-    },
-    {
-      name: "Jesse and Jessica Stores",
-      img: "./malls/lagos/JesseAndJessicaStores.jpg",
-      address: "Abeokuta",
-      city: "Abeokuta",
-      description: "A vibrant store offering a variety of products for diverse shopping needs."
-    },
-    {
-      name: "Ibidunni Home of Culture, Fashion and Tourism",
-      img: "./malls/lagos/IbidunniHome.jpg",
-      address: "Abeokuta",
-      city: "Abeokuta",
-      description: "A place to discover Nigerian culture and unique fashion treasures."
-    },
-    {
-      name: "Pick'riteXclusive Clothings",
-      img: "./malls/lagos/PickriteXclusiveClothings.jpg",
-      address: "Abeokuta",
-      city: "Abeokuta",
-      description: "A store offering stylish clothing for men, women, and children."
-    },
-    {
-      name: "Fortune’s StoreNg",
-      img: "./malls/lagos/FortunesStoreNg.jpg",
-      address: "Abeokuta",
-      city: "Abeokuta",
-      description: "A store offering trendy men's and women's clothing reflecting Nigerian fashion culture."
-    },
-    {
-      name: "Lizbeth Emporium",
-      img: "./malls/lagos/LizbethEmporium.jpg",
-      address: "Abeokuta",
-      city: "Abeokuta",
-      description: "A place to discover unique fashion accessories blending local craftsmanship with contemporary style."
-    },
-    {
-      name: "BOULUS MART",
-      img: "./malls/lagos/BOULUSMART.jpg",
-      address: "Abeokuta",
+      name: "boulos mart",
+      img: "./malls/ogun/boulos.png",
+      address: "Market, Cooperative Building, Idi-Ishin Junction, Omida Rd, Abeokuta",
       city: "Abeokuta",
       description: "A grocery store offering local and international products for diverse culinary needs."
     },
-    {
-      name: "ZOË",
-      img: "./malls/lagos/ZOË.jpg",
-      address: "Abeokuta",
-      city: "Abeokuta",
-      description: "A store offering an exquisite selection of clothing and lingerie embodying style and quality."
-    },
-    {
-      name: "MICHOLINE",
-      img: "./malls/lagos/MICHOLINE.jpg",
-      address: "Abeokuta",
-      city: "Abeokuta",
-      description: "A clothing store offering authentic Nigerian fashion with unique styles."
-    },
-    {
-      name: "Twice As Nice",
-      img: "./malls/lagos/TwiceAsNice.jpg",
-      address: "10 Lalabu Street, Abeokuta",
-      city: "Abeokuta",
-      description: "A clothing shop selling women's and men's T-shirts, accessories, and shoes."
-    }
   ],
 
-  Oyo: [
+  Oyo: [ 
     {
       name: "The Palms Shopping Mall",
       img: "./malls/oyo/ThePalmsShoppingMall.png",
