@@ -48,13 +48,6 @@ const Marketplace = () => {
     setProducts(marketProducts);
   };
 
-  const fetchBookmarks = async () => {
-    if (!userProfile) return;
-    const bookmarks = await getBookmarks(userProfile.id, errorLogger);
-    if (!bookmarks) return;
-    setBookmarkedProducts(new Set(bookmarks.map((item) => item.productId)));
-  };
-
   const MARKET_CATEGORIES = ["All", ...PRODUCT_CATEGORIES];
   const [selectedCategory, setSelectedCategory] = useState(
     MARKET_CATEGORIES[0]
