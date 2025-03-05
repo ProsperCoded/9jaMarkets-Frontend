@@ -41,27 +41,40 @@ export const PRODUCT_CATEGORIES = [
   "KIDS AND BABY PRODUCTS",
 ];
 export const plans = {
+  free:{
+    id:"free",
+    name: "Free Plan",
+    price: 0,
+    duration: "3 days",
+    benefits: [
+      "Basic product listing",
+      "Standard search result placement",
+      "Access to standard analytics",
+    ],
+  },
   standard: {
     id: "standard",
     name: "Standard Plan",
-    price: 1500,
+    price: 3000,
     duration: "7 days",
     benefits: [
-      "Perfect for weekly campaigns",
-      "Moderate reach for your ad",
-      "Basic visibility features",
+      "Enhanced product visibilitys",
+      "Priority placement in search results",
+      "Access to detailed analytics",
+      "Eligibility for promotional campaigns",
     ],
   },
   premium: {
     id: "premium",
     name: "Premium Plan",
-    price: 3500,
+    price: 5000,
     duration: "30 days",
     benefits: [
-      "Maximum visibility",
-      "Reach a wider audience consistently",
-      "Boost engagement and conversions",
-      "Premium placement in search results",
+      "Maximum product visibility",
+      "Top-tier placement in search results",
+      "Comprehensive analytics and reporting",
+      "Inclusion in premium promotional campaigns",
+      "Access to advanced seller tools",
     ],
   },
   boost: {
@@ -70,8 +83,10 @@ export const plans = {
     price: 10000,
     duration: "30 days",
     benefits: [
-      "Highlighted placement for top visibility",
-      "Fast-track reach with premium exposure",
+      "Exclusive product placement on homepage",
+      "Featured in targeted email campaigns",
+      "Dedicated account support",
+      "Access to beta features and tools",
     ],
   },
 };

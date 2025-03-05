@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Button, Input, Form, message, Card, Spin } from "antd";
+import { Button, Input, Form, Card } from "antd";
 import {
   sendVerificationMerchantEmailApi,
   verifyMerchantEmailOtp,
@@ -7,6 +7,7 @@ import {
 import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "@/contexts";
 import { useErrorLogger } from "@/hooks";
 import logo from "@/assets/Logo.svg";
+import { Mail, Shield, RefreshCw, CheckCircle } from "lucide-react";
 
 export default function MerchantEmailVerification() {
   const [form] = Form.useForm();
@@ -66,72 +67,87 @@ export default function MerchantEmailVerification() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center p-4 min-h-screen">
-      <Card
-        className="bg-slate-100 shadow-lg p-4 rounded-xl w-full max-w-md"
-        title={
-          <div className="flex justify-center">
-            <img src={logo} alt="9ja Markets Logo" className="mb-4 h-12" />
+    <div className="min-h-screen bg-gradient-to-b from-Primary/5 to-transparent flex flex-col justify-center items-center p-4">
+      <Card className="w-full max-w-md bg-white shadow-xl rounded-2xl border border-gray-100">
+        <div className="flex justify-center mb-8">
+          <div className="relative">
+            <img src={logo} alt="9ja Markets Logo" className="h-16" />
           </div>
-        }
-      >
-        <div className="mb-6 text-center">
-          <h2 className="font-bold text-2xl text-gray-800">
-            Verify Your Email
-          </h2>
-          <p className="mt-2 text-gray-600">
-            Please check your email ({userProfile?.email}) and enter the
-            verification code below.
-          </p>
         </div>
 
-        <Form form={form} onFinish={handleVerify} layout="vertical">
-          <Form.Item
-            name="verificationCode"
-            rules={[
-              {
-                required: true,
-                message: "Please enter the verification code",
-              },
-            ]}
-          >
-            <Input
-              placeholder="Enter verification code"
-              size="large"
-              className="rounded-md"
-            />
-          </Form.Item>
+        <div className="mb-8 text-center">
+          <h2 className="font-bold text-2xl text-gray-800 mb-3">
+            Verify Your Email
+          </h2>
+          <div className="flex items-center justify-center gap-2 text-gray-600 bg-Primary/5 py-2 px-4 rounded-lg">
+            <Mail className="w-5 h-5 text-Primary" />
+            <p className="text-sm">{userProfile?.email}</p>
+          </div>
+        </div>
 
-          <Form.Item>
+        <Form
+          form={form}
+          onFinish={handleVerify}
+          layout="vertical"
+          className="space-y-6"
+        >
+          <div className="relative">
+            <Form.Item
+              name="verificationCode"
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter the verification code",
+                },
+              ]}
+            >
+              <Input
+                placeholder="verification code sent to your mail"
+                size="large"
+                className="h-12 text-sm rounded-xl border-gray-200 hover:border-Primary/50 focus:border-Primary transition-colors"
+                maxLength={6}
+              />
+            </Form.Item>
+            {loading && (
+              <CheckCircle className="absolute right-3 top-3 w-6 h-6 text-Primary animate-spin" />
+            )}
+          </div>
+
+          <Form.Item className="mb-0">
             <Button
               type="primary"
               htmlType="submit"
               loading={loading}
-              className="rounded-md w-full h-12 font-medium text-base"
+              className="w-full h-12 text-base font-medium rounded-xl bg-Primary hover:bg-Primary/90 border-none shadow-lg shadow-Primary/20 hover:shadow-xl hover:shadow-Primary/30 transition-all"
             >
               Verify Email
             </Button>
           </Form.Item>
         </Form>
 
-        <div className="mt-4 text-center">
-          <p className="mb-2 text-gray-600">Didn't receive a code?</p>
+        <div className="mt-8 text-center">
+          <p className="mb-3 text-gray-600">Did not receive a code?</p>
           <Button
             type="link"
             onClick={handleResendCode}
             disabled={countdown > 0 || resendLoading}
             loading={resendLoading}
+            className="flex items-center justify-center gap-2 mx-auto hover:text-Primary/80"
+            icon={countdown > 0 && <RefreshCw className="w-4 h-4 animate-spin" />}
           >
             {countdown > 0
               ? `Resend code in ${countdown}s`
               : "Resend verification code"}
           </Button>
         </div>
-      </Card>
 
-      <div className="mt-6 text-center text-gray-500 text-sm">
-        <p>If you're having trouble, please contact our support team.</p>
-      </div>
+        <div className="mt-8 pt-6 border-t border-gray-100">
+          <div className="flex items-center gap-3 justify-center text-gray-500 text-sm">
+            <Shield className="w-4 h-4" />
+            <p>Need help? Contact our support team</p>
+          </div>
+        </div>
+      </Card>
     </div>
   );
 }
