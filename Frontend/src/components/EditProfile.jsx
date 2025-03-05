@@ -155,15 +155,12 @@ export default function EditProfile() {
         <div className="gap-8 grid grid-cols-1 lg:grid-cols-3">
           {/* Sidebar Navigation */}
           <div className="lg:col-span-1">
-            <div className="top-20 sticky flex flex-col space-y-1 bg-white shadow-sm p-2 rounded-lg h-[calc(100vh-120px)]">
+            <div className="top-20 sticky flex flex-col space-y-1 bg-white shadow-sm p-2 rounded-lg h-auto"> {/* Reduced height */}
               <button className="bg-Primary/5 px-4 py-2 rounded-md w-full font-medium text-left text-Primary">
-                Personal Information
+                Personal Info
               </button>
               <button className="hover:bg-gray-50 px-4 py-2 rounded-md w-full text-gray-700 text-left">
                 Security
-              </button>
-              <button className="hover:bg-gray-50 px-4 py-2 rounded-md w-full text-gray-700 text-left">
-                Notifications
               </button>
 
               {/* Logout button at bottom */}
