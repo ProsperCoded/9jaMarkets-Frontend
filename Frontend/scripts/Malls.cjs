@@ -431,6 +431,218 @@ const MALLS = {
     }
   ],
 
+  Osun: [
+    {
+      name: "Osun Mall",
+      img: "./markets/OsunMall.jpg",
+      address: "Gbongan/Ibadan Road, Osogbo",
+      city: "Osogbo",
+      description: "An ultramodern mega shopping mall featuring Filmhouse cinemas, spas, game shops, bars, restaurants, and various retail stores."
+    },
+    {
+      name: "Betsay Shopping Mall",
+      img: "./markets/BetsayShoppingMall.jpg",
+      address: "Obafemi Awolowo Way, Osogbo",
+      city: "Osogbo",
+      description: "A shopping destination offering a variety of jewelry and other retail stores."
+    },
+    {
+      name: "Bridget's Mall",
+      img: "./markets/BridgetsMall.jpg",
+      address: "Ile-Ife",
+      city: "Ile-Ife",
+      description: "A privately owned 'one-stop' shopping and social hub offering a range of goods and services."
+    },
+    {
+      name: "Olorunda Shopping Complex",
+      img: "./markets/OlorundaShoppingComplex.jpg",
+      address: "Okefia, Osogbo",
+      city: "Osogbo",
+      description: "A shopping complex offering various retail outlets and services."
+    },
+    {
+      name: "Ayeso Shopping Complex",
+      img: "./markets/AyesoShoppingComplex.jpg",
+      address: "Ayeso Area, Esa-Oke",
+      city: "Esa-Oke",
+      description: "A local shopping complex providing various goods and services to the community."
+    },
+    {
+      name: "Fasogbon Shopping Complex",
+      img: "./markets/FasogbonShoppingComplex.jpg",
+      address: "Edunabon Road, Ile-Ife",
+      city: "Ile-Ife",
+      description: "A shopping complex offering a variety of retail stores and services."
+    },
+    {
+      name: "Segron Mart",
+      img: "./markets/SegronMart.jpg",
+      address: "Plot 11A Oodua Street, Unity Estate, Osogbo",
+      city: "Osogbo",
+      description: "An in-store retail shopping center offering a wide variety of grocery items, provisions, and daily consumables."
+    }
+  ],
+
+  Ondo: [
+    {
+      name: "Akure Mall",
+      img: "./malls/ondo/AkureMall.jpg",
+      address: "Igbatoro Road",
+      city: "Akure",
+      description: "A prominent shopping destination housing various retail outlets, including Shoprite, boutiques, and a cinema."
+    },
+    {
+      name: "Ojaja Park",
+      img: "./malls/ondo/OjajaPark.jpg",
+      address: "Alagbaka",
+      city: "Akure",
+      description: "A multifunctional complex featuring a shopping mall, eatery, hotel, cinema, and amusement park."
+    },
+    {
+      name: "Olufunmilayo Shopping Centre",
+      img: "./malls/ondo/OlufunmilayoShoppingCentre.jpg",
+      address: "Oke-Ijebu Road",
+      city: "Akure",
+      description: "A shopping center offering a range of retail stores and services."
+    },
+    {
+      name: "Rashee Becky Phones",
+      img: "./malls/ondo/RasheeBeckyPhones.jpg",
+      address: "139 Arakale Rd, opposite cash hold petrol station",
+      city: "Akure",
+      description: "An outlet mall specializing in mobile phones and accessories."
+    },
+    {
+      name: "Nao Supermarket",
+      img: "./malls/ondo/NaoSupermarket.jpg",
+      address: "Oba Adesida Road",
+      city: "Akure",
+      description: "A supermarket providing a range of consumer goods."
+    },
+    {
+      name: "Samdee Phone Plaza",
+      img: "./malls/ondo/SamdeePhonePlaza.jpg",
+      address: "10 Araromi St, old garage",
+      city: "Akure",
+      description: "A plaza specializing in mobile phones and accessories."
+    },
+    {
+      name: "Tisco Super Market",
+      img: "./malls/ondo/TiscoSuperMarket.png",
+      address: "7637+9X9, Alagbaka",
+      city: "Akure",
+      description: "A supermarket offering a variety of products."
+    }
+  ],
+
+  "Cross-River": [
+    {
+      name: "Tinapa Shopping Centre",
+      img: "./malls/cross-river/TinapaShoppingCentre.jpg",
+      address: "Tinapa Resort",
+      city: "Calabar",
+      description: "One of Nigeria's largest malls, designed to boost tourism in Cross River State.",
+    },
+    {
+      name: "Calabar Mall",
+      img: "./malls/cross-river/CalabarMall.jpg",
+      address: "MCC Road",
+      city: "Calabar",
+      description: "A modern shopping center housing over 50 brands of shops, including a 5-screen multiplex for shopping and recreational activities.",
+    },
+    {
+      name: "Big Qua Shopping Complex",
+      img: "./malls/cross-river/BigQuaShoppingComplex.jpg",
+      address: "Big Qua Road, MCC Road, Oqua Street",
+      city: "Calabar",
+      description: "A shopping complex with many shops selling a variety of items, accessible to everyone with ample parking space."
+    },
+    {
+      name: "Livingston Shopping Complex",
+      img: "./malls/cross-river/LivingstonShoppingComplex.jpg",
+      address: "119 Ndidem Usang Iso Road, Atekong",
+      city: "Calabar",
+      description: "Known for relaxation and comfort, featuring an excellent bakery and a variety of shops."
+    },
+    {
+      name: "NYOVAT Shopping Mall",
+      img: "./malls/cross-river/NYOVATShoppingMall.jpg",
+      address: "15 Oche-rore Street, Ikom",
+      city: "Ikom",
+      description: "One of the biggest and most popular shopping centers in Ikom, offering household and personal items at relatively affordable prices."
+    },
+    {
+      name: "Onyx Plaza",
+      img: "./malls/cross-river/OnyxPlaza.jpg",
+      address: "26 Ediba Road, Big Qua Town",
+      city: "Calabar",
+      description: "An open-space marketplace housing various retail stores and office establishments offering different services."
+    },
+    {
+      name: "Shoprite Plaza",
+      img: "./malls/cross-river/ShopritePlaza.jpg",
+      address: "MCC Road, 1st Avenue Ikot Eyo, near Channel View Hotel, Old Town",
+      city: "Calabar",
+      description: "A variety store location selling an extensive range of goods, both household and personal items."
+    },
+    {
+      name: "Moffi Power Planet Ltd",
+      img: "./malls/cross-river/MoffiPowerPlanetLtd.jpg",
+      address: "Calabar",
+      city: "Calabar",
+      description: "A shopping destination in Calabar offering various products and services."
+    },
+    {
+      name: "Calabar Online Watch Store",
+      img: "./malls/cross-river/CalabarOnlineWatchStore.jpg",
+      address: "74A Ndidem Usang Iso Road",
+      city: "Calabar",
+      description: "Offers sales of top-notch watch brands, luxury gold watches for men, business Quartz wristwatches, and fashion shoes for men."
+    },
+    {
+      name: "Classic Imports and Gift Shop",
+      img: "./malls/cross-river/ClassicImportsAndGiftShop.jpg",
+      address: "Calabar",
+      city: "Calabar",
+      description: "A gift shop offering a variety of imported items and gifts."
+    },
+    {
+      name: "Strong Footing",
+      img: "./malls/cross-river/StrongFooting.jpg",
+      address: "Shop 1646 Ikom Main Park, Main Market, Ikom",
+      city: "Ikom",
+      description: "A profitable shoe manufacturing enterprise fulfilling clients' dreams, desires, and expectations."
+    },
+    {
+      name: "Gadget Gallery",
+      img: "./malls/cross-river/GadgetGallery.jpg",
+      address: "93 Ndidem Usang Iso Road, Calabar",
+      city: "Calabar",
+      description: "A computer retail and repair store offering laptops, electronics, and accessories."
+    },
+    {
+      name: "Antel Sat Communication",
+      img: "./malls/cross-river/AntelSatCommunication.jpg",
+      address: "1 Anansa Road, Calabar",
+      city: "Calabar",
+      description: "A mobile phone shop offering a variety of mobile phones and accessories."
+    },
+    {
+      name: "Samsung Store",
+      img: "./malls/cross-river/SamsungStore.jpg",
+      address: "34 Target by Nelson Mandela Road, Calabar",
+      city: "Calabar",
+      description: "Offers great deals in electronics, including phones, computers, and home appliances."
+    },
+    {
+      name: "Twice As Nice",
+      img: "./malls/cross-river/TwiceAsNice.jpg",
+      address: "30 Nsefik Eyo Layout, Calabar",
+      city: "Calabar",
+      description: "A shop for gift items, men's and women's clothing, accessories, belts, and office bags."
+    }
+  ],
+
 
 
 };
