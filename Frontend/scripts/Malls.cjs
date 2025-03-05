@@ -551,13 +551,6 @@ const MALLS = {
       description: "A modern shopping center housing over 50 brands of shops, including a 5-screen multiplex for shopping and recreational activities.",
     },
     {
-      name: "Big Qua Shopping Complex",
-      img: "./malls/cross-river/BigQuaShoppingComplex.jpg",
-      address: "Big Qua Road, MCC Road, Oqua Street",
-      city: "Calabar",
-      description: "A shopping complex with many shops selling a variety of items, accessible to everyone with ample parking space."
-    },
-    {
       name: "Livingston Shopping Complex",
       img: "./malls/cross-river/LivingstonShoppingComplex.jpg",
       address: "119 Ndidem Usang Iso Road, Atekong",
@@ -570,76 +563,6 @@ const MALLS = {
       address: "15 Oche-rore Street, Ikom",
       city: "Ikom",
       description: "One of the biggest and most popular shopping centers in Ikom, offering household and personal items at relatively affordable prices."
-    },
-    {
-      name: "Onyx Plaza",
-      img: "./malls/cross-river/OnyxPlaza.jpg",
-      address: "26 Ediba Road, Big Qua Town",
-      city: "Calabar",
-      description: "An open-space marketplace housing various retail stores and office establishments offering different services."
-    },
-    {
-      name: "Shoprite Plaza",
-      img: "./malls/cross-river/ShopritePlaza.jpg",
-      address: "MCC Road, 1st Avenue Ikot Eyo, near Channel View Hotel, Old Town",
-      city: "Calabar",
-      description: "A variety store location selling an extensive range of goods, both household and personal items."
-    },
-    {
-      name: "Moffi Power Planet Ltd",
-      img: "./malls/cross-river/MoffiPowerPlanetLtd.jpg",
-      address: "Calabar",
-      city: "Calabar",
-      description: "A shopping destination in Calabar offering various products and services."
-    },
-    {
-      name: "Calabar Online Watch Store",
-      img: "./malls/cross-river/CalabarOnlineWatchStore.jpg",
-      address: "74A Ndidem Usang Iso Road",
-      city: "Calabar",
-      description: "Offers sales of top-notch watch brands, luxury gold watches for men, business Quartz wristwatches, and fashion shoes for men."
-    },
-    {
-      name: "Classic Imports and Gift Shop",
-      img: "./malls/cross-river/ClassicImportsAndGiftShop.jpg",
-      address: "Calabar",
-      city: "Calabar",
-      description: "A gift shop offering a variety of imported items and gifts."
-    },
-    {
-      name: "Strong Footing",
-      img: "./malls/cross-river/StrongFooting.jpg",
-      address: "Shop 1646 Ikom Main Park, Main Market, Ikom",
-      city: "Ikom",
-      description: "A profitable shoe manufacturing enterprise fulfilling clients' dreams, desires, and expectations."
-    },
-    {
-      name: "Gadget Gallery",
-      img: "./malls/cross-river/GadgetGallery.jpg",
-      address: "93 Ndidem Usang Iso Road, Calabar",
-      city: "Calabar",
-      description: "A computer retail and repair store offering laptops, electronics, and accessories."
-    },
-    {
-      name: "Antel Sat Communication",
-      img: "./malls/cross-river/AntelSatCommunication.jpg",
-      address: "1 Anansa Road, Calabar",
-      city: "Calabar",
-      description: "A mobile phone shop offering a variety of mobile phones and accessories."
-    },
-    {
-      name: "Samsung Store",
-      img: "./malls/cross-river/SamsungStore.jpg",
-      address: "34 Target by Nelson Mandela Road, Calabar",
-      city: "Calabar",
-      description: "Offers great deals in electronics, including phones, computers, and home appliances."
-    },
-    {
-      name: "Twice As Nice",
-      img: "./malls/cross-river/TwiceAsNice.jpg",
-      address: "30 Nsefik Eyo Layout, Calabar",
-      city: "Calabar",
-      description: "A shop for gift items, men's and women's clothing, accessories, belts, and office bags."
     }
   ],
 
