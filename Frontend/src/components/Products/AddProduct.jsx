@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Upload, X, ImagePlus } from "lucide-react";
+import { Upload, X, ImagePlus, Plus, Minus, Loader } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import {
   formatPrice,
@@ -80,7 +80,24 @@ export default function AddProduct() {
     setSelectedImages([]);
   };
 
+  const adjustStock = (increment) => {
+    setStock(prev => {
+      const newValue = increment ? prev + 1 : prev - 1;
+      return Math.max(1, newValue); // Ensures stock doesn't go below 1
+    });
+  };
+
   const handleSubmit = async () => {
+    console.log("Submitting product with:", {
+      productName,
+      category,
+      price,
+      stock,
+      productDetails,
+      productDescription,
+      imageCount: selectedImages.length
+    });
+
     if (
       !productName ||
       !category ||
@@ -90,7 +107,16 @@ export default function AddProduct() {
       !productDescription ||
       selectedImages.length === 0
     ) {
-      messageApi.error("All fields are required.");
+      const missing = [];
+      if (!productName) missing.push("Product Name");
+      if (!category) missing.push("Category");
+      if (!price) missing.push("Price");
+      if (!stock) missing.push("Stock");
+      if (!productDetails) missing.push("Product Details");
+      if (!productDescription) missing.push("Product Description");
+      if (selectedImages.length === 0) missing.push("Product Images");
+
+      messageApi.error(`Please fill in all required fields: ${missing.join(", ")}`);
       return;
     }
 
@@ -106,18 +132,29 @@ export default function AddProduct() {
         selectedImages,
       };
 
-      const response = await uploadProductApi(payload, (error) => {
-        messageApi.error("Failed to upload product");
-        console.error(error);
-      });
+      console.log("Sending payload:", payload);
 
-      if (!response) return;
+      const response = await uploadProductApi(
+        payload,
+        (error) => {
+          console.error("Upload error:", error);
+          messageApi.error("Failed to upload product: " + error);
+        },
+        (success) => {
+          console.log("Upload success:", success);
+        }
+      );
+
+      if (!response) {
+        messageApi.error("Failed to get response from server");
+        return;
+      }
+
       messageApi.success("Successfully uploaded product");
       resetStates();
     } catch (error) {
+      console.error("Submit error:", error);
       messageApi.error("An error occurred while uploading the product");
-      console.error(error);
-      console.log(selectedImages);
     } finally {
       setIsSubmitting(false);
     }
@@ -236,7 +273,7 @@ export default function AddProduct() {
             value={price}
             onChange={(e) => {
               const value = e.target.value.replace(/[^0-9,]/g, "");
-              setPrice(value);
+              setPrice(formatPrice(value));
             }}
             placeholder="Enter price"
           />
@@ -244,13 +281,34 @@ export default function AddProduct() {
 
         <div className="space-y-2">
           <Label htmlFor="stock">Stock Available</Label>
-          <Input
-            id="stock"
-            type="number"
-            min="1"
-            value={stock}
-            onChange={(e) => setStock(parseInt(e.target.value) || 1)}
-          />
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => adjustStock(false)}
+              className="bg-gray-100 hover:bg-gray-200 p-2 rounded-lg text-gray-600 transition-colors"
+              aria-label="Decrease stock"
+            >
+              <Minus className="w-4 h-4" />
+            </button>
+            
+            <Input
+              id="stock"
+              type="number"
+              min="1"
+              value={stock}
+              onChange={(e) => setStock(Math.max(1, parseInt(e.target.value) || 1))}
+              className="text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            />
+            
+            <button
+              type="button"
+              onClick={() => adjustStock(true)}
+              className="bg-gray-100 hover:bg-gray-200 p-2 rounded-lg text-gray-600 transition-colors"
+              aria-label="Increase stock"
+            >
+              <Plus className="w-4 h-4" />
+            </button>
+          </div>
         </div>
 
         <div className="space-y-2 sm:col-span-2">
@@ -280,10 +338,17 @@ export default function AddProduct() {
       <div className="flex justify-end">
         <Button
           onClick={handleSubmit}
-          className="bg-Primary hover:bg-Primary/80 w-full sm:w-auto text-white"
-          disabled={isSubmitting}
+          className="bg-Primary hover:bg-Primary/80 w-full sm:w-auto text-white disabled:opacity-50 disabled:cursor-not-allowed"
+          disabled={isSubmitting || !productName || !category || !price || !stock || !productDetails || !productDescription || selectedImages.length === 0}
         >
-          {isSubmitting ? "Adding Product..." : "Add Product"}
+          {isSubmitting ? (
+            <div className="flex items-center gap-2">
+              <Loader className="w-4 h-4 animate-spin" />
+              Adding Product...
+            </div>
+          ) : (
+            "Add Product"
+          )}
         </Button>
       </div>
     </div>
