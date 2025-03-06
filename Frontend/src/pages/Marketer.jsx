@@ -2,6 +2,7 @@ import {  Users, Rocket, CheckCircle2, ArrowRight, Coins, Target, BadgePercent, 
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { MarketerSignupButton } from "@/components/MarketerSignupButton";
   
   const steps = [
     {
@@ -77,10 +78,10 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
               Turn Your Network into Cash! 
             </p>
             <div className="flex justify-center gap-4">
-              <Link className="flex items-center justify-center mt-6 px-6 py-3 bg-orange text-white rounded-full hover:bg-orange/90 transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+              <MarketerSignupButton className="flex items-center justify-center mt-6 px-6 py-3 bg-orange text-white rounded-full hover:bg-orange/90 transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                 Start Earning Now
                 <ArrowRight className="ml-2 w-5 h-5" />
-              </Link>
+              </MarketerSignupButton>
             </div>
           </div>
         </section>
@@ -179,10 +180,10 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
             <p className="text-gray-600 mb-8">
               Fill out the form now and become a 9jaMarket Marketer!
             </p>
-            <Link className="inline-flex items-center mt-6 px-6 py-3 bg-orange text-white rounded-full hover:bg-orange/90 transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+            <MarketerSignupButton className="inline-flex items-center mt-6 px-6 py-3 bg-orange text-white rounded-full hover:bg-orange/90 transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
               Sign Up as a Marketer
               <ArrowRight className="ml-2 w-5 h-5" />
-            </Link>
+            </MarketerSignupButton>
           </div>
         </section>
       </div>

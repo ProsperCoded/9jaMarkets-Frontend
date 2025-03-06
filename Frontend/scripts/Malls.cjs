@@ -1,3 +1,5 @@
+const { Rivers } = require("./Markets.cjs");
+
 const MALLS = {
   Lagos: [
     {
@@ -104,21 +106,21 @@ const MALLS = {
     {
       name: "Abeokuta City Mall",
       img: "./malls/ogun/abeokutamall.jpg",
-      address: "125 Osoba Road, Oke-Mosan, Abeokuta",
+      address: "125 Osoba Road, Oke-Mosan",
       city: "Abeokuta",
       description: "A central shopping area with multiple shops, eateries, cinema, and recreational facilities."
     },
     {
       name: "Modu Shopping Mall",
       img: "./malls/ogun/modumall.jpeg",
-      address: "Alabata Road, Abeokuta",
+      address: "Alabata Road",
       city: "Abeokuta",
       description: "A vibrant retail destination offering shopping, dining, and local cultural experiences."
     },
     {
       name: "boulos mart",
       img: "./malls/ogun/boulos.png",
-      address: "Market, Cooperative Building, Idi-Ishin Junction, Omida Rd, Abeokuta",
+      address: "Market, Cooperative Building, Idi-Ishin Junction, Omida Rd",
       city: "Abeokuta",
       description: "A grocery store offering local and international products for diverse culinary needs."
     },
@@ -128,108 +130,66 @@ const MALLS = {
     {
       name: "The Palms Shopping Mall",
       img: "./malls/oyo/ThePalmsShoppingMall.png",
-      address: "MKO Abiola Way, Oluyole 200273, Ibadan",
+      address: "MKO Abiola Way, Oluyole 200273",
       city: "Ibadan",
       description: "A spacious mall offering a variety of retail outlets, eateries, and entertainment options."
     },
     {
       name: "Heritage Mall",
       img: "./malls/oyo/HeritageMall.jpg",
-      address: "Dugbe, Ibadan",
+      address: "Dugbe",
       city: "Ibadan",
       description: "A modern shopping center located in the heart of Ibadan, featuring numerous shops and services."
     },
     {
       name: "Ventura Mall",
       img: "./malls/oyo/VenturaMall.jpg",
-      address: "Samonda, Ibadan",
+      address: "Samonda",
       city: "Ibadan",
       description: "A vibrant mall offering shopping, dining, and entertainment experiences, including a cinema."
     },
     {
       name: "Jericho Mall",
       img: "./malls/oyo/JerichoMall.jpg",
-      address: "Jericho, Ibadan",
+      address: "Jericho",
       city: "Ibadan",
       description: "A mid-size mall providing prime retail shops and attractions aimed at creating a memorable shopping experience."
     },
     {
       name: "Grandex Mall",
-      img: "./malls/oyo/GrandexMall.jpg",
-      address: "Bodija, Ibadan",
+      img: "./malls/oyo/GrandexMall.webp",
+      address: "Bodija",
       city: "Ibadan",
       description: "A shopping destination offering a variety of products, including groceries, electronics, and fashion items."
     },
     {
       name: "Ace Mall",
       img: "./malls/oyo/AceMall.jpg",
-      address: "Ring Road, Ibadan",
+      address: "Ring Road",
       city: "Ibadan",
       description: "A contemporary mall featuring various retail outlets, eateries, and entertainment options."
     },
     {
       name: "Westmead Mall",
       img: "./malls/oyo/WestmeadMall.jpg",
-      address: "Challenge, Ibadan",
+      address: "Challenge",
       city: "Ibadan",
       description: "A shopping center offering a range of retail stores, services, and dining options."
     },
     {
       name: "Westmead Mall",
       img: "./malls/oyo/WestmeadMall.jpg",
-      address: "Rayfield Gardens City Estate, Ibadan",
+      address: "Rayfield Gardens City Estate",
       city: "Ibadan",
       description: "A newly opened shopping center set to revolutionize the shopping experience in Ibadan."
     },
     {
       name: "Brent Mall Sawmill Branch",
       img: "./malls/oyo/BrentMallSawmillBranch.jpg",
-      address: "Old Sawmill Bus Stop, Old Ife Road, Ibadan",
+      address: "Old Sawmill Bus Stop, Old Ife Road",
       city: "Ibadan",
       description: "A retail outlet dealing in agricultural products, healthcare products, and pharmaceuticals."
     },
-    {
-      name: "Topfat Art Gallery",
-      img: "./malls/oyo/TopfatArtGallery.jpg",
-      address: "Ibadan",
-      city: "Ibadan",
-      description: "An art gallery offering a variety of artworks and cultural artifacts."
-    },
-    {
-      name: "Constance And Sons Gallery",
-      img: "./malls/oyo/ConstanceAndSonsGallery.jpg",
-      address: "Ibadan",
-      city: "Ibadan",
-      description: "A gallery showcasing diverse artworks and cultural items."
-    },
-    {
-      name: "Richmary Discovery Ltd",
-      img: "./malls/oyo/RichmaryDiscoveryLtd.jpg",
-      address: "Shop 29, Praise Plazer, Iwo Road, Ibadan",
-      city: "Ibadan",
-      description: "A store offering a range of products, including computers and accessories."
-    },
-    {
-      name: "SAMTOB Phones & Computers",
-      img: "./malls/oyo/SAMTOBPhonesAndComputers.jpg",
-      address: "T24, GSM Plaza, Mokola Roundabout, Ibadan",
-      city: "Ibadan",
-      description: "A store specializing in quality laptops, mobile phones, and accessories."
-    },
-    {
-      name: "Compustore",
-      img: "./malls/oyo/Compustore.jpg",
-      address: "13 Adeniji Street, Liberty Rd, Ibadan",
-      city: "Ibadan",
-      description: "An online store dealing in the sales of computers and related accessories."
-    },
-    {
-      name: "First Admin Computer Technology",
-      img: "./malls/oyo/FirstAdminComputerTechnology.jpg",
-      address: "79 beside Henry Tee Motor, Ring Road, Ibadan",
-      city: "Ibadan",
-      description: "A company providing advanced computer technology solutions and services."
-    }
   ],
 
   Ekiti: [
@@ -344,14 +304,14 @@ const MALLS = {
     {
       name: "Osun Mall",
       img: "./malls/osun/OsunMall.jpg",
-      address: "Gbongan/Ibadan Road, Osogbo",
+      address: "Gbongan/Ibadan Road",
       city: "Osogbo",
       description: "An ultramodern mega shopping mall featuring Filmhouse cinemas, spas, game shops, bars, restaurants, and various retail stores."
     },
     {
       name: "Betsay Shopping Mall",
       img: "./malls/osun/BetsayShoppingMall.jpg",
-      address: "Obafemi Awolowo Way, Osogbo",
+      address: "Obafemi Awolowo Way",
       city: "Osogbo",
       description: "A shopping destination offering a variety of jewelry and other retail stores."
     },
@@ -365,28 +325,28 @@ const MALLS = {
     {
       name: "Olorunda Shopping Complex",
       img: "./malls/osun/OlorundaShoppingComplex.jpg",
-      address: "Okefia, Osogbo",
+      address: "Okefia",
       city: "Osogbo",
       description: "A shopping complex offering various retail outlets and services."
     },
     {
       name: "Ayeso Shopping Complex",
       img: "./malls/osun/AyesoShoppingComplex.jpg",
-      address: "Ayeso Area, Esa-Oke",
+      address: "Ayeso Area",
       city: "Esa-Oke",
       description: "A local shopping complex providing various goods and services to the community."
     },
     {
       name: "Fasogbon Shopping Complex",
       img: "./malls/osun/FasogbonShoppingComplex.jpg",
-      address: "Edunabon Road, Ile-Ife",
+      address: "Edunabon Road",
       city: "Ile-Ife",
       description: "A shopping complex offering a variety of retail stores and services."
     },
     {
       name: "Segron Mart",
       img: "./malls/osun/SegronMart.jpg",
-      address: "Plot 11A Oodua Street, Unity Estate, Osogbo",
+      address: "Plot 11A Oodua Street, Unity Estate",
       city: "Osogbo",
       description: "An in-store retail shopping center offering a wide variety of grocery items, provisions, and daily consumables."
     }
@@ -475,7 +435,92 @@ const MALLS = {
     }
   ],
 
-
+  Rivers: [
+    {
+      name: "Port Harcourt Mall",
+      img: "./markets/PortHarcourtMall.jpg",
+      address: "1 Azikiwe Road, Old GRA",
+      city: "Port Harcourt",
+      description: "A modern shopping destination featuring various retail outlets, eateries, and entertainment options."
+    },
+    {
+      name: "The Autograph",
+      img: "./markets/TheAutograph.jpg",
+      address: "30 Sani Abacha Road, GRA Phase 3",
+      city: "Port Harcourt",
+      description: "An event center with strategically arranged shops and office spaces."
+    },
+    {
+      name: "KG Mall",
+      img: "./markets/KGMall.jpg",
+      address: "Evo Road, Elechi",
+      city: "Port Harcourt",
+      description: "A lifestyle shopping center with a unisex salon, relaxation spaces, and various stores."
+    },
+    {
+      name: "The Vineyard",
+      img: "./markets/TheVineyard.jpg",
+      address: "Phase 2, 88 Woji Road, GRA",
+      city: "Port Harcourt",
+      description: "A shopping and lifestyle center catering to household and personal needs."
+    },
+    {
+      name: "Hakarat Mall",
+      img: "./markets/HakaratMall.jpg",
+      address: "252 Obiwali Road, Rumuigbo",
+      city: "Port Harcourt",
+      description: "A shopping and hangout spot featuring a rooftop lounge and a variety of retail stores."
+    },
+    {
+      name: "Nkpolu Oroworukwo Plaza",
+      img: "./markets/NkpoluOroworukwoPlaza.jpg",
+      address: "Ikwerre Road, Woji",
+      city: "Port Harcourt",
+      description: "A shopping plaza offering building materials, household, and personal items."
+    },
+    {
+      name: "Next Cash & Carry",
+      img: "./markets/NextCashAndCarry.jpg",
+      address: "Oginigba Elekahia Link Road, Trans Amadi",
+      city: "Port Harcourt",
+      description: "A large hypermarket selling household and personal items at wholesale prices."
+    },
+    {
+      name: "Township Mega Plaza",
+      img: "./markets/TownshipMegaPlaza.jpg",
+      address: "89 Aggrey Road, Township",
+      city: "Port Harcourt",
+      description: "A shopping center offering groceries, clothes, gift items, and fashion accessories."
+    },
+    {
+      name: "Market Square",
+      img: "./markets/MarketSquare.jpg",
+      address: "Ikwerre Road, beside Ogoni Grand View Hotel, Rumuodomaya",
+      city: "Port Harcourt",
+      description: "A superstore offering a variety of household and grocery items at competitive prices."
+    },
+    {
+      name: "Spar Mall",
+      img: "./markets/SparMall.jpg",
+      address: "Port Harcourt",
+      city: "Port Harcourt",
+      description: "A well-known shopping center offering a wide range of products, including groceries and electronics."
+    },
+    {
+      name: "Genesis Centre",
+      img: "./markets/GenesisCentre.jpg",
+      address: "Port Harcourt",
+      city: "Port Harcourt",
+      description: "A premier destination for entertainment, dining, and shopping."
+    },
+    {
+      name: "Vineyard Shopping Mall",
+      img: "./markets/VineyardShoppingMall.jpg",
+      address: "Port Harcourt",
+      city: "Port Harcourt",
+      description: "A shopping mall offering a variety of retail stores, eateries, and entertainment options."
+    }
+  ],
 
 };
 
