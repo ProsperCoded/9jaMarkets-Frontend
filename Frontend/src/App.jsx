@@ -50,8 +50,9 @@ import ProductDetails from "./components/ProductDetails";
 import LandingPage from "./pages/landingPages/LandingPage";
 import MerchantProfile from "./pages/MerchantProfile";
 import LoadingPage from "./componets-utils/LoadingPage";
-import { FloatingWhatsApp } from 'react-floating-whatsapp'
+import { FloatingWhatsApp } from "react-floating-whatsapp";
 import logo from "./assets/Logo.svg";
+import CustomerPage from "./pages/landingPages/CustomerPage";
 
 function AntDesignConfig({ children }) {
   return (
@@ -106,6 +107,8 @@ function App() {
 
             <Routes>
               <Route path="/" element={<LandingPage />} />
+              <Route path="/products" element={<CustomerPage />} />
+              <Route path="/products/:productId" element={<ProductDetails />} />
               <Route path="/how-it-works" element={<HowItWorks />} />
               <Route path="/markets" element={<MarketPage />} />
               <Route path="/markets/:id" element={<Marketplace />} />
@@ -148,7 +151,6 @@ function App() {
               <Route path="/contact" element={<ContactUs />} />
 
               <Route path="/markets/:marketId" element={<Marketplace />} />
-              <Route path="/products/:productId" element={<ProductDetails />} />
 
               <Route
                 path="/merchant/:merchantId"
@@ -167,7 +169,7 @@ function App() {
             {/* Conditionally render footer */}
             {shouldShowFooter && <Footer />}
             <IntercomMessenger />
-            <FloatingWhatsApp 
+            <FloatingWhatsApp
               phoneNumber="07014541564"
               accountName="9jaMarkets"
               allowClickAway={true}
@@ -179,7 +181,7 @@ function App() {
               darkMode={true}
               avatar={logo}
               buttonStyle={{
-                backgroundColor: "#21CA1B"
+                backgroundColor: "#21CA1B",
               }}
               buttonClassName="whatsapp-button"
             />

@@ -73,34 +73,6 @@ import {
 import { useContext } from "react";
 import { MALLS_DATA_CONTEXT, MARKET_DATA_CONTEXT } from "@/contexts";
 
-// const featuredMarkets = [
-//   { name: "Alaba Market", location: "Lagos State", imageUrl: AlabaMarket },
-//   { name: "Bodija Market", location: "Oyo State", imageUrl: BodijaMarket },
-//   {
-//     name: "Oil Mill Market",
-//     location: "Rivers State",
-//     imageUrl: OilMillMarket,
-//   },
-//   {
-//     name: "Computer Village",
-//     location: "Lagos State",
-//     imageUrl: ComputerVillage,
-//   },
-//   {
-//     name: "Onitsha Main Market",
-//     location: "Anambra State",
-//     imageUrl: OnitshaMarket,
-//   },
-// ];
-
-// const featuredMalls = [
-//   { name: "Ikeja City Mall", location: "Lagos State", imageUrl: IkejaMall },
-//   { name: "Palms Shopping Mall", location: "Oyo State", imageUrl: PalmsMall },
-//   { name: "Onitsha Mall", location: "Anambra State", imageUrl: OnitshaMall },
-//   { name: "Ado Bayero Mall", location: "Kano State", imageUrl: AdoBayeroMall },
-//   { name: "Jabi Lake Mall", location: "Abuja", imageUrl: JabiLakeMall },
-// ];
-
 // Update the categoryIcons mapping
 const categoryIcons = {
   "Education & Stationery": GraduationCap,
@@ -261,11 +233,7 @@ function ExploreSection() {
               >
                 {Object.entries(categories).map(([name, imageUrl]) => (
                   <SwiperSlide key={name}>
-                    <Link
-                      to={`/category/${name
-                        .toLowerCase()
-                        .replace(/\s+/g, "-")}`}
-                    >
+                    <Link to={`/products?category=${encodeURIComponent(name)}`}>
                       <div className="h-[200px] cursor-pointer group">
                         <div className="relative rounded-xl h-full overflow-hidden">
                           <img

@@ -1,8 +1,8 @@
 // export const SERVER_URL =
 //   "https://safe-lindsy-obiken-415ef84b.koyeb.app/api/v1/";
-export const SERVER_URL =
-  "https://tricky-carmine-prosper-coded-9jamarket-35d50fa1.koyeb.app/api/v1/";
-// export const SERVER_URL = "http://localhost:3100/api/v1/";
+// export const SERVER_URL =
+// "https://tricky-carmine-prosper-coded-9jamarket-35d50fa1.koyeb.app/api/v1/";
+export const SERVER_URL = "http://localhost:3100/api/v1/";
 export const GOOGLE_URL = `${SERVER_URL}auth/customer/google`;
 // 3 Days for access token
 export const ACCESS_TOKEN_DURATION = 3;
@@ -41,8 +41,8 @@ export const PRODUCT_CATEGORIES = [
   "KIDS AND BABY PRODUCTS",
 ];
 export const plans = {
-  free:{
-    id:"free",
+  free: {
+    id: "free",
     name: "Free Plan",
     price: 0,
     duration: "3 days",
