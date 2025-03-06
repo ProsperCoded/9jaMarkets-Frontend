@@ -50,6 +50,8 @@ import ProductDetails from "./components/ProductDetails";
 import LandingPage from "./pages/landingPages/LandingPage";
 import MerchantProfile from "./pages/MerchantProfile";
 import LoadingPage from "./componets-utils/LoadingPage";
+import { FloatingWhatsApp } from 'react-floating-whatsapp'
+import logo from "./assets/Logo.svg";
 
 function AntDesignConfig({ children }) {
   return (
@@ -165,6 +167,22 @@ function App() {
             {/* Conditionally render footer */}
             {shouldShowFooter && <Footer />}
             <IntercomMessenger />
+            <FloatingWhatsApp 
+              phoneNumber="07014541564"
+              accountName="9jaMarkets"
+              allowClickAway={true}
+              allowEsc={true}
+              chatMessage="Hello! 👋 How can we help you today?"
+              statusMessage="Usually replies within an hour"
+              notification={true}
+              notificationSound={true}
+              darkMode={true}
+              avatar={logo}
+              buttonStyle={{
+                backgroundColor: "#21CA1B"
+              }}
+              buttonClassName="whatsapp-button"
+            />
           </InitializeApp>
         </ContextWrapper>
       </AntDesignConfig>
