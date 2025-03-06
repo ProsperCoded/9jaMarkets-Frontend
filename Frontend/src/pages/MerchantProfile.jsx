@@ -1,16 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import {
-  MapPin,
-  Phone,
-  Mail,
-  Store,
-  Package,
-  Star,
-  Clock,
-  AlertCircle,
-  ArrowLeft,
-} from "lucide-react";
+import { MapPin, Phone, Mail, Store, Package, Star, Clock, AlertCircle, ArrowLeft, BadgeCheck } from "lucide-react";
 import { MESSAGE_API_CONTEXT } from "@/contexts";
 import { getMerchantProfileApi } from "@/lib/api/serviceApi";
 import { getMerchantProducts } from "@/lib/api/productApi";
@@ -68,7 +58,7 @@ const MerchantProfile = () => {
             <div className="bg-white shadow-lg p-8 rounded-xl border border-gray-100">
               <div className="relative mb-6">
                 <div className="bg-Primary/5 p-4 rounded-full inline-block">
-                  <Store className="mx-auto w-16 h-16 text-Primary" />
+                  <Store className="mx-auto w-16 h-16 text-Primary/30" />
                 </div>
                 <AlertCircle className="right-1/2 bottom-0 absolute w-8 h-8 text-orange animate-bounce translate-x-8" />
               </div>
@@ -104,11 +94,20 @@ const MerchantProfile = () => {
   return (
     <div className="bg-gradient-to-b from-Primary/5 to-transparent min-h-screen">
       <div className="mx-auto px-4 container py-6">
+        {/* Back Button */}
+        <button
+          onClick={() => navigate(-1)}
+          className="flex items-center gap-2 mb-6 text-gray-600 hover:text-Primary transition-all duration-300 hover:-translate-x-1"
+        >
+          <ArrowLeft className="w-5 h-5" />
+          Go Back
+        </button>
+
         {/* Merchant Header */}
-        <div className="bg-white shadow-lg mb-8 p-8 rounded-2xl border border-gray-100 transform transition-all duration-300 hover:shadow-xl">
-          <div className="flex md:flex-row flex-col gap-8">
+        <div className="bg-white shadow-md mb-8 p-4 sm:p-6 lg:p-8 rounded-2xl border border-gray-100 transform transition-all duration-300 hover:shadow-xl">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-8">
             {/* Merchant Logo/Image */}
-            <div className="flex-shrink-0 rounded-2xl w-40 h-40 overflow-hidden border-4 border-Primary/10 shadow-lg">
+            <div className="flex-shrink-0 rounded-2xl w-28 sm:w-32 lg:w-40 h-28 sm:h-32 lg:h-40 overflow-hidden border-4 border-Primary/10 shadow-md mx-auto sm:mx-0">
               <img
                 src={merchant.logo || "/merchant.png"}
                 alt={merchant.brandName}
@@ -118,39 +117,37 @@ const MerchantProfile = () => {
 
             {/* Merchant Info */}
             <div className="flex-grow">
-              <h1 className="mb-4 font-bold text-3xl text-gray-900 flex items-center gap-3">
+              <h1 className="mb-3 sm:mb-4 font-bold text-2xl sm:text-3xl text-gray-900 flex items-center gap-3">
                 {merchant.brandName}
-                <span className="bg-Primary/10 text-Primary text-sm px-3 py-1 rounded-full">
-                  Verified Merchant
-                </span>
+                <BadgeCheck className="w-5 h-5 text-Primary" />
               </h1>
 
-              <div className="flex flex-wrap gap-6 mb-6 text-gray-600">
-                <div className="flex items-center gap-3 bg-gray-50 px-4 py-2 rounded-lg hover:bg-Primary/5 transition-colors">
-                  <MapPin className="w-5 h-5 text-Primary" />
+              <div className="flex flex-wrap gap-3 sm:gap-6 mb-4 sm:mb-6 text-gray-600 text-sm sm:text-base">
+                <div className="flex items-center gap-2 sm:gap-3 bg-gray-50 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg hover:bg-Primary/5 transition-colors">
+                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-Primary" />
                   <span>{merchant.addresses[0].address}</span>
                 </div>
-                <div className="flex items-center gap-3 bg-gray-50 px-4 py-2 rounded-lg hover:bg-Primary/5 transition-colors">
-                  <Phone className="w-5 h-5 text-Primary" />
+                <div className="flex items-center gap-2 sm:gap-3 bg-gray-50 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg hover:bg-Primary/5 transition-colors">
+                  <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-Primary" />
                   <span>{merchant.phoneNumbers[0].number}</span>
                 </div>
-                <div className="flex items-center gap-3 bg-gray-50 px-4 py-2 rounded-lg hover:bg-Primary/5 transition-colors">
-                  <Mail className="w-5 h-5 text-Primary" />
+                <div className="flex items-center gap-2 sm:gap-3 bg-gray-50 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg hover:bg-Primary/5 transition-colors">
+                  <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-Primary" />
                   <span>{merchant.email}</span>
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-8 text-sm">
-                <div className="flex items-center gap-2 bg-Primary/5 px-4 py-2 rounded-full">
-                  <Package className="w-5 h-5 text-Primary" />
+              <div className="flex flex-wrap gap-4 sm:gap-8 text-xs sm:text-sm">
+                <div className="flex items-center gap-2 bg-Primary/5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full">
+                  <Package className="w-4 h-4 sm:w-5 sm:h-5 text-Primary" />
                   <span className="font-medium">{products.length} Products</span>
                 </div>
-                <div className="flex items-center gap-2 bg-yellow-50 px-4 py-2 rounded-full">
-                  <Star fill="orange" className="w-5 h-5 text-orange" />
+                <div className="flex items-center gap-2 bg-yellow-50 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full">
+                  <Star fill="orange" className="w-4 h-4 sm:w-5 sm:h-5 text-orange" />
                   <span className="font-medium">4.5 Rating</span>
                 </div>
-                <div className="flex items-center gap-2 bg-Primary/5 px-4 py-2 rounded-full">
-                  <Clock className="w-5 h-5 text-Primary" />
+                <div className="flex items-center gap-2 bg-Primary/5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full">
+                  <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-Primary" />
                   <span className="font-medium">
                     Member since {new Date(merchant.createdAt).getFullYear()}
                   </span>
