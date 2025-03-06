@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Loader, ArrowLeft } from "lucide-react";
 import PropTypes from 'prop-types';
 
-export default function LoadingPage({ message = "Loading..." }) {
+export default function LoadingPage({ message = "Loading" }) {
   const [dots, setDots] = useState("");
   
   useEffect(() => {

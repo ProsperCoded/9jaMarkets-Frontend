@@ -465,32 +465,11 @@ const MALLS = {
       description: "A shopping and lifestyle center catering to household and personal needs."
     },
     {
-      name: "Hakarat Mall",
-      img: "./malls/rivers/HakaratMall.jpg",
-      address: "252 Obiwali Road, Rumuigbo",
-      city: "Port Harcourt",
-      description: "A shopping and hangout spot featuring a rooftop lounge and a variety of retail stores."
-    },
-    {
-      name: "Nkpolu Oroworukwo Plaza",
-      img: "./malls/rivers/NkpoluOroworukwoPlaza.jpg",
-      address: "Ikwerre Road, Woji",
-      city: "Port Harcourt",
-      description: "A shopping plaza offering building materials, household, and personal items."
-    },
-    {
       name: "Next Cash & Carry",
       img: "./malls/rivers/NextCashAndCarry.jpg",
       address: "Oginigba Elekahia Link Road, Trans Amadi",
       city: "Port Harcourt",
       description: "A large hypermarket selling household and personal items at wholesale prices."
-    },
-    {
-      name: "Township Mega Plaza",
-      img: "./malls/rivers/TownshipMegaPlaza.jpg",
-      address: "89 Aggrey Road, Township",
-      city: "Port Harcourt",
-      description: "A shopping center offering groceries, clothes, gift items, and fashion accessories."
     },
     {
       name: "Market Square",
@@ -500,25 +479,11 @@ const MALLS = {
       description: "A superstore offering a variety of household and grocery items at competitive prices."
     },
     {
-      name: "Spar Mall",
-      img: "./malls/rivers/SparMall.jpg",
-      address: "Port Harcourt",
-      city: "Port Harcourt",
-      description: "A well-known shopping center offering a wide range of products, including groceries and electronics."
-    },
-    {
       name: "Genesis Centre",
       img: "./malls/rivers/GenesisCentre.jpg",
-      address: "Port Harcourt",
+      address: "Trans-Amadi Rd, Nkpogu",
       city: "Port Harcourt",
       description: "A premier destination for entertainment, dining, and shopping."
-    },
-    {
-      name: "Vineyard Shopping Mall",
-      img: "./malls/rivers/VineyardShoppingMall.jpg",
-      address: "Port Harcourt",
-      city: "Port Harcourt",
-      description: "A shopping mall offering a variety of retail stores, eateries, and entertainment options."
     }
   ],
 
@@ -531,100 +496,37 @@ const MALLS = {
       description: "A modern shopping mall with retail stores, a food court, and entertainment options."
     },
     {
-      name: "Hexagon Mall",
-      img: "./malls/edo/HexagonMall.jpg",
-      address: "Ihama Road, GRA",
-      city: "Benin City",
-      description: "A lifestyle shopping center featuring retail stores, restaurants, and relaxation spots."
-    },
-    {
       name: "Kadis Plaza",
       img: "./malls/edo/KadisPlaza.jpg",
-      address: "Airport Road",
+      address: "8 Ugbowo-Lagos Rd, Uselu",
       city: "Benin City",
       description: "A shopping plaza housing various stores, a supermarket, and eateries."
     },
     {
-      name: "Robinson Plaza",
-      img: "./malls/edo/RobinsonPlaza.jpg",
-      address: "Mission Road",
-      city: "Benin City",
-      description: "A popular shopping complex offering fashion, electronics, and household items."
-    },
-    {
-      name: "Uyi Grand Mall",
-      img: "./malls/edo/UyiGrandMall.jpg",
-      address: "Boundary Road",
-      city: "Benin City",
-      description: "A shopping center with a mix of retail stores, a cinema, and dining outlets."
-    },
-    {
-      name: "Oliha Market Plaza",
-      img: "./malls/edo/OlihaMarketPlaza.jpg",
-      address: "Siluko Road",
-      city: "Benin City",
-      description: "A commercial complex with retail shops, groceries, and fashion outlets."
-    },
-    {
-      name: "Julius Plaza",
-      img: "./malls/edo/JuliusPlaza.jpg",
-      address: "Ekenwan Road",
-      city: "Benin City",
-      description: "A shopping plaza offering fashion stores, electronics, and supermalls/edo."
-    },
-    {
-      name: "Oredo Shopping Plaza",
-      img: "./malls/edo/OredoShoppingPlaza.jpg",
-      address: "Ring Road",
-      city: "Benin City",
-      description: "A shopping hub featuring a mix of small and large retail stores."
-    },
-    {
-      name: "Evbuotubu Shopping Complex",
-      img: "./malls/edo/EvbuotubuShoppingComplex.jpg",
-      address: "Evbuotubu Road",
+      name: "Ebalunode Shopping Plaza",
+      img: "./malls/edo/EbalunodeShoppingPlaza.jpg",
+      address: "65 Benin City-Ehor Rd, Avbiama",
       city: "Benin City",
       description: "A commercial center with various retail shops and grocery stores."
     },
     {
-      name: "Civic Centre Mall",
-      img: "./malls/edo/CivicCentreMall.jpg",
-      address: "Airport Road",
+      name: "Legacy Mall Benin",
+      img: "./malls/edo/LEGACYMALLBENIN.jpg",
+      address: "Ohuoba St, Oka",
       city: "Benin City",
       description: "A modern shopping mall with restaurants, retail stores, and a cinema."
     },
     {
-      name: "Etete Shopping Plaza",
-      img: "./malls/edo/EteteShoppingPlaza.jpg",
-      address: "Etete Road",
+      name: "Everyday Mall",
+      img: "./malls/edo/everydaymall.jpg",
+      address: "Benin Sapele Rd, Oka",
       city: "Benin City",
       description: "A shopping center with various fashion, electronics, and household items."
     },
     {
-      name: "Ekenwan Plaza",
-      img: "./malls/edo/EkenwanPlaza.jpg",
-      address: "Ekenwan Road",
-      city: "Benin City",
-      description: "A shopping complex with multiple stores, a supermarket, and eateries."
-    },
-    {
-      name: "Osula Plaza",
-      img: "./malls/edo/OsulaPlaza.jpg",
-      address: "Uselu Road",
-      city: "Benin City",
-      description: "A business hub with retail shops and office spaces."
-    },
-    {
-      name: "Faithway Plaza",
-      img: "./malls/edo/FaithwayPlaza.jpg",
-      address: "Ugbowo Road",
-      city: "Benin City",
-      description: "A small shopping plaza with stores for groceries, clothing, and gadgets."
-    },
-    {
-      name: "Golden Plaza",
-      img: "./malls/edo/GoldenPlaza.jpg",
-      address: "New Lagos Road",
+      name: "Gold Plaza",
+      img: "./malls/edo/GoldPlaza.jpg",
+      address: "Arougba Community, Along Irhirhi Road, off Airport Road",
       city: "Benin City",
       description: "A popular shopping and business center with retail outlets and services."
     }

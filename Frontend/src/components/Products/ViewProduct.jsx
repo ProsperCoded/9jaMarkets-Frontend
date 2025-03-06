@@ -4,10 +4,13 @@ import { useEffect } from "react";
 import { getProductsApi } from "@/lib/api/productApi";
 import { Package, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useContext } from "react";
+import { TabContext } from "./ProductPage";
 
 export default function ViewProducts() {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { setActiveTab } = useContext(TabContext);
 
   async function getProducts() {
     try {
@@ -50,14 +53,7 @@ export default function ViewProducts() {
           adding your first product.
         </p>
         <Button
-          onClick={() => {
-            const addTabTrigger = document.querySelector(
-              '[data-state][value="add"]'
-            );
-            if (addTabTrigger instanceof HTMLElement) {
-              addTabTrigger.click();
-            }
-          }}
+          onClick={() => setActiveTab("add")}
           className="inline-flex items-center gap-2 bg-Primary hover:bg-Primary/80 text-white"
         >
           <Plus className="w-4 h-4" />
