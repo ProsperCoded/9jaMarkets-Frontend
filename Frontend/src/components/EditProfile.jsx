@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import { Pencil, Check, X, Plus, MapPin, Phone, Trash } from "lucide-react";
 import PropTypes from "prop-types";
 import { Input } from "@/components/ui/input";
@@ -136,6 +136,16 @@ export default function EditProfile() {
 
   const [deleteAccountOpen, setDeleteAccountOpen] = useState(false);
 
+  // Add refs for each section
+  const personalInfoRef = useRef(null);
+  const securityRef = useRef(null);
+  const addressesRef = useRef(null);
+
+  // Add scroll handler
+  const scrollToSection = (ref) => {
+    ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   return (
     <div className="bg-gradient-to-b from-gray-50 to-white min-h-screen">
       {/* Header Section */}
@@ -155,15 +165,27 @@ export default function EditProfile() {
         <div className="gap-8 grid grid-cols-1 lg:grid-cols-3">
           {/* Sidebar Navigation */}
           <div className="lg:col-span-1">
-            <div className="top-20 sticky flex flex-col space-y-1 bg-white shadow-sm p-2 rounded-lg h-auto"> {/* Reduced height */}
-              <button className="bg-Primary/5 px-4 py-2 rounded-md w-full font-medium text-left text-Primary">
+            <div className="top-20 sticky flex flex-col space-y-1 bg-white shadow-sm p-2 rounded-lg h-auto">
+              <button 
+                onClick={() => scrollToSection(personalInfoRef)}
+                className="hover:bg-Primary/5 px-4 py-2 rounded-md w-full text-left text-gray-700 hover:text-Primary transition-colors"
+              >
                 Personal Info
               </button>
-              <button className="hover:bg-gray-50 px-4 py-2 rounded-md w-full text-gray-700 text-left">
+              <button 
+                onClick={() => scrollToSection(securityRef)}
+                className="hover:bg-Primary/5 px-4 py-2 rounded-md w-full text-left text-gray-700 hover:text-Primary transition-colors"
+              >
                 Security
               </button>
+              <button 
+                onClick={() => scrollToSection(addressesRef)}
+                className="hover:bg-Primary/5 px-4 py-2 rounded-md w-full text-left text-gray-700 hover:text-Primary transition-colors"
+              >
+                Addresses
+              </button>
 
-              {/* Logout button at bottom */}
+              {/* Logout button remains the same */}
               <div className="mt-auto">
                 <button
                   onClick={() => setLogoutOpen(true)}
@@ -178,7 +200,7 @@ export default function EditProfile() {
           {/* Form Sections */}
           <div className="space-y-8 lg:col-span-2">
             {/* Personal Information Card */}
-            <div className="bg-white shadow-sm rounded-lg overflow-hidden">
+            <div ref={personalInfoRef} className="bg-white shadow-sm rounded-lg overflow-hidden">
               <div className="border-gray-200 bg-gray-50 px-6 py-4 border-b">
                 <h2 className="font-medium text-gray-900 text-lg">
                   Personal Information
@@ -252,34 +274,6 @@ export default function EditProfile() {
                       type="date"
                     />
                   )}
-                  <div className="flex flex-col">
-                    <label className="mb-3 font-medium text-muted-foreground text-sm">
-                      Password
-                    </label>
-
-                    <Link
-                      to="/forget-password"
-                      className="font-semibold text-Primary hover:underline"
-                    >
-                      Change Password
-                    </Link>
-                  </div>
-                </div>
-                <div className="gap-6 grid grid-cols-1 sm:grid-cols-2">
-                  <ProfileField
-                    label="Date of Birth"
-                    value={profile.dateOfBirth || ""}
-                    onUpdate={(value) => handleUpdate("dateOfBirth", value)}
-                    type="date"
-                  />
-                  <div className="flex flex-col justify-end">
-                    <Link
-                      to="/forget-password"
-                      className="inline-flex justify-center items-center bg-Primary hover:bg-Primary/90 shadow-sm px-4 py-2 border border-transparent rounded-md focus:ring-2 focus:ring-Primary focus:ring-offset-2 font-medium text-sm text-white focus:outline-none"
-                    >
-                      Change Password
-                    </Link>
-                  </div>
                 </div>
                 <div>
                   <MarketSelect
@@ -291,7 +285,7 @@ export default function EditProfile() {
             </div>
 
             {/* Security Card */}
-            <div className="bg-white shadow-sm rounded-lg overflow-hidden">
+            <div ref={securityRef} className="bg-white shadow-sm rounded-lg overflow-hidden">
               <div className="border-gray-200 bg-gray-50 px-6 py-4 border-b">
                 <h2 className="font-medium text-gray-900 text-lg">Security</h2>
                 <p className="mt-1 text-gray-600 text-sm">
@@ -327,7 +321,7 @@ export default function EditProfile() {
             </div>
 
             {/* Addresses Card */}
-            <div className="bg-white shadow-sm rounded-lg overflow-hidden">
+            <div ref={addressesRef} className="bg-white shadow-sm rounded-lg overflow-hidden">
               <div className="flex justify-between items-center border-gray-200 bg-gray-50 px-6 py-4 border-b">
                 <div>
                   <h2 className="font-medium text-gray-900 text-lg">

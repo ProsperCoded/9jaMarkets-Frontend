@@ -438,87 +438,268 @@ const MALLS = {
   Rivers: [
     {
       name: "Port Harcourt Mall",
-      img: "./markets/PortHarcourtMall.jpg",
+      img: "./malls/rivers/PortHarcourtMall.jpg",
       address: "1 Azikiwe Road, Old GRA",
       city: "Port Harcourt",
       description: "A modern shopping destination featuring various retail outlets, eateries, and entertainment options."
     },
     {
       name: "The Autograph",
-      img: "./markets/TheAutograph.jpg",
+      img: "./malls/rivers/TheAutograph.jpg",
       address: "30 Sani Abacha Road, GRA Phase 3",
       city: "Port Harcourt",
       description: "An event center with strategically arranged shops and office spaces."
     },
     {
       name: "KG Mall",
-      img: "./markets/KGMall.jpg",
+      img: "./malls/rivers/KGMall.jpg",
       address: "Evo Road, Elechi",
       city: "Port Harcourt",
       description: "A lifestyle shopping center with a unisex salon, relaxation spaces, and various stores."
     },
     {
       name: "The Vineyard",
-      img: "./markets/TheVineyard.jpg",
+      img: "./malls/rivers/TheVineyard.jpg",
       address: "Phase 2, 88 Woji Road, GRA",
       city: "Port Harcourt",
       description: "A shopping and lifestyle center catering to household and personal needs."
     },
     {
       name: "Hakarat Mall",
-      img: "./markets/HakaratMall.jpg",
+      img: "./malls/rivers/HakaratMall.jpg",
       address: "252 Obiwali Road, Rumuigbo",
       city: "Port Harcourt",
       description: "A shopping and hangout spot featuring a rooftop lounge and a variety of retail stores."
     },
     {
       name: "Nkpolu Oroworukwo Plaza",
-      img: "./markets/NkpoluOroworukwoPlaza.jpg",
+      img: "./malls/rivers/NkpoluOroworukwoPlaza.jpg",
       address: "Ikwerre Road, Woji",
       city: "Port Harcourt",
       description: "A shopping plaza offering building materials, household, and personal items."
     },
     {
       name: "Next Cash & Carry",
-      img: "./markets/NextCashAndCarry.jpg",
+      img: "./malls/rivers/NextCashAndCarry.jpg",
       address: "Oginigba Elekahia Link Road, Trans Amadi",
       city: "Port Harcourt",
       description: "A large hypermarket selling household and personal items at wholesale prices."
     },
     {
       name: "Township Mega Plaza",
-      img: "./markets/TownshipMegaPlaza.jpg",
+      img: "./malls/rivers/TownshipMegaPlaza.jpg",
       address: "89 Aggrey Road, Township",
       city: "Port Harcourt",
       description: "A shopping center offering groceries, clothes, gift items, and fashion accessories."
     },
     {
       name: "Market Square",
-      img: "./markets/MarketSquare.jpg",
+      img: "./malls/rivers/MarketSquare.jpg",
       address: "Ikwerre Road, beside Ogoni Grand View Hotel, Rumuodomaya",
       city: "Port Harcourt",
       description: "A superstore offering a variety of household and grocery items at competitive prices."
     },
     {
       name: "Spar Mall",
-      img: "./markets/SparMall.jpg",
+      img: "./malls/rivers/SparMall.jpg",
       address: "Port Harcourt",
       city: "Port Harcourt",
       description: "A well-known shopping center offering a wide range of products, including groceries and electronics."
     },
     {
       name: "Genesis Centre",
-      img: "./markets/GenesisCentre.jpg",
+      img: "./malls/rivers/GenesisCentre.jpg",
       address: "Port Harcourt",
       city: "Port Harcourt",
       description: "A premier destination for entertainment, dining, and shopping."
     },
     {
       name: "Vineyard Shopping Mall",
-      img: "./markets/VineyardShoppingMall.jpg",
+      img: "./malls/rivers/VineyardShoppingMall.jpg",
       address: "Port Harcourt",
       city: "Port Harcourt",
       description: "A shopping mall offering a variety of retail stores, eateries, and entertainment options."
+    }
+  ],
+
+  Edo: [
+    {
+      name: "Benin Mall",
+      img: "./malls/edo/BeninMall.jpg",
+      address: "Sapele Road",
+      city: "Benin City",
+      description: "A modern shopping mall with retail stores, a food court, and entertainment options."
+    },
+    {
+      name: "Hexagon Mall",
+      img: "./malls/edo/HexagonMall.jpg",
+      address: "Ihama Road, GRA",
+      city: "Benin City",
+      description: "A lifestyle shopping center featuring retail stores, restaurants, and relaxation spots."
+    },
+    {
+      name: "Kadis Plaza",
+      img: "./malls/edo/KadisPlaza.jpg",
+      address: "Airport Road",
+      city: "Benin City",
+      description: "A shopping plaza housing various stores, a supermarket, and eateries."
+    },
+    {
+      name: "Robinson Plaza",
+      img: "./malls/edo/RobinsonPlaza.jpg",
+      address: "Mission Road",
+      city: "Benin City",
+      description: "A popular shopping complex offering fashion, electronics, and household items."
+    },
+    {
+      name: "Uyi Grand Mall",
+      img: "./malls/edo/UyiGrandMall.jpg",
+      address: "Boundary Road",
+      city: "Benin City",
+      description: "A shopping center with a mix of retail stores, a cinema, and dining outlets."
+    },
+    {
+      name: "Oliha Market Plaza",
+      img: "./malls/edo/OlihaMarketPlaza.jpg",
+      address: "Siluko Road",
+      city: "Benin City",
+      description: "A commercial complex with retail shops, groceries, and fashion outlets."
+    },
+    {
+      name: "Julius Plaza",
+      img: "./malls/edo/JuliusPlaza.jpg",
+      address: "Ekenwan Road",
+      city: "Benin City",
+      description: "A shopping plaza offering fashion stores, electronics, and supermalls/edo."
+    },
+    {
+      name: "Oredo Shopping Plaza",
+      img: "./malls/edo/OredoShoppingPlaza.jpg",
+      address: "Ring Road",
+      city: "Benin City",
+      description: "A shopping hub featuring a mix of small and large retail stores."
+    },
+    {
+      name: "Evbuotubu Shopping Complex",
+      img: "./malls/edo/EvbuotubuShoppingComplex.jpg",
+      address: "Evbuotubu Road",
+      city: "Benin City",
+      description: "A commercial center with various retail shops and grocery stores."
+    },
+    {
+      name: "Civic Centre Mall",
+      img: "./malls/edo/CivicCentreMall.jpg",
+      address: "Airport Road",
+      city: "Benin City",
+      description: "A modern shopping mall with restaurants, retail stores, and a cinema."
+    },
+    {
+      name: "Etete Shopping Plaza",
+      img: "./malls/edo/EteteShoppingPlaza.jpg",
+      address: "Etete Road",
+      city: "Benin City",
+      description: "A shopping center with various fashion, electronics, and household items."
+    },
+    {
+      name: "Ekenwan Plaza",
+      img: "./malls/edo/EkenwanPlaza.jpg",
+      address: "Ekenwan Road",
+      city: "Benin City",
+      description: "A shopping complex with multiple stores, a supermarket, and eateries."
+    },
+    {
+      name: "Osula Plaza",
+      img: "./malls/edo/OsulaPlaza.jpg",
+      address: "Uselu Road",
+      city: "Benin City",
+      description: "A business hub with retail shops and office spaces."
+    },
+    {
+      name: "Faithway Plaza",
+      img: "./malls/edo/FaithwayPlaza.jpg",
+      address: "Ugbowo Road",
+      city: "Benin City",
+      description: "A small shopping plaza with stores for groceries, clothing, and gadgets."
+    },
+    {
+      name: "Golden Plaza",
+      img: "./malls/edo/GoldenPlaza.jpg",
+      address: "New Lagos Road",
+      city: "Benin City",
+      description: "A popular shopping and business center with retail outlets and services."
+    }
+  ],
+
+  "Akwa-Ibom" : [
+    {
+      name: "Ibom Tropicana Shopping Mall",
+      img: "./malls/akwa-ibom/IbomTropicana.jpg",
+      address: "Uyo, Akwa Ibom",
+      city: "Uyo",
+      description: "A modern shopping mall inaugurated to boost tourism and create wealth in the state."
+    },
+    {
+      name: "De Choice Mall",
+      img: "./malls/akwa-ibom/DeChoiceMall.jpg",
+      address: "Uyo, Akwa Ibom",
+      city: "Uyo",
+      description: "An ultra-modern shopping center featuring various shops, including furniture stores, electronics outlets, beauty shops, and a pharmacy."
+    },
+    {
+      name: "Inels Mall",
+      img: "./malls/akwa-ibom/InelsMall.jpg",
+      address: "Uyo, Akwa Ibom",
+      city: "Uyo",
+      description: "Offers online and offline sales of beauty, cosmetics, personal care products, groceries, and kitchen items."
+    },
+    {
+      name: "L&T Superstore",
+      img: "./malls/akwa-ibom/LTSuperstore.jpg",
+      address: "Uyo, Akwa Ibom",
+      city: "Uyo",
+      description: "An online retail store offering game consoles, controller pads, and PlayStation CDs at affordable prices."
+    },
+    {
+      name: "Pointek Uyo",
+      img: "./malls/akwa-ibom/PointekUyo.jpg",
+      address: "Uyo, Akwa Ibom",
+      city: "Uyo",
+      description: "Wholesalers and retailers of top-notch brands of mobile phones, electronics, computers, accessories, and gaming consoles with free delivery."
+    },
+    {
+      name: "Akpan Andem Market",
+      img: "./malls/akwa-ibom/AkpanAndemMarket.jpg",
+      address: "Uyo, Akwa Ibom",
+      city: "Uyo",
+      description: "A popular market offering local ingredients, fruits, stationery, fashion accessories, and more."
+    },
+    {
+      name: "Itam Market",
+      img: "./malls/akwa-ibom/ItamMarket.jpg",
+      address: "Uyo, Akwa Ibom",
+      city: "Uyo",
+      description: "A large local market with stores selling personal needs, household items, and industrial products such as fresh produce and electrical appliances."
+    },
+    {
+      name: "LG Showroom & Service Centre",
+      img: "./malls/akwa-ibom/LGShowroom.jpg",
+      address: "Uyo, Akwa Ibom",
+      city: "Uyo",
+      description: "Offers sales, installation, repairs, and maintenance of electronics and appliances, including refrigerators and air conditioners."
+    },
+    {
+      name: "MallforAfrica",
+      img: "./malls/akwa-ibom/MallforAfrica.jpg",
+      address: "Uyo, Akwa Ibom",
+      city: "Uyo",
+      description: "An online shopping platform providing access to shop from premium US and UK websites with delivery to Nigeria."
+    },
+    {
+      name: "Sweet Bride Enterprises",
+      img: "./malls/akwa-ibom/SweetBrideEnterprises.jpg",
+      address: "Uyo, Akwa Ibom",
+      city: "Uyo",
+      description: "A well-known wedding dress and accessories brand offering sales and rentals of the latest bridal gowns and accessories."
     }
   ],
 
