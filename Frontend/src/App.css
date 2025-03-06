@@ -70,3 +70,7 @@
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
 }
+
+.whatsapp-button {
+  background-color: #21CA1B !important; /* Your primary green color */
+}

@@ -28,7 +28,7 @@ import {
   Building, 
   Briefcase,
   Wallet,
-  Bank
+  Landmark
 } from "lucide-react";
 
 const businessTypes = [
@@ -54,8 +54,8 @@ const banks = [
   // Add more banks
 ];
 
-// Separate the MarketerSignup dialog component
-function MarketerSignupDialog({ open, onOpenChange }) {
+// Export the dialog component so it can be used by MarketerSignupButton
+export function MarketerSignupDialog({ open, onOpenChange }) {
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -240,7 +240,7 @@ function MarketerSignupDialog({ open, onOpenChange }) {
                 <Label htmlFor="bankName">Bank Name</Label>
                 <Select required>
                   <SelectTrigger className="pl-9 relative">
-                    <Bank className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                    <Landmark className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                     <SelectValue placeholder="Select your bank" />
                   </SelectTrigger>
                   <SelectContent>
