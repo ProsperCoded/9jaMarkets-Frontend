@@ -20,10 +20,9 @@ import { MESSAGE_API_CONTEXT } from "@/contexts";
 import OTPModal from "@/componets-utils/OTPModal";
 import { useNavigate } from "react-router-dom";
 import { deleteAuth, isStrongPassword } from "@/lib/util";
-import { AlertCircle, ArrowLeft, Mail, Loader2 } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 import { USER_PROFILE_CONTEXT } from "@/contexts";
-import { toast } from "sonner";
-
+import { Store, User } from "lucide-react";
 function ForgetPassword() {
   const [email, setEmail] = useState("");
   const messageApi = useContext(MESSAGE_API_CONTEXT);
@@ -35,44 +34,35 @@ function ForgetPassword() {
   const [resetCode, setResetCode] = useState("");
   const { userProfile, setUserProfile } = useContext(USER_PROFILE_CONTEXT);
   const navigate = useNavigate();
+  const [userType, setUserType] = useState(
+    (userProfile && userProfile.userType) || "customer"
+  );
   const sendForgetPasswordApi =
-    userProfile.userType === "merchant"
+    userType === "merchant"
       ? sendForgetPasswordMerchantApi
       : sendForgetPasswordCustomerApi;
 
   const resetPasswordApi =
-    userProfile.userType === "merchant"
+    userType === "merchant"
       ? resetPasswordMerchantApi
       : resetPasswordCustomerApi;
-
-  const [isLoading, setIsLoading] = useState(false);
-
   function quickLogout() {
     // This is only useful when the user is already signed in
     setUserProfile(null);
     deleteAuth();
     navigate("/");
   }
-
   const sendVerificationEmail = async () => {
-    setIsLoading(true);
-    try {
-      const response = await sendForgetPasswordApi(email, (message) => {
-        messageApi.error("Failed to send Verification");
-        console.error(message);
-      });
-      if (response) {
-        console.log(response);
-        messageApi.success("Email Verification Sent");
-        setOTPModalOpen(true);
-      }
-    } catch (error) {
-      toast.error("Failed to send reset link. Please try again.");
-    } finally {
-      setIsLoading(false);
+    const response = await sendForgetPasswordApi(email, (message) => {
+      messageApi.error("Failed to send Verification");
+      console.error(message);
+    });
+    if (response) {
+      console.log(response);
+      messageApi.success("Email Verification Sent");
+      setOTPModalOpen(true);
     }
   };
-
   const storeOTP = (otp) => {
     setResetCode(otp);
     setOTPModalOpen(false);
@@ -100,89 +90,148 @@ function ForgetPassword() {
     messageApi.success("Password Changed Successfully");
     quickLogout();
   };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    try {
-      await sendVerificationEmail();
-    } catch (error) {
-      toast.error("Failed to send reset link. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-site-bg/35 flex items-center justify-center px-4">
-      <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-2xl shadow-lg">
-        {/* Back Button */}
-        <Button
-          variant="ghost"
-          className="flex items-center text-gray-600 hover:text-Primary"
-          onClick={() => navigate(-1)}
-        >
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back
-        </Button>
-
-        <div className="text-center">
-          <h2 className="text-3xl font-bold text-Primary mb-2">
-            Forgot Password?
-          </h2>
-          <p className="text-gray-600">
-            No worries! Enter your email and we'll send you reset instructions.
-          </p>
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-2">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Email Address
-            </label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                className="pl-10 py-6"
-                required
-              />
-            </div>
-          </div>
-
-          <Button
-            type="submit"
-            className="w-full bg-Primary hover:bg-Primary/90 text-white py-6"
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Sending Reset Link...
-              </>
-            ) : (
-              "Send Reset Link"
-            )}
-          </Button>
-        </form>
-
-        <div className="text-center text-sm">
-          <p className="text-gray-600">
-            Remember your password?{" "}
-            <Button
-              variant="link"
-              className="text-Primary hover:text-Primary/90 p-0"
-              onClick={() => navigate("/login")}
-            >
-              Back to Login
-            </Button>
-          </p>
-        </div>
+    <div className="w-full h-screen">
+      <OTPModal
+        title="ENTER OTP"
+        open={OTPModalOpen}
+        setOpen={(open) => setOTPModalOpen(open)}
+        verifyEmail={storeOTP}
+        sendVerificationEmail={sendVerificationEmail}
+      />
+      <div className="flex justify-center items-center h-full">
+        <Card className="mx-2 w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
+          {!resetCode ? (
+            <>
+              <CardHeader>
+                <CardTitle className="text-Primary">Forgot Password</CardTitle>
+                <CardDescription>
+                  Enter your email to reset your password
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="items-center gap-4 grid w-full">
+                  <div className="flex flex-col space-y-1.5">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="Enter your email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Label
+                      htmlFor="userTypeToggle"
+                      className="bg-slate-200 p-2 rounded-lg cursor-pointer"
+                    >
+                      Account Type :
+                    </Label>
+                    <input
+                      type="checkbox"
+                      id="userTypeToggle"
+                      className="hidden"
+                      checked={userType === "merchant"}
+                      onChange={(e) =>
+                        setUserType(e.target.checked ? "merchant" : "customer")
+                      }
+                    />
+                    <Label
+                      htmlFor="userTypeToggle"
+                      className="flex items-center font-bold cursor-pointer"
+                    >
+                      {userType === "merchant" ? (
+                        <Store className="mr-2 w-4 h-4" />
+                      ) : (
+                        <User className="mr-2 w-4 h-4" />
+                      )}
+                      {userType === "merchant"
+                        ? "Merchant Account"
+                        : "Customer Account"}
+                    </Label>
+                  </div>
+                </div>
+              </CardContent>
+              <CardFooter className="flex justify-between">
+                <Button
+                  className="bg-[#F8912D] hover:bg-Primary w-full"
+                  onClick={sendVerificationEmail}
+                >
+                  Reset Password
+                </Button>
+              </CardFooter>
+            </>
+          ) : (
+            <>
+              <CardHeader>
+                <CardTitle className="text-[#236C13]">
+                  Change Password
+                </CardTitle>
+                <CardDescription>
+                  Enter your old and new password
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleChangePassword}>
+                  <div className="items-center gap-4 grid w-full">
+                    <div className="flex flex-col space-y-1.5">
+                      <Label htmlFor="newPassword">New Password</Label>
+                      <Input
+                        id="newPassword"
+                        type="password"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div className="flex flex-col space-y-1.5">
+                      <Label htmlFor="confirmPassword">
+                        Confirm New Password
+                      </Label>
+                      <Input
+                        id="confirmPassword"
+                        type="password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
+                      />
+                    </div>
+                  </div>
+                </form>
+              </CardContent>
+              <CardFooter className="flex flex-col">
+                <div className="mb-4 w-full text-center">
+                  {/* resend verification */}
+                  <a
+                    href="#"
+                    className="text-[#236C13] text-sm hover:text-[#21CA1B]"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      sendVerificationEmail();
+                    }}
+                  >
+                    Didn't receive the reset link ?
+                    <b className="ml-2 font-semibold">Resend</b>
+                  </a>
+                </div>
+                {error && (
+                  <div className="flex items-start bg-red-100 mb-4 p-2 rounded w-full text-red-700">
+                    <AlertCircle className="mr-2" size={30} />
+                    {error}
+                  </div>
+                )}
+                <Button
+                  className="bg-[#F8912D] hover:bg-[#236C13] w-full"
+                  onClick={handleChangePassword}
+                >
+                  Change Password
+                </Button>
+              </CardFooter>
+            </>
+          )}
+        </Card>
       </div>
     </div>
   );
