@@ -58,6 +58,7 @@ const ProductDetails = () => {
   useEffect(() => {
     const checkBookmarkStatus = async () => {
       if (!userProfile) return;
+      if (userProfile.userType === "merchant") return;
       try {
         const bookmarks = await getBookmarks(userProfile.id, messageApi.error);
         setIsBookmarked(
@@ -128,8 +129,8 @@ const ProductDetails = () => {
                     product.displayImage?.url
                   }
                   alt={product.name}
-                  className="w-full h-full object-cover transition-all duration-300"
-                  style={{ transform: 'scale(1.01)' }}
+                  className="w-full h-full transition-all duration-300 object-cover"
+                  style={{ transform: "scale(1.01)" }}
                 />
 
                 {/* Image Navigation Arrows */}
@@ -210,7 +211,7 @@ const ProductDetails = () => {
 
                 {/* Merchant Info Card */}
                 <div className="border-Primary/20 bg-gradient-to-br from-Primary/5 to-Primary/10 p-3 sm:p-4 lg:p-6 border rounded-xl">
-                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:gap-6">
+                  <div className="flex sm:flex-row flex-col gap-3 sm:gap-4 lg:gap-6">
                     <div className="flex sm:flex-col items-center sm:items-start sm:w-1/3 lg:w-1/2">
                       <div className="border-2 border-Primary/20 rounded-lg w-16 sm:w-20 lg:w-24 h-16 sm:h-20 lg:h-24 overflow-hidden">
                         <img
@@ -219,7 +220,7 @@ const ProductDetails = () => {
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      <div className="ml-4 sm:ml-0 sm:mt-5">
+                      <div className="sm:mt-5 ml-4 sm:ml-0">
                         <h3 className="font-semibold text-base text-gray-900 sm:text-lg">
                           {product.merchant.brandName}
                         </h3>
@@ -388,13 +389,17 @@ const ProductDetails = () => {
         </div>
 
         {/* Disclaimer section */}
-        <div className="mt-8 bg-orange/5 border border-orange/10 rounded-xl p-4 sm:p-6">
-          <div className="flex gap-3 items-start">
-            <AlertCircle className="w-5 h-5 text-orange flex-shrink-0 mt-0.5" />
+        <div className="border-orange/10 bg-orange/5 mt-8 p-4 sm:p-6 border rounded-xl">
+          <div className="flex items-start gap-3">
+            <AlertCircle className="flex-shrink-0 mt-0.5 w-5 h-5 text-orange" />
             <div className="space-y-1">
               <h3 className="font-medium text-gray-900">Disclaimer</h3>
-              <p className="text-sm text-gray-600 leading-relaxed">
-                9jaMarkets acts as a platform connecting buyers with merchants. We do not handle transactions, shipping, or product fulfillment. Please verify all details with the merchant before making any payments. Exercise due diligence when conducting business transactions.
+              <p className="text-gray-600 text-sm leading-relaxed">
+                9jaMarkets acts as a platform connecting buyers with merchants.
+                We do not handle transactions, shipping, or product fulfillment.
+                Please verify all details with the merchant before making any
+                payments. Exercise due diligence when conducting business
+                transactions.
               </p>
             </div>
           </div>

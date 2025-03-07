@@ -33,9 +33,14 @@ import {
   removeFromBookmarks,
   getBookmarks,
 } from "@/lib/api/bookmarkApi";
-import { getAuth } from "@/lib/util";
+import {
+  getAuth,
+  replaceAmpersandWithAnd,
+  replaceSpacesWithUnderscore,
+} from "@/lib/util";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
+import { Label } from "@/components/ui/label";
 
 const CustomerPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -43,8 +48,12 @@ const CustomerPage = () => {
   const { toast } = useToast();
 
   // Get initial category from URL params
-  const initialCategory = searchParams.get("category") || "All";
-  const initialState = searchParams.get("state") || "All";
+  const initialCategory = replaceAmpersandWithAnd(
+    searchParams.get("category") || "All"
+  );
+  const initialState = replaceAmpersandWithAnd(
+    searchParams.get("state") || "All"
+  );
   const initialPage = parseInt(searchParams.get("page") || "1", 10);
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -139,7 +148,10 @@ const CustomerPage = () => {
           {
             page: pagination.currentPage,
             pageSize: 16, // Adjust based on your design
-            category: selectedCategory !== "All" ? selectedCategory : null,
+            category:
+              selectedCategory !== "All"
+                ? replaceSpacesWithUnderscore(selectedCategory)
+                : null,
             state: selectedState !== "All" ? selectedState : null,
           },
           (error) =>
@@ -320,36 +332,41 @@ const CustomerPage = () => {
 
           {/* Filters */}
           <div className="flex gap-4 w-full max-w-[300px]">
-            <Select value={selectedState} onValueChange={setSelectedState}>
-              <SelectTrigger className="bg-white rounded-full">
-                <MapPin className="mr-2 w-4 h-4" />
-                <SelectValue placeholder="State" />
-              </SelectTrigger>
-              <SelectContent>
-                {stateOptions.map((state) => (
-                  <SelectItem key={state} value={state}>
-                    {state}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-
-            <Select
-              value={selectedCategory}
-              onValueChange={setSelectedCategory}
-            >
-              <SelectTrigger className="bg-white rounded-full">
-                <ListFilter className="mr-2 w-4 h-4" />
-                <SelectValue placeholder="Category" />
-              </SelectTrigger>
-              <SelectContent>
-                {categoriesOptions.map((category) => (
-                  <SelectItem key={category} value={category}>
-                    {category}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <div className="flex flex-col items-center">
+              <Label className="font-bold text-white text-xl">State</Label>
+              <Select value={selectedState} onValueChange={setSelectedState}>
+                <SelectTrigger className="bg-white rounded-full">
+                  <MapPin className="mr-2 w-4 h-4" />
+                  <SelectValue placeholder="State" />
+                </SelectTrigger>
+                <SelectContent>
+                  {stateOptions.map((state) => (
+                    <SelectItem key={state} value={state}>
+                      {state}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex flex-col items-center">
+              <Label className="font-bold text-white text-xl">Category</Label>
+              <Select
+                value={selectedCategory}
+                onValueChange={setSelectedCategory}
+              >
+                <SelectTrigger className="bg-white rounded-full">
+                  <ListFilter className="mr-2 w-4 h-4" />
+                  <SelectValue placeholder="Category" />
+                </SelectTrigger>
+                <SelectContent>
+                  {categoriesOptions.map((category) => (
+                    <SelectItem key={category} value={category}>
+                      {category}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         </div>
       </div>

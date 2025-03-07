@@ -52,7 +52,12 @@ import Kids from "../assets/optimized/categories/kids&babyproducts.png";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { MALLS, MARKETS } from "../config";
+import { MALLS, MARKETS, PRODUCT_CATEGORIES } from "../config";
+import {
+  replaceAmpersandWithAnd,
+  replaceSpacesWithUnderscore,
+  replaceUnderscoresWithSpaces,
+} from "../lib/util";
 
 import {
   GraduationCap, // Education
@@ -73,41 +78,66 @@ import {
 import { useContext } from "react";
 import { MALLS_DATA_CONTEXT, MARKET_DATA_CONTEXT } from "@/contexts";
 
-// Update the categoryIcons mapping
-const categoryIcons = {
-  "Education & Stationery": GraduationCap,
-  "Real Estate & Housing": Building2,
-  "Events & Entertainment": Music,
-  "Technology Services": Laptop,
-  "Cultural Experiences": Theater,
-  "Food & Groceries": ShoppingBasket,
-  "Electronics & Gadgets": Smartphone,
-  "Fashion & Accessories": Shirt,
-  "Health & Wellness": Heart,
-  "Home & Living": Home,
-  "Automobile Needs": Car,
-  "Traditional Crafts": Paintbrush,
-  "Sports & Outdoor": Trophy,
-  "Kids & Baby Products": Baby,
+// Helper function to format category name from config format to display format
+const formatCategoryName = (category) => {
+  return category
+    .split(" AND ")
+    .map((word) => word.charAt(0) + word.slice(1).toLowerCase())
+    .join(" & ");
 };
 
-// Update the categories object with new image mappings
-const categories = {
-  "Education & Stationery": Education,
-  "Real Estate & Housing": RealEstate,
-  "Events & Entertainment": Events,
-  "Technology Services": Technology,
-  "Cultural Experiences": Cultural,
-  "Food & Groceries": Food,
-  "Electronics & Gadgets": Electronics,
-  "Fashion & Accessories": Fashion,
-  "Health & Wellness": Health,
-  "Home & Living": HomeImage,
-  "Automobile Needs": Automobile,
-  "Traditional Crafts": Traditional,
-  "Sports & Outdoor": Sports,
-  "Kids & Baby Products": Kids,
+// Map the icons to their respective categories - ensure every category has an icon
+const iconMapping = {
+  EDUCATION: GraduationCap,
+  REAL: Building2, // Changed from "REAL ESTATE" to just "REAL" to match first word extraction
+  EVENTS: Music,
+  TECHNOLOGY: Laptop,
+  CULTURAL: Theater,
+  FOOD: ShoppingBasket,
+  ELECTRONICS: Smartphone,
+  FASHION: Shirt,
+  HEALTH: Heart,
+  HOME: Home,
+  AUTOMOBILE: Car,
+  TRADITIONAL: Paintbrush,
+  SPORTS: Trophy,
+  KIDS: Baby,
 };
+
+// Map the images to their respective categories
+const imageMapping = {
+  "EDUCATION AND STATIONERY": Education,
+  "REAL ESTATE AND HOUSING": RealEstate,
+  "EVENTS AND ENTERTAINMENT": Events,
+  "TECHNOLOGY SERVICES": Technology,
+  "CULTURAL EXPERIENCES": Cultural,
+  "FOOD AND GROCERIES": Food,
+  "ELECTRONICS AND GADGETS": Electronics,
+  "FASHION AND ACCESSORIES": Fashion,
+  "HEALTH AND WELLNESS": Health,
+  "HOME AND LIVING": HomeImage,
+  "AUTOMOBILE NEEDS": Automobile,
+  "TRADITIONAL CRAFTS": Traditional,
+  "SPORTS AND OUTDOOR": Sports,
+  "KIDS AND BABY PRODUCTS": Kids,
+};
+
+// Default fallback icon to prevent undefined icons
+const FallbackIcon = ShoppingBasket;
+
+// Generate category icons and categories objects dynamically
+const categoryIcons = {};
+const categories = {};
+
+PRODUCT_CATEGORIES.forEach((category) => {
+  const formattedName = formatCategoryName(category);
+  // Extract only the first word for icon mapping
+  const categoryKey = category.split(" ")[0];
+
+  // Use the mapped icon or fallback to a default icon if not found
+  categoryIcons[formattedName] = iconMapping[categoryKey] || FallbackIcon;
+  categories[formattedName] = imageMapping[category];
+});
 
 function ExploreSection() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -233,7 +263,11 @@ function ExploreSection() {
               >
                 {Object.entries(categories).map(([name, imageUrl]) => (
                   <SwiperSlide key={name}>
-                    <Link to={`/products?category=${encodeURIComponent(name)}`}>
+                    <Link
+                      to={`/products?category=${encodeURIComponent(
+                        name.toUpperCase()
+                      )}`}
+                    >
                       <div className="h-[200px] cursor-pointer group">
                         <div className="relative rounded-xl h-full overflow-hidden">
                           <img

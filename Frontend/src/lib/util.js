@@ -57,3 +57,10 @@ export function replaceSpacesWithUnderscore(value = "") {
 export function replaceUnderscoresWithSpaces(value = "") {
   return value.replace(/_/g, " ");
 }
+export function replaceAmpersandWithAnd(value = "") {
+  return value.replace(/&/g, "AND");
+}
+
+export function replaceAndWithAmpersand(value = "") {
+  return value.replace(/AND/g, "&");
+}
