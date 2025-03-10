@@ -102,7 +102,7 @@ const MALLS = {
     {
       name: "A to Z Mall",
       img: "./malls/bayelsa/AtoZMall.jpg",
-      address: "Coordinates: 4°55'36.0\"N 6°19'13.0\"E",
+      address: "Isaac Boro Expressway, Opposite Baybridge Junction, Kpansia",
       city: "Yenagoa",
       description: "A shopping mall providing a range of retail options.",
     },
@@ -129,6 +129,95 @@ const MALLS = {
       address: "Opposite Interbau Roundabout, Okpanam Road",
       city: "Asaba",
       description: "A contemporary shopping mall housing numerous retail outlets, restaurants, and a cinema, providing a comprehensive shopping and entertainment experience.",
+    }
+  ],
+
+  Ebonyi: [
+    {
+      name: "Ebonyi State Shopping Mall",
+      img: "./malls/ebonyi/EbonyiStateShoppingMall.jpg",
+      address: "Abakaliki",
+      city: "Ebonyi",
+      description: "A modern shopping complex housing various retail stores, restaurants, and entertainment facilities.",
+    },
+    {
+      name: "Roban Stores Abakaliki",
+      img: "./malls/ebonyi/RobanStoresAbakaliki.jpg",
+      address: "Mile 50 Junction, Kpiri Kpiri, Abakaliki",
+      city: "Ebonyi",
+      description: "A world-class shopping center offering a wide variety of items ranging from fruits and vegetables to gym equipment and baked products.",
+    },
+    {
+      name: "All Seasons Shopping Mall",
+      img: "./malls/ebonyi/AllSeasonsShoppingMall.jpg",
+      address: "Mile 50 Before NEPA Junction, Abakaliki",
+      city: "Ebonyi",
+      description: "A contemporary shopping center offering groceries, beauty products, clothing, and accessories.",
+    }
+  ],
+
+  Enugu: [
+    {
+      name: "Polo Park Mall",
+      img: "./malls/enugu/PoloParkMall.jpg",
+      address: "Polo Park Amusement Centre",
+      city: "Enugu",
+      description: "A premium shopping mall with a wide range of retail and recreational facilities.",
+    },
+    {
+      name: "Chase Mall",
+      img: "./malls/enugu/ChaseMall.jpg",
+      address: "33 Abakaliki Road, GRA",
+      city: "Enugu",
+      description: "A mall with steady security, parking spot, and stores selling fashion accessories, groceries, and more, as well as corporate offices.",
+    },
+  ],
+
+  Imo: [
+    {
+      name: "Owerri Mall",
+      img: "./malls/imo/OwerriMall.jpg",
+      address: "Egbu Road, Owerri, Imo State",
+      city: "Owerri",
+      description: "A state-of-the-art mall featuring over 40 shops occupied by major brands like Shoprite, Genesis Cinema, PEP, Kilimanjaro, and LG.",
+    },
+    {
+      name: "L'ARCADE",
+      img: "./malls/imo/LARCADE.jpg",
+      address: "Okohia Industrial Layout, World Bank Road, Opposite Titanic View Hotel, Owerri, Imo State",
+      city: "Owerri",
+      description: "A modern shopping mall developed by Sandworth Properties, offering a premium shopping experience in the heart of Owerri.",
+    },
+    {
+      name: "Everyday Supermarket",
+      img: "./malls/imo/EverydaySupermarket.jpg",
+      address: "Wetheral Road, Owerri, Imo State",
+      city: "Owerri",
+      description: "A supermarket providing a unique shopping experience with a wide range of products at competitive prices.",
+    },
+    {
+      name: "Priceless Stores",
+      img: "./malls/imo/PricelessStores.jpg",
+      address: "Location to be updated",
+      city: "Owerri",
+      description: "A shopping destination offering a variety of products to meet diverse customer needs.",
+    },
+    {
+      name: "Fouani Store",
+      img: "./malls/imo/FouaniStore.jpg",
+      address: "No 3 Egbu Road, Owerri, Imo State",
+      city: "Owerri",
+      description: "A leading distributor of LG electronics products, offering a wide range of electronics and home appliances.",
+    }
+  ],
+
+  Jigawa: [
+    {
+      name: "Sahad Stores Ltd",
+      img: "./malls/jigawa/SahadStoresLtd.webp",
+      address: "C10/C11 Sani Abacha Way",
+      city: "Dutse",
+      description: "A leading superstore offering food items, electrical goods, fitness equipment, salon products, and accessories.",
     }
   ],
 
