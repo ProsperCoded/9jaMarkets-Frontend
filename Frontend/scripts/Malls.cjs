@@ -1,6 +1,137 @@
 const { Rivers } = require("./Markets.cjs");
 
 const MALLS = {
+  Anambra: [
+    {
+      name: "Onitsha Mall",
+      img: "./malls/anambra/OnitshaMall.jpg",
+      address: "Onitsha, Anambra State",
+      city: "Anambra",
+      description: "A modern shopping complex housing international retailers like Shoprite, providing a comprehensive shopping experience."
+    },
+    {
+      name: "Awgbu Junction Agulu",
+      img: "./malls/anambra/AwgbuJunctionAgulu.jpg",
+      address: "Agulu, Anambra State",
+      city: "Anambra",
+      description: "A local shopping spot known for its variety of goods and services, serving the Agulu community."
+    },
+    {
+      name: "Standard Plaza",
+      img: "./malls/anambra/StandardPlaza.jpg",
+      address: "Anambra State",
+      city: "Anambra",
+      description: "A shopping center offering a range of retail outlets, catering to various shopping needs."
+    },
+    {
+      name: "Oye Market Ukpo",
+      img: "./malls/anambra/OyeMarketUkpo.jpg",
+      address: "Ukpo, Anambra State",
+      city: "Anambra",
+      description: "A traditional market known for its wide array of products, reflecting the local culture and commerce."
+    },
+    {
+      name: "Ifyblessed Plaza",
+      img: "./malls/anambra/IfyblessedPlaza.jpg",
+      address: "Anambra State",
+      city: "Anambra",
+      description: "A shopping plaza offering diverse retail options, popular among local shoppers."
+    },
+    {
+      name: "Ozo Nwayo Plaza",
+      img: "./malls/anambra/OzoNwayoPlaza.jpg",
+      address: "Anambra State",
+      city: "Anambra",
+      description: "A commercial center providing various goods and services to meet shoppers' needs."
+    },
+    {
+      name: "Afor Market",
+      img: "./malls/anambra/AforMarket.jpg",
+      address: "Anambra State",
+      city: "Anambra",
+      description: "A bustling market known for its vibrant trade in local products and commodities."
+    },
+    {
+      name: "Emmav Plaza",
+      img: "./malls/anambra/EmmavPlaza.jpg",
+      address: "Anambra State",
+      city: "Anambra",
+      description: "A shopping destination offering a variety of retail outlets, catering to diverse preferences."
+    },
+    {
+      name: "EMPORORS GSM VILLAGE",
+      img: "./malls/anambra/EmpororsGSMVillage.jpg",
+      address: "Anambra State",
+      city: "Anambra",
+      description: "A specialized market focusing on mobile phones and accessories, popular among tech enthusiasts."
+    }
+  ],
+  
+  Abia: [
+    {
+      name: "Aba Mega Mall",
+      img: "./malls/abia/AbaMegaMall.jpg",
+      address: "Ekenna Street, Aba",
+      city: "Abia",
+      description: "One of the largest malls in Africa, and the first smart mall globally, inaugurated in 2015."
+    },
+    {
+      name: "Abia Mall",
+      img: "./malls/abia/AbiaMall.jpg",
+      address: "Old Garri Road, Umuahia",
+      city: "Abia",
+      description: "A one-stop shopping destination offering diverse retail options and leisure experiences."
+    },
+    {
+      name: "Enyimba Mall",
+      img: "./malls/abia/EnyimbaMall.jpg",
+      address: "Etche Road, Aba",
+      city: "Abia",
+      description: "A modern shopping center featuring outlet shops and enhancing Aba’s commercial landscape."
+    },
+    {
+      name: "Market Square",
+      img: "./malls/abia/MarketSquare.jpg",
+      address: "Aba",
+      city: "Aba",
+      description: "A modern grocery shopping mall known for its standard facilities and diverse product offerings.",
+      }
+  ],
+
+  Bayelsa: [
+    {
+      name: "A to Z Mall",
+      img: "./malls/bayelsa/AtoZMall.jpg",
+      address: "Coordinates: 4°55'36.0\"N 6°19'13.0\"E",
+      city: "Yenagoa",
+      description: "A shopping mall providing a range of retail options.",
+    },
+    {
+      name: "Market Square",
+      img: "./malls/bayelsa/MarketSquare.jpg",
+      address: "Benvies Road, Biogbolo",
+      city: "Yenagoa",
+      description: "A shopping mall offering a variety of products and services.",
+     }
+  ],
+
+  Delta: [
+    {
+      name: "Delta Mall",
+      img: "./malls/delta/DeltaMall.jpg",
+      address: "Effurun Roundabout",
+      city: "Effurun",
+      description: "A modern shopping center featuring various retail stores, eateries, and entertainment options, including a cinema.",
+    },
+    {
+      name: "Asaba Mall",
+      img: "./malls/delta/AsabaMall.jpg",
+      address: "Opposite Interbau Roundabout, Okpanam Road",
+      city: "Asaba",
+      description: "A contemporary shopping mall housing numerous retail outlets, restaurants, and a cinema, providing a comprehensive shopping and entertainment experience.",
+    }
+  ],
+
   Lagos: [
     {
       name: "Ikeja City Mall",
@@ -414,7 +545,7 @@ const MALLS = {
     },
     {
       name: "Calabar Mall",
-      img: "./malls/cross-river/CalabarMall.jpg",
+      img: "./malls/cross-river/CalabarMall.webp",
       address: "MCC Road",
       city: "Calabar",
       description: "A modern shopping center housing over 50 brands of shops, including a 5-screen multiplex for shopping and recreational activities.",
@@ -429,7 +560,7 @@ const MALLS = {
     {
       name: "NYOVAT Shopping Mall",
       img: "./malls/cross-river/NYOVATShoppingMall.jpg",
-      address: "15 Oche-rore Street, Ikom",
+      address: "15 Oche-rore Street",
       city: "Ikom",
       description: "One of the biggest and most popular shopping centers in Ikom, offering household and personal items at relatively affordable prices."
     }

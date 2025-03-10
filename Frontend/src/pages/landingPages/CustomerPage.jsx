@@ -40,7 +40,6 @@ import {
 } from "@/lib/util";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
-import { Label } from "@/components/ui/label";
 
 const CustomerPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -332,41 +331,37 @@ const CustomerPage = () => {
 
           {/* Filters */}
           <div className="flex gap-4 w-full max-w-[300px]">
-            <div className="flex flex-col items-center">
-              <Label className="font-bold text-white text-xl">State</Label>
-              <Select value={selectedState} onValueChange={setSelectedState}>
-                <SelectTrigger className="bg-white rounded-full">
-                  <MapPin className="mr-2 w-4 h-4" />
-                  <SelectValue placeholder="State" />
-                </SelectTrigger>
-                <SelectContent>
-                  {stateOptions.map((state) => (
-                    <SelectItem key={state} value={state}>
-                      {state}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="flex flex-col items-center">
-              <Label className="font-bold text-white text-xl">Category</Label>
-              <Select
-                value={selectedCategory}
-                onValueChange={setSelectedCategory}
-              >
-                <SelectTrigger className="bg-white rounded-full">
-                  <ListFilter className="mr-2 w-4 h-4" />
-                  <SelectValue placeholder="Category" />
-                </SelectTrigger>
-                <SelectContent>
-                  {categoriesOptions.map((category) => (
-                    <SelectItem key={category} value={category}>
-                      {category}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+            <Select value={selectedState} onValueChange={setSelectedState}>
+              <SelectTrigger className="bg-white rounded-full">
+                <MapPin className="mr-2 w-4 h-4" />
+                <SelectValue placeholder="State">
+                  {selectedState === "All" ? "State" : selectedState}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                {stateOptions.map((state) => (
+                  <SelectItem key={state} value={state}>
+                    {state}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+              <SelectTrigger className="bg-white rounded-full">
+                <ListFilter className="mr-2 w-4 h-4" />
+                <SelectValue placeholder="Category">
+                  {selectedCategory === "All" ? "Category" : selectedCategory}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                {categoriesOptions.map((category) => (
+                  <SelectItem key={category} value={category}>
+                    {category}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
       </div>
@@ -385,8 +380,71 @@ const CustomerPage = () => {
             <div className="border-Primary border-t-2 border-b-2 rounded-full w-12 h-12 animate-spin"></div>
           </div>
         ) : filteredProducts.length === 0 ? (
-          <div className="py-10 text-center">
-            <p className="text-gray-500 text-lg">No products found</p>
+          <div className="flex flex-col items-center justify-center py-16 px-4">
+            {/* Animated Illustration */}
+            <div className="relative mb-8">
+              <div className="absolute inset-0 bg-Primary/10 animate-pulse rounded-full" />
+              <div className="relative bg-white p-6 rounded-full shadow-xl">
+                <div className="relative w-24 h-24 animate-float">
+                  <Search className="w-full h-full text-Primary opacity-80" />
+                  <div className="absolute -top-1 -right-1 bg-Primary/20 rounded-full p-2 animate-bounce-slow">
+                    <ListFilter className="w-4 h-4 text-Primary" />
+                  </div>
+                </div>
+              </div>
+              {/* Decorative Elements */}
+              <div className="absolute -top-4 -left-4 bg-Primary/5 rounded-full w-8 h-8 animate-bounce-slow" />
+              <div className="absolute -bottom-2 -right-6 bg-Primary/10 rounded-full w-12 h-12 animate-bounce-delayed" />
+              <div className="absolute top-1/2 -right-8 bg-Primary/15 rounded-full w-6 h-6 animate-pulse" />
+            </div>
+
+            {/* Text Content */}
+            <div className="text-center max-w-md mx-auto space-y-3">
+              <h3 className="text-2xl font-bold text-gray-900 bg-gradient-to-r from-Primary to-Primary/60 bg-clip-text text-transparent">
+                No Products Found
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                {selectedCategory !== "All" || selectedState !== "All" ? (
+                  <>
+                    We couldn't find any products matching your filters. Try adjusting your
+                    search criteria or explore our other categories.
+                  </>
+                ) : (
+                  <>
+                    Looks like we're still stocking up! Check back soon for amazing
+                    products or try a different search term.
+                  </>
+                )}
+              </p>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="mt-8 flex flex-wrap gap-4 justify-center">
+              {(selectedCategory !== "All" || selectedState !== "All") && (
+                <button
+                  onClick={() => {
+                    setSelectedCategory("All");
+                    setSelectedState("All");
+                    setSearchQuery("");
+                  }}
+                  className="bg-Primary/5 hover:bg-Primary/10 text-Primary px-6 py-2 rounded-full font-medium transition-all duration-300 hover:shadow-lg hover:shadow-Primary/10 flex items-center gap-2"
+                >
+                  <ListFilter className="w-4 h-4" />
+                  Clear Filters
+                </button>
+              )}
+              <button
+                onClick={() => {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  const searchInput = document.querySelector('input[type="text"]');
+                  if (searchInput) searchInput.focus();
+                }}
+                className="bg-Primary hover:bg-Primary/90 text-white px-6 py-2 rounded-full font-medium transition-all duration-300 hover:shadow-lg hover:shadow-Primary/20 flex items-center gap-2"
+              >
+                <Search className="w-4 h-4" />
+                New Search
+              </button>
+            </div>
           </div>
         ) : (
           <div className="gap-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
