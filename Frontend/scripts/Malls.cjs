@@ -127,32 +127,11 @@ const MALLS = {
     },
     {
       name: "L'ARCADE",
-      img: "./malls/imo/LARCADE.jpg",
+      img: "./malls/imo/l'arcade.jpg",
       address: "Okohia Industrial Layout, World Bank Road, Opposite Titanic View Hotel, Owerri, Imo State",
       city: "Owerri",
       description: "A modern shopping mall developed by Sandworth Properties, offering a premium shopping experience in the heart of Owerri.",
     },
-    {
-      name: "Everyday Supermarket",
-      img: "./malls/imo/EverydaySupermarket.jpg",
-      address: "Wetheral Road, Owerri, Imo State",
-      city: "Owerri",
-      description: "A supermarket providing a unique shopping experience with a wide range of products at competitive prices.",
-    },
-    {
-      name: "Priceless Stores",
-      img: "./malls/imo/PricelessStores.jpg",
-      address: "Location to be updated",
-      city: "Owerri",
-      description: "A shopping destination offering a variety of products to meet diverse customer needs.",
-    },
-    {
-      name: "Fouani Store",
-      img: "./malls/imo/FouaniStore.jpg",
-      address: "No 3 Egbu Road, Owerri, Imo State",
-      city: "Owerri",
-      description: "A leading distributor of LG electronics products, offering a wide range of electronics and home appliances.",
-    }
   ],
 
   Jigawa: [
