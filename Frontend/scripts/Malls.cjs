@@ -182,7 +182,6 @@ const MALLS = {
       address: "Zoo Road, Kano, Nigeria",
       city: "Kano",
       description: "The first ultramodern shopping mall in Northern Nigeria, offering a variety of retail outlets, restaurants, and entertainment options.",
-      url: "https://adobayeromall.com/"
     },
     {
       name: "Country Mall Ltd",
@@ -190,7 +189,6 @@ const MALLS = {
       address: "Plot 35/36 Guda Abdullahi Road, Farm Center, Nasarawa, Kano, Nigeria",
       city: "Kano",
       description: "A shopping destination for groceries, household items, wines, spirits, and electronics.",
-      url: "https://www.finelib.com/cities/kano/shopping/shopping-malls"
     },
     {
       name: "Hajarat Shopping Mall",
@@ -198,7 +196,6 @@ const MALLS = {
       address: "Shops 4/5 Kaltume House, Maiduguri Road/Tarauni Junction, Hotoro, Kano, Nigeria",
       city: "Kano",
       description: "Offers a range of products including frozen foods, wines, beverages, baby foods, cosmetics, and gift items.",
-      url: "https://www.finelib.com/cities/kano/shopping/shopping-malls"
     },
     {
       name: "Galaxy Mall",
@@ -206,7 +203,6 @@ const MALLS = {
       address: "Sabon Gari, Kano, Nigeria",
       city: "Kano",
       description: "A prominent mall in the Sabon Gari area, catering to diverse shopping needs.",
-      url: "https://ynaija.com/popular-shopping-malls-in-kano/"
     },
     {
       name: "Farah Mall",
@@ -214,109 +210,96 @@ const MALLS = {
       address: "Fagge, Kano, Nigeria",
       city: "Kano",
       description: "A medium-sized mall catering to middle- and low-income earners, offering a blend of quality and affordability.",
-      url: "https://ynaija.com/popular-shopping-malls-in-kano/"
     }
   ],
 
   Katsina: [
     {
       name: "Jifatu Store",
-      img: "./markets/JifatuStore.jpg",
+      img: "./malls/katsina/JifatuStore.jpg",
       address: "Katsina, Nigeria",
       city: "Katsina",
       description: "A prominent shopping center offering a variety of goods and services.",
-      url: "https://ynaija.com/major-shopping-centres-in-katsina/"
     },
     {
       name: "First Lady Shopping Complex",
-      img: "./markets/FirstLadyShoppingComplex.jpg",
+      img: "./malls/katsina/FirstLadyShoppingComplex.jpg",
       address: "Katsina, Nigeria",
       city: "Katsina",
       description: "A well-known complex housing numerous retail outlets.",
-      url: "https://ynaija.com/major-shopping-centres-in-katsina/"
     },
     {
       name: "Green House Store",
-      img: "./markets/GreenHouseStore.jpg",
+      img: "./malls/katsina/GreenHouseStore.jpg",
       address: "Katsina, Nigeria",
       city: "Katsina",
       description: "A shopping destination offering a variety of products.",
-      url: "https://ynaija.com/major-shopping-centres-in-katsina/"
     },
     {
       name: "Abbass Plaza",
-      img: "./markets/AbbassPlaza.jpg",
+      img: "./malls/katsina/AbbassPlaza.jpg",
       address: "Katsina, Nigeria",
       city: "Katsina",
       description: "A plaza featuring multiple shops and services.",
-      url: "https://ynaija.com/major-shopping-centres-in-katsina/"
     },
     {
       name: "Umar Stores",
-      img: "./markets/UmarStores.jpg",
+      img: "./malls/katsina/UmarStores.jpg",
       address: "Katsina, Nigeria",
       city: "Katsina",
       description: "A store known for its wide range of products.",
-      url: "https://ynaija.com/major-shopping-centres-in-katsina/"
     },
     {
       name: "Abdullahi Plaza",
-      img: "./markets/AbdullahiPlaza.jpg",
+      img: "./malls/katsina/AbdullahiPlaza.jpg",
       address: "Katsina, Nigeria",
       city: "Katsina",
       description: "A shopping plaza with various retail options.",
-      url: "https://ynaija.com/major-shopping-centres-in-katsina/"
     },
     {
       name: "Sauki Fish Shopping Mall",
-      img: "./markets/SaukiFishShoppingMall.jpg",
+      img: "./malls/katsina/SaukiFishShoppingMall.jpg",
       address: "Ahmadu Bello Way, Near Audu Fari House, Katsina, Nigeria",
       city: "Katsina",
       description: "A shopping mall offering a variety of products, including fish and other groceries.",
-      url: "https://www.facebook.com/katsinapost/posts/sauki-fish-shopping-mall-katsinafarashin-kayanmu-na-yau-03-12-2024address-ahmadu/1083085347163729/"
     },
     {
       name: "Katsina City Mall",
-      img: "./markets/KatsinaCityMall.jpg",
+      img: "./malls/katsina/KatsinaCityMall.jpg",
       address: "Katsina, Nigeria",
       city: "Katsina",
       description: "A modern shopping mall constructed by the government to enhance commercial activities.",
-      url: "https://kipa.kt.gov.ng/property-development/"
     },
     {
       name: "Katsina-Dubai International Market",
-      img: "./markets/KatsinaDubaiInternationalMarket.jpg",
+      img: "./malls/katsina/KatsinaDubaiInternationalMarket.jpg",
       address: "Katsina, Nigeria",
       city: "Katsina",
       description: "An international market aimed at boosting trade and commerce in the region.",
-      url: "https://kipa.kt.gov.ng/property-development/"
     }
   ],
 
   Kebbi: [
     {
       name: "Elnoor Cellphones City",
-      img: "./markets/ElnoorCellphonesCity.jpg",
+      img: "./malls/kebbi/ElnoorCellphonesCity.jpg",
       address: "3, Emir Haruna Road, Birnin Kebbi, Kebbi State, Nigeria",
       city: "Birnin Kebbi",
       description: "A phone store offering a wide range of quality mobile phones and accessories, providing customers with a satisfying shopping experience.",
-      url: "https://www.finelib.com/cities/birnin-kebbi/shopping"
     },
     {
       name: "Rotimage Shopping",
-      img: "./markets/RotimageShopping.jpg",
+      img: "./malls/kebbi/RotimageShopping.jpg",
       address: "Emir Usman Road, Birnin Kebbi, Kebbi State, Nigeria",
       city: "Birnin Kebbi",
       description: "A shopping center offering a variety of products and services to cater to diverse customer needs.",
-      url: "https://www.finelib.com/cities/birnin-kebbi/shopping"
     },
     {
       name: "KXPRESS Birnin Kebbi",
-      img: "./markets/KXPRESSBirninKebbi.jpg",
+      img: "./malls/kebbi/KXPRESSBirninKebbi.jpg",
       address: "Shop No 3, Ahmadu Bello Way, Birnin Kebbi, Kebbi State, Nigeria",
       city: "Birnin Kebbi",
       description: "A logistics and delivery service center associated with Konga Online Shopping, facilitating e-commerce activities in the region.",
-      url: "https://new.konga.com/send-package/stores?geocode=1061493607&state=Kebbi"
     }
   ],
 
@@ -927,59 +910,34 @@ const MALLS = {
   Sokoto: [
     {
       name: "AGG Mall Shopping Complex",
-      img: "./markets/AGGMallShoppingComplex.jpg",
-      address: "Mabera Jelani Area, Shuni Road, Sokoto, Nigeria",
+      img: "./malls/sokoto/AGGMallShoppingComplex.jpg",
+      address: "Mabera Jelani Area, Shuni Road",
       city: "Sokoto",
       description: "An ultramodern shopping mall offering a wide variety of products such as home goods, glassware, electronics, clothing, laces, Swiss materials, and more.",
-      url: "https://www.finelib.com/cities/sokoto/shopping"
-    },
-    {
-      name: "AU Jaredi Plaza",
-      img: "./markets/AUJarediPlaza.jpg",
-      address: "Location to be updated",
-      city: "Sokoto",
-      description: "A vibrant hub blending convenience and affordability in a bustling shopping environment.",
-      url: "https://au-jaredi-plaza.wheree.com/"
-    },
-    {
-      name: "Alkanchi Plaza",
-      img: "./markets/AlkanchiPlaza.jpg",
-      address: "Location to be updated",
-      city: "Sokoto",
-      description: "A premier shopping destination offering a diverse array of products and services catering to various needs.",
-      url: "https://alkanchi-plaza.wheree.com/"
-    },
-    {
-      name: "Haulat Shopping Complex",
-      img: "./markets/HaulatShoppingComplex.jpg",
-      address: "26HF+F33, Mabera Mujaya 840103, Sokoto, Nigeria",
-      city: "Sokoto",
-      description: "A shopping complex offering a variety of products and services to meet customers' needs.",
-      url: "https://www.trip.com/travel-guide/shops/sokoto/haulat-shopping-complex-138442801/"
     },
     {
       name: "Fodio Shopping Mall",
-      img: "./markets/FodioShoppingMall.jpg",
-      address: "Location to be updated",
+      img: "./malls/sokoto/FodioShoppingMall.jpg",
+      address: "9 Abdulahi Fodio Rd, Minanata",
       city: "Sokoto",
       description: "A shopping mall providing a variety of retail options for shoppers.",
-      url: "https://www.instagram.com/explore/locations/847275188684422/fodio-shopping-mall-sokoto/nearby/"
     },
     {
       name: "K7 Mall",
-      img: "./markets/K7Mall.jpg",
-      address: "No 1, Agaei Road, Sokoto, Nigeria",
+      img: "./malls/sokoto/K7Mall.jpg",
+      address: "No 1, Agaei Road",
       city: "Sokoto",
       description: "A shopping mall offering a range of products and services to cater to diverse customer needs.",
-      url: "https://www.facebook.com/k7mallsok/videos/k7-mall-no-1-agaei-road-sokoto/492066429277209/"
-    },
+    }
+  ],
+
+  Zamfara: [
     {
-      name: "KXPRESS Sokoto SC 001",
-      img: "./markets/KXPRESSSokotoSC001.jpg",
-      address: "City View Plaza, Suite A2, Beside First Bank, Diplomat Area, Sultan Abubakar Road, Sokoto, Nigeria",
-      city: "Sokoto",
-      description: "A logistics and delivery service center associated with Konga Online Shopping, facilitating e-commerce activities in the region.",
-      url: "https://new.konga.com/send-package/stores?geocode=1061493619&state=Sokoto"
+      name: "Jifatu Shopping Mall",
+      img: "./malls/zamfara/JifatuShoppingMall.jpg",
+      address: "Gusau",
+      city: "Zamfara",
+      description: "Fully stocked with groceries, household goods, cosmetics, toiletries, and more, Jifatu Shopping Mall is a place where you can get almost everything you need.",
     }
   ],
 
