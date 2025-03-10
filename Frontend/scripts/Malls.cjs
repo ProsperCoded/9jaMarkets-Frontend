@@ -4,67 +4,11 @@ const MALLS = {
   Anambra: [
     {
       name: "Onitsha Mall",
-      img: "./malls/anambra/OnitshaMall.jpg",
-      address: "Onitsha, Anambra State",
+      img: "./malls/anambra/onitsha.jpeg",
+      address: "Park Street, Onitsha G.R.A, Onitsha",
       city: "Anambra",
       description: "A modern shopping complex housing international retailers like Shoprite, providing a comprehensive shopping experience."
     },
-    {
-      name: "Awgbu Junction Agulu",
-      img: "./malls/anambra/AwgbuJunctionAgulu.jpg",
-      address: "Agulu, Anambra State",
-      city: "Anambra",
-      description: "A local shopping spot known for its variety of goods and services, serving the Agulu community."
-    },
-    {
-      name: "Standard Plaza",
-      img: "./malls/anambra/StandardPlaza.jpg",
-      address: "Anambra State",
-      city: "Anambra",
-      description: "A shopping center offering a range of retail outlets, catering to various shopping needs."
-    },
-    {
-      name: "Oye Market Ukpo",
-      img: "./malls/anambra/OyeMarketUkpo.jpg",
-      address: "Ukpo, Anambra State",
-      city: "Anambra",
-      description: "A traditional market known for its wide array of products, reflecting the local culture and commerce."
-    },
-    {
-      name: "Ifyblessed Plaza",
-      img: "./malls/anambra/IfyblessedPlaza.jpg",
-      address: "Anambra State",
-      city: "Anambra",
-      description: "A shopping plaza offering diverse retail options, popular among local shoppers."
-    },
-    {
-      name: "Ozo Nwayo Plaza",
-      img: "./malls/anambra/OzoNwayoPlaza.jpg",
-      address: "Anambra State",
-      city: "Anambra",
-      description: "A commercial center providing various goods and services to meet shoppers' needs."
-    },
-    {
-      name: "Afor Market",
-      img: "./malls/anambra/AforMarket.jpg",
-      address: "Anambra State",
-      city: "Anambra",
-      description: "A bustling market known for its vibrant trade in local products and commodities."
-    },
-    {
-      name: "Emmav Plaza",
-      img: "./malls/anambra/EmmavPlaza.jpg",
-      address: "Anambra State",
-      city: "Anambra",
-      description: "A shopping destination offering a variety of retail outlets, catering to diverse preferences."
-    },
-    {
-      name: "EMPORORS GSM VILLAGE",
-      img: "./malls/anambra/EmpororsGSMVillage.jpg",
-      address: "Anambra State",
-      city: "Anambra",
-      description: "A specialized market focusing on mobile phones and accessories, popular among tech enthusiasts."
-    }
   ],
   
   Abia: [
