@@ -1004,59 +1004,97 @@ const MALLS = {
   Sokoto: [
     {
       name: "AGG Mall Shopping Complex",
-      img: "./markets/AGGMallShoppingComplex.jpg",
-      address: "Mabera Jelani Area, Shuni Road, Sokoto, Nigeria",
+      img: "./malls/sokoto/AGGMallShoppingComplex.jpg",
+      address: "Mabera Jelani Area, Shuni Road",
       city: "Sokoto",
       description: "An ultramodern shopping mall offering a wide variety of products such as home goods, glassware, electronics, clothing, laces, Swiss materials, and more.",
-      url: "https://www.finelib.com/cities/sokoto/shopping"
     },
     {
       name: "AU Jaredi Plaza",
-      img: "./markets/AUJarediPlaza.jpg",
+      img: "./malls/sokoto/AUJarediPlaza.jpg",
       address: "Location to be updated",
       city: "Sokoto",
       description: "A vibrant hub blending convenience and affordability in a bustling shopping environment.",
-      url: "https://au-jaredi-plaza.wheree.com/"
     },
     {
       name: "Alkanchi Plaza",
-      img: "./markets/AlkanchiPlaza.jpg",
+      img: "./malls/sokoto/AlkanchiPlaza.jpg",
       address: "Location to be updated",
       city: "Sokoto",
       description: "A premier shopping destination offering a diverse array of products and services catering to various needs.",
-      url: "https://alkanchi-plaza.wheree.com/"
     },
     {
       name: "Haulat Shopping Complex",
-      img: "./markets/HaulatShoppingComplex.jpg",
-      address: "26HF+F33, Mabera Mujaya 840103, Sokoto, Nigeria",
+      img: "./malls/sokoto/HaulatShoppingComplex.jpg",
+      address: "26HF+F33, Mabera Mujaya 840103",
       city: "Sokoto",
       description: "A shopping complex offering a variety of products and services to meet customers' needs.",
-      url: "https://www.trip.com/travel-guide/shops/sokoto/haulat-shopping-complex-138442801/"
     },
     {
       name: "Fodio Shopping Mall",
-      img: "./markets/FodioShoppingMall.jpg",
+      img: "./malls/sokoto/FodioShoppingMall.jpg",
       address: "Location to be updated",
       city: "Sokoto",
       description: "A shopping mall providing a variety of retail options for shoppers.",
-      url: "https://www.instagram.com/explore/locations/847275188684422/fodio-shopping-mall-sokoto/nearby/"
     },
     {
       name: "K7 Mall",
-      img: "./markets/K7Mall.jpg",
-      address: "No 1, Agaei Road, Sokoto, Nigeria",
+      img: "./malls/sokoto/K7Mall.jpg",
+      address: "No 1, Agaei Road",
       city: "Sokoto",
       description: "A shopping mall offering a range of products and services to cater to diverse customer needs.",
-      url: "https://www.facebook.com/k7mallsok/videos/k7-mall-no-1-agaei-road-sokoto/492066429277209/"
     },
     {
       name: "KXPRESS Sokoto SC 001",
-      img: "./markets/KXPRESSSokotoSC001.jpg",
-      address: "City View Plaza, Suite A2, Beside First Bank, Diplomat Area, Sultan Abubakar Road, Sokoto, Nigeria",
+      img: "./malls/sokoto/KXPRESSSokotoSC001.jpg",
+      address: "City View Plaza, Suite A2, Beside First Bank, Diplomat Area, Sultan Abubakar Road",
       city: "Sokoto",
       description: "A logistics and delivery service center associated with Konga Online Shopping, facilitating e-commerce activities in the region.",
-      url: "https://new.konga.com/send-package/stores?geocode=1061493619&state=Sokoto"
+    }
+  ],
+
+  Zamfara: [
+    {
+      name: "Jifatu Shopping Mall",
+      img: "./malls/zamfara/JifatuShoppingMall.jpg",
+      address: "Gusau, Zamfara State, Nigeria",
+      city: "Gusau",
+      description: "Fully stocked with groceries, household goods, cosmetics, toiletries, and more, Jifatu Shopping Mall is a place where you can get almost everything you need.",
+    },
+    {
+      name: "Delight Super Stores",
+      img: "./malls/zamfara/DelightSuperStores.jpg",
+      address: "Tudun Wada Road, Gusau, Zamfara State, Nigeria",
+      city: "Gusau",
+      description: "A supermarket selling a range of household goods, body care products, and other equipment.",
+    },
+    {
+      name: "E-Think Products",
+      img: "./malls/zamfara/EThinkProducts.jpg",
+      address: "No 9A Engineer Nadama Close, GRA Gusau, Zamfara State, Nigeria",
+      city: "Gusau",
+      description: "A shopping center offering a variety of products and services to meet diverse customer needs.",
+    },
+    {
+      name: "Zabarma Plaza",
+      img: "./malls/zamfara/ZabarmaPlaza.jpg",
+      address: "5MCG+4V7, Gusau 632101, Zamfara, Nigeria",
+      city: "Gusau",
+      description: "A shopping plaza providing various retail options for shoppers.",
+    },
+    {
+      name: "Nana Firdausi Plaza",
+      img: "./malls/zamfara/NanaFirdausiPlaza.jpg",
+      address: "Gusau, Zamfara State, Nigeria",
+      city: "Gusau",
+      description: "A plaza featuring multiple shops and services catering to different needs.",
+    },
+    {
+      name: "Tudun Wada Market",
+      img: "./malls/zamfara/TudunWadaMarket.jpg",
+      address: "Gusau, Zamfara State, Nigeria",
+      city: "Gusau",
+      description: "A market offering a wide range of products and services to the local community.",
     }
   ],
 
