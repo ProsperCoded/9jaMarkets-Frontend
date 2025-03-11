@@ -133,7 +133,6 @@ const MALLS = {
       description: "A modern shopping mall developed by Sandworth Properties, offering a premium shopping experience in the heart of Owerri.",
     },
   ],
-
   Jigawa: [
     {
       name: "Sahad Stores Ltd",
@@ -178,105 +177,28 @@ const MALLS = {
   Kano: [
     {
       name: "Ado Bayero Mall",
-      img: "./malls/kano/AdoBayeroMall.jpg",
+      img: "./malls/kano/ado-bayero.jpeg",
       address: "Zoo Road, Kano, Nigeria",
       city: "Kano",
       description: "The first ultramodern shopping mall in Northern Nigeria, offering a variety of retail outlets, restaurants, and entertainment options.",
     },
     {
       name: "Country Mall Ltd",
-      img: "./malls/kano/CountryMallLtd.jpg",
+      img: "./malls/kano/country.jpeg",
       address: "Plot 35/36 Guda Abdullahi Road, Farm Center, Nasarawa, Kano, Nigeria",
       city: "Kano",
       description: "A shopping destination for groceries, household items, wines, spirits, and electronics.",
     },
-    {
-      name: "Hajarat Shopping Mall",
-      img: "./malls/kano/HajaratShoppingMall.jpg",
-      address: "Shops 4/5 Kaltume House, Maiduguri Road/Tarauni Junction, Hotoro, Kano, Nigeria",
-      city: "Kano",
-      description: "Offers a range of products including frozen foods, wines, beverages, baby foods, cosmetics, and gift items.",
-    },
-    {
-      name: "Galaxy Mall",
-      img: "./malls/kano/GalaxyMall.jpg",
-      address: "Sabon Gari, Kano, Nigeria",
-      city: "Kano",
-      description: "A prominent mall in the Sabon Gari area, catering to diverse shopping needs.",
-    },
-    {
-      name: "Farah Mall",
-      img: "./malls/kano/FarahMall.jpg",
-      address: "Fagge, Kano, Nigeria",
-      city: "Kano",
-      description: "A medium-sized mall catering to middle- and low-income earners, offering a blend of quality and affordability.",
-    }
   ],
 
   Katsina: [
     {
-      name: "Jifatu Store",
-      img: "./malls/katsina/JifatuStore.jpg",
-      address: "Katsina, Nigeria",
-      city: "Katsina",
-      description: "A prominent shopping center offering a variety of goods and services.",
-    },
-    {
       name: "First Lady Shopping Complex",
-      img: "./malls/katsina/FirstLadyShoppingComplex.jpg",
+      img: "./malls/katsina/firstlady.jpeg",
       address: "Katsina, Nigeria",
       city: "Katsina",
       description: "A well-known complex housing numerous retail outlets.",
     },
-    {
-      name: "Green House Store",
-      img: "./malls/katsina/GreenHouseStore.jpg",
-      address: "Katsina, Nigeria",
-      city: "Katsina",
-      description: "A shopping destination offering a variety of products.",
-    },
-    {
-      name: "Abbass Plaza",
-      img: "./malls/katsina/AbbassPlaza.jpg",
-      address: "Katsina, Nigeria",
-      city: "Katsina",
-      description: "A plaza featuring multiple shops and services.",
-    },
-    {
-      name: "Umar Stores",
-      img: "./malls/katsina/UmarStores.jpg",
-      address: "Katsina, Nigeria",
-      city: "Katsina",
-      description: "A store known for its wide range of products.",
-    },
-    {
-      name: "Abdullahi Plaza",
-      img: "./malls/katsina/AbdullahiPlaza.jpg",
-      address: "Katsina, Nigeria",
-      city: "Katsina",
-      description: "A shopping plaza with various retail options.",
-    },
-    {
-      name: "Sauki Fish Shopping Mall",
-      img: "./malls/katsina/SaukiFishShoppingMall.jpg",
-      address: "Ahmadu Bello Way, Near Audu Fari House, Katsina, Nigeria",
-      city: "Katsina",
-      description: "A shopping mall offering a variety of products, including fish and other groceries.",
-    },
-    {
-      name: "Katsina City Mall",
-      img: "./malls/katsina/KatsinaCityMall.jpg",
-      address: "Katsina, Nigeria",
-      city: "Katsina",
-      description: "A modern shopping mall constructed by the government to enhance commercial activities.",
-    },
-    {
-      name: "Katsina-Dubai International Market",
-      img: "./malls/katsina/KatsinaDubaiInternationalMarket.jpg",
-      address: "Katsina, Nigeria",
-      city: "Katsina",
-      description: "An international market aimed at boosting trade and commerce in the region.",
-    }
   ],
 
   Kebbi: [
