@@ -202,27 +202,6 @@ const MALLS = {
   ],
 
   Kebbi: [
-    {
-      name: "Elnoor Cellphones City",
-      img: "./malls/kebbi/ElnoorCellphonesCity.jpg",
-      address: "3, Emir Haruna Road, Birnin Kebbi, Kebbi State, Nigeria",
-      city: "Birnin Kebbi",
-      description: "A phone store offering a wide range of quality mobile phones and accessories, providing customers with a satisfying shopping experience.",
-    },
-    {
-      name: "Rotimage Shopping",
-      img: "./malls/kebbi/RotimageShopping.jpg",
-      address: "Emir Usman Road, Birnin Kebbi, Kebbi State, Nigeria",
-      city: "Birnin Kebbi",
-      description: "A shopping center offering a variety of products and services to cater to diverse customer needs.",
-    },
-    {
-      name: "KXPRESS Birnin Kebbi",
-      img: "./malls/kebbi/KXPRESSBirninKebbi.jpg",
-      address: "Shop No 3, Ahmadu Bello Way, Birnin Kebbi, Kebbi State, Nigeria",
-      city: "Birnin Kebbi",
-      description: "A logistics and delivery service center associated with Konga Online Shopping, facilitating e-commerce activities in the region.",
-    }
   ],
 
   Lagos: [
@@ -759,74 +738,25 @@ const MALLS = {
   "Akwa-Ibom" : [
     {
       name: "Ibom Tropicana Shopping Mall",
-      img: "./malls/akwa-ibom/IbomTropicana.jpg",
+      img: "./malls/akwa-ibom/ibom.jpeg",
       address: "Uyo, Akwa Ibom",
       city: "Uyo",
       description: "A modern shopping mall inaugurated to boost tourism and create wealth in the state."
     },
     {
       name: "De Choice Mall",
-      img: "./malls/akwa-ibom/DeChoiceMall.jpg",
+      img: "./malls/akwa-ibom/dechoice.jpeg",
       address: "Uyo, Akwa Ibom",
       city: "Uyo",
       description: "An ultra-modern shopping center featuring various shops, including furniture stores, electronics outlets, beauty shops, and a pharmacy."
     },
     {
       name: "Inels Mall",
-      img: "./malls/akwa-ibom/InelsMall.jpg",
+      img: "./malls/akwa-ibom/inels.jpeg",
       address: "Uyo, Akwa Ibom",
       city: "Uyo",
       description: "Offers online and offline sales of beauty, cosmetics, personal care products, groceries, and kitchen items."
     },
-    {
-      name: "L&T Superstore",
-      img: "./malls/akwa-ibom/LTSuperstore.jpg",
-      address: "Uyo, Akwa Ibom",
-      city: "Uyo",
-      description: "An online retail store offering game consoles, controller pads, and PlayStation CDs at affordable prices."
-    },
-    {
-      name: "Pointek Uyo",
-      img: "./malls/akwa-ibom/PointekUyo.jpg",
-      address: "Uyo, Akwa Ibom",
-      city: "Uyo",
-      description: "Wholesalers and retailers of top-notch brands of mobile phones, electronics, computers, accessories, and gaming consoles with free delivery."
-    },
-    {
-      name: "Akpan Andem Market",
-      img: "./malls/akwa-ibom/AkpanAndemMarket.jpg",
-      address: "Uyo, Akwa Ibom",
-      city: "Uyo",
-      description: "A popular market offering local ingredients, fruits, stationery, fashion accessories, and more."
-    },
-    {
-      name: "Itam Market",
-      img: "./malls/akwa-ibom/ItamMarket.jpg",
-      address: "Uyo, Akwa Ibom",
-      city: "Uyo",
-      description: "A large local market with stores selling personal needs, household items, and industrial products such as fresh produce and electrical appliances."
-    },
-    {
-      name: "LG Showroom & Service Centre",
-      img: "./malls/akwa-ibom/LGShowroom.jpg",
-      address: "Uyo, Akwa Ibom",
-      city: "Uyo",
-      description: "Offers sales, installation, repairs, and maintenance of electronics and appliances, including refrigerators and air conditioners."
-    },
-    {
-      name: "MallforAfrica",
-      img: "./malls/akwa-ibom/MallforAfrica.jpg",
-      address: "Uyo, Akwa Ibom",
-      city: "Uyo",
-      description: "An online shopping platform providing access to shop from premium US and UK websites with delivery to Nigeria."
-    },
-    {
-      name: "Sweet Bride Enterprises",
-      img: "./malls/akwa-ibom/SweetBrideEnterprises.jpg",
-      address: "Uyo, Akwa Ibom",
-      city: "Uyo",
-      description: "A well-known wedding dress and accessories brand offering sales and rentals of the latest bridal gowns and accessories."
-    }
   ],
 
   Sokoto: [
