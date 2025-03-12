@@ -111,6 +111,35 @@ export async function verifyAdPayment(reference, errorLogger = () => {}) {
 }
 **/
 
+// * get's all ads regardless if paid for or expired
+export async function getAllAdsApi(
+  { market, merchant } = {},
+  errorLogger = () => {}
+) {
+  const url = new URL("ad/all", SERVER_URL);
+
+  // Add query parameters if provided
+  if (market) url.searchParams.append("market", market);
+  if (merchant) url.searchParams.append("merchant", merchant);
+
+  try {
+    const response = await fetch(url);
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      errorLogger(responseData.message);
+      return [];
+    }
+
+    return responseData.data || [];
+  } catch (error) {
+    errorLogger("Failed to fetch ads");
+    console.error("Error fetching ads:", error);
+    return [];
+  }
+}
+
+// * filters out ads that have expired and not paid for
 /**
  * Fetches advertisements with optional filtering by market and/or merchant
  *
