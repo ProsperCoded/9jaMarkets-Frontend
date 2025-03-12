@@ -17,6 +17,9 @@ importers:
       '@intercom/messenger-js-sdk':
         specifier: ^0.0.14
         version: 0.0.14
+      '@paystack/inline-js':
+        specifier: ^2.22.2
+        version: 2.22.2
       '@radix-ui/react-accordion':
         specifier: ^1.2.3
         version: 1.2.3(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -566,6 +569,10 @@ packages:
   '@nodelib/fs.walk@1.2.8':
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
+
+  '@paystack/inline-js@2.22.2':
+    resolution: {integrity: sha512-/yiK/ehUgIWNmShdSbaiAZFzACGqNMLPzC8kdNN4Pgmus5TWaMewmkl2Se9BgCzgHNEEMh7uwIBr0ZSbzQTZDQ==}
+    engines: {node: '>= 18.0.0', npm: '>= 10.0.0'}
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -3599,6 +3606,8 @@ snapshots:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.19.1
+
+  '@paystack/inline-js@2.22.2': {}
 
   '@pkgjs/parseargs@0.11.0':
     optional: true

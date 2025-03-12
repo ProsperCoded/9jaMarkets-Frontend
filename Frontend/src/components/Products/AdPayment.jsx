@@ -19,8 +19,15 @@ import { useContext } from "react";
 import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "@/contexts";
 import { getProduct } from "@/lib/api/productApi";
 import { useErrorLogger } from "@/hooks";
+import {
+  initializeAdApi,
+  verifyAdPayment,
+  activateFreeAd,
+} from "@/lib/api/adApi";
+import Paystack from "@paystack/inline-js";
+
 const paymentMethods = [
-  { id: "card", name: "Pay with Interswitch", icon: InterswitchLogo },
+  { id: "card", name: "Pay with Paystack", icon: InterswitchLogo },
 ];
 
 export default function BillingPage() {
@@ -35,6 +42,7 @@ export default function BillingPage() {
   let url = new URL(window.location.href);
   let planId = url.searchParams.get("plan");
   let productId = url.searchParams.get("productId");
+
   useEffect(() => {
     // const params = new URLSearchParams(location.search);
     if (!(planId && plans[planId])) {
@@ -47,7 +55,12 @@ export default function BillingPage() {
       messageApi.error("Must Select a valid product");
       return;
     }
-    setSelectedPlan(plans[planId]);
+    let plan = plans[planId];
+    if (!plan) {
+      messageApi.error("Invalid selected plan");
+      return;
+    }
+    setSelectedPlan(plan);
     getProduct(productId, errorLogger).then((data) => {
       if (!data) {
         navigate("/products");
@@ -58,6 +71,44 @@ export default function BillingPage() {
     });
   }, [location, navigate]);
 
+  async function handlePayment() {
+    // Implement payment logic here
+    const level = selectedPlan.level;
+    if (level === 0) {
+      // try free add activation
+      const freeAd = await activateFreeAd(productId, errorLogger);
+      if (freeAd) {
+        messageApi.success("Free Ad activated successfully");
+        navigate("/dashboard/products", { replace: true });
+      }
+      return;
+    }
+    const paymentData = await initializeAdApi(level, productId, errorLogger);
+    console.log("paymentData", paymentData);
+    const config = {
+      email: userProfile.email, // Get from your auth context/state
+      amount: selectedPlan.price * 100, // Amount in kobo
+      key: "pk_test_675c37205e748ec82da0b59a67c0c6ad26aa0cc3",
+      publicKey: "pk_test_675c37205e748ec82da0b59a67c0c6ad26aa0cc3",
+      reference: paymentData.reference,
+      onSuccess: async (response) => {
+        const verified = await verifyAdPayment(response.reference, errorLogger);
+        if (verified) {
+          messageApi.success("Payment successful");
+          navigate("/dashboard/products", { replace: true });
+        }
+      },
+      onClose: () => {
+        messageApi.warning("Ad payment was Canceled");
+      },
+      onLoad: (response) => {
+        console.log("onLoad: ", response);
+      },
+    };
+
+    const popup = new Paystack();
+    popup.newTransaction(config);
+  }
   if (!selectedPlan || !userProfile) {
     return (
       <div className="flex justify-center items-center bg-gray-50 min-h-screen">
@@ -97,7 +148,7 @@ export default function BillingPage() {
                   return (
                     <Label
                       key={method.id}
-                      className="flex items-center [&:has(:checked)]:border-Primary hover:border-Primary [&:has(:checked)]:bg-Primary/10 p-3 md:p-4 border rounded-lg transition-all cursor-pointer"
+                      className="flex items-center [&:has(:checked)]:bg-Primary/10 p-3 md:p-4 border [&:has(:checked)]:border-Primary hover:border-Primary rounded-lg transition-all cursor-pointer"
                     >
                       <RadioGroupItem value={method.id} className="mr-4" />
                       <img className="mr-3 w-16" src={method.icon} />
@@ -120,6 +171,7 @@ export default function BillingPage() {
                       // expected to be a merchant
                       value={userProfile.brandName}
                       className="w-full"
+                      disabled={true}
                     />
                   </div>
                   <div className="gap-2 grid">
@@ -130,6 +182,7 @@ export default function BillingPage() {
                       value={userProfile.email}
                       placeholder="Enter your email"
                       className="w-full"
+                      disabled={true}
                     />
                   </div>
                   <div className="gap-2 grid">
@@ -140,6 +193,7 @@ export default function BillingPage() {
                       value={userProfile.phoneNumbers[0].number}
                       placeholder="Enter your phone number"
                       className="w-full"
+                      disabled={true}
                     />
                   </div>
                 </div>
@@ -200,6 +254,7 @@ export default function BillingPage() {
                 <Button
                   className="bg-Primary hover:bg-Primary/90 w-full text-white"
                   size="lg"
+                  onClick={handlePayment}
                 >
                   Review and Confirm
                 </Button>

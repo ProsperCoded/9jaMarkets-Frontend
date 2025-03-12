@@ -51,27 +51,6 @@ export async function activateFreeAd(productId, errorLogger = () => {}) {
 }
  */
 
-/**
- * Initializes the ad API for a given level and product ID.
- *
- * @param {string} level - The level of the ad to initialize.
- * @param {string} productId - The ID of the product for which the ad is being initialized.
- * @param {function} [errorLogger=() => {}] - Optional error logging function.
- * @returns {Promise<{
- *   status: string,
- *   message: string,
- *   data: {
- *     merchant_code: string,
- *     pay_item_id: string,
- *     txn_ref: string,
- *     mode: string,
- *     site_redirect_url: string,
- *     amount: number,
- *     currency: number
- *   }
- * }>} - A promise that resolves to the data from the API response.
- * @throws {Error} - Throws an error if the API request fails.
- */
 export async function initializeAdApi(
   level,
   productId,
@@ -95,50 +74,16 @@ export async function initializeAdApi(
   return responseData.data;
 }
 // * Example Response Data
-/** 
- {
-  "status": "success",
-  "message": "Ad Payment Initialized Successfully",
-  "data": {
-    "merchant_code": "MX007",
-    "pay_item_id": "101007",
-    "txn_ref": "txn-2a8214f8-6a8d-43b4-b9c1-985a14711082",
-    "mode": "TEST",
-    "site_redirect_url": "http://localhost:3000/checkout?txn_ref=txn-2a8214f8-6a8d-43b4-b9c1-985a14711082",
-    "amount": 10000,
-    "currency": 566
-  }
-}
-  **/
-/**
- * Verifies the ad payment for a given transaction reference.
- *
- * @param {string} txnReference - The transaction reference to verify.
- * @param {function} [errorLogger=() => {}] - Optional error logging function.
- * @returns {Promise<{
- *   id: string,
- *   amount: number,
- *   status: string,
- *   for: string,
- *   reference: string,
- *   date: string,
- *   updatedAt: string,
- *   deletedAt: string | null,
- *   merchantId: string
- * }>} - A promise that resolves to the data from the API response.
- * @throws {Error} - Throws an error if the API request fails.
- */
-export async function verifyAdPayment(txnReference, errorLogger = () => {}) {
-  const { accessToken } = getAuth();
-  const url = new URL(`ad/verify/${txnReference}`, SERVER_URL);
 
+export async function verifyAdPayment(reference, errorLogger = () => {}) {
+  const { accessToken } = getAuth();
+  const url = new URL(`ad/verify/${reference}`, SERVER_URL);
   const response = await fetch(url, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
   });
-
   const responseData = await response.json();
   if (!response.ok) {
     errorLogger(responseData.message);

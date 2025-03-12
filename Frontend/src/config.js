@@ -1,8 +1,8 @@
 // export const SERVER_URL =
 //   "https://safe-lindsy-obiken-415ef84b.koyeb.app/api/v1/";
-export const SERVER_URL =
-  "https://tricky-carmine-prosper-coded-9jamarket-35d50fa1.koyeb.app/api/v1/";
-// export const SERVER_URL = "http://localhost:3100/api/v1/";
+// export const SERVER_URL =
+//   "https://tricky-carmine-prosper-coded-9jamarket-35d50fa1.koyeb.app/api/v1/";
+export const SERVER_URL = "http://localhost:3100/api/v1/";
 export const GOOGLE_URL = `${SERVER_URL}auth/customer/google`;
 // 3 Days for access token
 export const ACCESS_TOKEN_DURATION = 3;
@@ -45,6 +45,7 @@ export const plans = {
     id: "free",
     name: "Free Plan",
     price: 0,
+    level: 0,
     duration: "3 days",
     benefits: [
       "Basic product listing",
@@ -56,9 +57,10 @@ export const plans = {
     id: "standard",
     name: "Standard Plan",
     price: 3000,
+    level: 1,
     duration: "7 days",
     benefits: [
-      "Enhanced product visibilitys",
+      "Enhanced product visibility",
       "Priority placement in search results",
       "Access to detailed analytics",
       "Eligibility for promotional campaigns",
@@ -68,6 +70,7 @@ export const plans = {
     id: "premium",
     name: "Premium Plan",
     price: 5000,
+    level: 2,
     duration: "30 days",
     benefits: [
       "Maximum product visibility",
@@ -81,6 +84,7 @@ export const plans = {
     id: "boost",
     name: "Boost Plan",
     price: 10000,
+    level: 3,
     duration: "30 days",
     benefits: [
       "Exclusive product placement on homepage",
