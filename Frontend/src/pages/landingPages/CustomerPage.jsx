@@ -1,15 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import {
-  Search,
-  Bookmark,
-  BookmarkCheck,
-  MapPin,
-  ListFilter,
-  Star,
-  Crown,
-  Award,
-} from "lucide-react";
+import { Search, MapPin, ListFilter, Star, Crown, Award } from "lucide-react";
 import { PRODUCT_CATEGORIES, STATES } from "@/config";
 import CH from "@/assets/customerhero.png";
 import {
@@ -47,6 +38,12 @@ import {
 } from "@/lib/util";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
+import {
+  useTrackAdView,
+  useTrackAdClick,
+  useTrackProductClick,
+} from "@/hooks/useTracking";
+import ProductCard from "@/components/ProductCard";
 
 // Function to get ad level badge properties
 const getAdBadge = (level) => {
@@ -106,26 +103,9 @@ const CustomerPage = () => {
   const stateOptions = ["All", ...STATES];
   const categoriesOptions = ["All", ...PRODUCT_CATEGORIES];
 
-  // Simulated advertised products - We'll merge these with API products
-  const advertizedProducts = [
-    {
-      id: "adv1",
-      name: "Classic Dry Iron",
-      price: 40000,
-      image: "/path/to/iron.jpg",
-      category: "Home & Living",
-      advertised: true,
-    },
-    {
-      id: "adv2",
-      name: "Samsung TV",
-      price: 100000,
-      image: "/path/to/tv.jpg",
-      category: "Electronics & Gadgets",
-      advertised: true,
-    },
-    // ...other advertised products
-  ];
+  // Add tracking hooks
+  const handleProductClick = useTrackProductClick();
+  const handleAdClick = useTrackAdClick();
 
   // Update URL when filters change
   useEffect(() => {
@@ -490,60 +470,13 @@ const CustomerPage = () => {
         ) : (
           <div className="gap-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {filteredProducts.map((product) => (
-              <Link to={`/products/${product.id}`} key={product.id}>
-                <Card
-                  key={product.id}
-                  className="group relative overflow-hidden"
-                >
-                  <div className="relative bg-gray-100 aspect-square">
-                    <img
-                      src={product.image || product.displayImage?.url}
-                      alt={product.name}
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
-
-                    {/* Premium Ad Badge */}
-                    {product.adStatus?.isAd &&
-                      getAdBadge(product.adStatus.level) && (
-                        <div
-                          className={`absolute top-2 left-2 px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1 shadow-md ${
-                            getAdBadge(product.adStatus.level).classes
-                          }`}
-                        >
-                          {getAdBadge(product.adStatus.level).icon}
-                          <span>
-                            {getAdBadge(product.adStatus.level).label}
-                          </span>
-                        </div>
-                      )}
-
-                    <Button
-                      size="icon"
-                      variant="ghost"
-                      className="top-2 right-2 absolute bg-Primary/80 hover:bg-Primary rounded-full text-white transition-colors"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        toggleBookmark(product.id);
-                      }}
-                    >
-                      {bookmarkedProducts.has(product.id) ? (
-                        <BookmarkCheck className="w-5 h-5" />
-                      ) : (
-                        <Bookmark className="w-5 h-5" />
-                      )}
-                    </Button>
-                  </div>
-                  <CardContent className="p-3">
-                    <h3 className="font-medium text-sm truncate">
-                      {product.name}
-                    </h3>
-                    <p className="font-bold text-Primary text-sm">
-                      ₦{product.price?.toLocaleString() || "N/A"}
-                    </p>
-                  </CardContent>
-                </Card>
-              </Link>
+              <ProductCard
+                key={product.id}
+                product={product}
+                getAdBadge={getAdBadge}
+                isBookmarked={bookmarkedProducts.has(product.id)}
+                onBookmarkToggle={toggleBookmark}
+              />
             ))}
           </div>
         )}

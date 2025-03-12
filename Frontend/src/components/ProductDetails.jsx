@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useErrorLogger } from "@/hooks";
 import WhatsappIcon from "@/assets/whatsapp-icon.svg";
@@ -25,7 +25,7 @@ import {
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { getProduct } from "@/lib/api/productApi";
-import { getAdsApi } from "@/lib/api/adApi";
+import { getAdByProduct } from "@/lib/api/adApi";
 import {
   USER_PROFILE_CONTEXT,
   MESSAGE_API_CONTEXT,
@@ -36,6 +36,7 @@ import {
   removeFromBookmarks,
   getBookmarks,
 } from "@/lib/api/bookmarkApi";
+import { trackProductClick, trackAdClick } from "@/lib/api/trackingApi";
 
 // Function to get ad status info
 const getAdStatusInfo = (adLevel) => {
@@ -89,6 +90,18 @@ const ProductDetails = () => {
   const messageApi = useContext(MESSAGE_API_CONTEXT);
   const { updateBookmarkCount } = useContext(BOOKMARK_CONTEXT);
 
+  // Track that this product was viewed
+  const hasTrackedRef = useRef(false);
+
+  useEffect(() => {
+    // Ensure we track the product click only once when the component mounts
+    if (productId && !hasTrackedRef.current) {
+      // * skip product clicking for this route
+      // trackProductClick(productId);
+      hasTrackedRef.current = true;
+    }
+  }, [productId]);
+
   useEffect(() => {
     const fetchProductDetails = async () => {
       const productDetails = await getProduct(productId, errorLogger);
@@ -97,16 +110,18 @@ const ProductDetails = () => {
         setSelectedImage(0);
 
         // Fetch ad status for this product
-        const ads = await getAdsApi({}, errorLogger);
-        const productAd = ads.find(
-          (ad) => ad.productId === productId && ad.paidFor === true
-        );
+        const productAd = await getAdByProduct(productId);
 
         if (productAd) {
           setAdStatus({
             level: productAd.level,
+            adId: productAd.id,
             expiresAt: new Date(productAd.expiresAt),
           });
+
+          // If this is an ad, track the ad click too
+          // * skip ad clicking for this component
+          // trackAdClick(productAd.id);
         }
       }
     };

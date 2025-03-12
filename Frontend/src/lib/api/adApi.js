@@ -147,6 +147,45 @@ export async function getAdsApi(
   }
 }
 
+export async function getAdApi(adId, errorLogger = () => {}) {
+  const url = new URL(`ad/${adId}`, SERVER_URL);
+
+  try {
+    const response = await fetch(url);
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      errorLogger(responseData.message);
+      return null;
+    }
+
+    return responseData.data || null;
+  } catch (error) {
+    errorLogger("Failed to fetch ad");
+    console.error("Error fetching ad:", error);
+    return null;
+  }
+}
+
+export async function getAdByProduct(productId, errorLogger = () => {}) {
+  const url = new URL(`ad/product/${productId}`, SERVER_URL);
+
+  try {
+    const response = await fetch(url);
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      errorLogger(responseData.message);
+      return null;
+    }
+
+    return responseData.data || null;
+  } catch (error) {
+    errorLogger("Failed to fetch ad");
+    console.error("Error fetching ad:", error);
+    return null;
+  }
+}
 /**
  * Fetches active ads and integrates them with product data
  *
@@ -182,6 +221,7 @@ export async function getProductsWithAdsStatus(
         adStatus: ad
           ? {
               isAd: true,
+              adId: ad.id, // Include the actual ad ID for tracking
               level: ad.level,
               expiresAt: ad.expiresAt,
             }

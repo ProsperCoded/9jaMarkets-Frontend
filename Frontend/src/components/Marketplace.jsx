@@ -35,6 +35,8 @@ import {
   getProductsWithAdsStatus,
   sortProductsByAdPriority,
 } from "@/lib/api/adApi";
+import { useTrackAdView, useTrackProductClick } from "@/hooks/useTracking";
+import { trackAdClick } from "@/lib/api/trackingApi";
 
 // Function to get ad level label and style
 const getAdBadge = (level) => {
@@ -167,6 +169,9 @@ const Marketplace = () => {
 
   if (!market && marketsData.length > 0) return <NotFoundPage />;
   if (!market) return <LoadingPage message={"Could not be found"} />;
+
+  // Hook for product click tracking
+  const handleProductClick = useTrackProductClick();
 
   return (
     <div className="bg-gray-50 pt-16 min-h-screen">
@@ -347,63 +352,98 @@ const Marketplace = () => {
           <div className="flex-1">
             {filteredProducts.length > 0 ? (
               <div className="gap-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
-                {filteredProducts.map((product) => (
-                  <div
-                    key={product.id}
-                    className="bg-white shadow-md hover:shadow-lg rounded-lg overflow-hidden transition-all"
-                  >
-                    <div className="relative">
-                      <Link to={`/products/${product.id}`}>
-                        <div className="aspect-square">
-                          <img
-                            src={
-                              product.displayImage?.url ||
-                              "/path/to/fallback.jpg"
+                {filteredProducts.map((product) => {
+                  // For ads, we need a ref to track when they come into view
+                  const adViewRef = product.adStatus?.isAd
+                    ? useTrackAdView(product.adStatus?.adId || product.id)
+                    : null;
+
+                  return (
+                    <div
+                      key={product.id}
+                      className="bg-white shadow-md hover:shadow-lg rounded-lg overflow-hidden transition-all"
+                      // If it's an ad, use the ref for view tracking
+                      ref={product.adStatus?.isAd ? adViewRef : null}
+                    >
+                      <div className="relative">
+                        <Link
+                          to={`/products/${product.id}`}
+                          onClick={() => {
+                            // Track product click
+                            handleProductClick(product.id);
+
+                            // If it's also an ad, track ad click
+                            if (product.adStatus?.isAd) {
+                              trackAdClick(
+                                product.adStatus?.adId || product.id
+                              );
                             }
-                            alt={product.name}
-                            className="w-full h-full object-cover"
-                          />
+                          }}
+                        >
+                          <div className="aspect-square">
+                            <img
+                              src={
+                                product.displayImage?.url ||
+                                "/path/to/fallback.jpg"
+                              }
+                              alt={product.name}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        </Link>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleBookmarkToggle(product.id);
+                          }}
+                          className="top-2 right-2 absolute bg-Primary/80 hover:bg-Primary p-2 rounded-full transition-colors"
+                        >
+                          {bookmarkedProducts.has(product.id) ? (
+                            <BookmarkCheck className="w-5 h-5 text-white" />
+                          ) : (
+                            <Bookmark className="w-5 h-5 text-white" />
+                          )}
+                        </button>
+
+                        {/* Premium Ad Badge */}
+                        {product.adStatus?.isAd &&
+                          getAdBadge(product.adStatus.level) && (
+                            <div
+                              className={`absolute top-2 left-2 px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${
+                                getAdBadge(product.adStatus.level).classes
+                              }`}
+                            >
+                              {getAdBadge(product.adStatus.level).icon}
+                              <span>
+                                {getAdBadge(product.adStatus.level).label}
+                              </span>
+                            </div>
+                          )}
+                      </div>
+                      <Link
+                        to={`/products/${product.id}`}
+                        onClick={() => {
+                          // Track product click
+                          handleProductClick(product.id);
+
+                          // If it's also an ad, track ad click
+                          if (product.adStatus?.isAd) {
+                            trackAdClick(product.adStatus?.adId || product.id);
+                          }
+                        }}
+                      >
+                        <div className="p-2">
+                          <h3 className="font-medium truncate">
+                            {product.name}
+                          </h3>
+                          <p className="font-bold text-Primary text">
+                            ₦{product.price?.toLocaleString()}
+                          </p>
                         </div>
                       </Link>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleBookmarkToggle(product.id);
-                        }}
-                        className="top-2 right-2 absolute bg-Primary/80 hover:bg-Primary p-2 rounded-full transition-colors"
-                      >
-                        {bookmarkedProducts.has(product.id) ? (
-                          <BookmarkCheck className="w-5 h-5 text-white" />
-                        ) : (
-                          <Bookmark className="w-5 h-5 text-white" />
-                        )}
-                      </button>
-
-                      {/* Premium Ad Badge */}
-                      {product.adStatus?.isAd &&
-                        getAdBadge(product.adStatus.level) && (
-                          <div
-                            className={`absolute top-2 left-2 px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${
-                              getAdBadge(product.adStatus.level).classes
-                            }`}
-                          >
-                            {getAdBadge(product.adStatus.level).icon}
-                            <span>
-                              {getAdBadge(product.adStatus.level).label}
-                            </span>
-                          </div>
-                        )}
                     </div>
-                    <Link to={`/products/${product.id}`}>
-                      <div className="p-2">
-                        <h3 className="font-medium truncate">{product.name}</h3>
-                        <p className="font-bold text-Primary text">
-                          ₦{product.price?.toLocaleString()}
-                        </p>
-                      </div>
-                    </Link>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             ) : (
               <div className="flex flex-col justify-center items-center px-4 py-12 text-center">

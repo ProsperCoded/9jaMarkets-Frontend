@@ -1,96 +1,86 @@
-import { Link, useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
-import { useState } from "react";
-import { CheckCircle, AlertCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Bookmark, BookmarkCheck } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  useTrackAdView,
+  useTrackAdClick,
+  useTrackProductClick,
+} from "@/hooks/useTracking";
 
-const ProductCard = ({ product }) => {
-  const [imageLoading, setImageLoading] = useState(true);
-  const navigate = useNavigate();
-
-  const hasAds = product.ads && product.ads.length > 0;
-  const verifiedAdsCount = hasAds
-    ? product.ads.filter((ad) => ad.paidFor === true).length
-    : 0;
-  const unverifiedAdsCount = hasAds
-    ? product.ads.filter((ad) => ad.paidFor === false).length
-    : 0;
-
-  const handleAdClick = (e) => {
-    e.preventDefault(); // Prevent the parent link navigation
-    navigate("/dashboard/ads/payments");
-  };
+export default function ProductCard({
+  product,
+  getAdBadge,
+  isBookmarked,
+  onBookmarkToggle,
+}) {
+  // Initialize tracking hooks at component top level
+  const adViewRef = useTrackAdView(
+    product.adStatus?.isAd ? product.adStatus.adId : null,
+    {
+      enabled: product.adStatus?.isAd,
+    }
+  );
+  const handleProductClick = useTrackProductClick();
+  const handleAdClick = useTrackAdClick();
 
   return (
     <Link
       to={`/products/${product.id}`}
-      className="group bg-white shadow-sm hover:shadow-md rounded-lg overflow-hidden transition-all duration-300"
+      onClick={() => {
+        handleProductClick(product.id);
+        if (product.adStatus?.isAd) {
+          handleAdClick(product.adStatus.adId);
+        }
+      }}
     >
-      <div className="relative aspect-square">
-        {imageLoading && (
-          <div className="absolute inset-0 bg-gray-200 animate-pulse" />
-        )}
-        <img
-          src={product.displayImage.url}
-          alt={product.name}
-          className={`w-full h-full object-cover transition-opacity duration-300 ${
-            imageLoading ? "opacity-0" : "opacity-100"
-          }`}
-          onLoad={() => setImageLoading(false)}
-          onError={() => setImageLoading(false)}
-        />
+      <Card
+        className="group relative overflow-hidden"
+        ref={product.adStatus?.isAd ? adViewRef : null}
+      >
+        <div className="relative bg-gray-100 aspect-square">
+          <img
+            src={product.image || product.displayImage?.url}
+            alt={product.name}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
 
-        {hasAds && (
-          <div className="right-0 bottom-0 left-0 absolute flex flex-wrap gap-1 p-1">
-            {verifiedAdsCount > 0 && (
-              <button
-                onClick={handleAdClick}
-                className="flex items-center gap-1 bg-green-100 hover:bg-green-200 px-2 py-1 rounded-full font-medium text-green-700 text-xs transition-colors"
-              >
-                <CheckCircle className="w-3 h-3" />
-                <span>{verifiedAdsCount} Verified</span>
-              </button>
+          {/* Premium Ad Badge */}
+          {product.adStatus?.isAd && getAdBadge(product.adStatus.level) && (
+            <div
+              className={`absolute top-2 left-2 px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1 shadow-md ${
+                getAdBadge(product.adStatus.level).classes
+              }`}
+            >
+              {getAdBadge(product.adStatus.level).icon}
+              <span>{getAdBadge(product.adStatus.level).label}</span>
+            </div>
+          )}
+
+          <Button
+            size="icon"
+            variant="ghost"
+            className="top-2 right-2 absolute bg-Primary/80 hover:bg-Primary rounded-full text-white transition-colors"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onBookmarkToggle(product.id);
+            }}
+          >
+            {isBookmarked ? (
+              <BookmarkCheck className="w-5 h-5" />
+            ) : (
+              <Bookmark className="w-5 h-5" />
             )}
-            {unverifiedAdsCount > 0 && (
-              <button
-                onClick={handleAdClick}
-                className="flex items-center gap-1 bg-yellow-100 hover:bg-yellow-200 px-2 py-1 rounded-full font-medium text-yellow-700 text-xs transition-colors"
-              >
-                <AlertCircle className="w-3 h-3" />
-                <span>{unverifiedAdsCount} Unverified</span>
-              </button>
-            )}
-          </div>
-        )}
-      </div>
-      <div className="p-3">
-        <h3 className="group-hover:text-Primary font-medium text-gray-900 line-clamp-2 transition-colors">
-          {product.name}33
-        </h3>
-        <p className="mt-1 font-bold text-Primary">
-          ₦{product.price?.toLocaleString()}
-        </p>
-      </div>
+          </Button>
+        </div>
+        <CardContent className="p-3">
+          <h3 className="font-medium text-sm truncate">{product.name}</h3>
+          <p className="font-bold text-Primary text-sm">
+            ₦{product.price?.toLocaleString() || "N/A"}
+          </p>
+        </CardContent>
+      </Card>
     </Link>
   );
-};
-
-ProductCard.propTypes = {
-  product: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    displayImage: PropTypes.shape({
-      url: PropTypes.string.isRequired,
-    }).isRequired,
-    ads: PropTypes.arrayOf(
-      PropTypes.shape({
-        level: PropTypes.number,
-        paidFor: PropTypes.bool,
-        productId: PropTypes.string,
-        expiresAt: PropTypes.string,
-      })
-    ),
-  }).isRequired,
-};
-
-export default ProductCard;
+}
