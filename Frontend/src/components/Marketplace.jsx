@@ -107,7 +107,6 @@ const Marketplace = () => {
   useEffect(() => {
     const loadBookmarks = async () => {
       if (!userProfile) return;
-      if (userProfile.userType === "merchant") return;
       try {
         const bookmarks = await getBookmarks(userProfile.id, messageApi.error);
         if (bookmarks) {
@@ -136,7 +135,7 @@ const Marketplace = () => {
               placeholder="Search a product..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="border-Primary py-2 pr-4 pl-10 border rounded-full focus:ring-2 focus:ring-Primary w-full text-sm focus:outline-none placeholder-gray-400"
+              className="py-2 pr-4 pl-10 border border-Primary rounded-full focus:outline-none focus:ring-2 focus:ring-Primary w-full text-sm placeholder-gray-400"
             />
             <Search className="top-1/2 left-3 absolute w-5 h-5 text-Primary -translate-y-1/2" />
           </div>
@@ -151,14 +150,14 @@ const Marketplace = () => {
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/50"></div>
-        <div className="relative flex flex-col justify-center items-center px-4 h-full text-center text-white">
+        <div className="relative flex flex-col justify-center items-center px-4 h-full text-white text-center">
           <h1 className="font-[400] text-3xl sm:text-4xl md:text-6xl lg:text-7xl uppercase leading-tight otto">
             {market.name}
           </h1>
         </div>
         <Link
           to="/include-market"
-          className="right-2 bottom-2 absolute flex items-center gap-1 text-white text-xs hover:text-orange underline transition-colors"
+          className="right-2 bottom-2 absolute flex items-center gap-1 text-white hover:text-orange text-xs underline transition-colors"
         >
           <HelpCircle className="w-4 h-4" />
           Not your market's picture?
@@ -169,7 +168,7 @@ const Marketplace = () => {
       <div className="bg-white shadow-md">
         <div className="mx-auto container">
           {/* Desktop View */}
-          <div className="md:block hidden px-4 py-6">
+          <div className="hidden md:block px-4 py-6">
             <div className="flex justify-between items-center pb-4 border-b">
               <div className="flex items-center gap-2">
                 <MapPin className="w-5 h-5 text-Primary" />
@@ -229,8 +228,8 @@ const Marketplace = () => {
                 <span className="font-medium text-gray-700">
                   View Market Details
                 </span>
-                <div className="group-open:rotate-180 flex justify-center items-center border-[1.5px] border-gray-500 rounded-full w-4 h-4 transition-transform">
-                  <div className="border-gray-500 border-r-[1.5px] border-b-[1.5px] w-1.5 h-1.5 translate-y-[-2px] rotate-45"></div>
+                <div className="flex justify-center items-center border-[1.5px] border-gray-500 rounded-full w-4 h-4 group-open:rotate-180 transition-transform">
+                  <div className="border-gray-500 border-r-[1.5px] border-b-[1.5px] w-1.5 h-1.5 rotate-45 translate-y-[-2px]"></div>
                 </div>
               </summary>
               <div className="space-y-4 px-4 pb-4">
@@ -254,7 +253,7 @@ const Marketplace = () => {
       <div className="mx-auto px-4 py-8 container">
         <div className="flex lg:flex-row flex-col gap-8">
           {/* Sidebar - Desktop */}
-          <div className="lg:block hidden w-[280px] shrink-0">
+          <div className="hidden lg:block w-[280px] shrink-0">
             <div className="top-[72px] sticky bg-white shadow-md p-4 rounded-lg max-h-[calc(100vh-120px)] overflow-y-auto">
               <h2 className="mb-4 font-semibold text-lg">Categories</h2>
               <ul className="space-y-2">
@@ -307,7 +306,7 @@ const Marketplace = () => {
                 {filteredProducts.map((product) => (
                   <div
                     key={product.id}
-                    className="bg-white shadow-md hover:shadow-lg rounded-lg transition-all overflow-hidden"
+                    className="bg-white shadow-md hover:shadow-lg rounded-lg overflow-hidden transition-all"
                   >
                     <div className="relative">
                       <Link to={`/products/${product.id}`}>
@@ -373,7 +372,7 @@ const Marketplace = () => {
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery("")}
-                    className="border-2 border-Primary hover:bg-Primary/5 mt-4 px-4 py-2 rounded-full text-Primary text-sm transition-colors"
+                    className="hover:bg-Primary/5 mt-4 px-4 py-2 border-2 border-Primary rounded-full text-Primary text-sm transition-colors"
                   >
                     Clear Search
                   </button>

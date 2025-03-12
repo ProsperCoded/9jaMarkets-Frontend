@@ -58,7 +58,6 @@ const ProductDetails = () => {
   useEffect(() => {
     const checkBookmarkStatus = async () => {
       if (!userProfile) return;
-      if (userProfile.userType === "merchant") return;
       try {
         const bookmarks = await getBookmarks(userProfile.id, messageApi.error);
         setIsBookmarked(
@@ -122,14 +121,14 @@ const ProductDetails = () => {
           <div className="gap-8 grid grid-cols-1 lg:grid-cols-2">
             {/* Image Gallery */}
             <div className="space-y-4">
-              <div className="relative rounded-lg overflow-hidden aspect-square">
+              <div className="relative rounded-lg aspect-square overflow-hidden">
                 <img
                   src={
                     product.images?.[selectedImage]?.url ||
                     product.displayImage?.url
                   }
                   alt={product.name}
-                  className="w-full h-full transition-all duration-300 object-cover"
+                  className="w-full h-full object-cover transition-all duration-300"
                   style={{ transform: "scale(1.01)" }}
                 />
 
@@ -142,7 +141,7 @@ const ProductDetails = () => {
                           prev === 0 ? product.images.length - 1 : prev - 1
                         )
                       }
-                      className="top-1/2 left-1 absolute bg-black/50 hover:bg-black/70 p-2 rounded-full text-white transition-all -translate-y-1/2 hover:scale-110 active:scale-95"
+                      className="top-1/2 left-1 absolute bg-black/50 hover:bg-black/70 p-2 rounded-full text-white hover:scale-110 active:scale-95 transition-all -translate-y-1/2"
                     >
                       <ChevronLeft className="w-6 h-6" />
                     </button>
@@ -152,7 +151,7 @@ const ProductDetails = () => {
                           prev === product.images.length - 1 ? 0 : prev + 1
                         )
                       }
-                      className="top-1/2 right-1 absolute bg-black/50 hover:bg-black/70 p-2 rounded-full text-white transition-all -translate-y-1/2 hover:scale-110 active:scale-95"
+                      className="top-1/2 right-1 absolute bg-black/50 hover:bg-black/70 p-2 rounded-full text-white hover:scale-110 active:scale-95 transition-all -translate-y-1/2"
                     >
                       <ChevronRight className="w-6 h-6" />
                     </button>
@@ -210,7 +209,7 @@ const ProductDetails = () => {
                 </p>
 
                 {/* Merchant Info Card */}
-                <div className="border-Primary/20 bg-gradient-to-br from-Primary/5 to-Primary/10 p-3 sm:p-4 lg:p-6 border rounded-xl">
+                <div className="bg-gradient-to-br from-Primary/5 to-Primary/10 p-3 sm:p-4 lg:p-6 border border-Primary/20 rounded-xl">
                   <div className="flex sm:flex-row flex-col gap-3 sm:gap-4 lg:gap-6">
                     <div className="flex sm:flex-col items-center sm:items-start sm:w-1/3 lg:w-1/2">
                       <div className="border-2 border-Primary/20 rounded-lg w-16 sm:w-20 lg:w-24 h-16 sm:h-20 lg:h-24 overflow-hidden">
@@ -221,14 +220,14 @@ const ProductDetails = () => {
                         />
                       </div>
                       <div className="sm:mt-5 ml-4 sm:ml-0">
-                        <h3 className="font-semibold text-base text-gray-900 sm:text-lg">
+                        <h3 className="font-semibold text-gray-900 text-base sm:text-lg">
                           {product.merchant.brandName}
                         </h3>
                         <button
                           onClick={() =>
                             navigate(`/merchant/${product.merchantId}`)
                           }
-                          className="flex items-center gap-1.5 mt-2 font-medium text-Primary text-sm hover:text-Primary/80"
+                          className="flex items-center gap-1.5 mt-2 font-medium text-Primary hover:text-Primary/80 text-sm"
                         >
                           <Store className="w-4 h-4" />
                           Visit Store
@@ -336,7 +335,7 @@ const ProductDetails = () => {
                           "_blank"
                         );
                       }}
-                      className="flex justify-center items-center gap-2 bg-[#25D366] hover:bg-[#128C7E] py-3 sm:py-4 lg:py-6 rounded-xl w-full font-medium text-sm text-white"
+                      className="flex justify-center items-center gap-2 bg-[#25D366] hover:bg-[#128C7E] py-3 sm:py-4 lg:py-6 rounded-xl w-full font-medium text-white text-sm"
                     >
                       <img
                         src={WhatsappIcon}
@@ -350,7 +349,7 @@ const ProductDetails = () => {
                       onClick={() => {
                         navigate(`/merchant/${product.merchantId}`);
                       }}
-                      className="flex justify-center items-center gap-2 bg-Primary hover:bg-Primary/90 py-3 sm:py-4 lg:py-6 rounded-xl w-full font-medium text-sm text-white"
+                      className="flex justify-center items-center gap-2 bg-Primary hover:bg-Primary/90 py-3 sm:py-4 lg:py-6 rounded-xl w-full font-medium text-white text-sm"
                     >
                       <Store className="w-5 sm:w-6 h-5 sm:h-6" />
                       View All Products
@@ -360,14 +359,14 @@ const ProductDetails = () => {
 
                 <div className="flex flex-col gap-3 bg-gray-50 p-4 rounded-lg">
                   <p className="flex items-center gap-3 text-gray-600">
-                    <PackageSearch className="text-Primary size-5" />
+                    <PackageSearch className="size-5 text-Primary" />
                     <span className="font-semibold">Category</span>
                     <span className="bg-white px-3 py-1 rounded-lg font-medium text-gray-900">
                       {product.category}
                     </span>
                   </p>
                   <p className="flex items-center gap-3 text-gray-600">
-                    <ShoppingBasket className="text-Primary size-5" />
+                    <ShoppingBasket className="size-5 text-Primary" />
                     <span className="font-semibold">Stock</span>
                     <span className="bg-white px-3 py-1 rounded-lg font-medium text-gray-900">
                       {product.stock}
@@ -389,7 +388,7 @@ const ProductDetails = () => {
         </div>
 
         {/* Disclaimer section */}
-        <div className="border-orange/10 bg-orange/5 mt-8 p-4 sm:p-6 border rounded-xl">
+        <div className="bg-orange/5 mt-8 p-4 sm:p-6 border border-orange/10 rounded-xl">
           <div className="flex items-start gap-3">
             <AlertCircle className="flex-shrink-0 mt-0.5 w-5 h-5 text-orange" />
             <div className="space-y-1">

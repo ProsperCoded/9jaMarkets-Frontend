@@ -4,9 +4,14 @@ import { getAuth } from "../util";
 
 export async function getBookmarks(customerId, errorLogger = () => {}) {
   const url = new URL(`customer/cart/${customerId}`, SERVER_URL);
+  const { accessToken, userType } = getAuth();
+  if (userType !== "customer") {
+    console.log("You are not authorized to view bookmarks");
+    return [];
+  }
   const response = await fetch(url, {
     headers: {
-      Authorization: `Bearer ${getAuth().accessToken}`,
+      Authorization: `Bearer ${accessToken}`,
     },
   });
   const responseData = await response.json();
@@ -19,7 +24,11 @@ export async function getBookmarks(customerId, errorLogger = () => {}) {
 
 export async function addToBookmarks(productId, errorLogger = () => {}) {
   const url = new URL(`customer/cart/${productId}`, SERVER_URL);
-  const { accessToken } = getAuth();
+  const { accessToken, userType } = getAuth();
+  if (userType !== "customer") {
+    errorLogger("Login as customer to add to bookmarks");
+    return [];
+  }
   const response = await fetch(url, {
     method: "PUT",
     body: JSON.stringify({ quantity: 1 }),
@@ -38,7 +47,10 @@ export async function addToBookmarks(productId, errorLogger = () => {}) {
 }
 export async function removeFromBookmarks(productId, errorLogger = () => {}) {
   const url = new URL(`customer/cart/${productId}`, SERVER_URL);
-  const { accessToken } = getAuth();
+  if (userType !== "customer") {
+    errorLogger("Login as customer to remove from bookmarks");
+    return [];
+  }
   const response = await fetch(url, {
     method: "DELETE",
     headers: {
