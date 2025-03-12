@@ -20,6 +20,9 @@ import {
   Info,
   Building2,
   MapPinned,
+  Star,
+  Crown,
+  Award,
 } from "lucide-react";
 import { PRODUCT_CATEGORIES } from "@/config";
 import {
@@ -28,6 +31,36 @@ import {
   getBookmarks,
 } from "@/lib/api/bookmarkApi";
 import { replaceUnderscoresWithSpaces } from "@/lib/util";
+import {
+  getProductsWithAdsStatus,
+  sortProductsByAdPriority,
+} from "@/lib/api/adApi";
+
+// Function to get ad level label and style
+const getAdBadge = (level) => {
+  switch (level) {
+    case 3:
+      return {
+        icon: <Crown className="w-3 h-3" />,
+        label: "Premium",
+        classes: "bg-gradient-to-r from-purple-500 to-indigo-600 text-white",
+      };
+    case 2:
+      return {
+        icon: <Star className="w-3 h-3" />,
+        label: "Featured",
+        classes: "bg-gradient-to-r from-orange-400 to-amber-500 text-white",
+      };
+    case 1:
+      return {
+        icon: <Award className="w-3 h-3" />,
+        label: "Standard",
+        classes: "bg-gradient-to-r from-cyan-500 to-blue-500 text-white",
+      };
+    default:
+      return null;
+  }
+};
 
 const Marketplace = () => {
   const errorLogger = useErrorLogger();
@@ -45,7 +78,18 @@ const Marketplace = () => {
   const fetchProducts = async () => {
     const marketProducts = await getMarketProducts(marketId, errorLogger);
     if (!marketProducts) return;
-    setProducts(marketProducts);
+
+    // Enhance products with ad status
+    const productsWithAdStatus = await getProductsWithAdsStatus(
+      marketProducts,
+      { market: marketId },
+      errorLogger
+    );
+
+    // Sort products so ads appear first
+    const sortedProducts = sortProductsByAdPriority(productsWithAdStatus);
+
+    setProducts(sortedProducts);
   };
 
   const MARKET_CATEGORIES = ["All", ...PRODUCT_CATEGORIES];
@@ -334,6 +378,21 @@ const Marketplace = () => {
                           <Bookmark className="w-5 h-5 text-white" />
                         )}
                       </button>
+
+                      {/* Premium Ad Badge */}
+                      {product.adStatus?.isAd &&
+                        getAdBadge(product.adStatus.level) && (
+                          <div
+                            className={`absolute top-2 left-2 px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${
+                              getAdBadge(product.adStatus.level).classes
+                            }`}
+                          >
+                            {getAdBadge(product.adStatus.level).icon}
+                            <span>
+                              {getAdBadge(product.adStatus.level).label}
+                            </span>
+                          </div>
+                        )}
                     </div>
                     <Link to={`/products/${product.id}`}>
                       <div className="p-2">

@@ -6,6 +6,9 @@ import {
   BookmarkCheck,
   MapPin,
   ListFilter,
+  Star,
+  Crown,
+  Award,
 } from "lucide-react";
 import { PRODUCT_CATEGORIES, STATES } from "@/config";
 import CH from "@/assets/customerhero.png";
@@ -34,12 +37,42 @@ import {
   getBookmarks,
 } from "@/lib/api/bookmarkApi";
 import {
+  getProductsWithAdsStatus,
+  sortProductsByAdPriority,
+} from "@/lib/api/adApi";
+import {
   getAuth,
   replaceAmpersandWithAnd,
   replaceSpacesWithUnderscore,
 } from "@/lib/util";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
+
+// Function to get ad level badge properties
+const getAdBadge = (level) => {
+  switch (level) {
+    case 3:
+      return {
+        icon: <Crown className="w-3 h-3" />,
+        label: "Premium",
+        classes: "bg-gradient-to-r from-purple-500 to-indigo-600 text-white",
+      };
+    case 2:
+      return {
+        icon: <Star className="w-3 h-3" />,
+        label: "Featured",
+        classes: "bg-gradient-to-r from-orange-400 to-amber-500 text-white",
+      };
+    case 1:
+      return {
+        icon: <Award className="w-3 h-3" />,
+        label: "Standard",
+        classes: "bg-gradient-to-r from-cyan-500 to-blue-500 text-white",
+      };
+    default:
+      return null;
+  }
+};
 
 const CustomerPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -162,16 +195,20 @@ const CustomerPage = () => {
         );
 
         if (productsData) {
-          // Transform API data to match our format
-          const apiProducts = productsData.items.map((item) => ({
-            id: item.id,
-            name: item.name,
-            price: item.price,
-            image: item.displayImage?.url,
-            category: item.category,
-            advertised: false,
-            // Add any other fields from the API that you need
-          }));
+          // Enhance products with ad status
+          const productsWithAdStatus = await getProductsWithAdsStatus(
+            productsData.items,
+            {},
+            (error) =>
+              toast({
+                title: "Error loading ad information",
+                description: error,
+                variant: "destructive",
+              })
+          );
+
+          // Sort products with ads first
+          const sortedProducts = sortProductsByAdPriority(productsWithAdStatus);
 
           setPagination({
             currentPage: productsData.currentPage,
@@ -181,8 +218,7 @@ const CustomerPage = () => {
             hasPreviousPage: productsData.hasPreviousPage,
           });
 
-          // Combine with advertized products for display
-          setProducts([...advertizedProducts, ...apiProducts]);
+          setProducts(sortedProducts);
         }
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -325,7 +361,7 @@ const CustomerPage = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="What are you looking for?"
-              className="flex-grow px-4 py-3 rounded-full text-sm outline-none"
+              className="flex-grow px-4 py-3 rounded-full outline-none text-sm"
             />
           </div>
 
@@ -347,7 +383,10 @@ const CustomerPage = () => {
               </SelectContent>
             </Select>
 
-            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+            <Select
+              value={selectedCategory}
+              onValueChange={setSelectedCategory}
+            >
               <SelectTrigger className="bg-white rounded-full">
                 <ListFilter className="mr-2 w-4 h-4" />
                 <SelectValue placeholder="Category">
@@ -380,46 +419,47 @@ const CustomerPage = () => {
             <div className="border-Primary border-t-2 border-b-2 rounded-full w-12 h-12 animate-spin"></div>
           </div>
         ) : filteredProducts.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-16 px-4">
+          <div className="flex flex-col justify-center items-center px-4 py-16">
             {/* Animated Illustration */}
             <div className="relative mb-8">
-              <div className="absolute inset-0 bg-Primary/10 animate-pulse rounded-full" />
-              <div className="relative bg-white p-6 rounded-full shadow-xl">
+              <div className="absolute inset-0 bg-Primary/10 rounded-full animate-pulse" />
+              <div className="relative bg-white shadow-xl p-6 rounded-full">
                 <div className="relative w-24 h-24 animate-float">
-                  <Search className="w-full h-full text-Primary opacity-80" />
-                  <div className="absolute -top-1 -right-1 bg-Primary/20 rounded-full p-2 animate-bounce-slow">
+                  <Search className="opacity-80 w-full h-full text-Primary" />
+                  <div className="-top-1 -right-1 absolute bg-Primary/20 p-2 rounded-full animate-bounce-slow">
                     <ListFilter className="w-4 h-4 text-Primary" />
                   </div>
                 </div>
               </div>
               {/* Decorative Elements */}
-              <div className="absolute -top-4 -left-4 bg-Primary/5 rounded-full w-8 h-8 animate-bounce-slow" />
-              <div className="absolute -bottom-2 -right-6 bg-Primary/10 rounded-full w-12 h-12 animate-bounce-delayed" />
-              <div className="absolute top-1/2 -right-8 bg-Primary/15 rounded-full w-6 h-6 animate-pulse" />
+              <div className="-top-4 -left-4 absolute bg-Primary/5 rounded-full w-8 h-8 animate-bounce-slow" />
+              <div className="-right-6 -bottom-2 absolute bg-Primary/10 rounded-full w-12 h-12 animate-bounce-delayed" />
+              <div className="top-1/2 -right-8 absolute bg-Primary/15 rounded-full w-6 h-6 animate-pulse" />
             </div>
 
             {/* Text Content */}
-            <div className="text-center max-w-md mx-auto space-y-3">
-              <h3 className="text-2xl font-bold text-gray-900 bg-gradient-to-r from-Primary to-Primary/60 bg-clip-text text-transparent">
+            <div className="space-y-3 mx-auto max-w-md text-center">
+              <h3 className="bg-clip-text bg-gradient-to-r from-Primary to-Primary/60 font-bold text-gray-900 text-transparent text-2xl">
                 No Products Found
               </h3>
               <p className="text-gray-600 leading-relaxed">
                 {selectedCategory !== "All" || selectedState !== "All" ? (
                   <>
-                    We couldn't find any products matching your filters. Try adjusting your
-                    search criteria or explore our other categories.
+                    We couldn't find any products matching your filters. Try
+                    adjusting your search criteria or explore our other
+                    categories.
                   </>
                 ) : (
                   <>
-                    Looks like we're still stocking up! Check back soon for amazing
-                    products or try a different search term.
+                    Looks like we're still stocking up! Check back soon for
+                    amazing products or try a different search term.
                   </>
                 )}
               </p>
             </div>
 
             {/* Action Buttons */}
-            <div className="mt-8 flex flex-wrap gap-4 justify-center">
+            <div className="flex flex-wrap justify-center gap-4 mt-8">
               {(selectedCategory !== "All" || selectedState !== "All") && (
                 <button
                   onClick={() => {
@@ -427,7 +467,7 @@ const CustomerPage = () => {
                     setSelectedState("All");
                     setSearchQuery("");
                   }}
-                  className="bg-Primary/5 hover:bg-Primary/10 text-Primary px-6 py-2 rounded-full font-medium transition-all duration-300 hover:shadow-lg hover:shadow-Primary/10 flex items-center gap-2"
+                  className="flex items-center gap-2 bg-Primary/5 hover:bg-Primary/10 hover:shadow-lg hover:shadow-Primary/10 px-6 py-2 rounded-full font-medium text-Primary transition-all duration-300"
                 >
                   <ListFilter className="w-4 h-4" />
                   Clear Filters
@@ -435,11 +475,12 @@ const CustomerPage = () => {
               )}
               <button
                 onClick={() => {
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                  const searchInput = document.querySelector('input[type="text"]');
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                  const searchInput =
+                    document.querySelector('input[type="text"]');
                   if (searchInput) searchInput.focus();
                 }}
-                className="bg-Primary hover:bg-Primary/90 text-white px-6 py-2 rounded-full font-medium transition-all duration-300 hover:shadow-lg hover:shadow-Primary/20 flex items-center gap-2"
+                className="flex items-center gap-2 bg-Primary hover:bg-Primary/90 hover:shadow-lg hover:shadow-Primary/20 px-6 py-2 rounded-full font-medium text-white transition-all duration-300"
               >
                 <Search className="w-4 h-4" />
                 New Search
@@ -450,23 +491,41 @@ const CustomerPage = () => {
           <div className="gap-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {filteredProducts.map((product) => (
               <Link to={`/products/${product.id}`} key={product.id}>
-                <Card key={product.id} className="overflow-hidden group">
+                <Card
+                  key={product.id}
+                  className="group relative overflow-hidden"
+                >
                   <div className="relative bg-gray-100 aspect-square">
                     <img
-                      src={product.image}
+                      src={product.image || product.displayImage?.url}
                       alt={product.name}
                       className="absolute inset-0 w-full h-full object-cover"
                     />
-                    {product.advertised && (
-                      <div className="top-2 left-2 absolute bg-Primary px-2 py-1 rounded-full text-white text-xs">
-                        Featured
-                      </div>
-                    )}
+
+                    {/* Premium Ad Badge */}
+                    {product.adStatus?.isAd &&
+                      getAdBadge(product.adStatus.level) && (
+                        <div
+                          className={`absolute top-2 left-2 px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1 shadow-md ${
+                            getAdBadge(product.adStatus.level).classes
+                          }`}
+                        >
+                          {getAdBadge(product.adStatus.level).icon}
+                          <span>
+                            {getAdBadge(product.adStatus.level).label}
+                          </span>
+                        </div>
+                      )}
+
                     <Button
                       size="icon"
                       variant="ghost"
                       className="top-2 right-2 absolute bg-Primary/80 hover:bg-Primary rounded-full text-white transition-colors"
-                      onClick={() => toggleBookmark(product.id)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        toggleBookmark(product.id);
+                      }}
                     >
                       {bookmarkedProducts.has(product.id) ? (
                         <BookmarkCheck className="w-5 h-5" />

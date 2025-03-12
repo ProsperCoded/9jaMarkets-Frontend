@@ -109,4 +109,112 @@ export async function verifyAdPayment(reference, errorLogger = () => {}) {
     "merchantId": "29164ad7-6bcb-44ae-b00e-d2d21aa37137"
   }
 }
-  **/
+**/
+
+/**
+ * Fetches advertisements with optional filtering by market and/or merchant
+ *
+ * @param {Object} options - Filter options
+ * @param {string} options.market - Optional market ID to filter ads
+ * @param {string} options.merchant - Optional merchant ID to filter ads
+ * @param {Function} errorLogger - Function to log errors
+ * @returns {Promise<Array>} - A promise that resolves to an array of ads
+ */
+export async function getAdsApi(
+  { market, merchant } = {},
+  errorLogger = () => {}
+) {
+  const url = new URL("ad", SERVER_URL);
+
+  // Add query parameters if provided
+  if (market) url.searchParams.append("market", market);
+  if (merchant) url.searchParams.append("merchant", merchant);
+
+  try {
+    const response = await fetch(url);
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      errorLogger(responseData.message);
+      return [];
+    }
+
+    return responseData.data || [];
+  } catch (error) {
+    errorLogger("Failed to fetch ads");
+    console.error("Error fetching ads:", error);
+    return [];
+  }
+}
+
+/**
+ * Fetches active ads and integrates them with product data
+ *
+ * @param {Array} products - Array of product objects to enhance with ad data
+ * @param {Object} options - Filter options
+ * @param {string} options.market - Optional market ID to filter ads
+ * @param {Function} errorLogger - Function to log errors
+ * @returns {Promise<Array>} - A promise that resolves to products with ad information
+ */
+export async function getProductsWithAdsStatus(
+  products,
+  { market } = {},
+  errorLogger = () => {}
+) {
+  if (!products || products.length === 0) return [];
+
+  try {
+    const ads = await getAdsApi({ market }, errorLogger);
+
+    // Create a map of productId to ad
+    const adMap = new Map();
+    ads.forEach((ad) => {
+      if (ad.paidFor) {
+        adMap.set(ad.productId, ad);
+      }
+    });
+
+    // Enhance products with ad information
+    return products.map((product) => {
+      const ad = adMap.get(product.id);
+      return {
+        ...product,
+        adStatus: ad
+          ? {
+              isAd: true,
+              level: ad.level,
+              expiresAt: ad.expiresAt,
+            }
+          : {
+              isAd: false,
+            },
+      };
+    });
+  } catch (error) {
+    errorLogger("Failed to integrate ad information");
+    console.error("Error integrating ad information:", error);
+    return products;
+  }
+}
+
+/**
+ * Sorts products to show ads first, with higher level ads appearing before lower level ads
+ *
+ * @param {Array} products - Array of products with ad status
+ * @returns {Array} - Sorted array of products
+ */
+export function sortProductsByAdPriority(products) {
+  return [...products].sort((a, b) => {
+    // First check if product has ad status
+    if (a.adStatus?.isAd && !b.adStatus?.isAd) return -1;
+    if (!a.adStatus?.isAd && b.adStatus?.isAd) return 1;
+
+    // If both are ads, sort by level (higher level first)
+    if (a.adStatus?.isAd && b.adStatus?.isAd) {
+      return b.adStatus.level - a.adStatus.level;
+    }
+
+    // If neither are ads, maintain original order
+    return 0;
+  });
+}

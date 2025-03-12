@@ -18,9 +18,14 @@ import {
   ChevronLeft,
   ChevronRight,
   AlertCircle,
+  Crown,
+  Star,
+  Award,
+  Calendar,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { getProduct } from "@/lib/api/productApi";
+import { getAdsApi } from "@/lib/api/adApi";
 import {
   USER_PROFILE_CONTEXT,
   MESSAGE_API_CONTEXT,
@@ -32,11 +37,51 @@ import {
   getBookmarks,
 } from "@/lib/api/bookmarkApi";
 
+// Function to get ad status info
+const getAdStatusInfo = (adLevel) => {
+  switch (adLevel) {
+    case 3:
+      return {
+        icon: <Crown className="w-5 h-5" />,
+        title: "Premium Ad",
+        color: "from-purple-500 to-indigo-600",
+        textColor: "text-purple-700",
+        bgColor: "bg-purple-50",
+        borderColor: "border-purple-200",
+        description:
+          "This product is featured with our highest tier premium advertising",
+      };
+    case 2:
+      return {
+        icon: <Star className="w-5 h-5" />,
+        title: "Featured Ad",
+        color: "from-orange-400 to-amber-500",
+        textColor: "text-orange-700",
+        bgColor: "bg-orange-50",
+        borderColor: "border-orange-200",
+        description: "This product is promoted with enhanced visibility",
+      };
+    case 1:
+      return {
+        icon: <Award className="w-5 h-5" />,
+        title: "Standard Ad",
+        color: "from-cyan-500 to-blue-500",
+        textColor: "text-blue-700",
+        bgColor: "bg-blue-50",
+        borderColor: "border-blue-200",
+        description: "This product is advertised with standard promotion",
+      };
+    default:
+      return null;
+  }
+};
+
 const ProductDetails = () => {
   const { productId } = useParams();
   const errorLogger = useErrorLogger();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
+  const [adStatus, setAdStatus] = useState(null);
   const [selectedImage, setSelectedImage] = useState(0);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(null);
@@ -50,6 +95,19 @@ const ProductDetails = () => {
       if (productDetails) {
         setProduct(productDetails);
         setSelectedImage(0);
+
+        // Fetch ad status for this product
+        const ads = await getAdsApi({}, errorLogger);
+        const productAd = ads.find(
+          (ad) => ad.productId === productId && ad.paidFor === true
+        );
+
+        if (productAd) {
+          setAdStatus({
+            level: productAd.level,
+            expiresAt: new Date(productAd.expiresAt),
+          });
+        }
       }
     };
     fetchProductDetails();
@@ -105,6 +163,8 @@ const ProductDetails = () => {
 
   if (!product) return <LoadingPage message="Loading product details..." />;
 
+  const adStatusInfo = adStatus ? getAdStatusInfo(adStatus.level) : null;
+
   return (
     <div className="bg-gray-50 pt-2 min-h-screen">
       <div className="mx-auto px-4 py-8 container">
@@ -118,6 +178,37 @@ const ProductDetails = () => {
         </button>
 
         <div className="bg-white shadow-md p-6 rounded-lg">
+          {/* Ad Status Banner (if product is advertised) */}
+          {adStatusInfo && (
+            <div
+              className={`mb-6 p-4 rounded-lg border ${adStatusInfo.borderColor} ${adStatusInfo.bgColor}`}
+            >
+              <div className="flex items-center gap-3">
+                <div
+                  className={`p-2 rounded-full bg-gradient-to-r ${adStatusInfo.color} text-white`}
+                >
+                  {adStatusInfo.icon}
+                </div>
+                <div>
+                  <h3 className={`font-semibold ${adStatusInfo.textColor}`}>
+                    {adStatusInfo.title}
+                  </h3>
+                  <p className="text-gray-600 text-sm">
+                    {adStatusInfo.description}
+                  </p>
+                  {adStatus.expiresAt && (
+                    <div className="flex items-center gap-2 mt-1 text-gray-500 text-sm">
+                      <Calendar className="w-4 h-4" />
+                      <span>
+                        Expires: {adStatus.expiresAt.toLocaleDateString()}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="gap-8 grid grid-cols-1 lg:grid-cols-2">
             {/* Image Gallery */}
             <div className="space-y-4">
@@ -187,6 +278,18 @@ const ProductDetails = () => {
               <div className="flex justify-between items-start gap-4">
                 <h1 className="font-semibold text-lg sm:text-xl lg:text-2xl capitalize tracking-tight">
                   {product.name}
+                  {adStatus && (
+                    <span
+                      className={`ml-2 inline-flex items-center px-2 py-1 text-xs rounded-full bg-gradient-to-r ${
+                        getAdStatusInfo(adStatus.level).color
+                      } text-white`}
+                    >
+                      {getAdStatusInfo(adStatus.level).icon}
+                      <span className="ml-1">
+                        {getAdStatusInfo(adStatus.level).title}
+                      </span>
+                    </span>
+                  )}
                 </h1>
                 <button
                   onClick={handleBookmarkToggle}
