@@ -25,6 +25,7 @@ import {
   activateFreeAd,
 } from "@/lib/api/adApi";
 import Paystack from "@paystack/inline-js";
+import LoadingOverlay from "../ui/LoadingOverlay";
 
 const paymentMethods = [
   { id: "card", name: "Pay with Paystack", icon: InterswitchLogo },
@@ -34,6 +35,8 @@ export default function BillingPage() {
   const [selectedMethod, setSelectedMethod] = useState("card");
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [productData, setProductData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState("");
   const { userProfile } = useContext(USER_PROFILE_CONTEXT);
   const navigate = useNavigate();
   const location = useLocation();
@@ -74,41 +77,76 @@ export default function BillingPage() {
   async function handlePayment() {
     // Implement payment logic here
     const level = selectedPlan.level;
-    if (level === 0) {
-      // try free add activation
-      const freeAd = await activateFreeAd(productId, errorLogger);
-      if (freeAd) {
-        messageApi.success("Free Ad activated successfully");
-        navigate("/dashboard/products", { replace: true });
-      }
-      return;
-    }
-    const paymentData = await initializeAdApi(level, productId, errorLogger);
-    console.log("paymentData", paymentData);
-    const config = {
-      email: userProfile.email, // Get from your auth context/state
-      amount: selectedPlan.price * 100, // Amount in kobo
-      key: "pk_test_675c37205e748ec82da0b59a67c0c6ad26aa0cc3",
-      publicKey: "pk_test_675c37205e748ec82da0b59a67c0c6ad26aa0cc3",
-      reference: paymentData.reference,
-      onSuccess: async (response) => {
-        const verified = await verifyAdPayment(response.reference, errorLogger);
-        if (verified) {
-          messageApi.success("Payment successful");
+
+    try {
+      if (level === 0) {
+        // Show loading for free ad activation
+        setLoadingMessage("Activating Free Ad...");
+        setLoading(true);
+
+        const freeAd = await activateFreeAd(productId, errorLogger);
+        setLoading(false);
+
+        if (freeAd) {
+          messageApi.success("Free Ad activated successfully");
           navigate("/dashboard/products", { replace: true });
         }
-      },
-      onClose: () => {
-        messageApi.warning("Ad payment was Canceled");
-      },
-      onLoad: (response) => {
-        console.log("onLoad: ", response);
-      },
-    };
+        return;
+      }
 
-    const popup = new Paystack();
-    popup.newTransaction(config);
+      // Show loading while initializing payment
+      setLoadingMessage("Loading Payment Interface...");
+      setLoading(true);
+
+      const paymentData = await initializeAdApi(level, productId, errorLogger);
+      if (!paymentData) {
+        setLoading(false);
+        messageApi.error("Failed to initialize payment");
+        return;
+      }
+
+      const config = {
+        email: userProfile.email,
+        amount: selectedPlan.price * 100, // Amount in kobo
+        key: "pk_test_675c37205e748ec82da0b59a67c0c6ad26aa0cc3",
+        publicKey: "pk_test_675c37205e748ec82da0b59a67c0c6ad26aa0cc3",
+        reference: paymentData.reference,
+        onSuccess: async (response) => {
+          // Show loading while verifying payment
+          setLoadingMessage("Verifying Ad Payment...");
+          setLoading(true);
+
+          const verified = await verifyAdPayment(
+            response.reference,
+            errorLogger
+          );
+          setLoading(false);
+
+          if (verified) {
+            messageApi.success("Ad Payment Verified Successfully");
+            navigate("/dashboard/products", { replace: true });
+          } else {
+            messageApi.error("Payment verification failed");
+          }
+        },
+        onClose: () => {
+          messageApi.warning("Ad payment was Canceled");
+        },
+        onLoad: () => {
+          // Hide loading when Paystack iframe is loaded
+          setLoading(false);
+        },
+      };
+
+      const popup = new Paystack();
+      popup.newTransaction(config);
+    } catch (error) {
+      console.error("Payment process error:", error);
+      setLoading(false);
+      messageApi.error("An error occurred during payment process");
+    }
   }
+
   if (!selectedPlan || !userProfile) {
     return (
       <div className="flex justify-center items-center bg-gray-50 min-h-screen">
@@ -119,6 +157,9 @@ export default function BillingPage() {
 
   return (
     <div className="bg-gray-50 px-4 py-8 min-h-screen">
+      {/* Loading Overlay */}
+      <LoadingOverlay isVisible={loading} message={loadingMessage} />
+
       <div className="mx-auto max-w-4xl container">
         <div className="space-y-4 mb-8 text-center">
           <h1 className="font-bold text-2xl md:text-3xl tracking-tight">
@@ -255,8 +296,9 @@ export default function BillingPage() {
                   className="bg-Primary hover:bg-Primary/90 w-full text-white"
                   size="lg"
                   onClick={handlePayment}
+                  disabled={loading}
                 >
-                  Review and Confirm
+                  {loading ? "Processing..." : "Review and Confirm"}
                 </Button>
               </CardFooter>
             </Card>
