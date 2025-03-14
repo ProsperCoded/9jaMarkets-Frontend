@@ -22,6 +22,16 @@
       "database": "store_52y1",
       "username": "obycodez55",
       "name": "dpg-cuj887rv2p9s73ftlj8g-a.ohio-postgres.render.com"
+    },
+    {
+      "previewLimit": 50,
+      "server": "aws-0-eu-central-1.pooler.supabase.com",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "mydb9ja",
+      "username": "postgres.kocizyzjcdeblmnajeog",
+      "password": "R6R1STySYnLFOihy",
+      "database": "postgres"
     }
   ]
 }

@@ -42,6 +42,20 @@ export const PRODUCT_CATEGORIES = [
   "SPORTS AND OUTDOOR",
   "KIDS AND BABY PRODUCTS",
 ];
+
+// * Featured market favored over others(in this order)
+export const FEATURED_MARKET_NAMES = [
+  "Alaba International Market",
+  "Balogun Market",
+  "Idumota Market",
+  "Ladipo Market",
+  "Wuse Market",
+  "Onitsha Main Market",
+  "Ariaria International Market",
+  "Yankaba Market",
+  "Igwuruta Market",
+  "Gbagi International Market",
+];
 export const plans = {
   free: {
     id: "free",

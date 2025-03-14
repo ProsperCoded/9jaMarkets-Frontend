@@ -4,14 +4,15 @@ const fs = require("fs"); // For reading image files
 const axios = require("axios");
 const FormData = require("form-data");
 const MARKETS = require("./Markets.cjs");
+const path = require("path");
 
-// const apiUrl = "https://safe-lindsy-obiken-415ef84b.koyeb.app/api/v1/market";
-const apiUrl = "http://localhost:3000/api/v1/market";
+const apiUrl =
+  "https://9ja-market-backend-production.up.railway.app/api/v1/market";
 const defaultCity = "Ibadan";
-const defaultAddress = "moniya market, moniya, Ibadan";
-const defaultDescription = "Best Market in town, located in Ibadan";
+const defaultAddress = "located in Nigeria";
+const defaultDescription = "Best Market in town";
 
-// ? Inject all market with it's states
+// ? Inject all market with its states
 const marketWithStates = Object.values(MARKETS).map((stateMarkets, ind) => {
   return stateMarkets.map((market) => {
     return { ...market, state: Object.keys(MARKETS)[ind] };
@@ -34,19 +35,24 @@ const uploadMarket = async (market) => {
   try {
     // * Using formData when market image is available and supported
     const formData = new FormData();
+    const fullPath = path.resolve(__dirname, market.img);
+    if (!market.img || !fs.existsSync(fullPath)) {
+      console.log(`Image not found for market ${market.name} , ${fullPath}`);
+      return;
+    }
     formData.append("name", market.name);
     formData.append("description", market.description);
     formData.append("address", market.address);
     formData.append("city", market.city);
     formData.append("state", market.state);
-    formData.append("displayImage", fs.createReadStream(market.img)); // Attach image
+    formData.append("displayImage", fs.createReadStream(fullPath)); // Attach image using fullPath
     const response = await axios.post(apiUrl, formData, {
       headers: formData.getHeaders(),
     });
     const responseData = response.data;
     console.log(`Market ${market.name} uploaded successfully:`, responseData);
   } catch (error) {
-    console.error(`Error uploading market ${market.name}:`, error);
+    console.error(`Error uploading market ${market.name}:`, error.message);
   }
 };
 
@@ -54,6 +60,7 @@ const uploadAllMarkets = async () => {
   for (const market of allMarkets) {
     await uploadMarket(market);
   }
+  console.log("All markets uploaded successfully");
 };
 
 uploadAllMarkets();
