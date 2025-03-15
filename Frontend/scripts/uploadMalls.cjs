@@ -12,6 +12,16 @@ const defaultCity = "Ibadan";
 const defaultAddress = "located in Nigeria";
 const defaultDescription = "Best Market in town";
 
+// Initialize log file
+const logDir = path.resolve(__dirname, "./logs");
+const logFile = path.join(logDir, "malls.log");
+
+// Ensure the logs directory exists and create/clear the log file
+if (!fs.existsSync(logDir)) {
+  fs.mkdirSync(logDir, { recursive: true });
+}
+fs.writeFileSync(logFile, ""); // Clear/create the log file
+
 // ? Inject all market with its states
 const mallsWithStates = Object.values(MALLS).map((stateMalls, ind) => {
   return stateMalls.map((mall) => {
@@ -25,18 +35,25 @@ let allMalls = mallsWithStates.flat();
 //  ? Insert Default values for city, address and description
 allMalls = allMalls.map((malls) => {
   return {
-    city: defaultCity,
     address: defaultAddress,
     description: defaultDescription,
+    // ! temporary fix for missing city in market data
+    city: market.city || market.state,
     ...malls,
   };
 });
+
+function fileLog(message) {
+  fs.appendFileSync(logFile, message + "\n");
+}
 const uploadMarket = async (mall) => {
   try {
     const formData = new FormData();
     const fullPath = path.resolve(__dirname, mall.img);
     if (!mall.img || !fs.existsSync(fullPath)) {
-      console.log(`Image not found for mall ${mall.name}, ${fullPath}`);
+      const logMessage = `Image not found for mall ${mall.name} , ${mall.img}`;
+      console.log(logMessage);
+      fileLog(logMessage);
       return;
     }
     // console.log("Uploading mall", mall);

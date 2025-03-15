@@ -12,6 +12,16 @@ const defaultCity = "Ibadan";
 const defaultAddress = "located in Nigeria";
 const defaultDescription = "Best Market in town";
 
+// Initialize log file
+const logDir = path.resolve(__dirname, "./logs");
+const logFile = path.join(logDir, "markets.log");
+
+// Ensure the logs directory exists and create/clear the log file
+if (!fs.existsSync(logDir)) {
+  fs.mkdirSync(logDir, { recursive: true });
+}
+fs.writeFileSync(logFile, ""); // Clear/create the log file
+
 // ? Inject all market with its states
 const marketWithStates = Object.values(MARKETS).map((stateMarkets, ind) => {
   return stateMarkets.map((market) => {
@@ -25,19 +35,25 @@ let allMarkets = marketWithStates.flat();
 //  ? Insert Default values for city, address and description
 allMarkets = allMarkets.map((market) => {
   return {
-    city: defaultCity,
     address: defaultAddress,
     description: defaultDescription,
+    // ! temporary fix for missing city in market data
+    city: market.city || market.state,
     ...market,
   };
 });
+function fileLog(message) {
+  fs.appendFileSync(logFile, message + "\n");
+}
 const uploadMarket = async (market) => {
   try {
     // * Using formData when market image is available and supported
     const formData = new FormData();
     const fullPath = path.resolve(__dirname, market.img);
     if (!market.img || !fs.existsSync(fullPath)) {
-      console.log(`Image not found for market ${market.name} , ${fullPath}`);
+      const logMessage = `Image not found for market ${market.name} , ${market.img}`;
+      console.log(logMessage);
+      fileLog(logMessage);
       return;
     }
     formData.append("name", market.name);

@@ -2,7 +2,7 @@ const MARKETS = {
   Abia: [
     {
       name: "Aba International Market",
-      img: "./markets/abia/aba-international.png",
+      img: "./markets/abia/aba-international.jpg",
       address: "Aba",
       description:
         "Best market to get a vast selection of locally manufactured goods, especially in textiles, leather products, and footwear.",
@@ -1367,42 +1367,42 @@ const MARKETS = {
   "FCT Abuja": [
     {
       name: "Apo Mechanic Village Market",
-      img: "./markets/abuja/apo-mechanic.jpg",
+      img: "./markets/FCT Abuja/apo-mechanic.jpg",
       address: "Apo, Abuja",
       description:
         "A major hub for vehicle spare parts, repairs, and mechanical services.",
     },
     {
       name: "Dei-Dei Building Materials Market",
-      img: "./markets/abuja/dei-dei.jpeg",
+      img: "./markets/FCT Abuja/dei-dei.jpeg",
       address: "Dei-Dei, Abuja",
       description:
         "The largest building materials market in Abuja, offering cement, tiles, plumbing, and electrical supplies.",
     },
     {
       name: "Dutse Market",
-      img: "./markets/abuja/dutse.jpg",
+      img: "./markets/FCT Abuja/dutse.jpg",
       address: "Dutse Alhaji, Abuja",
       description:
         "A bustling market known for fresh food, household items, and clothing.",
     },
     {
       name: "Garki International Market",
-      img: "./markets/abuja/garki.jpeg",
+      img: "./markets/FCT Abuja/garki.jpeg",
       address: "Garki, Abuja",
       description:
         "A popular shopping destination offering groceries, clothing, and electronics.",
     },
     {
       name: "Gudu Market",
-      img: "./markets/abuja/gudu.jpg",
+      img: "./markets/FCT Abuja/gudu.jpg",
       address: "Gudu, Abuja",
       description:
         "Famous for fresh produce, meat, seafood, and bulk grocery shopping.",
     },
     {
       name: "Gwagwalada Market",
-      img: "./markets/abuja/gwagwalada.jpg",
+      img: "./markets/FCT Abuja/gwagwalada.jpg",
       address: "Gwagwalada, Abuja",
       description:
         "A major market serving the Gwagwalada area with a variety of goods.",
@@ -1416,52 +1416,64 @@ const MARKETS = {
     },
     {
       name: "Kado Fish Market",
-      img: "./markets/abuja/kado.jpg",
+      img: "./markets/FCT Abuja/kado.jpg",
       address: "Kado, Abuja",
       description:
         "The best spot in Abuja for fresh fish, seafood, and other perishable goods.",
     },
     {
       name: "Kubwa Market",
-      img: "./markets/abuja/kubwa.jpg",
+      img: "./markets/FCT Abuja/kubwa.jpg",
       address: "Kubwa, Abuja",
       description:
         "A well-organized market catering to the fast-growing Kubwa community.",
     },
     {
       name: "Lugbe Market",
-      img: "./markets/abuja/lugbe.jpeg",
+      img: "./markets/FCT Abuja/lugbe.jpeg",
       address: "Lugbe, Abuja",
       description:
         "A local market serving the Lugbe area with foodstuffs and daily needs.",
     },
     {
       name: "Nyanya Market",
-      img: "./markets/abuja/nyanya.jpeg",
+      img: "./markets/FCT Abuja/nyanya.jpeg",
       address: "Nyanya, Abuja",
       description:
         "A busy suburban market known for affordable foodstuffs and second-hand goods.",
     },
     {
       name: "Utako Market",
-      img: "./markets/abuja/utako.jpg",
+      img: "./markets/FCT Abuja/utako.jpg",
       address: "Utako, Abuja",
       description:
         "A vibrant market with sections for clothing, groceries, and electronics.",
     },
     {
       name: "Wuse Market",
-      img: "./markets/FCT/wuse.jpg",
+      img: "./markets/FCT Abuja/wuse.jpg",
       address: "Wuse, Abuja",
       description:
         "The largest and most commercialized market in Abuja, offering almost everything.",
     },
     {
       name: "Zuba Fruit Market",
-      img: "./markets/abuja/zuba.jpg",
+      img: "./markets/FCT Abuja/zuba.jpg",
       address: "Zuba, Abuja",
       description:
         "A wholesale fruit market, supplying fresh produce to Abuja and beyond.",
+    },
+    {
+      name: "Karimo Market",
+      address: "along Kado Fish Market, Idogwari 900102, Abuja",
+      img: "./markets/FCT Abuja/karimo.png",
+      description: "Sale Thrift and Fairly used Costumes",
+    },
+    {
+      name: "Gosa Market",
+      address: "along Airport Road in Abuja",
+      img: "./markets/FCT Abuja/gosa.jpg",
+      description: "fresh farm produce, foodstuffs, and Thrifted clothing",
     },
   ],
 
@@ -2425,7 +2437,7 @@ const MARKETS = {
     },
     {
       name: "Oniru New Market",
-      img: "./markets/lagos/oniru.webp",
+      img: "./markets/lagos/oniru.jpg",
       address: "Maroko Road",
       description:
         "A modern market offering fresh groceries, fashion items, and imported goods.",
