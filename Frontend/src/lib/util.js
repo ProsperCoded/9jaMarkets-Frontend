@@ -64,3 +64,47 @@ export function replaceAmpersandWithAnd(value = "") {
 export function replaceAndWithAmpersand(value = "") {
   return value.replace(/AND/g, "&");
 }
+
+export function convertToNestedListOrdered(list, nestCount) {
+  if (list.length % nestCount !== 0) {
+    throw new Error("The list cannot be divided into equal parts");
+  }
+  let columns = list.length / nestCount;
+  let nestedList = [
+    Array(columns)
+      .fill([])
+      .map((_, i) => i * 3),
+  ];
+
+  let index = 0;
+  while (index < list.length) {
+    for (let i = 0; i < nestedList.length; i++) {
+      nestedList[i].push(list[index]);
+      index++;
+    }
+  }
+  return nestedList;
+}
+export function convertToNestedList(list, nestCount, orderCount) {
+  // orderCount is a number that aims to arange the first set of (orderCount) items in a specific order that it would be displayed to the user.
+  let nestedList = [];
+
+  let index = 0;
+  // if (orderCount) {
+  //   let firstItems = convertToNestedListOrdered(
+  //     list.slice(0, orderCount),
+  //     nestCount
+  //   );
+  //   nestedList.push(...firstItems);
+  //   index = orderCount;
+  // }
+  while (index < list.length) {
+    nestedList.push(list.slice(index, index + nestCount));
+    index += nestCount;
+  }
+  return nestedList;
+}
+
+export function flattenNestedList(nestedList) {
+  return nestedList.flat();
+}

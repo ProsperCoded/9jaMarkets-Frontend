@@ -55,6 +55,19 @@ export const FEATURED_MARKET_NAMES = [
   "Yankaba Market",
   "Igwuruta Market",
   "Gbagi International Market",
+  "Babbar Kasuwa Market",
+  "Monday Market",
+];
+
+export const FEATURED_MALLS_NAMES = [
+  "Ikeja City Mall",
+  "Jabi Lake Mall",
+  "Ado Bayero Mall",
+  "Jericho Mall",
+  "Polo Park Mall",
+  "Calabar Mall",
+  "Legacy Mall Benin",
+  "Manga Plaza Mall",
 ];
 export const plans = {
   free: {
@@ -424,7 +437,6 @@ export const MARKETS = {
 };
 
 export const STATES = [
-  "Abuja",
   "Abia",
   "Adamawa",
   "Akwa-Ibom",
@@ -439,7 +451,7 @@ export const STATES = [
   "Edo",
   "Ekiti",
   "Enugu",
-  "FCT",
+  "FCT Abuja",
   "Gombe",
   "Imo",
   "Jigawa",

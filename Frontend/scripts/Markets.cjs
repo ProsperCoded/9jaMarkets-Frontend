@@ -1364,7 +1364,7 @@ const MARKETS = {
     },
   ],
 
-  FCT: [
+  "FCT Abuja": [
     {
       name: "Apo Mechanic Village Market",
       img: "./markets/abuja/apo-mechanic.jpg",
@@ -1451,7 +1451,7 @@ const MARKETS = {
     },
     {
       name: "Wuse Market",
-      img: "./markets/abuja/wuse.jpg",
+      img: "./markets/FCT/wuse.jpg",
       address: "Wuse, Abuja",
       description:
         "The largest and most commercialized market in Abuja, offering almost everything.",

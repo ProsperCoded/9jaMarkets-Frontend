@@ -4,8 +4,9 @@ const fs = require("fs"); // For reading image files
 const axios = require("axios");
 const FormData = require("form-data");
 const MALLS = require("./Malls.cjs");
-const apiUrl = "https://safe-lindsy-obiken-415ef84b.koyeb.app/api/v1/market";
-// const apiUrl = "https://lnczzhnm-3000.euw.devtunnels.ms/api/v1/market";
+const path = require("path");
+const apiUrl =
+  "https://9ja-market-backend-production.up.railway.app/api/v1/market";
 
 const defaultCity = "Ibadan";
 const defaultAddress = "located in Nigeria";
@@ -24,10 +25,10 @@ let allMalls = mallsWithStates.flat();
 //  ? Insert Default values for city, address and description
 allMalls = allMalls.map((malls) => {
   return {
-    ...malls,
     city: defaultCity,
     address: defaultAddress,
     description: defaultDescription,
+    ...malls,
   };
 });
 const uploadMarket = async (mall) => {
@@ -38,12 +39,13 @@ const uploadMarket = async (mall) => {
       console.log(`Image not found for mall ${mall.name}, ${fullPath}`);
       return;
     }
+    // console.log("Uploading mall", mall);
     formData.append("name", mall.name);
     formData.append("description", mall.description);
     formData.append("address", mall.address);
     formData.append("city", mall.city);
     formData.append("state", mall.state);
-    formData.append("isMall", true);
+    formData.append("isMall", "true");
     formData.append("displayImage", fs.createReadStream(fullPath)); // Attach image using fullPath
     const response = await axios.post(apiUrl, formData, {
       headers: formData.getHeaders(),
@@ -57,7 +59,6 @@ const uploadMarket = async (mall) => {
 };
 
 const uploadAllMalls = async () => {
-  console.log(allMalls);
   for (const mall of allMalls) {
     await uploadMarket(mall);
   }

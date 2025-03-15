@@ -15,24 +15,14 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
+import { Pagination, Navigation } from "swiper/modules";
 import { Search } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-
-// Import optimized images for markets and malls
-import AlabaMarket from "../assets/optimized/markets/AlabaMarket.jpg";
-import BodijaMarket from "../assets/optimized/markets/BodijaMarket.jpg";
-import OilMillMarket from "../assets/optimized/markets/OilMillMarket.jpg";
-import ComputerVillage from "../assets/optimized/markets/ComputerVillage.jpg";
-import OnitshaMarket from "../assets/optimized/markets/OnitshaMarket.jpg";
-import IkejaMall from "../assets/optimized/malls/IkejaMall.jpg";
-import PalmsMall from "../assets/optimized/malls/PalmsMall.jpg";
-import OnitshaMall from "../assets/optimized/malls/OnitshaMall.jpg";
-import AdoBayeroMall from "../assets/optimized/malls/AdoBayeroMall.jpg";
-import JabiLakeMall from "../assets/optimized/malls/JabiLakeMall.jpg";
+import "swiper/css/navigation";
 
 // Import optimized category images
 import Education from "../assets/optimized/categories/education-&-stationery.webp";
@@ -50,14 +40,11 @@ import Traditional from "../assets/optimized/categories/traditional-crafts.jpg";
 import Sports from "../assets/optimized/categories/sports&outdoor.jpg";
 import Kids from "../assets/optimized/categories/kids&babyproducts.png";
 
+import { FEATURED_MARKET_NAMES, FEATURED_MALLS_NAMES } from "@/config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { MALLS, MARKETS, PRODUCT_CATEGORIES } from "../config";
-import {
-  replaceAmpersandWithAnd,
-  replaceSpacesWithUnderscore,
-  replaceUnderscoresWithSpaces,
-} from "../lib/util";
+import { convertToNestedList } from "../lib/util";
 
 import {
   GraduationCap, // Education
@@ -141,57 +128,133 @@ PRODUCT_CATEGORIES.forEach((category) => {
 
 function ExploreSection() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [cardNumber, setCardNumber] = useState(1);
+  const [columnNumber, setCardNumber] = useState(4); // Default to desktop (4 columns)
+  const [isMobile, setIsMobile] = useState(false);
   const { marketsData } = useContext(MARKET_DATA_CONTEXT);
   const { mallsData } = useContext(MALLS_DATA_CONTEXT);
+  const [prioritizedMarkets, setPrioritizedMarkets] = useState([]);
+  const [prioritizedMalls, setPrioritizedMalls] = useState([]);
 
-  const [featuredMarkets, setFeaturedMarkets] = useState([]);
-  const [featuredMalls, setFeaturedMalls] = useState([]);
-  // ! For Testing Purposes
-  useEffect(() => {
-    setFeaturedMarkets(marketsData.slice(0, 5));
-    setFeaturedMalls(mallsData.slice(0, 5));
-  }, [marketsData, mallsData]);
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value.toLowerCase());
   };
 
+  // Set up responsive display and prioritize markets/malls
   useEffect(() => {
+    // Handle responsive layout
     const handleResize = () => {
-      const isMobile = window.innerWidth < 600;
-      const isIPad = window.innerWidth >= 600 && window.innerWidth < 1024;
-      const isDesktop = window.innerWidth >= 1024;
+      const screenWidth = window.innerWidth;
+      const newIsMobile = screenWidth < 768;
+      setIsMobile(newIsMobile);
 
-      const newCardNumber = isDesktop
-        ? 4 // Show 4 cards on desktop
-        : isIPad
-        ? 3
-        : isMobile
-        ? 2
-        : 1;
-
-      setCardNumber(newCardNumber);
+      if (screenWidth >= 1024) {
+        // Desktop - 4 columns
+        setCardNumber(4);
+      } else if (screenWidth >= 768) {
+        // Tablet - 3 columns
+        setCardNumber(3);
+      } else {
+        // Mobile - 2 columns
+        setCardNumber(2);
+      }
     };
 
     window.addEventListener("resize", handleResize);
-    handleResize();
+    handleResize(); // Initial call
+
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Prioritize markets and malls based on featured lists
+  useEffect(() => {
+    if (marketsData.length > 0) {
+      // Create a copy of the markets data to avoid mutating the original
+      const marketsCopy = [...marketsData];
+
+      // Sort markets based on priority list
+      const sorted = marketsCopy.sort((a, b) => {
+        const indexA = FEATURED_MARKET_NAMES.findIndex(
+          (name) => a.name.toLowerCase() === name.toLowerCase()
+        );
+        const indexB = FEATURED_MARKET_NAMES.findIndex(
+          (name) => b.name.toLowerCase() === name.toLowerCase()
+        );
+
+        // If both are in the featured list, sort by their position in the list
+        if (indexA !== -1 && indexB !== -1) {
+          return indexA - indexB;
+        }
+
+        // If only a is in the featured list, it comes first
+        if (indexA !== -1) return -1;
+
+        // If only b is in the featured list, it comes first
+        if (indexB !== -1) return 1;
+
+        // If neither is in the featured list, maintain original order
+        return 0;
+      });
+
+      setPrioritizedMarkets(sorted);
+    }
+
+    if (mallsData.length > 0) {
+      // Create a copy of the malls data
+      const mallsCopy = [...mallsData];
+
+      // Sort malls based on priority list
+      const sorted = mallsCopy.sort((a, b) => {
+        const indexA = FEATURED_MALLS_NAMES.findIndex(
+          (name) => a.name.toLowerCase() === name.toLowerCase()
+        );
+        const indexB = FEATURED_MALLS_NAMES.findIndex(
+          (name) => b.name.toLowerCase() === name.toLowerCase()
+        );
+
+        // If both are in the featured list, sort by their position in the list
+        if (indexA !== -1 && indexB !== -1) {
+          return indexA - indexB;
+        }
+
+        // If only a is in the featured list, it comes first
+        if (indexA !== -1) return -1;
+
+        // If only b is in the featured list, it comes first
+        if (indexB !== -1) return 1;
+
+        // If neither is in the featured list, maintain original order
+        return 0;
+      });
+
+      setPrioritizedMalls(sorted);
+    }
+  }, [marketsData, mallsData]);
+
+  // Filter markets and malls based on search query
   const filteredMarkets = useMemo(() => {
-    if (!searchQuery) return featuredMarkets;
-    return marketsData
-      .filter((market) => market.name.toLowerCase().includes(searchQuery))
-      .slice(0, cardNumber * 5);
-  }, [searchQuery, featuredMarkets, cardNumber]);
+    if (!searchQuery) return prioritizedMarkets;
+    return prioritizedMarkets.filter((market) =>
+      market.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [searchQuery, prioritizedMarkets]);
 
   const filteredMalls = useMemo(() => {
-    if (!searchQuery) return featuredMalls;
-    return mallsData
-      .filter((mall) => mall.name.toLowerCase().includes(searchQuery))
-      .slice(0, cardNumber * 5);
-  }, [searchQuery, featuredMalls, cardNumber]);
+    if (!searchQuery) return prioritizedMalls;
+    return prioritizedMalls.filter((mall) =>
+      mall.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [searchQuery, prioritizedMalls]);
 
+  // for slides
+  const nestedMarkets = useMemo(() => {
+    const rowNumber = 3;
+    return convertToNestedList(filteredMarkets, rowNumber, 12);
+  }, [filteredMarkets]);
+
+  const nestedMalls = useMemo(() => {
+    const rowNumber = 2;
+    return convertToNestedList(filteredMalls, rowNumber);
+  }, [filteredMalls]);
   const navigate = useNavigate();
 
   return (
@@ -205,11 +268,11 @@ function ExploreSection() {
               placeholder="Search by state, market, or category..."
               value={searchQuery}
               onChange={handleSearchChange}
-              className="border-2 border-Primary px-6 py-3 md:py-4 pr-[100px] rounded-full focus:ring-2 focus:ring-Primary/20 w-full text-sm md:text-base focus:outline-none"
+              className="px-6 py-3 md:py-4 pr-[100px] border-2 border-Primary rounded-full focus:outline-none focus:ring-2 focus:ring-Primary/20 w-full text-sm md:text-base"
             />
             <button className="right-2 absolute flex justify-center items-center bg-[#F8912D] hover:bg-[#F8912D]/90 px-4 md:px-6 py-2 md:py-2.5 rounded-full text-white transition-colors">
               <Search className="w-5 h-5" />
-              <span className="md:inline hidden ml-2">Search</span>
+              <span className="hidden md:inline ml-2">Search</span>
             </button>
           </div>
         </div>
@@ -227,24 +290,24 @@ function ExploreSection() {
             </button>
           </div>
 
-          <h2 className="mb-6 font-bold text-center text-Primary text-xl md:text-2xl">
+          <h2 className="mb-6 font-bold text-Primary text-xl md:text-2xl text-center">
             Categories
           </h2>
 
           <div className="flex md:flex-row flex-col gap-4">
             {/* Desktop: Place Ad Button */}
-            <div className="md:block hidden">
+            <div className="hidden md:block">
               <button
                 onClick={() => navigate("/ad")}
-                className="bg-orange hover:bg-orange/90 shadow-sm hover:shadow-md rounded-xl w-[200px] h-[200px] text-white transition-all duration-200 group"
+                className="group bg-orange hover:bg-orange/90 shadow-sm hover:shadow-md rounded-xl w-[200px] h-[200px] text-white transition-all duration-200"
               >
                 <div className="flex flex-col justify-center items-center gap-3 p-4">
-                  <div className="group-hover:scale-110 flex justify-center items-center bg-white/20 rounded-full w-10 h-10 transition-transform duration-200">
+                  <div className="flex justify-center items-center bg-white/20 rounded-full w-10 h-10 group-hover:scale-110 transition-transform duration-200">
                     <FontAwesomeIcon icon={faPlus} className="text-xl" />
                   </div>
                   <div className="text-center">
                     <div className="font-semibold">Place Your Ad</div>
-                    <p className="text-sm text-white/80">Advertise here</p>
+                    <p className="text-white/80 text-sm">Advertise here</p>
                   </div>
                 </div>
               </button>
@@ -253,7 +316,7 @@ function ExploreSection() {
             {/* Categories Swiper */}
             <div className="w-full md:max-w-[calc(100%-220px)]">
               <Swiper
-                slidesPerView={cardNumber}
+                slidesPerView={columnNumber}
                 spaceBetween={16}
                 pagination={{
                   clickable: true,
@@ -268,7 +331,7 @@ function ExploreSection() {
                         name.toUpperCase()
                       )}`}
                     >
-                      <div className="h-[200px] cursor-pointer group">
+                      <div className="group h-[200px] cursor-pointer">
                         <div className="relative rounded-xl h-full overflow-hidden">
                           <img
                             src={imageUrl}
@@ -281,11 +344,11 @@ function ExploreSection() {
                               className:
                                 "w-6 h-6 mb-2 group-hover:scale-110 transition-transform duration-200",
                             })}
-                            <h3 className="font-medium text-center text-sm">
+                            <h3 className="font-medium text-sm text-center">
                               {name}
                             </h3>
                           </div>
-                          <h3 className="font-semibold text-center text-sm text-white md:text-base">
+                          <h3 className="font-semibold text-white text-sm md:text-base text-center">
                             {name}
                           </h3>
                         </div>
@@ -300,85 +363,200 @@ function ExploreSection() {
 
         {/* Markets Section */}
         <div className="mb-16">
-          <h2 className="mb-8 font-bold text-center text-Primary text-xl md:text-2xl">
+          <h2 className="mb-8 font-bold text-Primary text-xl md:text-2xl text-center">
             Featured Markets
           </h2>
-          <div className="mx-auto max-w-6xl">
+          <div className="relative mx-auto max-w-6xl">
             <Swiper
-              slidesPerView={cardNumber}
-              spaceBetween={24}
+              // slidesPerView={columnNumber}
+              spaceBetween={16}
               pagination={{
                 clickable: true,
+                dynamicBullets: true,
               }}
-              modules={[Pagination]}
+              navigation={{
+                nextEl: ".swiper-button-next-markets", // Fixed class name
+                prevEl: ".swiper-button-prev-markets", // Fixed class name
+              }}
+              modules={[Pagination, Navigation]}
               className="custom-swiper-pagination pb-10"
+              initialSlide={0}
+              watchSlidesProgress={true}
+              slidesPerGroup={1}
+              breakpoints={{
+                320: {
+                  slidesPerView: 2,
+                  slidesPerGroup: 1,
+                  spaceBetween: 12,
+                },
+                768: {
+                  slidesPerView: 3,
+                  slidesPerGroup: 1,
+                  spaceBetween: 16,
+                },
+                1024: {
+                  slidesPerView: 4,
+                  slidesPerGroup: 1,
+                  spaceBetween: 20,
+                },
+              }}
             >
-              {filteredMarkets.map((market) => (
-                <SwiperSlide key={market.name}>
-                  <div className="bg-white shadow-lg hover:shadow-xl rounded-xl transition-all duration-200 overflow-hidden hover:scale-105">
-                    <Link to={`/markets/${market.id}`}>
-                      <img
-                        src={market.displayImage}
-                        alt={market.name}
-                        className="w-full aspect-[4/3] object-cover"
-                        loading="lazy"
-                      />
-                      <div className="p-4">
-                        <h3 className="mb-1 font-bold text-base text-gray-800 md:text-lg">
-                          {market.name}
-                        </h3>
-                        <p className="text-gray-600 text-sm md:text-base">
-                          {market.address}
-                        </p>
-                      </div>
-                    </Link>
-                  </div>
-                </SwiperSlide>
-              ))}
+              {/* First Slide - Grid View */}
+              {nestedMarkets.map((markets, index) => {
+                return (
+                  <SwiperSlide>
+                    {/* grid-cols-1 md:grid-cols-3 lg:grid-cols-4 */}
+                    <div className="gap-4 md:gap-6 grid grid-rows-3 overflow-visible">
+                      {markets.map((market) => (
+                        <div
+                          key={market.id || market.name}
+                          className="bg-white shadow-lg hover:shadow-xl rounded-xl overflow-hidden hover:scale-105 transition-all duration-200"
+                        >
+                          <Link to={`/markets/${market.id}`}>
+                            <img
+                              src={market.displayImage}
+                              alt={market.name}
+                              className="w-full object-cover aspect-[4/3]"
+                              loading="lazy"
+                            />
+                            <div className="p-4 min-h-[5rem]">
+                              <h3 className="mb-1 font-bold text-gray-800 text-base md:text-lg">
+                                {market.name}
+                              </h3>
+                              <p className="text-gray-600 text-sm md:text-base">
+                                {market.address}
+                              </p>
+                            </div>
+                          </Link>
+                        </div>
+                      ))}
+                    </div>
+                  </SwiperSlide>
+                );
+              })}
             </Swiper>
+
+            {/* Custom Navigation Buttons - Fixed class names */}
+            {filteredMarkets.length > (isMobile ? 8 : 12) && (
+              <>
+                <button className="top-1/2 -left-4 z-10 absolute flex justify-center items-center bg-white hover:bg-gray-50 shadow-md rounded-full w-10 h-10 -translate-y-1/2 cursor-pointer swiper-button-prev-markets transform">
+                  <ChevronLeft className="w-5 h-5 text-gray-700" />
+                </button>
+                <button className="top-1/2 -right-4 z-10 absolute flex justify-center items-center bg-white hover:bg-gray-50 shadow-md rounded-full w-10 h-10 -translate-y-1/2 cursor-pointer swiper-button-next-markets transform">
+                  <ChevronRight className="w-5 h-5 text-gray-700" />
+                </button>
+              </>
+            )}
           </div>
         </div>
 
         {/* Malls Section */}
         <div>
-          <h2 className="mb-8 font-bold text-center text-Primary text-xl md:text-2xl">
+          <h2 className="mb-8 font-bold text-Primary text-xl md:text-2xl text-center">
             Featured Malls
           </h2>
-          <div className="mx-auto max-w-6xl">
+          <div className="relative mx-auto max-w-6xl">
             <Swiper
-              slidesPerView={cardNumber}
-              spaceBetween={24}
+              spaceBetween={16}
               pagination={{
                 clickable: true,
+                dynamicBullets: true,
               }}
-              modules={[Pagination]}
+              navigation={{
+                nextEl: ".swiper-button-next-malls", // Fixed class name
+                prevEl: ".swiper-button-prev-malls", // Fixed class name
+              }}
+              modules={[Pagination, Navigation]}
               className="custom-swiper-pagination pb-10"
+              initialSlide={0}
+              watchSlidesProgress={true}
+              slidesPerGroup={1}
+              breakpoints={{
+                320: {
+                  slidesPerView: 2,
+                  slidesPerGroup: 1,
+                  spaceBetween: 12,
+                },
+                768: {
+                  slidesPerView: 3,
+                  slidesPerGroup: 1,
+                  spaceBetween: 16,
+                },
+                1024: {
+                  slidesPerView: 4,
+                  slidesPerGroup: 1,
+                  spaceBetween: 20,
+                },
+              }}
             >
-              {filteredMalls.map((mall) => (
-                <SwiperSlide key={mall.name}>
-                  <div className="bg-white shadow-lg hover:shadow-xl rounded-xl transition-all duration-200 overflow-hidden hover:scale-105">
-                    <Link to={`/markets/${mall.id}`}>
-                      <img
-                        src={mall.displayImage}
-                        alt={mall.name}
-                        className="w-full aspect-[4/3] object-cover"
-                        loading="lazy"
-                      />
-                      <div className="p-4">
-                        <h3 className="mb-1 font-bold text-base text-gray-800 md:text-lg">
-                          {mall.name}
-                        </h3>
-                        <p className="text-gray-600 text-sm md:text-base">
-                          {mall.address}
-                        </p>
+              {/* Using the same nested layout as markets */}
+              {nestedMalls.map((malls, index) => (
+                <SwiperSlide key={index}>
+                  <div className="gap-4 md:gap-6 grid grid-rows-2">
+                    {malls.map((mall) => (
+                      <div
+                        key={mall.id || mall.name}
+                        className="bg-white shadow-lg hover:shadow-xl rounded-xl overflow-hidden hover:scale-105 transition-all duration-200"
+                      >
+                        <Link to={`/malls/${mall.id}`}>
+                          <img
+                            src={mall.displayImage}
+                            alt={mall.name}
+                            className="w-full object-cover aspect-[4/3]"
+                            loading="lazy"
+                          />
+                          <div className="p-4 min-h-[5rem]">
+                            <h3 className="mb-1 font-bold text-gray-800 text-base md:text-lg">
+                              {mall.name}
+                            </h3>
+                            <p className="text-gray-600 text-sm md:text-base">
+                              {mall.address}
+                            </p>
+                          </div>
+                        </Link>
                       </div>
-                    </Link>
+                    ))}
                   </div>
                 </SwiperSlide>
               ))}
             </Swiper>
+
+            {/* Navigation Buttons - Fixed class names */}
+            {filteredMalls.length > 8 && (
+              <>
+                <button className="top-1/2 -left-4 z-10 absolute flex justify-center items-center bg-white hover:bg-gray-50 shadow-md rounded-full w-10 h-10 -translate-y-1/2 cursor-pointer swiper-button-prev-malls transform">
+                  <ChevronLeft className="w-5 h-5 text-gray-700" />
+                </button>
+                <button className="top-1/2 -right-4 z-10 absolute flex justify-center items-center bg-white hover:bg-gray-50 shadow-md rounded-full w-10 h-10 -translate-y-1/2 cursor-pointer swiper-button-next-malls transform">
+                  <ChevronRight className="w-5 h-5 text-gray-700" />
+                </button>
+              </>
+            )}
           </div>
         </div>
+
+        {/* Add custom styles for navigation buttons on mobile */}
+        <style jsx>{`
+          @media (max-width: 640px) {
+            .swiper-button-prev-markets,
+            .swiper-button-next-markets,
+            .swiper-button-prev-malls,
+            .swiper-button-next-malls {
+              width: 32px;
+              height: 32px;
+            }
+
+            .swiper-button-prev-markets,
+            .swiper-button-prev-malls {
+              left: 4px;
+            }
+
+            .swiper-button-next-markets,
+            .swiper-button-next-malls {
+              right: 4px;
+            }
+          }
+        `}</style>
       </div>
     </div>
   );
