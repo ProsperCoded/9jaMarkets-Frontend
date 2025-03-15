@@ -2354,7 +2354,7 @@ const MARKETS = {
     {
       name: "Alaba International Market",
       img: "./markets/lagos/alaba.jpeg",
-      address: "Alaba",
+      address: "Alaba, Ojo Area Lagos",
       description:
         "Nigeria’s largest electronics market, specializing in gadgets, home appliances, and spare parts.",
     },

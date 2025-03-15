@@ -53,7 +53,7 @@ export const FEATURED_MARKET_NAMES = [
   "Onitsha Main Market",
   "Ariaria International Market",
   "Yankaba Market",
-  "Igwuruta Market",
+  "Mile 1 Market",
   "Gbagi International Market",
   "Babbar Kasuwa Market",
   "Monday Market",

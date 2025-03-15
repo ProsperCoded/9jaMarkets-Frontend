@@ -410,17 +410,30 @@ function ExploreSection() {
                       {markets.map((market) => (
                         <div
                           key={market.id || market.name}
-                          className="bg-white shadow-lg hover:shadow-xl rounded-xl overflow-hidden hover:scale-105 transition-all duration-200"
+                          className="group relative bg-white shadow-lg hover:shadow-xl rounded-xl overflow-hidden hover:scale-105 transition-all duration-200"
                         >
                           <Link to={`/markets/${market.id}`}>
-                            <img
-                              src={market.displayImage}
-                              alt={market.name}
-                              className="w-full object-cover aspect-[4/3]"
-                              loading="lazy"
-                            />
-                            <div className="p-4 min-h-[5rem]">
-                              <h3 className="mb-1 font-bold text-gray-800 text-base md:text-lg">
+                            <div className="relative">
+                              <img
+                                src={market.displayImage}
+                                alt={market.name}
+                                className="w-full object-cover aspect-[4/3]"
+                                loading="lazy"
+                              />
+                              {/* State Badge - Absolute positioned */}
+                              <span className="top-3 right-3 absolute bg-white/90 shadow-sm px-3 py-1 rounded-full font-medium text-gray-700 text-sm">
+                                {market.state}
+                              </span>
+                              {/* Description Overlay on Hover */}
+                              <div className="absolute inset-0 flex justify-center items-center bg-black/70 opacity-0 group-hover:opacity-100 p-4 transition-opacity duration-200">
+                                <p className="text-white text-sm text-center line-clamp-4">
+                                  {market.description ||
+                                    "No description available"}
+                                </p>
+                              </div>
+                            </div>
+                            <div className="p-4">
+                              <h3 className="font-bold text-gray-800 text-base md:text-lg">
                                 {market.name}
                               </h3>
                               <p className="text-gray-600 text-sm md:text-base">
@@ -496,17 +509,29 @@ function ExploreSection() {
                     {malls.map((mall) => (
                       <div
                         key={mall.id || mall.name}
-                        className="bg-white shadow-lg hover:shadow-xl rounded-xl overflow-hidden hover:scale-105 transition-all duration-200"
+                        className="group relative bg-white shadow-lg hover:shadow-xl rounded-xl overflow-hidden hover:scale-105 transition-all duration-200"
                       >
                         <Link to={`/malls/${mall.id}`}>
-                          <img
-                            src={mall.displayImage}
-                            alt={mall.name}
-                            className="w-full object-cover aspect-[4/3]"
-                            loading="lazy"
-                          />
-                          <div className="p-4 min-h-[5rem]">
-                            <h3 className="mb-1 font-bold text-gray-800 text-base md:text-lg">
+                          <div className="relative">
+                            <img
+                              src={mall.displayImage}
+                              alt={mall.name}
+                              className="w-full object-cover aspect-[4/3]"
+                              loading="lazy"
+                            />
+                            {/* State Badge */}
+                            <span className="top-3 right-3 absolute bg-white/90 shadow-sm px-3 py-1 rounded-full font-medium text-gray-700 text-sm">
+                              {mall.state}
+                            </span>
+                            {/* Description Overlay on Hover */}
+                            <div className="absolute inset-0 flex justify-center items-center bg-black/70 opacity-0 group-hover:opacity-100 p-4 transition-opacity duration-200">
+                              <p className="text-white text-sm text-center line-clamp-4">
+                                {mall.description || "No description available"}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="p-4">
+                            <h3 className="font-bold text-gray-800 text-base md:text-lg">
                               {mall.name}
                             </h3>
                             <p className="text-gray-600 text-sm md:text-base">

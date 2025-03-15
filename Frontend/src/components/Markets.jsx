@@ -21,10 +21,9 @@ const MarketCard = ({ market }) => {
   return (
     <Link
       to={`/markets/${market.id}`}
-      className="group bg-white shadow-sm hover:shadow-md rounded-xl overflow-hidden transition-all duration-300"
+      className="group relative bg-white shadow-sm hover:shadow-md rounded-xl overflow-hidden transition-all duration-300"
     >
-      <div className="relative aspect-video overflow-hidden">
-        {/* Skeleton loader */}
+      <div className="relative">
         {imageLoading && (
           <div className="absolute inset-0 bg-gray-200 animate-pulse" />
         )}
@@ -32,12 +31,22 @@ const MarketCard = ({ market }) => {
           src={market.displayImage}
           alt={market.name}
           loading="lazy"
-          className={`w-full h-full transform transition-all duration-300 object-cover ${
+          className={`w-full h-full aspect-video object-cover transform transition-all duration-300 ${
             imageLoading ? "opacity-0" : "opacity-100 group-hover:scale-105"
           }`}
           onLoad={() => setImageLoading(false)}
           onError={() => setImageLoading(false)}
         />
+        {/* State Badge */}
+        <span className="top-3 right-3 absolute bg-white/90 shadow-sm px-3 py-1 rounded-full font-medium text-gray-700 text-sm">
+          {market.state}
+        </span>
+        {/* Description Overlay */}
+        <div className="absolute inset-0 flex justify-center items-center bg-black/70 opacity-0 group-hover:opacity-100 p-4 transition-opacity duration-200">
+          <p className="text-white text-sm text-center line-clamp-4">
+            {market.description || "No description available"}
+          </p>
+        </div>
       </div>
       <div className="p-3 md:p-4">
         <h3 className="group-hover:text-Primary font-semibold text-gray-800 text-sm md:text-lg line-clamp-1 transition-colors">
