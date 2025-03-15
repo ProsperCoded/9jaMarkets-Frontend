@@ -1,10 +1,36 @@
 import React, { useContext, useState } from "react";
-import { Store, UserRound, Settings, Home, Package, Users, MessageSquare, LogOut, ChevronRight, X } from "lucide-react";
-import { Link, Outlet, useParams, useNavigate, useLocation } from "react-router-dom";
+import {
+  Store,
+  UserRound,
+  Settings,
+  Home,
+  Package,
+  Users,
+  MessageSquare,
+  LogOut,
+  ChevronRight,
+  X,
+} from "lucide-react";
+import {
+  Link,
+  Outlet,
+  useParams,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import { Avatar } from "antd";
-import { USER_PROFILE_CONTEXT, LOGOUT_MODAL_CONTEXT, LOGIN_MODAL_CONTEXT, SIGNUP_MODAL_CONTEXT } from "@/contexts";
+import {
+  USER_PROFILE_CONTEXT,
+  LOGOUT_MODAL_CONTEXT,
+  LOGIN_MODAL_CONTEXT,
+  SIGNUP_MODAL_CONTEXT,
+} from "@/contexts";
 import { Button } from "./ui/button";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "./ui/collapsible";
 import { ChevronsUpDown } from "lucide-react";
 
 const Dashboard = () => {
@@ -23,37 +49,37 @@ const Dashboard = () => {
 
   const name = userProfile.firstName || userProfile.brandName;
 
-  const menuItems = [
-    {
-      path: "/dashboard/overview",
-      icon: <Home className="w-5 h-5" />,
-      label: "Overview",
-    },
-    {
-      path: "/dashboard/products",
-      icon: <Package className="w-5 h-5" />,
-      label: "Products",
-    },
-    ...(userProfile.userType === "merchant"
+  const menuItems =
+    userProfile.userType === "merchant"
       ? [
           {
             path: "/dashboard/customers",
             icon: <Users className="w-5 h-5" />,
             label: "Customers",
           },
+          {
+            path: "/dashboard/overview",
+            icon: <Home className="w-5 h-5" />,
+            label: "Overview",
+          },
+          {
+            path: "/dashboard/products",
+            icon: <Package className="w-5 h-5" />,
+            label: "Products",
+          },
         ]
-      : []),
-    {
-      path: "/dashboard/messages",
-      icon: <MessageSquare className="w-5 h-5" />,
-      label: "Vendors",
-    },
-  ];
+      : [
+          {
+            path: "/dashboard/messages",
+            icon: <MessageSquare className="w-5 h-5" />,
+            label: "Vendors",
+          },
+        ];
 
   return (
     <div className="flex bg-gray-50 min-h-screen">
       {/* Desktop Sidebar */}
-      <aside className="lg:block top-0 left-0 fixed border-gray-200 hidden bg-white px-4 pt-10 border-r w-64 h-screen">
+      <aside className="hidden lg:block top-0 left-0 fixed bg-white px-4 pt-10 border-gray-200 border-r w-64 h-screen">
         <SidebarContent
           name={name}
           userProfile={userProfile}
@@ -66,7 +92,7 @@ const Dashboard = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="z-50 fixed inset-0 lg:hidden">
+        <div className="lg:hidden z-50 fixed inset-0">
           {/* Backdrop with fade animation */}
           <div
             className="fixed inset-0 bg-black/50 transition-opacity duration-300 ease-in-out"
@@ -112,7 +138,7 @@ const Dashboard = () => {
       {/* Mobile Menu Button with slide animation */}
       <button
         onClick={() => setIsMobileMenuOpen(true)}
-        className="top-1/3 left-0 fixed flex items-center lg:hidden bg-orange shadow-lg py-5 p-2 rounded-r-xl text-white transform transition-transform hover:translate-x-1 duration-300 ease-in-out"
+        className="lg:hidden top-1/3 left-0 fixed flex items-center bg-orange shadow-lg p-2 py-5 rounded-r-xl text-white transition-transform hover:translate-x-1 duration-300 ease-in-out transform"
       >
         <ChevronRight className="w-5 h-5" />
       </button>
@@ -142,12 +168,14 @@ const SidebarContent = ({
           <div className="relative ml-3">
             <h2 className="font-semibold text-lg">{name}</h2>
             <button
-              className="top-8 left-32 absolute bg-Primary p-2 rounded-full transition-transform hover:scale-105"
+              className="top-8 left-32 absolute bg-Primary p-2 rounded-full hover:scale-105 transition-transform"
               onClick={() => navigate("/dashboard/edit")}
             >
               <Settings className="w-4 h-4" color="white" />
             </button>
-            <p className="text-sm">{userProfile.phoneNumbers[0].number}</p>
+            {userProfile.phoneNumbers.length > 0 && (
+              <p className="text-sm">{userProfile.phoneNumbers[0].number}</p>
+            )}
           </div>
         </div>
 
@@ -189,32 +217,6 @@ const SidebarContent = ({
     </div>
   );
 };
-
-// function UserOptions() {
-//   return (
-//     <div className="mb-6">
-//       <div className="space-y-2">
-//         <div className="flex flex-col space-y-2">
-//           <Link
-//             to="/dashboard/products"
-//             className="flex items-center space-x-2 hover:bg-Primary/20 p-2 rounded-lg"
-//           >
-//             <Store className="w-5 h-5" />
-//             <span>Sign in as Merchant</span>
-//           </Link>
-//           <Link
-//             to="/merchant-signup"
-//             className="flex items-center space-x-2 hover:bg-Primary/20 p-2 rounded-lg"
-//           >
-//             <UserRound className="w-5 h-5" />
-//             <span>Sign up as Merchant</span>
-//           </Link>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
 function UserOptions() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -246,13 +248,13 @@ function UserOptions() {
           </div>
           <CollapsibleContent className="space-y-2 pl-2">
             <div
-              className="hover:bg-Primary px-3 py-2 border rounded-md font-mono text-sm hover:text-white transition-colors"
+              className="hover:bg-Primary px-3 py-2 border rounded-md font-mono hover:text-white text-sm transition-colors"
               onClick={() => setLoginOpen("merchant")}
             >
               Sign in as Merchant
             </div>
             <div
-              className="hover:bg-Primary px-3 py-2 border rounded-md font-mono text-sm hover:text-white transition-colors"
+              className="hover:bg-Primary px-3 py-2 border rounded-md font-mono hover:text-white text-sm transition-colors"
               onClick={() => navigate("/merchant-signup")}
             >
               Sign up as Merchant
@@ -281,13 +283,13 @@ function UserOptions() {
           </div>
           <CollapsibleContent className="space-y-2 pl-2">
             <div
-              className="hover:bg-Primary px-3 py-2 border rounded-md font-mono text-sm hover:text-white transition-colors"
+              className="hover:bg-Primary px-3 py-2 border rounded-md font-mono hover:text-white text-sm transition-colors"
               onClick={() => setLoginOpen(true)}
             >
               Sign in as Customer
             </div>
             <div
-              className="hover:bg-Primary px-3 py-2 border rounded-md font-mono text-sm hover:text-white transition-colors"
+              className="hover:bg-Primary px-3 py-2 border rounded-md font-mono hover:text-white text-sm transition-colors"
               onClick={() => setSignupOpen(true)}
             >
               Sign up as Customer

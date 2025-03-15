@@ -1,8 +1,17 @@
 import { useState, useContext, useMemo } from "react";
 import { Link } from "react-router-dom";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { STATES } from "../config";
-import { MapPin, Store, ShoppingBag, SlidersHorizontal, X, Building2, MapPinOff, Search } from "lucide-react";
+import {
+  MapPin,
+  Store,
+  ShoppingBag,
+  SlidersHorizontal,
+  X,
+  Building2,
+  MapPinOff,
+  Search,
+} from "lucide-react";
 import { MARKET_DATA_CONTEXT } from "@/contexts";
 
 // MarketCard component with PropTypes
@@ -12,9 +21,9 @@ const MarketCard = ({ market }) => {
   return (
     <Link
       to={`/markets/${market.id}`}
-      className="bg-white shadow-sm hover:shadow-md rounded-xl transition-all duration-300 overflow-hidden group"
+      className="group bg-white shadow-sm hover:shadow-md rounded-xl overflow-hidden transition-all duration-300"
     >
-      <div className="overflow-hidden aspect-video relative">
+      <div className="relative aspect-video overflow-hidden">
         {/* Skeleton loader */}
         {imageLoading && (
           <div className="absolute inset-0 bg-gray-200 animate-pulse" />
@@ -24,21 +33,19 @@ const MarketCard = ({ market }) => {
           alt={market.name}
           loading="lazy"
           className={`w-full h-full transform transition-all duration-300 object-cover ${
-            imageLoading ? 'opacity-0' : 'opacity-100 group-hover:scale-105'
+            imageLoading ? "opacity-0" : "opacity-100 group-hover:scale-105"
           }`}
           onLoad={() => setImageLoading(false)}
           onError={() => setImageLoading(false)}
         />
       </div>
       <div className="p-3 md:p-4">
-        <h3 className="group-hover:text-Primary line-clamp-1 font-semibold text-gray-800 text-sm md:text-lg transition-colors">
+        <h3 className="group-hover:text-Primary font-semibold text-gray-800 text-sm md:text-lg line-clamp-1 transition-colors">
           {market.name}
         </h3>
         <div className="flex items-start gap-2 mt-2 text-gray-600">
           <MapPin size={16} className="flex-shrink-0 mt-1" />
-          <p className="line-clamp-2 text-xs md:text-sm">
-            {market.address}
-          </p>
+          <p className="text-xs md:text-sm line-clamp-2">{market.address}</p>
         </div>
       </div>
     </Link>
@@ -55,7 +62,7 @@ MarketCard.propTypes = {
 };
 
 const MarketPage = () => {
-  const [selectedState, setSelectedState] = useState("Abuja");
+  const [selectedState, setSelectedState] = useState(STATES[0]);
   const [searchTerm, setSearchTerm] = useState("");
   const [showFilters, setShowFilters] = useState(false);
   const { marketsData } = useContext(MARKET_DATA_CONTEXT);
@@ -83,23 +90,23 @@ const MarketPage = () => {
   }, [selectedState, marketsData, searchTerm]);
 
   return (
-    <div className="relative z-0 flex flex-col bg-gray-50 min-h-screen">
+    <div className="z-0 relative flex flex-col bg-gray-50 min-h-screen">
       {/* Header Navigation - Updated positioning */}
-      <div className="sticky top-[55px] z-20 bg-white shadow-sm">
+      <div className="top-[55px] z-20 sticky bg-white shadow-sm">
         {/* Removed container class to allow full-width alignment */}
         <div className="flex items-center h-16">
           {/* Market/Mall Switch - Aligned exactly with sidebar */}
-          <div className="hidden md:flex items-center space-x-6 w-72 lg:w-80 pl-6">
+          <div className="hidden md:flex items-center space-x-6 pl-6 w-72 lg:w-80">
             <Link
               to="/markets"
-              className="flex items-center gap-2 hover:opacity-90 font-bold text-lg text-Primary transition-opacity"
+              className="flex items-center gap-2 hover:opacity-90 font-bold text-Primary text-lg transition-opacity"
             >
               <Store className="w-5 h-5" />
               <span>Markets</span>
             </Link>
             <Link
               to="/malls"
-              className="flex items-center gap-2 text-gray-600 text-lg hover:text-Primary transition-colors"
+              className="flex items-center gap-2 text-gray-600 hover:text-Primary text-lg transition-colors"
             >
               <ShoppingBag className="w-5 h-5" />
               <span>Malls</span>
@@ -107,7 +114,7 @@ const MarketPage = () => {
           </div>
 
           {/* Mobile Market/Mall Switch */}
-          <div className="flex md:hidden items-center space-x-4 px-4">
+          <div className="md:hidden flex items-center space-x-4 px-4">
             <Link
               to="/markets"
               className="flex items-center gap-1 hover:opacity-90 font-bold text-Primary transition-opacity"
@@ -123,7 +130,7 @@ const MarketPage = () => {
           </div>
 
           {/* Search Bar - Centered in remaining space */}
-          <div className="flex-1 flex justify-center px-4">
+          <div className="flex flex-1 justify-center px-4">
             <div className="w-full max-w-xl">
               <div className="relative">
                 <input
@@ -131,11 +138,11 @@ const MarketPage = () => {
                   placeholder={`Search ${selectedState} markets...`}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full border-2 border-Primary px-4 py-2 pr-12 pl-5 rounded-full focus:ring-2 focus:ring-Primary/20 text-sm transition-all focus:outline-none"
+                  className="px-4 py-2 pr-12 pl-5 border-2 border-Primary rounded-full focus:outline-none focus:ring-2 focus:ring-Primary/20 w-full text-sm transition-all"
                 />
                 <Search
                   size={20}
-                  className="absolute top-1/2 right-4 transform -translate-y-1/2 text-Primary pointer-events-none"
+                  className="top-1/2 right-4 absolute text-Primary -translate-y-1/2 pointer-events-none transform"
                 />
               </div>
             </div>
@@ -144,7 +151,7 @@ const MarketPage = () => {
           {/* Filter Button */}
           <button
             onClick={() => setShowFilters(true)}
-            className="md:hidden flex items-center justify-center w-10 h-10 text-Primary mr-4"
+            className="md:hidden flex justify-center items-center mr-4 w-10 h-10 text-Primary"
           >
             <SlidersHorizontal size={20} />
           </button>
@@ -200,12 +207,12 @@ const MarketPage = () => {
       {/* Main Content */}
       <div className="flex flex-1">
         {/* Desktop Sidebar */}
-        <aside 
-          className="md:block hidden bg-white p-6 w-72 lg:w-80 overflow-y-auto"
+        <aside
+          className="hidden md:block bg-white p-6 w-72 lg:w-80 overflow-y-auto"
           style={{
-            position: 'sticky',
-            top: '119px', // 55px (Header2) + 64px (Market nav)
-            height: 'calc(100vh - 119px)', // Viewport - (Header2 + Market nav)
+            position: "sticky",
+            top: "119px", // 55px (Header2) + 64px (Market nav)
+            height: "calc(100vh - 119px)", // Viewport - (Header2 + Market nav)
           }}
         >
           <h3 className="mb-4 font-semibold text-lg">Select State</h3>
@@ -239,38 +246,40 @@ const MarketPage = () => {
                   <MarketCard key={index} market={market} />
                 ))
               ) : (
-                <div className="col-span-full flex flex-col items-center justify-center py-12 px-4">
+                <div className="flex flex-col justify-center items-center col-span-full px-4 py-12">
                   <div className="relative mb-6">
                     <Building2 className="w-24 h-24 text-gray-200 animate-pulse" />
-                    <MapPinOff className="w-12 h-12 text-Primary absolute -bottom-2 -right-2 transform rotate-12" />
+                    <MapPinOff className="-right-2 -bottom-2 absolute w-12 h-12 text-Primary rotate-12 transform" />
                   </div>
-                  <div className="text-center max-w-md mx-auto space-y-3">
-                    <h3 className="text-xl font-semibold text-gray-800">
+                  <div className="space-y-3 mx-auto max-w-md text-center">
+                    <h3 className="font-semibold text-gray-800 text-xl">
                       No Markets Found in {selectedState}
                     </h3>
                     <div className="text-gray-600">
                       {searchTerm ? (
                         <>
-                          We couldn&apos;t find any markets matching &quot;{searchTerm}&quot; in {selectedState}.
-                          Try adjusting your search or exploring a different state.
+                          We couldn&apos;t find any markets matching &quot;
+                          {searchTerm}&quot; in {selectedState}. Try adjusting
+                          your search or exploring a different state.
                         </>
                       ) : (
                         <>
-                          We&apos;re still mapping markets in {selectedState}. 
-                          Try exploring markets in a different state or check back later.
+                          We&apos;re still mapping markets in {selectedState}.
+                          Try exploring markets in a different state or check
+                          back later.
                         </>
                       )}
                     </div>
-                    <div className="pt-6 flex flex-col sm:flex-row gap-3 justify-center">
+                    <div className="flex sm:flex-row flex-col justify-center gap-3 pt-6">
                       <button
                         onClick={() => setSearchTerm("")}
-                        className="w-full sm:w-auto px-4 py-2 text-Primary border-2 border-Primary rounded-full hover:bg-Primary/5 transition-colors text-sm"
+                        className="hover:bg-Primary/5 px-4 py-2 border-2 border-Primary rounded-full w-full sm:w-auto text-Primary text-sm transition-colors"
                       >
                         Clear Search
                       </button>
                       <Link
                         to="/include-market"
-                        className="w-full sm:w-auto px-4 py-2 bg-Primary text-white rounded-full hover:bg-Primary/90 transition-colors text-sm whitespace-nowrap"
+                        className="bg-Primary hover:bg-Primary/90 px-4 py-2 rounded-full w-full sm:w-auto text-white text-sm whitespace-nowrap transition-colors"
                       >
                         Include Your Market
                       </Link>

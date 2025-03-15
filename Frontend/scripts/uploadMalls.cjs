@@ -10,7 +10,7 @@ const apiUrl =
 
 const defaultCity = "Ibadan";
 const defaultAddress = "located in Nigeria";
-const defaultDescription = "Best Market in town";
+const defaultDescription = "Best Mall in town";
 
 // Initialize log file
 const logDir = path.resolve(__dirname, "./logs");
@@ -33,13 +33,13 @@ const mallsWithStates = Object.values(MALLS).map((stateMalls, ind) => {
 let allMalls = mallsWithStates.flat();
 
 //  ? Insert Default values for city, address and description
-allMalls = allMalls.map((malls) => {
+allMalls = allMalls.map((mall) => {
   return {
     address: defaultAddress,
     description: defaultDescription,
     // ! temporary fix for missing city in market data
-    city: market.city || market.state,
-    ...malls,
+    city: mall.city || mall.state,
+    ...mall,
   };
 });
 
