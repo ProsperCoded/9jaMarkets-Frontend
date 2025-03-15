@@ -35,7 +35,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { getAdsApi, getAllAdsApi } from "@/lib/api/adApi";
-import { MESSAGE_API_CONTEXT } from "@/contexts";
+import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "@/contexts";
 import { useErrorLogger } from "@/hooks";
 import {
   Chart as ChartJS,
@@ -48,6 +48,8 @@ import {
   Legend,
 } from "chart.js";
 import { useContext } from "react";
+import { useNavigation } from "react-router-dom";
+import { redirect } from "react-router-dom";
 
 ChartJS.register(
   CategoryScale,
@@ -66,6 +68,7 @@ const Overview = () => {
   const [expandedCards, setExpandedCards] = useState({});
   const [activeTab, setActiveTab] = useState("online-ads");
   const messageApi = useContext(MESSAGE_API_CONTEXT);
+  const { userProfile } = useContext(USER_PROFILE_CONTEXT);
   const errorLogger = useErrorLogger();
 
   // Use useCallback to prevent function recreation on every render
@@ -273,7 +276,10 @@ const Overview = () => {
       <p className="mt-2 text-gray-500 text-sm">Please wait a moment</p>
     </div>
   );
-
+  if (userProfile.userType !== "merchant") {
+    redirect("/dashboard/bookmark", { replace: true });
+    return;
+  }
   return (
     <div className="space-y-4 mx-auto p-4 max-w-7xl">
       <div className="mb-8">
