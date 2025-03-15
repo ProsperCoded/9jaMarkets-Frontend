@@ -2330,12 +2330,19 @@ const MARKETS = {
       description:
         "A historical market in Badagry known for fresh seafood, palm oil, and traditional crafts.",
     },
+    // {
+    //   name: "Agboju Market",
+    //   img: "./markets/lagos/agboju.jpg",
+    //   address: "Festac Town",
+    //   description:
+    //     "A vibrant marketplace for food items, clothing, and electronics in the Festac area.",
+    // },
     {
-      name: "Agboju Market",
-      img: "./markets/lagos/agboju.jpg",
-      address: "Festac Town",
+      name: "Tejuosho Market",
+      img: "./markets/lagos/tejuosho.jpg",
+      address: "Yaba, along Tejuosho Road",
       description:
-        "A vibrant marketplace for food items, clothing, and electronics in the Festac area.",
+        "Diverse range of products clothing, electronics, foodstuffs, beauty products, fabrics (Ankara, lace), and household items",
     },
     {
       name: "Agege Market",
@@ -2373,15 +2380,23 @@ const MARKETS = {
         "One of the largest textile markets in Africa, famous for fabrics, jewelry, and fashion accessories.",
     },
     {
-      name: "Bar Beach Market",
-      img: "./markets/lagos/barbeach.jpg",
-      address: "Elegushi",
+      name: "Epe Fish Market",
+      img: "./markets/lagos/epe.jpg",
+      address: "Marina Road, Epe, Lagos",
       description:
-        "A beachside market offering fresh seafood, beachwear, and souvenirs.",
+        "Known for freshwater and saltwater fish, including catfish, tilapia, crabs, prawns, and snails",
     },
+    // ! doesn't exists
+    // {
+    //   name: "Bar Beach Market",
+    //   img: "./markets/lagos/barbeach.jpg",
+    //   address: "Elegushi",
+    //   description:
+    //     "A beachside market offering fresh seafood, beachwear, and souvenirs.",
+    // },
     {
       name: "Computer Village",
-      img: "./markets/lagos/computervillage.jpg",
+      img: "./markets/lagos/computer-village.jpg",
       address: "Ikeja",
       description:
         "Nigeria’s tech hub for computers, mobile phones, accessories, and repairs.",
@@ -2423,7 +2438,7 @@ const MARKETS = {
     },
     {
       name: "Mile 12 Market",
-      img: "./markets/lagos/mile12.jpg",
+      img: "./markets/lagos/ketu.jpg",
       address: "Ketu",
       description:
         "A popular foodstuff market supplying fresh vegetables, fruits, and spices in bulk.",
@@ -2455,6 +2470,13 @@ const MARKETS = {
       address: "Ebute Metta",
       description:
         "One of Lagos’ oldest markets, known for bulk food supplies and fresh produce.",
+    },
+    {
+      name: "Jankara Market",
+      img: "./markets/lagos/jankara.webp",
+      address: "Lagos Island, near Idumota and Balogun markets",
+      description:
+        "amous for selling local herbs, traditional medicines, charms, spiritual items, second-hand goods, fabrics, jewelry, and home essentials",
     },
   ],
 

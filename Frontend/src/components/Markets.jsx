@@ -82,8 +82,10 @@ const MarketPage = () => {
       const markets = marketsData.filter((market) => {
         if (!market.state) return false;
         return (
-          market.state.toLowerCase().includes(selectedState.toLowerCase()) &&
-          market.name.toLowerCase().includes(searchTerm.toLowerCase())
+          market.state.toLowerCase().includes(selectedState.toLowerCase()) ||
+          market.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          market.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          market.description.toLowerCase().includes(searchTerm.toLowerCase())
         );
       });
       return markets;

@@ -25,8 +25,10 @@ const MallPage = () => {
       const malls = mallsData.filter((mall) => {
         if (!mall.state) return false;
         return (
-          mall.state.toLowerCase().includes(selectedState.toLowerCase()) &&
-          mall.name.toLowerCase().includes(searchTerm.toLowerCase())
+          mall.state.toLowerCase().includes(selectedState.toLowerCase()) ||
+          mall.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          mall.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          mall.description.toLowerCase().includes(searchTerm.toLowerCase())
         );
       });
       return malls;
