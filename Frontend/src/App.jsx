@@ -129,6 +129,7 @@ function App() {
               {/* Dashboard routes with Outlet */}
               <Route path="/dashboard" element={<Dashboard />}>
                 <Route index element={<Navigate to="overview" replace />} />
+                <Route path="bookmark" element={<Bookmark />} />
                 <Route path="overview" element={<Overview />} />
                 <Route path="products" element={<ProductPage />}>
                   <Route path="select-plan" element={<SelectPlan />} />

@@ -31,7 +31,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "./ui/collapsible";
-import { ChevronsUpDown } from "lucide-react";
+import { ChevronsUpDown, Bookmark } from "lucide-react";
 
 const Dashboard = () => {
   const { subpage } = useParams();
@@ -69,6 +69,11 @@ const Dashboard = () => {
           },
         ]
       : [
+          {
+            path: "/dashboard/bookmark",
+            icon: <Bookmark className="w-5 h-5" />,
+            label: "Bookmarks",
+          },
           {
             path: "/dashboard/messages",
             icon: <MessageSquare className="w-5 h-5" />,
