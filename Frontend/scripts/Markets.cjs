@@ -1572,6 +1572,12 @@ const MARKETS = {
         "A popular market in Ahiazu Mbaise, known for agricultural produce and local crafts.",
     },
     {
+      name: "Amakohia Market",
+      img: "./markets/imo/amakohia-market.jpg",
+      address: "Owerri",
+      description: "A bustling market in Amakohia, Owerri, known for its fresh farm produce, affordable clothing, household essentials, and local delicacies. It is a key shopping destination for residents and traders in the area."
+    },
+    {
       name: "Anhara Market",
       img: "./markets/imo/anhara.jpg",
       address: "Isiala Mbano",
@@ -1584,6 +1590,12 @@ const MARKETS = {
       address: "Owerri",
       description:
         "A market near Christ Church, Owerri, offering foodstuffs, clothing, and electronics.",
+    },
+    {
+      name: "Douglas Road Market",
+      img: "./markets/imo/douglas-road-market.jpg",
+      address: "Owerri",
+      description: "A major commercial hub in Owerri, Douglas Road Market is known for its diverse range of goods, including textiles, electronics, foodstuffs, and household items. The market is always bustling with traders and shoppers, making it a key economic center in the city."
     },
     {
       name: "Eke Onuwa Market",
@@ -1612,6 +1624,12 @@ const MARKETS = {
       address: "Orlu",
       description:
         "A large trading center catering to both local and international traders in Orlu.",
+    },
+    {
+      name: "Nkwo Mbieri Market",
+      img: "./markets/imo/nkwo-mbieri-market.jpg",
+      address: "Mbieri",
+      description: "A traditional market in Mbieri, Imo State, known for its vibrant trade in fresh farm produce, livestock, handcrafted goods, and household essentials. It operates on the Nkwo market day, attracting traders and buyers from surrounding communities."
     },
     {
       name: "Okigwe Market",
@@ -1647,6 +1665,12 @@ const MARKETS = {
       address: "Owerri",
       description:
         "A major commercial hub in Owerri, known for its affordability and wide range of goods.",
+    },
+    {
+      name: "Umuahia Market",
+      img: "./markets/abia/umuahia-market.jpg",
+      address: "Umuahia",
+      description: "A vibrant marketplace in the heart of Umuahia, known for its wide variety of fresh produce, textiles, household goods, and electronics. It serves as a major trading hub for both locals and visitors."
     },
   ],
 
@@ -3441,6 +3465,12 @@ const MARKETS = {
       address: "Ardo-Kola LGA, Taraba State",
       description:
         "A bustling weekly market known for foodstuffs and household items.",
+    },
+    {
+      name: "Kefas International Palliative Market",
+      img: "./markets/taraba/kefas-palliative-market.jpg",
+      address: "Taraba State",
+      description: "A newly established market in Taraba State, providing affordable food items, household goods, and essential commodities. It was created to support local traders and ensure food security through government-backed initiatives."
     },
     {
       name: "Mayo-Renewo Market",
