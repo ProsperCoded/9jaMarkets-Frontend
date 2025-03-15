@@ -1,7 +1,8 @@
-import { useState, useContext, useMemo } from "react";
+import { useState, useContext, useMemo, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { STATES } from "../config";
+import debounce from "lodash.debounce";
 import {
   MapPin,
   Store,
@@ -73,32 +74,77 @@ MarketCard.propTypes = {
 const MarketPage = () => {
   const [selectedState, setSelectedState] = useState(STATES[0]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [showFilters, setShowFilters] = useState(false);
   const { marketsData } = useContext(MARKET_DATA_CONTEXT);
 
+  // Set up debounced search term
+  const debouncedSearch = useCallback(
+    debounce((value) => {
+      setDebouncedSearchTerm(value);
+    }, 300),
+    []
+  );
+
+  // Update debounced value when search term changes
+  useEffect(() => {
+    debouncedSearch(searchTerm);
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [searchTerm, debouncedSearch]);
+
   const filteredMarkets = useMemo(() => {
     if (!selectedState) return marketsData;
-    if (searchTerm) {
-      const markets = marketsData.filter((market) => {
-        if (!market.state) return false;
-        return (
-          market.state.toLowerCase().includes(selectedState.toLowerCase()) ||
-          market.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          market.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          market.description.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-      });
-      return markets;
-    }
-    const markets = marketsData.filter((market) => {
+
+    // First filter by state
+
+    const stateFiltered = marketsData.filter((market) => {
       if (!market.state) return false;
-      const includes = market.state
-        .toLowerCase()
-        .includes(selectedState.toLowerCase());
-      return includes;
+      return market.state.toLowerCase().includes(selectedState.toLowerCase());
     });
-    return markets;
-  }, [selectedState, marketsData, searchTerm]);
+
+    // If no search term, return state-filtered markets
+    if (!debouncedSearchTerm) return stateFiltered;
+
+    const searchLower = debouncedSearchTerm.toLowerCase();
+
+    // Create arrays for different priority levels
+    const nameMatches = [];
+    const descriptionMatches = [];
+    const addressMatches = [];
+    const otherMatches = [];
+
+    marketsData.forEach((market) => {
+      // Check market name (highest priority)
+      if (market.name.toLowerCase().includes(searchLower)) {
+        nameMatches.push({ ...market, relevanceScore: 4 });
+      }
+      // Check description (second priority)
+      else if (
+        market.description &&
+        market.description.toLowerCase().includes(searchLower)
+      ) {
+        descriptionMatches.push({ ...market, relevanceScore: 3 });
+      }
+      // Check address (third priority)
+      else if (market.address.toLowerCase().includes(searchLower)) {
+        addressMatches.push({ ...market, relevanceScore: 2 });
+      }
+      // Check other fields
+      else if (market.state.toLowerCase().includes(searchLower)) {
+        otherMatches.push({ ...market, relevanceScore: 1 });
+      }
+    });
+
+    // Combine all matches in priority order
+    return [
+      ...nameMatches,
+      ...descriptionMatches,
+      ...addressMatches,
+      ...otherMatches,
+    ];
+  }, [selectedState, marketsData, debouncedSearchTerm]);
 
   return (
     <div className="z-0 relative flex flex-col bg-gray-50 min-h-screen">
@@ -143,18 +189,34 @@ const MarketPage = () => {
           {/* Search Bar - Centered in remaining space */}
           <div className="flex flex-1 justify-center px-4">
             <div className="w-full max-w-xl">
-              <div className="relative">
+              <div className="group relative">
                 <input
                   type="text"
                   placeholder={`Search ${selectedState} markets...`}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="px-4 py-2 pr-12 pl-5 border-2 border-Primary rounded-full focus:outline-none focus:ring-2 focus:ring-Primary/20 w-full text-sm transition-all"
+                  className="bg-white/90 shadow-sm hover:shadow px-4 py-2 pr-16 pl-12 border-2 border-Primary/80 focus:border-Primary rounded-full focus:outline-none focus:ring-2 focus:ring-Primary/20 w-full text-sm transition-all"
                 />
-                <Search
-                  size={20}
-                  className="top-1/2 right-4 absolute text-Primary -translate-y-1/2 pointer-events-none transform"
-                />
+                {/* Search icon on the left */}
+                <div className="top-1/2 left-4 absolute text-Primary -translate-y-1/2">
+                  <Search size={18} />
+                </div>
+
+                {/* Clear button - only shows when there's text */}
+                {searchTerm && (
+                  <button
+                    onClick={() => setSearchTerm("")}
+                    className="top-1/2 right-10 absolute hover:bg-gray-100 p-1 rounded-full text-gray-400 hover:text-gray-600 transition-all -translate-y-1/2"
+                    aria-label="Clear search"
+                  >
+                    <X size={16} />
+                  </button>
+                )}
+
+                {/* State indicator on the right */}
+                <div className="top-1/2 right-3 absolute bg-Primary/10 px-2 py-1 rounded-full font-medium text-Primary text-xs -translate-y-1/2">
+                  {selectedState}
+                </div>
               </div>
             </div>
           </div>
