@@ -23,7 +23,9 @@ export function UserAvatar({ showName, auth }) {
     <div>
       <ul className="space-y-2 mx-2 px-2 min-w-[10ch]">
         <li
-          className="hover:font-semibold hover:text-red-500 transition-colors cursor-pointer select-none"
+          className={
+            "hover:font-semibold hover:text-red-500 transition-colors cursor-pointer select-none"
+          }
           onClick={() => {
             setLogoutOpen(true);
           }}
@@ -81,13 +83,15 @@ export function UserAvatar({ showName, auth }) {
     </span>
   ) : (
     auth && (
-      <div className={`flex ${showName ? 'md:flex-row flex-col gap-3' : 'hidden'}`}>
+      <div
+        className={`flex ${showName ? "md:flex-row flex-col gap-3" : "hidden"}`}
+      >
         <button
           onClick={(e) => {
             setLoginOpen(true);
             e.stopPropagation();
           }}
-          className="border-white hover:bg-white px-4 py-1 border rounded-full text-white hover:text-Primary transition"
+          className="hover:bg-white px-4 py-1 border border-white rounded-full text-white hover:text-Primary transition"
         >
           Login
         </button>

@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import {
   MALLS_DATA_CONTEXT,
-  MARKET_DATA_CONTEXT,
+  MARKETS_DATA_CONTEXT,
   USER_PROFILE_CONTEXT,
 } from "./contexts";
 import { getMerchantProfileApi } from "./lib/api/serviceApi";
@@ -16,7 +16,7 @@ import { useErrorLogger } from "./hooks";
 import { getMallsApi } from "./lib/api/mallApi";
 function InitializeApp({ children }) {
   const { setUserProfile } = useContext(USER_PROFILE_CONTEXT);
-  const { setMarketsData } = useContext(MARKET_DATA_CONTEXT);
+  const { setMarketsData } = useContext(MARKETS_DATA_CONTEXT);
   const { setMallsData } = useContext(MALLS_DATA_CONTEXT);
   // const errorLogger = (message) => console.error(message);
   const errorLogger = useErrorLogger();

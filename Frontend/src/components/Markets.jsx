@@ -13,7 +13,7 @@ import {
   MapPinOff,
   Search,
 } from "lucide-react";
-import { MARKET_DATA_CONTEXT } from "@/contexts";
+import { MARKETS_DATA_CONTEXT } from "@/contexts";
 
 // MarketCard component with PropTypes
 const MarketCard = ({ market }) => {
@@ -76,7 +76,7 @@ const MarketPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [showFilters, setShowFilters] = useState(false);
-  const { marketsData } = useContext(MARKET_DATA_CONTEXT);
+  const { marketsData } = useContext(MARKETS_DATA_CONTEXT);
 
   // Set up debounced search term
   const debouncedSearch = useCallback(

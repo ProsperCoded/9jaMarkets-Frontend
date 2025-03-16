@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { useErrorLogger } from "@/hooks";
 import { getMarketProducts } from "@/lib/api/marketApi";
 import {
-  MARKET_DATA_CONTEXT,
+  MARKETS_DATA_CONTEXT,
   MESSAGE_API_CONTEXT,
   USER_PROFILE_CONTEXT,
   BOOKMARK_CONTEXT,
@@ -73,7 +73,7 @@ const Marketplace = () => {
   const { id: marketId } = useParams();
   const [products, setProducts] = useState();
   const [searchQuery, setSearchQuery] = useState("");
-  const { marketsData } = useContext(MARKET_DATA_CONTEXT);
+  const { marketsData } = useContext(MARKETS_DATA_CONTEXT);
   const market = marketsData.find((market) => market.id === marketId);
   const { userProfile } = useContext(USER_PROFILE_CONTEXT);
   const [bookmarkedProducts, setBookmarkedProducts] = useState(new Set());

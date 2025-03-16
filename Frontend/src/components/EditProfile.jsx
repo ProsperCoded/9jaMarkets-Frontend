@@ -11,7 +11,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "./ui/tabs";
 import { useEffect } from "react";
 import {
   MESSAGE_API_CONTEXT,
-  MARKET_DATA_CONTEXT,
+  MARKETS_DATA_CONTEXT,
   MALLS_DATA_CONTEXT,
   USER_PROFILE_CONTEXT,
   LOGOUT_MODAL_CONTEXT,
@@ -143,7 +143,7 @@ export default function EditProfile() {
 
   // Add scroll handler
   const scrollToSection = (ref) => {
-    ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
@@ -151,7 +151,7 @@ export default function EditProfile() {
       {/* Header Section */}
       <div className="bg-Primary/5 border-b">
         <div className="mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-7xl">
-          <h1 className="font-bold text-2xl text-gray-900 md:text-3xl">
+          <h1 className="font-bold text-gray-900 text-2xl md:text-3xl">
             Profile Settings
           </h1>
           <p className="mt-2 text-gray-600 text-sm">
@@ -166,21 +166,21 @@ export default function EditProfile() {
           {/* Sidebar Navigation */}
           <div className="lg:col-span-1">
             <div className="top-20 sticky flex flex-col space-y-1 bg-white shadow-sm p-2 rounded-lg h-auto">
-              <button 
+              <button
                 onClick={() => scrollToSection(personalInfoRef)}
-                className="hover:bg-Primary/5 px-4 py-2 rounded-md w-full text-left text-gray-700 hover:text-Primary transition-colors"
+                className="hover:bg-Primary/5 px-4 py-2 rounded-md w-full text-gray-700 hover:text-Primary text-left transition-colors"
               >
                 Personal Info
               </button>
-              <button 
+              <button
                 onClick={() => scrollToSection(securityRef)}
-                className="hover:bg-Primary/5 px-4 py-2 rounded-md w-full text-left text-gray-700 hover:text-Primary transition-colors"
+                className="hover:bg-Primary/5 px-4 py-2 rounded-md w-full text-gray-700 hover:text-Primary text-left transition-colors"
               >
                 Security
               </button>
-              <button 
+              <button
                 onClick={() => scrollToSection(addressesRef)}
-                className="hover:bg-Primary/5 px-4 py-2 rounded-md w-full text-left text-gray-700 hover:text-Primary transition-colors"
+                className="hover:bg-Primary/5 px-4 py-2 rounded-md w-full text-gray-700 hover:text-Primary text-left transition-colors"
               >
                 Addresses
               </button>
@@ -189,7 +189,7 @@ export default function EditProfile() {
               <div className="mt-auto">
                 <button
                   onClick={() => setLogoutOpen(true)}
-                  className="hover:bg-red-50 px-4 py-2 rounded-md w-full text-left text-red-600"
+                  className="hover:bg-red-50 px-4 py-2 rounded-md w-full text-red-600 text-left"
                 >
                   Logout
                 </button>
@@ -200,8 +200,11 @@ export default function EditProfile() {
           {/* Form Sections */}
           <div className="space-y-8 lg:col-span-2">
             {/* Personal Information Card */}
-            <div ref={personalInfoRef} className="bg-white shadow-sm rounded-lg overflow-hidden">
-              <div className="border-gray-200 bg-gray-50 px-6 py-4 border-b">
+            <div
+              ref={personalInfoRef}
+              className="bg-white shadow-sm rounded-lg overflow-hidden"
+            >
+              <div className="bg-gray-50 px-6 py-4 border-gray-200 border-b">
                 <h2 className="font-medium text-gray-900 text-lg">
                   Personal Information
                 </h2>
@@ -285,8 +288,11 @@ export default function EditProfile() {
             </div>
 
             {/* Security Card */}
-            <div ref={securityRef} className="bg-white shadow-sm rounded-lg overflow-hidden">
-              <div className="border-gray-200 bg-gray-50 px-6 py-4 border-b">
+            <div
+              ref={securityRef}
+              className="bg-white shadow-sm rounded-lg overflow-hidden"
+            >
+              <div className="bg-gray-50 px-6 py-4 border-gray-200 border-b">
                 <h2 className="font-medium text-gray-900 text-lg">Security</h2>
                 <p className="mt-1 text-gray-600 text-sm">
                   Manage your account security settings
@@ -296,7 +302,7 @@ export default function EditProfile() {
                 <div className="flex flex-col space-y-4">
                   <Link
                     to="/forget-password"
-                    className="inline-flex justify-center items-center bg-Primary hover:bg-Primary/90 shadow-sm px-4 py-2 border border-transparent rounded-md focus:ring-2 focus:ring-Primary focus:ring-offset-2 w-full sm:w-auto font-medium text-sm text-white focus:outline-none"
+                    className="inline-flex justify-center items-center bg-Primary hover:bg-Primary/90 shadow-sm px-4 py-2 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-Primary focus:ring-offset-2 w-full sm:w-auto font-medium text-white text-sm"
                   >
                     Change Password
                   </Link>
@@ -311,7 +317,7 @@ export default function EditProfile() {
                     </p>
                     <button
                       onClick={() => setDeleteAccountOpen(true)}
-                      className="inline-flex justify-center items-center bg-red-600 hover:bg-red-700 shadow-sm px-4 py-2 border border-transparent rounded-md focus:ring-2 focus:ring-red-500 focus:ring-offset-2 w-full sm:w-auto font-medium text-sm text-white focus:outline-none"
+                      className="inline-flex justify-center items-center bg-red-600 hover:bg-red-700 shadow-sm px-4 py-2 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 w-full sm:w-auto font-medium text-white text-sm"
                     >
                       Delete Account
                     </button>
@@ -321,8 +327,11 @@ export default function EditProfile() {
             </div>
 
             {/* Addresses Card */}
-            <div ref={addressesRef} className="bg-white shadow-sm rounded-lg overflow-hidden">
-              <div className="flex justify-between items-center border-gray-200 bg-gray-50 px-6 py-4 border-b">
+            <div
+              ref={addressesRef}
+              className="bg-white shadow-sm rounded-lg overflow-hidden"
+            >
+              <div className="flex justify-between items-center bg-gray-50 px-6 py-4 border-gray-200 border-b">
                 <div>
                   <h2 className="font-medium text-gray-900 text-lg">
                     Addresses
@@ -370,7 +379,7 @@ PhoneNumberField.propTypes = {
 };
 AddressForm.propTypes = addressPropTypes;
 function MarketSelect({ onUpdate, id }) {
-  const { marketsData } = useContext(MARKET_DATA_CONTEXT);
+  const { marketsData } = useContext(MARKETS_DATA_CONTEXT);
   const { mallsData } = useContext(MALLS_DATA_CONTEXT);
   const availableMarkets = marketsData.map((market) => market.name);
   const [marketName, setMarketId] = useState(
@@ -404,7 +413,7 @@ function MarketSelect({ onUpdate, id }) {
                 id="marketName"
                 value={marketName}
                 onChange={(e) => setMarketId(e.target.value)}
-                className="border-gray-300 px-4 py-2 border rounded-md w-full"
+                className="px-4 py-2 border border-gray-300 rounded-md w-full"
                 required
               >
                 <option>-- Select Market --</option>
@@ -434,7 +443,7 @@ function MarketSelect({ onUpdate, id }) {
                 id="mallName"
                 value={mallId}
                 onChange={(e) => setMallId(e.target.value)}
-                className="border-gray-300 px-4 py-2 border rounded-md w-full"
+                className="px-4 py-2 border border-gray-300 rounded-md w-full"
                 required
               >
                 <option selected>-- Select Mall --</option>
@@ -771,7 +780,7 @@ export function PhoneNumberField({ phoneNumbers, onUpdate }) {
             variant="outline"
             onClick={handleAdd}
             disabled={isLoading}
-            className="border-[#236C13] hover:bg-[#21CA1B]/10"
+            className="hover:bg-[#21CA1B]/10 border-[#236C13]"
           >
             <Plus className="mr-2 w-4 h-4" />
             Add Phone
@@ -848,7 +857,7 @@ export function AddressForm({ address, onUpdate, onDelete }) {
             <Button
               variant="outline"
               onClick={() => setIsEditing(true)}
-              className="border-Primary hover:bg-Primary/5 text-Primary"
+              className="hover:bg-Primary/5 border-Primary text-Primary"
             >
               Edit
             </Button>

@@ -63,7 +63,7 @@ import {
   Baby, // Kids
 } from "lucide-react";
 import { useContext } from "react";
-import { MALLS_DATA_CONTEXT, MARKET_DATA_CONTEXT } from "@/contexts";
+import { MALLS_DATA_CONTEXT, MARKETS_DATA_CONTEXT } from "@/contexts";
 
 // Helper function to format category name from config format to display format
 const formatCategoryName = (category) => {
@@ -130,7 +130,7 @@ function ExploreSection() {
   const [searchQuery, setSearchQuery] = useState("");
   const [columnNumber, setCardNumber] = useState(4); // Default to desktop (4 columns)
   const [isMobile, setIsMobile] = useState(false);
-  const { marketsData } = useContext(MARKET_DATA_CONTEXT);
+  const { marketsData } = useContext(MARKETS_DATA_CONTEXT);
   const { mallsData } = useContext(MALLS_DATA_CONTEXT);
   const [prioritizedMarkets, setPrioritizedMarkets] = useState([]);
   const [prioritizedMalls, setPrioritizedMalls] = useState([]);

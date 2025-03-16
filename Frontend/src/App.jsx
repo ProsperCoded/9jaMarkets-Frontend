@@ -25,6 +25,11 @@ import InvestPage from "./pages/Invest";
 import MarketerPage from "./pages/Marketer";
 import IncludeMarket from "./pages/IncludeMarket";
 import MerchantEmailVerification from "./pages/MerchantEmailVerification";
+import Admin from "./components/Admin";
+import AdminDashboard from "./components/AdminDashboard";
+import AdminMarkets from "./components/AdminMarkets";
+import AdminMalls from "./components/AdminMalls";
+import AdminMarketers from "./components/AdminMarketers";
 
 import { ConfigProvider } from "antd";
 import InitializeApp from "./InitializeApp";
@@ -90,6 +95,11 @@ function App() {
     "/dashboard/customers",
     "/dashboard/messages",
     "/dashboard/edit",
+    "/admin",
+    "/admin/dashboard",
+    "/admin/markets",
+    "/admin/malls",
+    "/admin/marketers",
   ];
 
   const shouldShowFooter = !hideFooterPaths.some((path) =>
@@ -138,6 +148,15 @@ function App() {
                 <Route path="edit" element={<EditProfile />} />
                 <Route path="customers" element={<div>Customers</div>} />
                 <Route path="messages" element={<div>Vendors</div>} />
+              </Route>
+
+              {/* Admin routes with Outlet */}
+              <Route path="/admin" element={<Admin />}>
+                <Route index element={<Navigate to="dashboard" replace />} />
+                <Route path="dashboard" element={<AdminDashboard />} />
+                <Route path="markets" element={<AdminMarkets />} />
+                <Route path="malls" element={<AdminMalls />} />
+                <Route path="marketers" element={<AdminMarketers />} />
               </Route>
 
               {/* Policy Pages */}

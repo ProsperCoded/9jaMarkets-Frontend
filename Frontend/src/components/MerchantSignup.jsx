@@ -2,7 +2,7 @@ import React, { useContext, useState, useRef } from "react";
 import logo from "../assets/Logo.svg";
 import { Eye, EyeOff, Check, X } from "lucide-react";
 import {
-  MARKET_DATA_CONTEXT,
+  MARKETS_DATA_CONTEXT,
   MESSAGE_API_CONTEXT,
   MALLS_DATA_CONTEXT,
   USER_PROFILE_CONTEXT,
@@ -34,7 +34,7 @@ const MerchantSignup = () => {
   const [merchantCategory, setMerchantCategories] = useState([]);
   const [marketName, setMarketName] = useState("");
   const [mallName, setMallName] = useState("");
-  const { marketsData } = useContext(MARKET_DATA_CONTEXT);
+  const { marketsData } = useContext(MARKETS_DATA_CONTEXT);
   const { mallsData } = useContext(MALLS_DATA_CONTEXT);
   const availableMarkets = marketsData.map((market) => market.name);
   const availableMalls = mallsData.map((mall) => mall.name);
@@ -151,7 +151,7 @@ const MerchantSignup = () => {
             alt="9ja Markets Logo"
             className="mx-auto w-auto h-12"
           />
-          <h2 className="mt-6 font-bold text-3xl text-gray-900">
+          <h2 className="mt-6 font-bold text-gray-900 text-3xl">
             Join 9ja Markets as a Merchant
           </h2>
           <p className="mt-2 text-gray-600 text-sm">
@@ -172,7 +172,7 @@ const MerchantSignup = () => {
           >
             {/* Basic Information */}
             <div className="space-y-6">
-              <h3 className="border-Primary pb-2 border-b font-medium text-gray-900 text-lg">
+              <h3 className="pb-2 border-Primary border-b font-medium text-gray-900 text-lg">
                 Basic Information
               </h3>
 
@@ -240,7 +240,7 @@ const MerchantSignup = () => {
 
             {/* Business Information */}
             <div className="space-y-6">
-              <h3 className="border-Primary pb-2 border-b font-medium text-gray-900 text-lg">
+              <h3 className="pb-2 border-Primary border-b font-medium text-gray-900 text-lg">
                 Business Information
               </h3>
 
@@ -291,7 +291,7 @@ const MerchantSignup = () => {
                             id={`category-${category}`}
                             checked={merchantCategory.includes(category)}
                             onChange={() => handleCategoryToggle(category)}
-                            className="border-gray-300 mr-2 rounded focus:ring-Primary text-Primary"
+                            className="mr-2 border-gray-300 rounded focus:ring-Primary text-Primary"
                           />
                           <label
                             htmlFor={`category-${category}`}
@@ -330,13 +330,13 @@ const MerchantSignup = () => {
             {/* Addresses */}
             <div className="space-y-6">
               <div className="flex justify-between items-center pb-2 border-b">
-                <h3 className="border-Primary pb-2 border-b font-medium text-gray-900 text-lg">
+                <h3 className="pb-2 border-Primary border-b font-medium text-gray-900 text-lg">
                   Business Addresses
                 </h3>
                 <button
                   type="button"
                   onClick={handleAddAddress}
-                  className="text-Primary text-sm hover:text-Primary/90"
+                  className="text-Primary hover:text-Primary/90 text-sm"
                 >
                   + Add Another Address
                 </button>
@@ -461,7 +461,7 @@ const MerchantSignup = () => {
 
             {/* Security */}
             <div className="space-y-6">
-              <h3 className="border-Primary pb-2 border-b font-medium text-gray-900 text-lg">
+              <h3 className="pb-2 border-Primary border-b font-medium text-gray-900 text-lg">
                 Security
               </h3>
 
@@ -530,7 +530,7 @@ const MerchantSignup = () => {
 
             <button
               type="submit"
-              className="flex justify-center bg-Primary hover:bg-Primary/90 shadow-sm px-4 py-3 border border-transparent rounded-md focus:ring-2 focus:ring-Primary focus:ring-offset-2 w-full font-medium text-sm text-white focus:outline-none"
+              className="flex justify-center bg-Primary hover:bg-Primary/90 shadow-sm px-4 py-3 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-Primary focus:ring-offset-2 w-full font-medium text-white text-sm"
               disabled={loading}
             >
               {loading ? (

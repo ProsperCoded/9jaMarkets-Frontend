@@ -39,7 +39,7 @@ export const MERCHANT_SIGNUP_MODAL_CONTEXT = createContext({
   merchantSignupOpen: false,
   setMerchantSignupOpen: () => {},
 });
-export const MARKET_DATA_CONTEXT = createContext({
+export const MARKETS_DATA_CONTEXT = createContext({
   marketsData: [],
   setMarketsData: () => {},
 });
@@ -120,7 +120,7 @@ export function ContextWrapper({ children }) {
                       setLogoutOpen={setLogoutOpen}
                     />
 
-                    <MARKET_DATA_CONTEXT.Provider
+                    <MARKETS_DATA_CONTEXT.Provider
                       value={{ marketsData, setMarketsData }}
                     >
                       <MALLS_DATA_CONTEXT.Provider
@@ -128,7 +128,7 @@ export function ContextWrapper({ children }) {
                       >
                         {children}
                       </MALLS_DATA_CONTEXT.Provider>
-                    </MARKET_DATA_CONTEXT.Provider>
+                    </MARKETS_DATA_CONTEXT.Provider>
                     <LoginModal />
                     <Signup />
                   </BOOKMARK_CONTEXT.Provider>
