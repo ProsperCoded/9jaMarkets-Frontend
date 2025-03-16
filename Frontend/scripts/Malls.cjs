@@ -1,5 +1,3 @@
-const { Rivers } = require("./Markets.cjs");
-
 const MALLS = {
   Anambra: [
     {
@@ -794,18 +792,15 @@ const MALLS = {
         "A premier destination for entertainment, dining, and shopping.",
     },
   ],
-Taraba:[
-  {
-    name: "Jalingo City Mall",
-    img: "./markets/taraba/jalingo-city-mall.jpg",
-    address: "Jalingo, Taraba State",
-    description: "A modern shopping mall in Jalingo, offering a wide range of retail stores, supermarkets, fashion outlets, and entertainment facilities. It serves as a commercial hub for residents and visitors, providing a premium shopping experience."
-  },
-
-
-
-
-],
+  Taraba: [
+    {
+      name: "Jalingo City Mall",
+      img: "./malls/taraba/jalingo-city-mall.jpg",
+      address: "Jalingo, Taraba State",
+      description:
+        "A modern shopping mall in Jalingo, offering a wide range of retail stores, supermarkets, fashion outlets, and entertainment facilities. It serves as a commercial hub for residents and visitors, providing a premium shopping experience.",
+    },
+  ],
   Edo: [
     {
       name: "Benin Mall",

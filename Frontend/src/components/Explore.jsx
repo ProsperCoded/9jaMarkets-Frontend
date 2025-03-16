@@ -375,8 +375,8 @@ function ExploreSection() {
                 dynamicBullets: true,
               }}
               navigation={{
-                nextEl: ".swiper-button-next-markets", // Fixed class name
-                prevEl: ".swiper-button-prev-markets", // Fixed class name
+                nextEl: ".swiper-button-next-markets",
+                prevEl: ".swiper-button-prev-markets",
               }}
               modules={[Pagination, Navigation]}
               className="custom-swiper-pagination pb-10"
@@ -402,64 +402,57 @@ function ExploreSection() {
               }}
             >
               {/* First Slide - Grid View */}
-              {nestedMarkets.map((markets, index) => {
-                return (
-                  <SwiperSlide>
-                    {/* grid-cols-1 md:grid-cols-3 lg:grid-cols-4 */}
-                    <div className="gap-4 md:gap-6 grid grid-rows-3 overflow-visible">
-                      {markets.map((market) => (
-                        <div
-                          key={market.id || market.name}
-                          className="group relative bg-white shadow-lg hover:shadow-xl rounded-xl overflow-hidden hover:scale-105 transition-all duration-200"
-                        >
-                          <Link to={`/markets/${market.id}`}>
-                            <div className="relative">
-                              <img
-                                src={market.displayImage}
-                                alt={market.name}
-                                className="w-full object-cover aspect-[4/3]"
-                                loading="lazy"
-                              />
-                              {/* State Badge - Absolute positioned */}
-                              <span className="top-3 right-3 absolute bg-white/90 shadow-sm px-3 py-1 rounded-full font-medium text-gray-700 text-sm">
-                                {market.state}
-                              </span>
-                              {/* Description Overlay on Hover */}
-                              <div className="absolute inset-0 flex justify-center items-center bg-black/70 opacity-0 group-hover:opacity-100 p-4 transition-opacity duration-200">
-                                <p className="text-white text-sm text-center line-clamp-4">
-                                  {market.description ||
-                                    "No description available"}
-                                </p>
-                              </div>
-                            </div>
-                            <div className="p-4">
-                              <h3 className="font-bold text-gray-800 text-base md:text-lg">
-                                {market.name}
-                              </h3>
-                              <p className="text-gray-600 text-sm md:text-base">
-                                {market.address}
+              {nestedMarkets.map((markets, index) => (
+                <SwiperSlide key={`market-slide-${index}`}>
+                  <div className="gap-4 md:gap-6 grid grid-rows-3 overflow-visible">
+                    {markets.map((market) => (
+                      <div
+                        key={market.id || market.name}
+                        className="group relative bg-white shadow-lg hover:shadow-xl rounded-xl overflow-hidden hover:scale-105 transition-all duration-200"
+                      >
+                        <Link to={`/markets/${market.id}`}>
+                          <div className="relative">
+                            <img
+                              src={market.displayImage}
+                              alt={market.name}
+                              className="w-full object-cover aspect-[4/3]"
+                              loading="lazy"
+                            />
+                            {/* State Badge - Absolute positioned */}
+                            <span className="top-3 right-3 absolute bg-white/90 shadow-sm px-3 py-1 rounded-full font-medium text-gray-700 text-sm">
+                              {market.state}
+                            </span>
+                            {/* Description Overlay on Hover */}
+                            <div className="absolute inset-0 flex justify-center items-center bg-black/70 opacity-0 group-hover:opacity-100 p-4 transition-opacity duration-200">
+                              <p className="text-white text-sm text-center line-clamp-4">
+                                {market.description ||
+                                  "No description available"}
                               </p>
                             </div>
-                          </Link>
-                        </div>
-                      ))}
-                    </div>
-                  </SwiperSlide>
-                );
-              })}
+                          </div>
+                          <div className="p-4">
+                            <h3 className="font-bold text-gray-800 text-base md:text-lg">
+                              {market.name}
+                            </h3>
+                            <p className="text-gray-600 text-sm md:text-base">
+                              {market.address}
+                            </p>
+                          </div>
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
+                </SwiperSlide>
+              ))}
             </Swiper>
 
             {/* Custom Navigation Buttons - Fixed class names */}
-            {filteredMarkets.length > (isMobile ? 8 : 12) && (
-              <>
-                <button className="top-1/2 -left-4 z-10 absolute flex justify-center items-center bg-white hover:bg-gray-50 shadow-md rounded-full w-10 h-10 -translate-y-1/2 cursor-pointer swiper-button-prev-markets transform">
-                  <ChevronLeft className="w-5 h-5 text-gray-700" />
-                </button>
-                <button className="top-1/2 -right-4 z-10 absolute flex justify-center items-center bg-white hover:bg-gray-50 shadow-md rounded-full w-10 h-10 -translate-y-1/2 cursor-pointer swiper-button-next-markets transform">
-                  <ChevronRight className="w-5 h-5 text-gray-700" />
-                </button>
-              </>
-            )}
+            <button className="top-1/2 -left-4 z-10 absolute flex justify-center items-center bg-white hover:bg-gray-50 shadow-md rounded-full w-10 h-10 -translate-y-1/2 cursor-pointer swiper-button-prev-markets transform">
+              <ChevronLeft className="w-5 h-5 text-gray-700" />
+            </button>
+            <button className="top-1/2 -right-4 z-10 absolute flex justify-center items-center bg-white hover:bg-gray-50 shadow-md rounded-full w-10 h-10 -translate-y-1/2 cursor-pointer swiper-button-next-markets transform">
+              <ChevronRight className="w-5 h-5 text-gray-700" />
+            </button>
           </div>
         </div>
 
@@ -476,8 +469,8 @@ function ExploreSection() {
                 dynamicBullets: true,
               }}
               navigation={{
-                nextEl: ".swiper-button-next-malls", // Fixed class name
-                prevEl: ".swiper-button-prev-malls", // Fixed class name
+                nextEl: ".swiper-button-next-malls",
+                prevEl: ".swiper-button-prev-malls",
               }}
               modules={[Pagination, Navigation]}
               className="custom-swiper-pagination pb-10"
@@ -504,7 +497,7 @@ function ExploreSection() {
             >
               {/* Using the same nested layout as markets */}
               {nestedMalls.map((malls, index) => (
-                <SwiperSlide key={index}>
+                <SwiperSlide key={`mall-slide-${index}`}>
                   <div className="gap-4 md:gap-6 grid grid-rows-2">
                     {malls.map((mall) => (
                       <div
@@ -547,16 +540,12 @@ function ExploreSection() {
             </Swiper>
 
             {/* Navigation Buttons - Fixed class names */}
-            {filteredMalls.length > 8 && (
-              <>
-                <button className="top-1/2 -left-4 z-10 absolute flex justify-center items-center bg-white hover:bg-gray-50 shadow-md rounded-full w-10 h-10 -translate-y-1/2 cursor-pointer swiper-button-prev-malls transform">
-                  <ChevronLeft className="w-5 h-5 text-gray-700" />
-                </button>
-                <button className="top-1/2 -right-4 z-10 absolute flex justify-center items-center bg-white hover:bg-gray-50 shadow-md rounded-full w-10 h-10 -translate-y-1/2 cursor-pointer swiper-button-next-malls transform">
-                  <ChevronRight className="w-5 h-5 text-gray-700" />
-                </button>
-              </>
-            )}
+            <button className="top-1/2 -left-4 z-10 absolute flex justify-center items-center bg-white hover:bg-gray-50 shadow-md rounded-full w-10 h-10 -translate-y-1/2 cursor-pointer swiper-button-prev-malls transform">
+              <ChevronLeft className="w-5 h-5 text-gray-700" />
+            </button>
+            <button className="top-1/2 -right-4 z-10 absolute flex justify-center items-center bg-white hover:bg-gray-50 shadow-md rounded-full w-10 h-10 -translate-y-1/2 cursor-pointer swiper-button-next-malls transform">
+              <ChevronRight className="w-5 h-5 text-gray-700" />
+            </button>
           </div>
         </div>
 
