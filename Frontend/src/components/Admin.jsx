@@ -8,18 +8,15 @@ import {
   X,
   PieChart,
   Menu,
-  Search,
   Bell,
 } from "lucide-react";
-import {
-  Link,
-  Outlet,
-  useParams,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
+import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { Avatar, Badge } from "antd";
-import { LOGOUT_MODAL_CONTEXT, USER_PROFILE_CONTEXT } from "@/contexts";
+import {
+  LOGOUT_MODAL_CONTEXT,
+  USER_PROFILE_CONTEXT,
+  MESSAGE_API_CONTEXT,
+} from "@/contexts";
 
 const Admin = () => {
   const location = useLocation();
@@ -27,8 +24,13 @@ const Admin = () => {
   const { setLogoutOpen } = useContext(LOGOUT_MODAL_CONTEXT);
   const { userProfile } = useContext(USER_PROFILE_CONTEXT);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
 
+  const messageApi = useContext(MESSAGE_API_CONTEXT);
+  if (!userProfile || userProfile.role !== "admin") {
+    messageApi.error("You are not authorized to view this page");
+    navigate("/");
+    return;
+  }
   // Admin navigation items
   const menuItems = [
     {
@@ -114,18 +116,6 @@ const Admin = () => {
               >
                 <Menu className="w-5 h-5" />
               </button>
-
-              {/* Search bar */}
-              <div className="relative">
-                <Search className="top-1/2 left-3 absolute w-4 h-4 text-gray-400 -translate-y-1/2 transform" />
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="bg-gray-50 py-2 pr-4 pl-10 border border-gray-300 focus:border-transparent rounded-full focus:outline-none focus:ring-2 focus:ring-orange w-64"
-                />
-              </div>
             </div>
 
             <div className="flex items-center space-x-4">

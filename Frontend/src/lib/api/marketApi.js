@@ -35,7 +35,7 @@ export async function getMarketProducts(marketId, errorLogger = () => {}) {
 }
 
 export async function createMarketApi(marketData, errorLogger = () => {}) {
-  const url = new URL("markets", SERVER_URL);
+  const url = new URL("market", SERVER_URL);
   const { accessToken } = getAuth();
 
   const formData = new FormData();
@@ -45,7 +45,7 @@ export async function createMarketApi(marketData, errorLogger = () => {}) {
     if (key === "displayImage" && marketData[key] instanceof File) {
       formData.append(key, marketData[key]);
     } else if (marketData[key] !== undefined && marketData[key] !== null) {
-      formData.append(key, marketData[key]);
+      formData.append(key, String(marketData[key]));
     }
   });
 
@@ -66,7 +66,7 @@ export async function createMarketApi(marketData, errorLogger = () => {}) {
 }
 
 export async function deleteMarketApi(marketId, errorLogger = () => {}) {
-  const url = new URL(`markets/${marketId}`, SERVER_URL);
+  const url = new URL(`market/${marketId}`, SERVER_URL);
   const { accessToken } = getAuth();
 
   const response = await fetch(url, {
@@ -85,7 +85,7 @@ export async function deleteMarketApi(marketId, errorLogger = () => {}) {
 }
 
 export async function deleteAllMarketsApi(errorLogger = () => {}) {
-  const url = new URL("markets", SERVER_URL);
+  const url = new URL("market", SERVER_URL);
   const { accessToken } = getAuth();
 
   const response = await fetch(url, {

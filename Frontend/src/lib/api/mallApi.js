@@ -16,10 +16,10 @@ export async function createMallApi(mallData, errorLogger = () => {}) {
   // Add isMall flag to indicate this is a mall
   const mallDataWithFlag = {
     ...mallData,
-    isMall: true,
+    isMall: "true",
   };
 
-  const url = new URL("markets", SERVER_URL);
+  const url = new URL("market", SERVER_URL);
   const { accessToken } = getAuth();
 
   const formData = new FormData();
@@ -53,7 +53,7 @@ export async function createMallApi(mallData, errorLogger = () => {}) {
 }
 
 export async function deleteMallApi(mallId, errorLogger = () => {}) {
-  const url = new URL(`markets/${mallId}`, SERVER_URL);
+  const url = new URL(`market/${mallId}`, SERVER_URL);
   const { accessToken } = getAuth();
 
   const response = await fetch(url, {
