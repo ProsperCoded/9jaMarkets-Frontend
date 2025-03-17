@@ -28,7 +28,8 @@ import {
   Building, 
   Briefcase,
   Wallet,
-  Landmark
+  Landmark,
+  FileUp
 } from "lucide-react";
 
 const businessTypes = [
@@ -45,15 +46,6 @@ const paymentMethods = [
   "Wallet"
 ];
 
-const banks = [
-  "Access Bank",
-  "First Bank",
-  "GT Bank",
-  "UBA",
-  "Zenith Bank",
-  // Add more banks
-];
-
 // Export the dialog component so it can be used by MarketerSignupButton
 export function MarketerSignupDialog({ open, onOpenChange }) {
   const [formData, setFormData] = useState({
@@ -61,8 +53,8 @@ export function MarketerSignupDialog({ open, onOpenChange }) {
     email: "",
     phone: "",
     username: "",
-    password: "",
-    confirmPassword: "",
+    idType: "",
+    idImage: null,
     businessName: "",
     businessType: "",
     paymentMethod: "",
@@ -77,6 +69,29 @@ export function MarketerSignupDialog({ open, onOpenChange }) {
     e.preventDefault();
     // Handle form submission
     console.log(formData);
+  };
+
+  // Add ID type options
+  const idTypes = [
+    "National ID (NIN)",
+    "Driver's License",
+    "Voter's Card",
+    "International Passport"
+  ];
+
+  // Handle ID image upload
+  const handleIdImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) { // 5MB limit
+        alert("File size should be less than 5MB");
+        return;
+      }
+      setFormData(prev => ({
+        ...prev,
+        idImage: file
+      }));
+    }
   };
 
   return (
@@ -151,29 +166,42 @@ export function MarketerSignupDialog({ open, onOpenChange }) {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                  <Input 
-                    id="password"
-                    type="password"
-                    className="pl-9"
-                    required
-                  />
-                </div>
+                <Label htmlFor="idType">ID Type</Label>
+                <Select 
+                  required
+                  value={formData.idType}
+                  onValueChange={(value) => setFormData(prev => ({ ...prev, idType: value }))}
+                >
+                  <SelectTrigger className="pl-9 relative">
+                    <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                    <SelectValue placeholder="Select ID type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {idTypes.map((type) => (
+                      <SelectItem key={type} value={type.toLowerCase()}>
+                        {type}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="confirmPassword">Confirm Password</Label>
+                <Label htmlFor="idImage">ID Image Upload</Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                   <Input 
-                    id="confirmPassword"
-                    type="password"
+                    id="idImage"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleIdImageUpload}
                     className="pl-9"
                     required
                   />
+                  <FileUp className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                 </div>
+                <p className="text-xs text-gray-500">
+                  Upload a clear image of your selected ID (Max: 5MB)
+                </p>
               </div>
             </div>
           </div>
@@ -238,19 +266,17 @@ export function MarketerSignupDialog({ open, onOpenChange }) {
 
               <div className="space-y-2">
                 <Label htmlFor="bankName">Bank Name</Label>
-                <Select required>
-                  <SelectTrigger className="pl-9 relative">
-                    <Landmark className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                    <SelectValue placeholder="Select your bank" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {banks.map((bank) => (
-                      <SelectItem key={bank} value={bank.toLowerCase()}>
-                        {bank}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <div className="relative">
+                  <Landmark className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                  <Input 
+                    id="bankName"
+                    placeholder="Enter your bank name"
+                    className="pl-9"
+                    value={formData.bankName}
+                    onChange={(e) => setFormData(prev => ({ ...prev, bankName: e.target.value }))}
+                    required
+                  />
+                </div>
               </div>
 
               <div className="space-y-2">
@@ -258,6 +284,8 @@ export function MarketerSignupDialog({ open, onOpenChange }) {
                 <Input 
                   id="accountName"
                   placeholder="As shown on your bank account"
+                  value={formData.accountName}
+                  onChange={(e) => setFormData(prev => ({ ...prev, accountName: e.target.value }))}
                   required
                 />
               </div>
@@ -268,6 +296,8 @@ export function MarketerSignupDialog({ open, onOpenChange }) {
                   id="accountNumber"
                   placeholder="10-digit account number"
                   maxLength={10}
+                  value={formData.accountNumber}
+                  onChange={(e) => setFormData(prev => ({ ...prev, accountNumber: e.target.value }))}
                   required
                 />
               </div>

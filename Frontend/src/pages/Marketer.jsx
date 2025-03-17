@@ -52,7 +52,7 @@ import { MarketerSignupButton } from "@/components/MarketerSignupButton";
     },
     {
       question: "When do I get paid?",
-      answer: "Payments are made monthly, directly to your bank account."
+      answer: "Payments are made monthly (for 6 months only), directly to your bank account."
     },
     {
       question: "What if a merchant stops running ads?",
