@@ -5,7 +5,8 @@ import {
   Store, 
   ShieldAlert, 
   Wallet,
-  AlertCircle
+  AlertCircle,
+  Megaphone 
 } from "lucide-react";
 import {
   Accordion,
@@ -47,6 +48,23 @@ const TermsPage = () => {
         "Fraudulent activities, false advertising, or misrepresentation.",
         "Harassment, abuse, or unethical behavior towards other users.",
         "Unauthorized use of 9jaMarkets's brand, trademarks, or intellectual property."
+      ]
+    },
+    {
+      id: "marketers",
+      icon: <Megaphone className="h-5 w-5"/>,
+      title: "Marketer Terms & Commission",
+      content: [
+        "Marketers must provide valid identification and accurate personal information during registration.",
+        "Commission rates are based on successful product sales and promotional activities.",
+        "Marketers must adhere to ethical marketing practices and avoid misleading advertisements.",
+        "Payment of commissions will be processed through verified bank accounts only.",
+        "Marketers are prohibited from making false claims about products or the platform.",
+        "9jaMarkets reserves the right to review and verify all marketing content and activities.",
+        "Commission payments will be processed within specified payment cycles after verification.",
+        "Marketers must maintain professional conduct when representing 9jaMarkets.",
+        "Any form of spam, harassment, or unethical marketing practices will result in immediate termination.",
+        "Marketers are responsible for their tax obligations on earned commissions."
       ]
     },
     {

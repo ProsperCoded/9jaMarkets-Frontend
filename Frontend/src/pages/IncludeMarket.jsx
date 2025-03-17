@@ -165,11 +165,11 @@ export default function IncludeMarket() {
                 <div className="space-y-2">
                   <Label htmlFor="city" className="flex items-center gap-2">
                     <MapPin className="w-4 h-4 text-Primary" />
-                    City/Area
+                    City/LGA
                   </Label>
                   <Input
                     id="city"
-                    placeholder="City or specific area"
+                    placeholder="City or Local Government Area"
                     required
                   />
                 </div>
@@ -275,7 +275,7 @@ export default function IncludeMarket() {
                 </Label>
                 <Textarea
                   id="info"
-                  placeholder="Any other details about the market..."
+                  placeholder="Give a brief description of the market..."
                   rows={4}
                 />
               </div>
