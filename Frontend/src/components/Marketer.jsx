@@ -5,7 +5,8 @@ import {
   DialogContent, 
   DialogHeader, 
   DialogTitle,
-  DialogDescription
+  DialogDescription,
+  DialogFooter
 } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -19,18 +20,7 @@ import {
 } from "./ui/select";
 import { Textarea } from "./ui/textarea";
 import { Checkbox } from "./ui/checkbox";
-import { 
-  User, 
-  Mail, 
-  Phone, 
-  AtSign, 
-  Lock, 
-  Building, 
-  Briefcase,
-  Wallet,
-  Landmark,
-  FileUp
-} from "lucide-react";
+import { User, Mail, Phone, AtSign, Lock, Building, Briefcase, Wallet, Landmark, FileUp, Handshake } from "lucide-react";
 
 const businessTypes = [
   "Affiliate Marketer",
@@ -64,11 +54,18 @@ export function MarketerSignupDialog({ open, onOpenChange }) {
     experience: "",
     agreeToTerms: false
   });
+  const [showSuccess, setShowSuccess] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission
-    console.log(formData);
+    try {
+      // Your existing form submission logic
+      console.log(formData);
+      onOpenChange(false); // Close the main dialog
+      setShowSuccess(true); // Show success modal
+    } catch (error) {
+      console.error('Signup failed:', error);
+    }
   };
 
   // Add ID type options
@@ -95,243 +92,277 @@ export function MarketerSignupDialog({ open, onOpenChange }) {
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-Primary">
-            Become a Marketer
-          </DialogTitle>
-          <DialogDescription>
-            Join our marketing team and start earning by promoting products on 9jaMarkets.
-          </DialogDescription>
-        </DialogHeader>
+    <>
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-Primary">
+              Become a Marketer
+            </DialogTitle>
+            <DialogDescription>
+              Join our marketing team and start earning by promoting products on 9jaMarkets.
+            </DialogDescription>
+          </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-6 py-4">
-          {/* Personal Information */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-gray-900">Personal Information</h3>
-            
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="space-y-2">
-                <Label htmlFor="fullName">Full Name</Label>
-                <div className="relative">
-                  <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                  <Input 
-                    id="fullName"
-                    placeholder="John Doe"
-                    className="pl-9"
-                    required
-                  />
+          <form onSubmit={handleSubmit} className="space-y-6 py-4">
+            {/* Personal Information */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-gray-900">Personal Information</h3>
+              
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="fullName">Full Name</Label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                    <Input 
+                      id="fullName"
+                      placeholder="John Doe"
+                      className="pl-9"
+                      required
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="email">Email Address</Label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                  <Input 
-                    id="email"
-                    type="email"
-                    placeholder="you@example.com"
-                    className="pl-9"
-                    required
-                  />
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email Address</Label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                    <Input 
+                      id="email"
+                      type="email"
+                      placeholder="you@example.com"
+                      className="pl-9"
+                      required
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="phone">Phone Number</Label>
-                <div className="relative">
-                  <Phone className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                  <Input 
-                    id="phone"
-                    placeholder="+234"
-                    className="pl-9"
-                    required
-                  />
+                <div className="space-y-2">
+                  <Label htmlFor="phone">Phone Number</Label>
+                  <div className="relative">
+                    <Phone className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                    <Input 
+                      id="phone"
+                      placeholder="+234"
+                      className="pl-9"
+                      required
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="username">Username</Label>
-                <div className="relative">
-                  <AtSign className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                  <Input 
-                    id="username"
-                    placeholder="unique_username"
-                    className="pl-9"
-                    required
-                  />
+                <div className="space-y-2">
+                  <Label htmlFor="username">Username</Label>
+                  <div className="relative">
+                    <AtSign className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                    <Input 
+                      id="username"
+                      placeholder="unique_username"
+                      className="pl-9"
+                      required
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="idType">ID Type</Label>
-                <Select 
-                  required
-                  value={formData.idType}
-                  onValueChange={(value) => setFormData(prev => ({ ...prev, idType: value }))}
-                >
-                  <SelectTrigger className="pl-9 relative">
-                    <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                    <SelectValue placeholder="Select ID type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {idTypes.map((type) => (
-                      <SelectItem key={type} value={type.toLowerCase()}>
-                        {type}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="idImage">ID Image Upload</Label>
-                <div className="relative">
-                  <Input 
-                    id="idImage"
-                    type="file"
-                    accept="image/*"
-                    onChange={handleIdImageUpload}
-                    className="pl-9"
+                <div className="space-y-2">
+                  <Label htmlFor="idType">ID Type</Label>
+                  <Select 
                     required
-                  />
-                  <FileUp className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                    value={formData.idType}
+                    onValueChange={(value) => setFormData(prev => ({ ...prev, idType: value }))}
+                  >
+                    <SelectTrigger className="pl-9 relative">
+                      <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                      <SelectValue placeholder="Select ID type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {idTypes.map((type) => (
+                        <SelectItem key={type} value={type.toLowerCase()}>
+                          {type}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
-                <p className="text-xs text-gray-500">
-                  Upload a clear image of your selected ID (Max: 5MB)
-                </p>
+
+                <div className="space-y-2">
+                  <Label htmlFor="idImage">ID Image Upload</Label>
+                  <div className="relative">
+                    <Input 
+                      id="idImage"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleIdImageUpload}
+                      className="pl-9"
+                      required
+                    />
+                    <FileUp className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                  </div>
+                  <p className="text-xs text-gray-500">
+                    Upload a clear image of your selected ID (Max: 5MB)
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Business Information */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-gray-900">Business Information</h3>
-            
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="space-y-2">
-                <Label htmlFor="businessName">Business Name (Optional)</Label>
-                <div className="relative">
-                  <Building className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                  <Input 
-                    id="businessName"
-                    placeholder="Your Business Name"
-                    className="pl-9"
-                  />
+            {/* Business Information */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-gray-900">Business Information</h3>
+              
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="businessName">Business Name (Optional)</Label>
+                  <div className="relative">
+                    <Building className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                    <Input 
+                      id="businessName"
+                      placeholder="Your Business Name"
+                      className="pl-9"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="businessType">Business Type</Label>
+                  <Select required>
+                    <SelectTrigger className="pl-9 relative">
+                      <Briefcase className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                      <SelectValue placeholder="Select business type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {businessTypes.map((type) => (
+                        <SelectItem key={type} value={type.toLowerCase()}>
+                          {type}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="businessType">Business Type</Label>
-                <Select required>
-                  <SelectTrigger className="pl-9 relative">
-                    <Briefcase className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                    <SelectValue placeholder="Select business type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {businessTypes.map((type) => (
-                      <SelectItem key={type} value={type.toLowerCase()}>
-                        {type}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
             </div>
-          </div>
 
-          {/* Payment Information */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-gray-900">Payment Information</h3>
-            
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="space-y-2">
-                <Label htmlFor="paymentMethod">Preferred Payment Method</Label>
-                <Select required>
-                  <SelectTrigger className="pl-9 relative">
-                    <Wallet className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                    <SelectValue placeholder="Select payment method" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {paymentMethods.map((method) => (
-                      <SelectItem key={method} value={method.toLowerCase()}>
-                        {method}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+            {/* Payment Information */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-gray-900">Payment Information</h3>
+              
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="paymentMethod">Preferred Payment Method</Label>
+                  <Select required>
+                    <SelectTrigger className="pl-9 relative">
+                      <Wallet className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                      <SelectValue placeholder="Select payment method" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {paymentMethods.map((method) => (
+                        <SelectItem key={method} value={method.toLowerCase()}>
+                          {method}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="bankName">Bank Name</Label>
-                <div className="relative">
-                  <Landmark className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                <div className="space-y-2">
+                  <Label htmlFor="bankName">Bank Name</Label>
+                  <div className="relative">
+                    <Landmark className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                    <Input 
+                      id="bankName"
+                      placeholder="Enter your bank name"
+                      className="pl-9"
+                      value={formData.bankName}
+                      onChange={(e) => setFormData(prev => ({ ...prev, bankName: e.target.value }))}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="accountName">Account Name</Label>
                   <Input 
-                    id="bankName"
-                    placeholder="Enter your bank name"
-                    className="pl-9"
-                    value={formData.bankName}
-                    onChange={(e) => setFormData(prev => ({ ...prev, bankName: e.target.value }))}
+                    id="accountName"
+                    placeholder="As shown on your bank account"
+                    value={formData.accountName}
+                    onChange={(e) => setFormData(prev => ({ ...prev, accountName: e.target.value }))}
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="accountNumber">Account Number</Label>
+                  <Input 
+                    id="accountNumber"
+                    placeholder="10-digit account number"
+                    maxLength={10}
+                    value={formData.accountNumber}
+                    onChange={(e) => setFormData(prev => ({ ...prev, accountNumber: e.target.value }))}
                     required
                   />
                 </div>
               </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="accountName">Account Name</Label>
-                <Input 
-                  id="accountName"
-                  placeholder="As shown on your bank account"
-                  value={formData.accountName}
-                  onChange={(e) => setFormData(prev => ({ ...prev, accountName: e.target.value }))}
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="accountNumber">Account Number</Label>
-                <Input 
-                  id="accountNumber"
-                  placeholder="10-digit account number"
-                  maxLength={10}
-                  value={formData.accountNumber}
-                  onChange={(e) => setFormData(prev => ({ ...prev, accountNumber: e.target.value }))}
-                  required
-                />
-              </div>
             </div>
-          </div>
 
-          {/* Experience */}
-          <div className="space-y-2">
-            <Label htmlFor="experience">Marketing Experience (Optional)</Label>
-            <Textarea 
-              id="experience"
-              placeholder="Brief description of your marketing experience or links to past work..."
-              className="h-24"
-            />
-          </div>
+            {/* Experience */}
+            <div className="space-y-2">
+              <Label htmlFor="experience">Marketing Experience (Optional)</Label>
+              <Textarea 
+                id="experience"
+                placeholder="Brief description of your marketing experience or links to past work..."
+                className="h-24"
+              />
+            </div>
 
-          {/* Terms and Conditions */}
-          <div className="flex items-center space-x-2">
-            <Checkbox id="terms" required />
-            <Label htmlFor="terms" className="text-sm">
-              I agree to the{" "}
-              <a href="/terms" className="text-Primary hover:underline">
-                Terms and Conditions
-              </a>
-            </Label>
-          </div>
+            {/* Terms and Conditions */}
+            <div className="flex items-center space-x-2">
+              <Checkbox id="terms" required />
+              <Label htmlFor="terms" className="text-sm">
+                I agree to the{" "}
+                <a href="/terms" className="text-Primary hover:underline">
+                  Terms and Conditions
+                </a>
+              </Label>
+            </div>
 
-          {/* Submit Button */}
-          <Button type="submit" className="w-full bg-Primary hover:bg-Primary/90">
-            Submit Application
-          </Button>
-        </form>
-      </DialogContent>
-    </Dialog>
+            {/* Submit Button */}
+            <Button type="submit" className="w-full bg-Primary hover:bg-Primary/90">
+              Submit Application
+            </Button>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* Success Modal */}
+      <Dialog open={showSuccess} onOpenChange={setShowSuccess}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <div className="mx-auto w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-4">
+              <Handshake className="h-12 w-12 text-Primary animate-bounce" />
+            </div>
+            <DialogTitle className="text-2xl font-bold text-center text-Primary">
+              Welcome to 9jaMarkets!
+            </DialogTitle>
+            <DialogDescription className="text-center">
+              <p className="text-lg text-gray-700 mt-2">
+                Your application has been received successfully!
+              </p>
+              <div className="mt-4 space-y-2 text-sm text-gray-600 text-left">
+                <p>• Our team will review your application within 24-48 hours</p>
+                <p>• You&apos;ll receive an email with your account details</p>
+                <p>• Get ready to start earning with 9jaMarkets!</p>
+              </div>
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="sm:justify-center">
+            <Button
+              onClick={() => setShowSuccess(false)}
+              className="bg-Primary hover:bg-Primary/90 text-white px-8"
+            >
+              Start Your Journey
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
 

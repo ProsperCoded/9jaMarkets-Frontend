@@ -1,5 +1,4 @@
 import {  Users, Rocket, CheckCircle2, ArrowRight, Coins, Target, BadgePercent, Banknote, Zap, HelpCircle } from "lucide-react";
-import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { MarketerSignupButton } from "@/components/MarketerSignupButton";
