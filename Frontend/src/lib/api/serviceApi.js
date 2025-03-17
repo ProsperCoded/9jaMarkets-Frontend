@@ -27,6 +27,7 @@ export async function getCustomerProfileApi(
   successLogger = () => {}
 ) {
   const { accessToken } = getAuth();
+  console.log("access Token", accessToken);
   const url = new URL(`customer/profile/${userId}`, SERVER_URL);
   const userProfile = await fetch(url, {
     headers: {

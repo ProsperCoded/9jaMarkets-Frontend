@@ -58,6 +58,8 @@ import LoadingPage from "./componets-utils/LoadingPage";
 import { FloatingWhatsApp } from "react-floating-whatsapp";
 import logo from "./assets/Logo.svg";
 import CustomerPage from "./pages/landingPages/CustomerPage";
+import CreateMall from "./components/CreateMall";
+import CreateMarket from "./components/CreateMarket";
 
 function AntDesignConfig({ children }) {
   return (
@@ -155,6 +157,8 @@ function App() {
                 <Route index element={<Navigate to="dashboard" replace />} />
                 <Route path="dashboard" element={<AdminDashboard />} />
                 <Route path="markets" element={<AdminMarkets />} />
+                <Route path="create-mall" element={<CreateMall />} />
+                <Route path="create-market" element={<CreateMarket />} />
                 <Route path="malls" element={<AdminMalls />} />
                 <Route path="marketers" element={<AdminMarketers />} />
               </Route>

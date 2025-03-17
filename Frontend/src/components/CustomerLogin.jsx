@@ -6,7 +6,7 @@ import googleLogo from "../assets/Google Icon.svg";
 import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "../contexts";
 import { getCustomerProfileApi } from "../lib/api/serviceApi";
 import { loginCustomerApi } from "../lib/api/authApi";
-import { storeAuth } from "../lib/util";
+import { getAuth, storeAuth } from "../lib/util";
 import Loading from "../componets-utils/Loading";
 import { GOOGLE_URL } from "@/config";
 import { LOGIN_MODAL_CONTEXT, SIGNUP_MODAL_CONTEXT } from "../contexts";
@@ -30,7 +30,7 @@ const CustomerLogin = () => {
     }
 
     document.body.style.overflow = "hidden";
-    
+
     const currentRef = modalRef.current;
     if (currentRef) {
       currentRef.focus();
@@ -40,7 +40,7 @@ const CustomerLogin = () => {
         }
       };
       currentRef.addEventListener("keypress", handleKeyPress);
-      
+
       return () => {
         currentRef.removeEventListener("keypress", handleKeyPress);
         document.body.style.overflow = "auto";
@@ -62,7 +62,7 @@ const CustomerLogin = () => {
 
     const { accessToken, refreshToken, id: userId } = loginData;
     storeAuth(userId, accessToken, refreshToken);
-    const userProfile = await getCustomerProfileApi(userId, accessToken, errorLogger);
+
     if (!userProfile) return;
 
     setUserProfile(userProfile);
@@ -75,12 +75,12 @@ const CustomerLogin = () => {
       <div className="relative bg-white shadow-lg p-4 sm:p-6 rounded-2xl w-[95%] max-w-md max-h-[90vh] overflow-y-auto">
         <button
           onClick={() => setLoginOpen(false)}
-          className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 p-2"
+          className="top-3 right-3 absolute p-2 text-gray-500 hover:text-gray-700"
         >
           <span className="text-2xl">&times;</span>
         </button>
 
-        <div className="text-center mb-6">
+        <div className="mb-6 text-center">
           <img
             src={logo}
             alt="9ja Markets Logo"
@@ -99,7 +99,10 @@ const CustomerLogin = () => {
           }}
         >
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="email"
+              className="block font-medium text-gray-700 text-sm"
+            >
               Email
             </label>
             <input
@@ -108,12 +111,15 @@ const CustomerLogin = () => {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-gray-300 p-2 focus:ring-2 focus:ring-Primary focus:outline-none"
+              className="mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-Primary w-full"
             />
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="password"
+              className="block font-medium text-gray-700 text-sm"
+            >
               Password
             </label>
             <div className="relative">
@@ -123,12 +129,12 @@ const CustomerLogin = () => {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="mt-1 w-full rounded-lg border border-gray-300 p-2 focus:ring-2 focus:ring-Primary focus:outline-none"
+                className="mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-Primary w-full"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                className="top-1/2 right-2 absolute text-gray-500 hover:text-gray-700 -translate-y-1/2"
               >
                 {showPassword ? (
                   <Eye className="w-5 h-5" />
@@ -139,17 +145,15 @@ const CustomerLogin = () => {
             </div>
           </div>
 
-          {error && (
-            <p className="text-red-500 text-sm text-center">{error}</p>
-          )}
+          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-Primary text-white p-2.5 rounded-lg font-medium hover:bg-Primary/90 transition-colors"
+            className="bg-Primary hover:bg-Primary/90 p-2.5 rounded-lg w-full font-medium text-white transition-colors"
           >
             {loading ? (
-              <div className="flex items-center justify-center gap-2">
+              <div className="flex justify-center items-center gap-2">
                 <Loading />
                 <span>Logging in...</span>
               </div>
@@ -160,24 +164,27 @@ const CustomerLogin = () => {
 
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
+              <div className="border-gray-300 border-t w-full"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 text-gray-500 bg-white">Or</span>
+              <span className="bg-white px-2 text-gray-500">Or</span>
             </div>
           </div>
 
           <a
             href={GOOGLE_URL}
-            className="flex items-center justify-center gap-3 w-full border border-gray-300 p-2.5 rounded-lg hover:bg-gray-50 transition-colors"
+            className="flex justify-center items-center gap-3 hover:bg-gray-50 p-2.5 border border-gray-300 rounded-lg w-full transition-colors"
           >
             <img src={googleLogo} alt="Google" className="w-5 h-5" />
             <span className="text-gray-700">Continue with Google</span>
           </a>
 
-          <div className="space-y-3 text-center text-sm">
+          <div className="space-y-3 text-sm text-center">
             <p>
-              <Link to="/forget-password" className="text-Primary hover:underline">
+              <Link
+                to="/forget-password"
+                className="text-Primary hover:underline"
+              >
                 Forgot Password?
               </Link>
             </p>
@@ -193,7 +200,7 @@ const CustomerLogin = () => {
                 Create an account
               </button>
             </p>
-            <p className="text-gray-500 text-xs pt-2">
+            <p className="pt-2 text-gray-500 text-xs">
               By continuing you agree to the{" "}
               <Link to="/terms" className="text-Primary hover:underline">
                 Policy and Rules
@@ -206,4 +213,4 @@ const CustomerLogin = () => {
   );
 };
 
-export default CustomerLogin; 
+export default CustomerLogin;

@@ -37,7 +37,7 @@ const LoginModal = () => {
     }
 
     document.body.style.overflow = "hidden";
-    
+
     const currentRef = modalRef.current;
     if (currentRef) {
       currentRef.focus();
@@ -47,7 +47,7 @@ const LoginModal = () => {
         }
       };
       currentRef.addEventListener("keypress", handleKeyPress);
-      
+
       return () => {
         currentRef.removeEventListener("keypress", handleKeyPress);
         document.body.style.overflow = "auto";
@@ -69,19 +69,16 @@ const LoginModal = () => {
       const loginData = await loginCustomerApi(payload, errorLogger);
       if (!loginData) return;
       const { accessToken, refreshToken, id: userId } = loginData;
-      storeAuth(userId, accessToken, refreshToken, "customer", rememberMe);
-      const userProfile_ = await getCustomerProfileApi(
-        userId,
-        errorLogger
-      );
+      storeAuth(userId, accessToken, refreshToken, "customer", true);
+      const userProfile_ = await getCustomerProfileApi(userId, errorLogger);
       if (!userProfile_) return;
       setUserProfile(userProfile_);
       if (window.Intercom) {
-        window.Intercom('update', {
+        window.Intercom("update", {
           name: userProfile_.name,
           email: userProfile_.email,
           created_at: userProfile_.createdAt,
-          user_id: userId
+          user_id: userId,
         });
       }
     } else {
@@ -89,18 +86,15 @@ const LoginModal = () => {
       if (!loginData) return;
       const { accessToken, refreshToken, id: userId } = loginData;
       storeAuth(userId, accessToken, refreshToken, "merchant", rememberMe);
-      const userProfile_ = await getMerchantProfileApi(
-        userId,
-        errorLogger
-      );
+      const userProfile_ = await getMerchantProfileApi(userId, errorLogger);
       if (!userProfile_) return;
       setUserProfile(userProfile_);
       if (window.Intercom) {
-        window.Intercom('update', {
+        window.Intercom("update", {
           name: userProfile_.name,
           email: userProfile_.email,
           created_at: userProfile_.createdAt,
-          user_id: userId
+          user_id: userId,
         });
       }
     }
@@ -124,7 +118,7 @@ const LoginModal = () => {
             alt="9ja Markets Logo"
             className="mx-auto h-12 sm:h-14"
           />
-          <h2 className="mt-2 font-bold text-lg text-Primary sm:text-xl">
+          <h2 className="mt-2 font-bold text-Primary text-lg sm:text-xl">
             Hello! Welcome back
           </h2>
         </div>
@@ -137,7 +131,10 @@ const LoginModal = () => {
           }}
         >
           <div>
-            <label htmlFor="email" className="block font-medium text-gray-700 text-sm">
+            <label
+              htmlFor="email"
+              className="block font-medium text-gray-700 text-sm"
+            >
               Email
             </label>
             <input
@@ -153,7 +150,10 @@ const LoginModal = () => {
           </div>
 
           <div>
-            <label htmlFor="password" className="block font-medium text-gray-700 text-sm">
+            <label
+              htmlFor="password"
+              className="block font-medium text-gray-700 text-sm"
+            >
               Password
             </label>
             <div className="relative">
@@ -215,9 +215,7 @@ const LoginModal = () => {
             </label>
           </div>
 
-          {error && (
-            <p className="text-center text-red-500 text-sm">{error}</p>
-          )}
+          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
           <button
             type="submit"
@@ -245,13 +243,13 @@ const LoginModal = () => {
 
           <a
             href={GOOGLE_URL}
-            className="flex justify-center items-center gap-3 border-gray-300 hover:bg-gray-50 p-2.5 border rounded-lg w-full transition-colors"
+            className="flex justify-center items-center gap-3 hover:bg-gray-50 p-2.5 border border-gray-300 rounded-lg w-full transition-colors"
           >
             <img src={googleLogo} alt="Google" className="w-5 h-5" />
             <span className="text-gray-700">Continue with Google</span>
           </a>
 
-          <div className="space-y-3 text-center text-sm">
+          <div className="space-y-3 text-sm text-center">
             <p>
               Don&apos;t have an account?{" "}
               <button

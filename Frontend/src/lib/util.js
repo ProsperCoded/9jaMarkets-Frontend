@@ -8,13 +8,21 @@ export function storeAuth(
   userType = "customer",
   rememberMe = true
 ) {
-  Cookies.set("userId", userId, { expires: ACCESS_TOKEN_DURATION });
+  Cookies.set("userId", userId, {
+    expires: new Date(Date.now() + ACCESS_TOKEN_DURATION * 24 * 60 * 60 * 1000),
+  });
   // Usertype can be 'customer' or 'merchant'
   localStorage.setItem("userType", userType);
   if (rememberMe) {
-    Cookies.set("accessToken", accessToken, { expires: ACCESS_TOKEN_DURATION });
+    Cookies.set("accessToken", accessToken, {
+      expires: new Date(
+        Date.now() + ACCESS_TOKEN_DURATION * 24 * 60 * 60 * 1000
+      ),
+    });
     Cookies.set("refreshToken", refreshToken, {
-      expires: REFRESH_TOKEN_DURATION,
+      expires: new Date(
+        Date.now() + REFRESH_TOKEN_DURATION * 24 * 60 * 60 * 1000
+      ),
     });
   } else {
     // deletes automatically when the user exits the browser
@@ -31,6 +39,7 @@ export function getAuth() {
   const refreshToken = Cookies.get("refreshToken");
   return { userId, accessToken, refreshToken, userType };
 }
+
 export function deleteAuth() {
   Cookies.remove("userId");
   Cookies.remove("accessToken");
