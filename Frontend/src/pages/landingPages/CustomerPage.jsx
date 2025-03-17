@@ -10,8 +10,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import {
   Pagination,
   PaginationContent,
@@ -37,7 +35,6 @@ import {
   replaceSpacesWithUnderscore,
 } from "@/lib/util";
 import { useToast } from "@/hooks/use-toast";
-import { Link } from "react-router-dom";
 import {
   useTrackAdView,
   useTrackAdClick,

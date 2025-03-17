@@ -43,7 +43,7 @@ import Kids from "../assets/optimized/categories/kids&babyproducts.png";
 import { FEATURED_MARKET_NAMES, FEATURED_MALLS_NAMES } from "@/config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { MALLS, MARKETS, PRODUCT_CATEGORIES } from "../config";
+import { PRODUCT_CATEGORIES } from "../config";
 import { convertToNestedList } from "../lib/util";
 
 import {

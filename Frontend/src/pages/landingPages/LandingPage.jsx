@@ -24,11 +24,11 @@ export default function LandingPage() {
     return <MerchantEmailVerification />;
   }
 
-  const isAdmin = userProfile && userProfile.role === "ADMIN";
-  if (isAdmin) {
-    navigate("/admin");
-    return;
-  }
+  // const isAdmin = userProfile && userProfile.role === "ADMIN";
+  // if (isAdmin) {
+  //   navigate("/admin");
+  //   return;
+  // }
 
   // Otherwise render normal content based on login status
   return <>{loggedIn ? <CustomerPage /> : <VisitorsPage />}</>;

@@ -1,4 +1,4 @@
-/** 
+/**
  * The main navigation bar of the application, containing the logo, navigation
  * links, icons, and profile picture. On mobile devices, the navigation links
  * are hidden and can be accessed by clicking the burger menu icon on the right
@@ -12,7 +12,7 @@
 import { useState, useEffect, useContext } from "react";
 import logo from "../assets/Logo.svg";
 import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ShieldCheck } from "lucide-react";
 import { UserAvatar } from "../componets-utils/UserAvatar";
 import { USER_PROFILE_CONTEXT } from "@/contexts";
 
@@ -59,7 +59,7 @@ function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="md:flex space-x-6 hidden ml-6 text-lg">
+          <nav className="hidden md:flex space-x-6 ml-6 text-lg">
             <Link to="/" className="hover:text-orange">
               Home
             </Link>
@@ -71,7 +71,16 @@ function Header() {
             </Link>
           </nav>
         </div>
-        <div className="md:block hidden">
+        <div className="hidden md:flex gap-2">
+          {userProfile && userProfile.role === "ADMIN" && (
+            <Link
+              to="/admin"
+              className="flex items-center gap-1.5 bg-P2/35 hover:bg-white px-3 py-1.5 rounded-full text-white hover:text-Primary transition-colors"
+            >
+              <ShieldCheck className="w-5 h-5" />
+              <span className="font-medium">Admin</span>
+            </Link>
+          )}
           <UserAvatar showName={true} auth={true} />
         </div>
 
@@ -80,7 +89,10 @@ function Header() {
           <div className="flex items-center">
             <UserAvatar showName={false} auth={true} />
           </div>
-          <button className="text-white p-2 hover:bg-white/10 rounded-full transition-colors" onClick={toggleMenu}>
+          <button
+            className="hover:bg-white/10 p-2 rounded-full text-white transition-colors"
+            onClick={toggleMenu}
+          >
             {isMenuOpen ? (
               <X className="w-6 h-6" />
             ) : (
@@ -99,20 +111,18 @@ function Header() {
             className="fixed inset-0 bg-black/50 transition-opacity duration-300"
             onClick={toggleMenu}
           />
-          <div
-            className="fixed top-0 right-0 grid grid-rows-[auto_1fr_auto] bg-black bg-opacity-20 backdrop-blur-md p-6 w-1/2 h-full text-lg text-white overflow-y-auto"
-          >
+          <div className="top-0 right-0 fixed grid grid-rows-[auto_1fr_auto] bg-black bg-opacity-20 backdrop-blur-md p-6 w-1/2 h-full overflow-y-auto text-white text-lg">
             {/* Close Button */}
             <div className="flex justify-end">
               <button
                 onClick={toggleMenu}
-                className="p-2 hover:bg-white/10 rounded-full transition-colors"
+                className="hover:bg-white/10 p-2 rounded-full transition-colors"
               >
                 <X className="w-6 h-6 cursor-pointer" />
               </button>
             </div>
             {/* Nav Links */}
-            <div className="align-top justify-start space-y-4">
+            <div className="justify-start space-y-4 align-top">
               <Link
                 to="/"
                 onClick={toggleMenu}
@@ -134,6 +144,16 @@ function Header() {
               >
                 Markets
               </Link>
+              {userProfile && userProfile.role === "ADMIN" && (
+                <Link
+                  to="/admin"
+                  onClick={toggleMenu}
+                  className="flex items-center gap-1.5 hover:text-orange"
+                >
+                  <ShieldCheck className="w-5 h-5" />
+                  Admin Dashboard
+                </Link>
+              )}
             </div>
             <div className="mt-auto">
               <UserAvatar showName={true} auth={true} />

@@ -26,11 +26,7 @@ const Admin = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const messageApi = useContext(MESSAGE_API_CONTEXT);
-  if (!userProfile || userProfile.role !== "admin") {
-    messageApi.error("You are not authorized to view this page");
-    navigate("/");
-    return;
-  }
+
   // Admin navigation items
   const menuItems = [
     {
@@ -55,6 +51,10 @@ const Admin = () => {
     },
   ];
 
+  if (!userProfile || userProfile.role !== "ADMIN") {
+    messageApi.error("You are not authorized to view this page");
+    navigate("/");
+  }
   return (
     <div className="flex bg-gray-50 min-h-screen">
       {/* Desktop Sidebar */}

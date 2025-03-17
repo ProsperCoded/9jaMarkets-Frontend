@@ -6,6 +6,7 @@ import {
   SIGNUP_MODAL_CONTEXT,
 } from "../contexts";
 import { Avatar, Popover } from "antd";
+import { ShieldCheck } from "lucide-react";
 
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
@@ -22,6 +23,24 @@ export function UserAvatar({ showName, auth }) {
   const options = (
     <div>
       <ul className="space-y-2 mx-2 px-2 min-w-[10ch]">
+        {userProfile && userProfile.role === "ADMIN" && (
+          <li
+            className="flex items-center gap-1.5 hover:font-semibold hover:text-Primary transition-colors cursor-pointer select-none"
+            onClick={() => {
+              navigate("/admin");
+            }}
+          >
+            <ShieldCheck className="w-4 h-4 text-Primary" /> Admin
+          </li>
+        )}
+        <li
+          className="hover:font-semibold hover:text-Primary transition-colors cursor-pointer select-none"
+          onClick={() => {
+            navigate("/dashboard");
+          }}
+        >
+          Profile
+        </li>
         <li
           className={
             "hover:font-semibold hover:text-red-500 transition-colors cursor-pointer select-none"
@@ -31,14 +50,6 @@ export function UserAvatar({ showName, auth }) {
           }}
         >
           Sign out
-        </li>
-        <li
-          className="hover:font-semibold hover:text-Primary transition-colors cursor-pointer select-none"
-          onClick={() => {
-            navigate("/dashboard");
-          }}
-        >
-          Profile
         </li>
       </ul>
     </div>

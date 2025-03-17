@@ -7,7 +7,7 @@
  */
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, Bookmark } from "lucide-react";
+import { Menu, X, Bookmark, ShieldCheck } from "lucide-react";
 import {
   BOOKMARK_CONTEXT,
   USER_PROFILE_CONTEXT,
@@ -43,7 +43,7 @@ const Header2 = () => {
               <img src={logo} alt="9ja Markets" className="h-8" />
             </Link>
             {/* Desktop Navigation */}
-            <nav className="md:flex space-x-6 hidden ml-6 text-lg">
+            <nav className="hidden md:flex space-x-6 ml-6 text-lg">
               <Link to="/" className="hover:text-orange">
                 Home
               </Link>
@@ -60,7 +60,7 @@ const Header2 = () => {
 
           <div className="flex items-center space-x-4 md:space-x-6">
             {/* Desktop Icons */}
-            <div className="md:flex space-x-4 hidden">
+            <div className="hidden md:flex space-x-4">
               {userProfile && userProfile.userType === "customer" && (
                 <Link
                   to={userProfile ? "/bookmark" : "#"}
@@ -75,11 +75,20 @@ const Header2 = () => {
                   )}
                 </Link>
               )}
+              {userProfile && userProfile.role === "ADMIN" && (
+                <Link
+                  to="/admin"
+                  className="flex items-center gap-1.5 bg-P2/35 hover:bg-white px-3 py-1.5 rounded-full text-white hover:text-Primary transition-colors"
+                >
+                  <ShieldCheck className="w-5 h-5" />
+                  <span className="font-medium">Admin</span>
+                </Link>
+              )}
               <UserAvatar showName={true} auth={true} />
             </div>
 
             {/* Mobile Avatar and Menu */}
-            <div className="flex items-center gap-4 md:hidden">
+            <div className="md:hidden flex items-center gap-4">
               {userProfile && userProfile.userType === "customer" && (
                 <Link
                   to={userProfile ? "/bookmark" : "#"}
@@ -92,6 +101,14 @@ const Header2 = () => {
                       {bookmarkCount}
                     </span>
                   )}
+                </Link>
+              )}
+              {userProfile && userProfile.role === "ADMIN" && (
+                <Link
+                  to="/admin"
+                  className="flex items-center hover:bg-white p-2 rounded-full hover:text-Primary transition-colors"
+                >
+                  <ShieldCheck className="w-6 h-6" />
                 </Link>
               )}
               <div className="flex items-center">
@@ -121,13 +138,13 @@ const Header2 = () => {
           className="fixed inset-0 bg-black/50 transition-opacity duration-300"
           onClick={toggleMenu}
         />
-        <div className="top-0 right-0 fixed grid grid-rows-[auto_1fr_auto] bg-black bg-opacity-20 backdrop-blur-md p-6 w-1/2 h-full text-lg text-white overflow-y-auto">
+        <div className="top-0 right-0 fixed grid grid-rows-[auto_1fr_auto] bg-black bg-opacity-20 backdrop-blur-md p-6 w-1/2 h-full overflow-y-auto text-white text-lg">
           {/* Close Button */}
           <div className="flex justify-end">
             <X className="w-6 h-6 cursor-pointer" onClick={toggleMenu} />
           </div>
           {/* Nav Links */}
-          <div className="align-top justify-start space-y-4">
+          <div className="justify-start space-y-4 align-top">
             <Link
               to="/"
               onClick={toggleMenu}
@@ -149,6 +166,16 @@ const Header2 = () => {
             >
               Markets
             </Link>
+            {userProfile && userProfile.role === "ADMIN" && (
+              <Link
+                to="/admin"
+                onClick={toggleMenu}
+                className="flex items-center gap-1.5 hover:text-orange"
+              >
+                <ShieldCheck className="w-5 h-5" />
+                Admin Dashboard
+              </Link>
+            )}
           </div>
           <div className="mt-auto">
             <UserAvatar showName={true} auth={true} />
