@@ -72,7 +72,7 @@ const MARKETS = {
     },
     {
       name: "Umuahia Main Market",
-      img: "./markets/abia/umuahia.jpg",
+      img: "./markets/abia/umuahia.jpeg",
       address: "Umuahia",
       description:
         "The largest market in Umuahia, offering a wide range of products from foodstuff to clothing and electronics.",
