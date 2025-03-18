@@ -11,13 +11,7 @@ import {
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { 
-  Select, 
-  SelectContent, 
-  SelectItem, 
-  SelectTrigger, 
-  SelectValue 
-} from "./ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Textarea } from "./ui/textarea";
 import { Checkbox } from "./ui/checkbox";
 import { User, Mail, Phone, AtSign, Lock, Building, Briefcase, Wallet, Landmark, FileUp, Handshake } from "lucide-react";
@@ -337,8 +331,8 @@ export function MarketerSignupDialog({ open, onOpenChange }) {
       <Dialog open={showSuccess} onOpenChange={setShowSuccess}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <div className="mx-auto w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-4">
-              <Handshake className="h-12 w-12 text-Primary animate-bounce" />
+            <div className="mx-auto w-20 h-20 bg-orange/10 rounded-full flex items-center justify-center mb-4">
+              <Handshake className="h-12 w-12 text-orange" />
             </div>
             <DialogTitle className="text-2xl font-bold text-center text-Primary">
               Welcome to 9jaMarkets!

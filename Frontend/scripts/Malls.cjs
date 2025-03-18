@@ -198,7 +198,7 @@ const MALLS = {
     {
       name: "Ado Bayero Mall",
       img: "./malls/kano/ado-bayero.jpeg",
-      address: "Zoo Road, Kano, Nigeria",
+      address: "Zoo Road",
       city: "Kano",
       description:
         "The first ultramodern shopping mall in Northern Nigeria, offering a variety of retail outlets, restaurants, and entertainment options.",
@@ -207,7 +207,7 @@ const MALLS = {
       name: "Country Mall Ltd",
       img: "./malls/kano/country.jpeg",
       address:
-        "Plot 35/36 Guda Abdullahi Road, Farm Center, Nasarawa, Kano, Nigeria",
+        "Plot 35/36 Guda Abdullahi Road, Farm Center, Nasarawa",
       city: "Kano",
       description:
         "A shopping destination for groceries, household items, wines, spirits, and electronics.",
@@ -218,7 +218,7 @@ const MALLS = {
     {
       name: "First Lady Shopping Complex",
       img: "./malls/katsina/firstlady.jpeg",
-      address: "Katsina, Nigeria",
+      address: "Katsina ",
       city: "Katsina",
       description: "A well-known complex housing numerous retail outlets.",
     },
