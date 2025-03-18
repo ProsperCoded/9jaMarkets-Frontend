@@ -152,7 +152,7 @@ const MerchantSignup = () => {
             className="mx-auto w-auto h-12"
           />
           <h2 className="mt-6 font-bold text-gray-900 text-3xl">
-            Join 9ja Markets as a Merchant
+            Join 9jaMarkets as a Merchant
           </h2>
           <p className="mt-2 text-gray-600 text-sm">
             Start selling your products to millions of customers today
