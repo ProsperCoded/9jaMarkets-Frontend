@@ -62,7 +62,9 @@ export function MarketerSignupDialog({ open, onOpenChange }) {
       // Your existing form submission logic
       console.log(formData);
       onOpenChange(false); // Close the main dialog
-      setShowSuccess(true); // Show success modal
+      setTimeout(() => {
+        setShowSuccess(true); // Show success modal with a slight delay
+      }, 100);
     } catch (error) {
       console.error('Signup failed:', error);
     }
@@ -331,7 +333,7 @@ export function MarketerSignupDialog({ open, onOpenChange }) {
         </DialogContent>
       </Dialog>
 
-      {/* Success Modal */}
+      {/* Simplified Success Modal */}
       <Dialog open={showSuccess} onOpenChange={setShowSuccess}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
