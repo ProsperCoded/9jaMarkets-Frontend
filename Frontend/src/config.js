@@ -1,6 +1,6 @@
-export const SERVER_URL =
-  "https://9ja-market-backend-production.up.railway.app/api/v1/";
-// export const SERVER_URL = "http://localhost:3100/api/v1/";
+// export const SERVER_URL =
+//   "https://9ja-market-backend-production.up.railway.app/api/v1/";
+export const SERVER_URL = "http://localhost:3100/api/v1/";
 export const GOOGLE_URL = `${SERVER_URL}auth/customer/google`;
 // 3 Days for access token
 export const ACCESS_TOKEN_DURATION = 3;
@@ -55,6 +55,34 @@ export const FEATURED_MARKET_NAMES = [
   "Monday Market",
 ];
 
+// This should be in the database just tired/lazy for now 😪
+export const SUPPORTED_BANKS = [
+  "Access Bank",
+  "Citibank",
+  "Diamond Bank",
+  "Ecobank",
+  "Fidelity Bank",
+  "First Bank",
+  "First City Monument Bank (FCMB)",
+  "Guaranty Trust Bank (GTB)",
+  "Heritage Bank",
+  "OPAY",
+  "PALMPAY",
+  "Kuda Bank",
+  "Paga",
+  "Polaris Bank",
+  "Providus Bank",
+  "Stanbic IBTC Bank",
+  "Standard Chartered Bank",
+  "Sterling Bank",
+  "Suntrust Bank",
+  "Union Bank",
+  "Central Bank of Nigeria",
+  "United Bank for Africa (UBA)",
+  "Unity Bank",
+  "Wema Bank",
+  "Zenith Bank",
+];
 export const FEATURED_MALLS_NAMES = [
   "Ikeja City Mall",
   "Jabi Lake Mall",

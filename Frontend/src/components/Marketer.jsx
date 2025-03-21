@@ -1,20 +1,50 @@
-import { useState } from "react";
-import PropTypes from 'prop-types';
-import { 
-  Dialog, 
-  DialogContent, 
-  DialogHeader, 
+import { useState, useContext } from "react";
+import PropTypes from "prop-types";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
   DialogTitle,
   DialogDescription,
-  DialogFooter
+  DialogFooter,
 } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 import { Textarea } from "./ui/textarea";
 import { Checkbox } from "./ui/checkbox";
-import { User, Mail, Phone, AtSign, Lock, Building, Briefcase, Wallet, Landmark, FileUp, Handshake } from "lucide-react";
+import {
+  User,
+  Mail,
+  Phone,
+  AtSign,
+  Lock,
+  Building,
+  Briefcase,
+  Wallet,
+  Landmark,
+  FileUp,
+  Handshake,
+  InfoIcon,
+  Loader2,
+} from "lucide-react";
+import { Combobox } from "./ui/Combobox";
+import { SUPPORTED_BANKS } from "../config";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
+import { MESSAGE_API_CONTEXT, USER_PROFILE_CONTEXT } from "@/contexts";
+import { createMarketerApi } from "@/lib/api/marketerApi";
 
 const businessTypes = [
   "Affiliate Marketer",
@@ -22,18 +52,14 @@ const businessTypes = [
   "Social Media Influencer",
   "Content Creator",
   "Brand Ambassador",
-  "Other"
-];
-
-const paymentMethods = [
-  "Bank Transfer",
-  "Wallet"
+  "Other",
 ];
 
 // Export the dialog component so it can be used by MarketerSignupButton
 export function MarketerSignupDialog({ open, onOpenChange }) {
   const [formData, setFormData] = useState({
-    fullName: "",
+    firstName: "",
+    lastName: "",
     email: "",
     phone: "",
     username: "",
@@ -41,27 +67,119 @@ export function MarketerSignupDialog({ open, onOpenChange }) {
     idImage: null,
     businessName: "",
     businessType: "",
-    paymentMethod: "",
     bankName: "",
     accountName: "",
     accountNumber: "",
-    experience: "",
-    agreeToTerms: false
+    marketingExperience: "",
+    agreeToTerms: false,
   });
   const [showSuccess, setShowSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const messageApi = useContext(MESSAGE_API_CONTEXT);
+  const { userProfile } = useContext(USER_PROFILE_CONTEXT);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      // Your existing form submission logic
-      console.log(formData);
-      onOpenChange(false); // Close the main dialog
-      setTimeout(() => {
-        setShowSuccess(true); // Show success modal with a slight delay
-      }, 100);
-    } catch (error) {
-      console.error('Signup failed:', error);
+
+    // Validate form
+    if (!formData.agreeToTerms) {
+      messageApi.error("You must agree to the terms and conditions");
+      return;
     }
+
+    if (!formData.idImage) {
+      messageApi.error("ID image is required");
+      return;
+    }
+
+    // Check max file size (5MB)
+    if (formData.idImage && formData.idImage.size > 5 * 1024 * 1024) {
+      messageApi.error("ID image must be less than 5MB");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      // Create FormData object for file upload
+      const marketerFormData = new FormData();
+
+      // Add required fields
+      marketerFormData.append("email", formData.email);
+      marketerFormData.append("firstName", formData.firstName);
+      marketerFormData.append("lastName", formData.lastName);
+      marketerFormData.append("username", formData.username);
+      marketerFormData.append("phoneNumber", formData.phone);
+      marketerFormData.append("accountName", formData.accountName);
+      marketerFormData.append("accountBank", formData.bankName);
+      marketerFormData.append("accountNumber", formData.accountNumber);
+      marketerFormData.append("BusinessType", formData.businessType);
+      marketerFormData.append("IdentityCredentialType", formData.idType);
+
+      // Add optional fields
+      if (formData.marketingExperience) {
+        marketerFormData.append(
+          "marketingExperience",
+          formData.marketingExperience
+        );
+      }
+
+      // Add ID image
+      marketerFormData.append("IdentityCredentialImage", formData.idImage);
+
+      // Submit form using API
+      const result = await createMarketerApi(
+        marketerFormData,
+        (error) => messageApi.error(error || "Failed to submit application"),
+        (success) =>
+          messageApi.success(success || "Application submitted successfully")
+      );
+
+      if (result) {
+        onOpenChange(false); // Close the main dialog
+        setTimeout(() => {
+          setShowSuccess(true); // Show success modal with a slight delay
+        }, 100);
+
+        // Reset form
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          username: "",
+          idType: "",
+          idImage: null,
+          businessName: "",
+          businessType: "",
+          paymentMethod: "",
+          bankName: "",
+          accountName: "",
+          accountNumber: "",
+          marketingExperience: "",
+          agreeToTerms: false,
+        });
+      }
+    } catch (error) {
+      console.error("Marketer signup failed:", error);
+      messageApi.error("An unexpected error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Format bank options for Combobox
+  const bankOptions = SUPPORTED_BANKS.map((bank) => ({
+    value: bank,
+    label: bank,
+  }));
+
+  // Handle bank selection
+  const handleBankSelect = (bank) => {
+    setFormData((prev) => ({
+      ...prev,
+      bankName: bank,
+    }));
   };
 
   // Add ID type options
@@ -69,20 +187,34 @@ export function MarketerSignupDialog({ open, onOpenChange }) {
     "National ID (NIN)",
     "Driver's License",
     "Voter's Card",
-    "International Passport"
+    "International Passport",
   ];
 
   // Handle ID image upload
   const handleIdImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      if (file.size > 5 * 1024 * 1024) { // 5MB limit
-        alert("File size should be less than 5MB");
+      if (file.size > 5 * 1024 * 1024) {
+        // 5MB limit
+        messageApi.error("File size should be less than 5MB");
         return;
       }
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        idImage: file
+        idImage: file,
+      }));
+    }
+  };
+
+  // Pre-fill form with user data if logged in
+  const prefillFromUserProfile = () => {
+    if (userProfile) {
+      setFormData((prev) => ({
+        ...prev,
+        firstName: userProfile.firstName || prev.firstName,
+        lastName: userProfile.lastName || prev.lastName,
+        email: userProfile.email || prev.email,
+        phone: userProfile.phoneNumber || prev.phone,
       }));
     }
   };
@@ -92,42 +224,112 @@ export function MarketerSignupDialog({ open, onOpenChange }) {
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-Primary">
+            <DialogTitle className="font-bold text-Primary text-2xl">
               Become a Marketer
             </DialogTitle>
             <DialogDescription>
-              Join our marketing team and start earning by promoting products on 9jaMarkets.
+              Join our marketing team and start earning by promoting products on
+              9jaMarkets.
             </DialogDescription>
           </DialogHeader>
 
           <form onSubmit={handleSubmit} className="space-y-6 py-4">
             {/* Personal Information */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-gray-900">Personal Information</h3>
-              
-              <div className="grid gap-4 md:grid-cols-2">
+              <h3 className="font-semibold text-gray-900 text-lg">
+                Personal Information
+              </h3>
+
+              <div className="gap-4 grid md:grid-cols-2">
                 <div className="space-y-2">
-                  <Label htmlFor="fullName">Full Name</Label>
+                  <Label htmlFor="firstName">First Name</Label>
                   <div className="relative">
-                    <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                    <Input 
-                      id="fullName"
-                      placeholder="John Doe"
+                    <User className="top-3 left-3 absolute w-4 h-4 text-gray-400" />
+                    <Input
+                      id="firstName"
+                      placeholder="John"
                       className="pl-9"
+                      value={formData.firstName}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          firstName: e.target.value,
+                        }))
+                      }
                       required
                     />
                   </div>
                 </div>
-
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email Address</Label>
+                  <Label htmlFor="lastName">Last Name</Label>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                    <Input 
+                    <User className="top-3 left-3 absolute w-4 h-4 text-gray-400" />
+                    <Input
+                      id="lastName"
+                      placeholder="Doe"
+                      className="pl-9"
+                      value={formData.lastName}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          lastName: e.target.value,
+                        }))
+                      }
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="username">Username</Label>
+                  <div className="relative">
+                    <AtSign className="top-3 left-3 absolute w-4 h-4 text-gray-400" />
+                    <Input
+                      id="username"
+                      placeholder="unique_username"
+                      className="pl-9"
+                      value={formData.username}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          username: e.target.value,
+                        }))
+                      }
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <Label htmlFor="email">Email Address</Label>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <InfoIcon className="w-4 h-4 text-Primary cursor-help" />
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-white shadow-lg p-3 rounded-md max-w-xs text-gray-800">
+                          <p>
+                            To track your application status, create a user
+                            account with this same email. You can then check
+                            your application in the profile dashboard.
+                          </p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
+                  <div className="relative">
+                    <Mail className="top-3 left-3 absolute w-4 h-4 text-gray-400" />
+                    <Input
                       id="email"
                       type="email"
                       placeholder="you@example.com"
                       className="pl-9"
+                      value={formData.email}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          email: e.target.value,
+                        }))
+                      }
                       required
                     />
                   </div>
@@ -136,24 +338,18 @@ export function MarketerSignupDialog({ open, onOpenChange }) {
                 <div className="space-y-2">
                   <Label htmlFor="phone">Phone Number</Label>
                   <div className="relative">
-                    <Phone className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                    <Input 
+                    <Phone className="top-3 left-3 absolute w-4 h-4 text-gray-400" />
+                    <Input
                       id="phone"
                       placeholder="+234"
                       className="pl-9"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="username">Username</Label>
-                  <div className="relative">
-                    <AtSign className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                    <Input 
-                      id="username"
-                      placeholder="unique_username"
-                      className="pl-9"
+                      value={formData.phone}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          phone: e.target.value,
+                        }))
+                      }
                       required
                     />
                   </div>
@@ -161,18 +357,20 @@ export function MarketerSignupDialog({ open, onOpenChange }) {
 
                 <div className="space-y-2">
                   <Label htmlFor="idType">ID Type</Label>
-                  <Select 
+                  <Select
                     required
                     value={formData.idType}
-                    onValueChange={(value) => setFormData(prev => ({ ...prev, idType: value }))}
+                    onValueChange={(value) =>
+                      setFormData((prev) => ({ ...prev, idType: value }))
+                    }
                   >
-                    <SelectTrigger className="pl-9 relative">
-                      <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                    <SelectTrigger className="relative pl-9">
+                      <Lock className="top-3 left-3 absolute w-4 h-4 text-gray-400" />
                       <SelectValue placeholder="Select ID type" />
                     </SelectTrigger>
                     <SelectContent>
                       {idTypes.map((type) => (
-                        <SelectItem key={type} value={type.toLowerCase()}>
+                        <SelectItem key={type} value={type}>
                           {type}
                         </SelectItem>
                       ))}
@@ -183,7 +381,7 @@ export function MarketerSignupDialog({ open, onOpenChange }) {
                 <div className="space-y-2">
                   <Label htmlFor="idImage">ID Image Upload</Label>
                   <div className="relative">
-                    <Input 
+                    <Input
                       id="idImage"
                       type="file"
                       accept="image/*"
@@ -191,9 +389,9 @@ export function MarketerSignupDialog({ open, onOpenChange }) {
                       className="pl-9"
                       required
                     />
-                    <FileUp className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                    <FileUp className="top-3 left-3 absolute w-4 h-4 text-gray-400" />
                   </div>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-gray-500 text-xs">
                     Upload a clear image of your selected ID (Max: 5MB)
                   </p>
                 </div>
@@ -202,31 +400,46 @@ export function MarketerSignupDialog({ open, onOpenChange }) {
 
             {/* Business Information */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-gray-900">Business Information</h3>
-              
-              <div className="grid gap-4 md:grid-cols-2">
+              <h3 className="font-semibold text-gray-900 text-lg">
+                Business Information
+              </h3>
+
+              <div className="gap-4 grid md:grid-cols-2">
                 <div className="space-y-2">
                   <Label htmlFor="businessName">Business Name (Optional)</Label>
                   <div className="relative">
-                    <Building className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                    <Input 
+                    <Building className="top-3 left-3 absolute w-4 h-4 text-gray-400" />
+                    <Input
                       id="businessName"
                       placeholder="Your Business Name"
                       className="pl-9"
+                      value={formData.businessName}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          businessName: e.target.value,
+                        }))
+                      }
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="businessType">Business Type</Label>
-                  <Select required>
-                    <SelectTrigger className="pl-9 relative">
-                      <Briefcase className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                  <Select
+                    required
+                    value={formData.businessType}
+                    onValueChange={(value) =>
+                      setFormData((prev) => ({ ...prev, businessType: value }))
+                    }
+                  >
+                    <SelectTrigger className="relative pl-9">
+                      <Briefcase className="top-3 left-3 absolute w-4 h-4 text-gray-400" />
                       <SelectValue placeholder="Select business type" />
                     </SelectTrigger>
                     <SelectContent>
                       {businessTypes.map((type) => (
-                        <SelectItem key={type} value={type.toLowerCase()}>
+                        <SelectItem key={type} value={type}>
                           {type}
                         </SelectItem>
                       ))}
@@ -238,60 +451,52 @@ export function MarketerSignupDialog({ open, onOpenChange }) {
 
             {/* Payment Information */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-gray-900">Payment Information</h3>
-              
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="paymentMethod">Preferred Payment Method</Label>
-                  <Select required>
-                    <SelectTrigger className="pl-9 relative">
-                      <Wallet className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                      <SelectValue placeholder="Select payment method" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {paymentMethods.map((method) => (
-                        <SelectItem key={method} value={method.toLowerCase()}>
-                          {method}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+              <h3 className="font-semibold text-gray-900 text-lg">
+                Payment Information
+              </h3>
 
+              <div className="gap-4 grid md:grid-cols-2">
                 <div className="space-y-2">
                   <Label htmlFor="bankName">Bank Name</Label>
                   <div className="relative">
-                    <Landmark className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                    <Input 
-                      id="bankName"
-                      placeholder="Enter your bank name"
-                      className="pl-9"
+                    <Combobox
+                      options={bankOptions}
                       value={formData.bankName}
-                      onChange={(e) => setFormData(prev => ({ ...prev, bankName: e.target.value }))}
-                      required
+                      handleSelect={handleBankSelect}
+                      message="Select your bank"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="accountName">Account Name</Label>
-                  <Input 
+                  <Input
                     id="accountName"
                     placeholder="As shown on your bank account"
                     value={formData.accountName}
-                    onChange={(e) => setFormData(prev => ({ ...prev, accountName: e.target.value }))}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        accountName: e.target.value,
+                      }))
+                    }
                     required
                   />
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="accountNumber">Account Number</Label>
-                  <Input 
+                  <Input
                     id="accountNumber"
                     placeholder="10-digit account number"
                     maxLength={10}
                     value={formData.accountNumber}
-                    onChange={(e) => setFormData(prev => ({ ...prev, accountNumber: e.target.value }))}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        accountNumber: e.target.value,
+                      }))
+                    }
                     required
                   />
                 </div>
@@ -300,17 +505,33 @@ export function MarketerSignupDialog({ open, onOpenChange }) {
 
             {/* Experience */}
             <div className="space-y-2">
-              <Label htmlFor="experience">Marketing Experience (Optional)</Label>
-              <Textarea 
-                id="experience"
+              <Label htmlFor="marketingExperience">
+                Marketing Experience (Optional)
+              </Label>
+              <Textarea
+                id="marketingExperience"
                 placeholder="Brief description of your marketing experience or links to past work..."
                 className="h-24"
+                value={formData.marketingExperience}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    marketingExperience: e.target.value,
+                  }))
+                }
               />
             </div>
 
             {/* Terms and Conditions */}
             <div className="flex items-center space-x-2">
-              <Checkbox id="terms" required />
+              <Checkbox
+                id="terms"
+                checked={formData.agreeToTerms}
+                onCheckedChange={(checked) =>
+                  setFormData((prev) => ({ ...prev, agreeToTerms: checked }))
+                }
+                required
+              />
               <Label htmlFor="terms" className="text-sm">
                 I agree to the{" "}
                 <a href="/terms" className="text-Primary hover:underline">
@@ -319,9 +540,32 @@ export function MarketerSignupDialog({ open, onOpenChange }) {
               </Label>
             </div>
 
+            {/* Auto-fill from profile button - show only if user is logged in */}
+            {userProfile && (
+              <Button
+                type="button"
+                variant="outline"
+                className="mb-4"
+                onClick={prefillFromUserProfile}
+              >
+                Auto-fill from my profile
+              </Button>
+            )}
+
             {/* Submit Button */}
-            <Button type="submit" className="w-full bg-Primary hover:bg-Primary/90">
-              Submit Application
+            <Button
+              type="submit"
+              className="bg-Primary hover:bg-Primary/90 w-full"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 w-4 h-4 animate-spin" />
+                  Submitting...
+                </>
+              ) : (
+                "Submit Application"
+              )}
             </Button>
           </form>
         </DialogContent>
@@ -331,18 +575,20 @@ export function MarketerSignupDialog({ open, onOpenChange }) {
       <Dialog open={showSuccess} onOpenChange={setShowSuccess}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <div className="mx-auto w-20 h-20 bg-orange/10 rounded-full flex items-center justify-center mb-4">
-              <Handshake className="h-12 w-12 text-orange" />
+            <div className="flex justify-center items-center bg-orange/10 mx-auto mb-4 rounded-full w-20 h-20">
+              <Handshake className="w-12 h-12 text-orange" />
             </div>
-            <DialogTitle className="text-2xl font-bold text-center text-Primary">
+            <DialogTitle className="font-bold text-Primary text-2xl text-center">
               Welcome to 9jaMarkets!
             </DialogTitle>
             <DialogDescription className="text-center">
-              <p className="text-lg text-gray-700 mt-2">
+              <p className="mt-2 text-gray-700 text-lg">
                 Your application has been received successfully!
               </p>
-              <div className="mt-4 space-y-2 text-sm text-gray-600 text-left">
-                <p>• Our team will review your application within 24-48 hours</p>
+              <div className="space-y-2 mt-4 text-gray-600 text-sm text-left">
+                <p>
+                  • Our team will review your application within 24-48 hours
+                </p>
                 <p>• You&apos;ll receive an email with your account details</p>
                 <p>• Get ready to start earning with 9jaMarkets!</p>
               </div>
@@ -351,7 +597,7 @@ export function MarketerSignupDialog({ open, onOpenChange }) {
           <DialogFooter className="sm:justify-center">
             <Button
               onClick={() => setShowSuccess(false)}
-              className="bg-Primary hover:bg-Primary/90 text-white px-8"
+              className="bg-Primary hover:bg-Primary/90 px-8 text-white"
             >
               Start Your Journey
             </Button>
@@ -364,7 +610,7 @@ export function MarketerSignupDialog({ open, onOpenChange }) {
 
 MarketerSignupDialog.propTypes = {
   open: PropTypes.bool.isRequired,
-  onOpenChange: PropTypes.func.isRequired
+  onOpenChange: PropTypes.func.isRequired,
 };
 
 // Main Marketer component
@@ -372,30 +618,41 @@ export default function Marketer() {
   const [showSignupDialog, setShowSignupDialog] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-Primary/10 to-transparent">
+    <div className="bg-gradient-to-b from-Primary/10 to-transparent min-h-screen">
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-16 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold text-Primary mb-6">
+      <section className="mx-auto px-4 py-16 text-center container">
+        <h1 className="mb-6 font-bold text-Primary text-4xl md:text-5xl">
           Become a 9jaMarkets Marketer
         </h1>
-        <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-          Join our growing community of marketers and earn by promoting products from various markets.
+        <p className="mx-auto mb-8 max-w-2xl text-gray-600 text-xl">
+          Join our growing community of marketers and earn by promoting products
+          from various markets.
         </p>
-        <Button 
+        <div className="bg-Primary/10 mx-auto mb-8 p-4 rounded-md max-w-2xl">
+          <p className="flex items-center text-gray-700 text-sm">
+            <InfoIcon className="flex-shrink-0 mr-2 w-5 h-5 text-Primary" />
+            <span>
+              <strong>Pro Tip:</strong> When signing up, use an email address
+              you can create a 9jaMarket account with. This will allow you to
+              track your marketer application status in your profile dashboard.
+            </span>
+          </p>
+        </div>
+        <Button
           onClick={() => setShowSignupDialog(true)}
-          className="bg-Primary hover:bg-Primary/90 text-white px-8 py-6 rounded-full text-lg"
+          className="bg-Primary hover:bg-Primary/90 px-8 py-6 rounded-full text-white text-lg"
         >
           Start Earning Today
         </Button>
       </section>
 
       {/* Features Section */}
-      <section className="container mx-auto px-4 py-16">
+      <section className="mx-auto px-4 py-16 container">
         {/* ... other content ... */}
-        <div className="text-center mt-12">
-          <Button 
+        <div className="mt-12 text-center">
+          <Button
             onClick={() => setShowSignupDialog(true)}
-            className="bg-orange hover:bg-orange/90 text-white px-8 py-6 rounded-full text-lg"
+            className="bg-orange hover:bg-orange/90 px-8 py-6 rounded-full text-white text-lg"
           >
             Signup as a Marketer
           </Button>
@@ -403,10 +660,10 @@ export default function Marketer() {
       </section>
 
       {/* Signup Dialog */}
-      <MarketerSignupDialog 
-        open={showSignupDialog} 
+      <MarketerSignupDialog
+        open={showSignupDialog}
         onOpenChange={setShowSignupDialog}
       />
     </div>
   );
-} 
+}

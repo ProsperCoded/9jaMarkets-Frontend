@@ -8,11 +8,7 @@ import {
   Building2,
   BadgePercent,
 } from "lucide-react";
-import {
-  getAllStatsApi,
-  getTotalProductsCountApi,
-  getTotalAdsCountApi,
-} from "@/lib/api/statsApi";
+import { getAllStatsApi } from "@/lib/api/statsApi";
 import {
   MARKETS_DATA_CONTEXT,
   MALLS_DATA_CONTEXT,
@@ -29,8 +25,6 @@ const AdminDashboard = () => {
       totalRevenue: 0,
     },
   });
-  const [productsCount, setProductsCount] = useState(0);
-  const [adsCount, setAdsCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const { marketsData } = useContext(MARKETS_DATA_CONTEXT);
   const { mallsData } = useContext(MALLS_DATA_CONTEXT);
@@ -42,28 +36,12 @@ const AdminDashboard = () => {
         setLoading(true);
 
         // Fetch all stats in parallel
-        const [statsData, productsData, adsData] = await Promise.all([
-          getAllStatsApi((error) =>
-            messageApi.error(error || "Failed to fetch statistics")
-          ),
-          getTotalProductsCountApi((error) =>
-            messageApi.error(error || "Failed to fetch products count")
-          ),
-          getTotalAdsCountApi((error) =>
-            messageApi.error(error || "Failed to fetch ads count")
-          ),
-        ]);
+        const statsData = await getAllStatsApi((error) =>
+          messageApi.error(error || "Failed to fetch statistics")
+        );
 
         if (statsData) {
           setStats(statsData);
-        }
-
-        if (productsData) {
-          setProductsCount(productsData.totalProducts);
-        }
-
-        if (adsData) {
-          setAdsCount(adsData.totalAds);
         }
       } catch (error) {
         console.error("Error fetching dashboard data:", error);
@@ -90,6 +68,13 @@ const AdminDashboard = () => {
       value: loading
         ? "Loading..."
         : stats.totalMerchants?.toLocaleString() || "0",
+      icon: <Users className="w-7 h-7" />,
+    },
+    {
+      title: "Total Marketers(verified)",
+      value: loading
+        ? "Loading..."
+        : stats.totalMarketers?.toLocaleString() || "0",
       icon: <Users className="w-7 h-7" />,
     },
     {
@@ -129,12 +114,14 @@ const AdminDashboard = () => {
     },
     {
       title: "Total Products",
-      value: loading ? "Loading..." : productsCount.toLocaleString() || "0",
+      value: loading
+        ? "Loading..."
+        : stats.totalProducts?.toLocaleString() || "0",
       icon: <ShoppingBag className="w-7 h-7" />,
     },
     {
       title: "Total Ads",
-      value: loading ? "Loading..." : adsCount.toLocaleString() || "0",
+      value: loading ? "Loading..." : stats.totalAds?.toLocaleString() || "0",
       icon: <BadgePercent className="w-7 h-7" />,
     },
   ];

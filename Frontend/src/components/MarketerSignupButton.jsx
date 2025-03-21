@@ -1,28 +1,23 @@
-import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState } from "react";
+import PropTypes from "prop-types";
 import { Button } from "./ui/button";
-import { MarketerSignupDialog } from './Marketer';
+import { MarketerSignupDialog } from "./Marketer";
 
-export function MarketerSignupButton({ className, children }) {
-  const [showDialog, setShowDialog] = useState(false);
+export function MarketerSignupButton({ children, className }) {
+  const [open, setOpen] = useState(false);
 
   return (
     <>
-      <Button 
-        onClick={() => setShowDialog(true)} 
-        className={className}
-      >
+      <Button className={className} onClick={() => setOpen(true)}>
         {children}
       </Button>
-      <MarketerSignupDialog 
-        open={showDialog} 
-        onOpenChange={setShowDialog}
-      />
+
+      <MarketerSignupDialog open={open} onOpenChange={setOpen} />
     </>
   );
 }
 
 MarketerSignupButton.propTypes = {
+  children: PropTypes.node.isRequired,
   className: PropTypes.string,
-  children: PropTypes.node.isRequired
-}; 
+};

@@ -6,7 +6,8 @@ const FormData = require("form-data");
 const MALLS = require("./Malls.cjs");
 const path = require("path");
 const apiUrl =
-  "https://9ja-market-backend-production.up.railway.app/api/v1/market";
+  // "https://9ja-market-backend-production.up.railway.app/api/v1/market";
+  "http://localhost:3100/api/v1/market";
 
 const defaultCity = "Ibadan";
 const defaultAddress = "located in Nigeria";
