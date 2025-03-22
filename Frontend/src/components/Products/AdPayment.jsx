@@ -25,7 +25,7 @@ import {
   activateFreeAd,
 } from "@/lib/api/adApi";
 import Paystack from "@paystack/inline-js";
-import LoadingOverlay from "../ui/LoadingOverlay";
+import { LoadingOverlay } from "../ui/LoadingOverlay";
 
 const paymentMethods = [
   { id: "card", name: "Pay with Paystack", icon: InterswitchLogo },

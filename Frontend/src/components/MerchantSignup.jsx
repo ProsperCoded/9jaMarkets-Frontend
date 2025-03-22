@@ -1,6 +1,6 @@
 import React, { useContext, useState, useRef } from "react";
 import logo from "../assets/Logo.svg";
-import { Eye, EyeOff, Check, X } from "lucide-react";
+import { Eye, EyeOff, Check, X, HelpCircle } from "lucide-react";
 import {
   MARKETS_DATA_CONTEXT,
   MESSAGE_API_CONTEXT,
@@ -34,6 +34,9 @@ const MerchantSignup = () => {
   const [merchantCategory, setMerchantCategories] = useState([]);
   const [marketName, setMarketName] = useState("");
   const [mallName, setMallName] = useState("");
+  const [referrerCode, setReferrerCode] = useState("");
+  const [referrerUsername, setReferrerUsername] = useState("");
+  const [showReferrerTooltip, setShowReferrerTooltip] = useState(false);
   const { marketsData } = useContext(MARKETS_DATA_CONTEXT);
   const { mallsData } = useContext(MALLS_DATA_CONTEXT);
   const availableMarkets = marketsData.map((market) => market.name);
@@ -109,6 +112,12 @@ const MerchantSignup = () => {
       return;
     }
 
+    // Don't allow both referrer code and username to be provided
+    if (referrerCode && referrerUsername) {
+      setError("Please provide either a referrer code or username, not both");
+      return;
+    }
+
     const formData = {
       email,
       phoneNumbers: [phone1, phone2],
@@ -119,6 +128,13 @@ const MerchantSignup = () => {
       marketName: marketName || mallName,
       addresses,
     };
+
+    // Add referrer information if provided
+    if (referrerCode) {
+      formData.referrerCode = referrerCode;
+    } else if (referrerUsername) {
+      formData.referrerUsername = referrerUsername;
+    }
 
     const signUp = await signupMerchantApi(formData, (error) => {
       console.error(error);
@@ -233,6 +249,67 @@ const MerchantSignup = () => {
                     className={inputClassName}
                     placeholder="Enter your brand name"
                     required
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Referral Information */}
+            <div className="space-y-6">
+              <div className="flex items-center pb-2 border-Primary border-b">
+                <h3 className="font-medium text-gray-900 text-lg">
+                  Referral Information
+                </h3>
+                <button
+                  type="button"
+                  onClick={() => setShowReferrerTooltip(!showReferrerTooltip)}
+                  className="ml-2 text-gray-400 hover:text-Primary"
+                >
+                  <HelpCircle className="w-5 h-5" />
+                </button>
+              </div>
+
+              {showReferrerTooltip && (
+                <div className="bg-blue-50 p-4 rounded-md text-blue-800 text-sm">
+                  <p>
+                    <strong>Optional:</strong> If you were referred by a
+                    marketer, you can enter either their referral code or
+                    username. You only need to provide one of these.
+                  </p>
+                </div>
+              )}
+
+              <div className="gap-6 grid grid-cols-1 sm:grid-cols-2">
+                <div>
+                  <label className="block font-medium text-gray-700 text-sm">
+                    Referrer Code (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    value={referrerCode}
+                    onChange={(e) => {
+                      setReferrerCode(e.target.value);
+                      // Clear username if code is being entered
+                      if (e.target.value) setReferrerUsername("");
+                    }}
+                    className={inputClassName}
+                    placeholder="Enter referrer code"
+                  />
+                </div>
+                <div>
+                  <label className="block font-medium text-gray-700 text-sm">
+                    Referrer Username (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    value={referrerUsername}
+                    onChange={(e) => {
+                      setReferrerUsername(e.target.value);
+                      // Clear code if username is being entered
+                      if (e.target.value) setReferrerCode("");
+                    }}
+                    className={inputClassName}
+                    placeholder="Enter referrer username"
                   />
                 </div>
               </div>

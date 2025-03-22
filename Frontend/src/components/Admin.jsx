@@ -9,6 +9,7 @@ import {
   PieChart,
   Menu,
   Bell,
+  Wallet,
 } from "lucide-react";
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { Avatar, Badge } from "antd";
@@ -48,6 +49,11 @@ const Admin = () => {
       path: "/admin/marketers",
       icon: <Users className="w-5 h-5" />,
       label: "Marketers",
+    },
+    {
+      path: "/admin/settlements",
+      icon: <Wallet className="w-5 h-5" />,
+      label: "Settlements",
     },
   ];
 

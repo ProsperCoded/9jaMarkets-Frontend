@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Loader2 } from "lucide-react";
 
-const LoadingOverlay = ({ isVisible, message }) => {
+export const LoadingOverlay = ({ isVisible, message }) => {
   if (!isVisible) return null;
 
   return (
@@ -22,5 +22,3 @@ LoadingOverlay.propTypes = {
   isVisible: PropTypes.bool.isRequired,
   message: PropTypes.string.isRequired,
 };
-
-export default LoadingOverlay;

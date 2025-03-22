@@ -30,6 +30,7 @@ import AdminDashboard from "./components/AdminDashboard";
 import AdminMarkets from "./components/AdminMarkets";
 import AdminMalls from "./components/AdminMalls";
 import AdminMarketers from "./components/AdminMarketers";
+import AdminSettlements from "./components/AdminSettlements";
 
 import { ConfigProvider } from "antd";
 import InitializeApp from "./InitializeApp";
@@ -102,6 +103,7 @@ function App() {
     "/admin/markets",
     "/admin/malls",
     "/admin/marketers",
+    "/admin/settlements",
   ];
 
   const shouldShowFooter = !hideFooterPaths.some((path) =>
@@ -161,6 +163,7 @@ function App() {
                 <Route path="create-market" element={<CreateMarket />} />
                 <Route path="malls" element={<AdminMalls />} />
                 <Route path="marketers" element={<AdminMarketers />} />
+                <Route path="settlements" element={<AdminSettlements />} />
               </Route>
 
               {/* Policy Pages */}
