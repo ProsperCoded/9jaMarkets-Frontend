@@ -22,6 +22,7 @@ import {
   CheckCircle,
   AlertOctagon,
   Users,
+  Wallet,
 } from "lucide-react";
 import {
   getAllMarketersWithEarnings,
@@ -278,7 +279,7 @@ const AdminSettlements = () => {
       dataIndex: "amount",
       key: "amount",
       render: (amount) => (
-        <span className="font-medium">{formatPrice(amount)}</span>
+        <span className="font-medium text-Primary">{formatPrice(amount)}</span>
       ),
     },
     {
@@ -296,40 +297,50 @@ const AdminSettlements = () => {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <Title level={3}>Marketer Settlements</Title>
+        <Title level={3} className="flex items-center gap-2 text-Primary">
+          <Wallet className="text-orange" size={24} />
+          <span className="bg-clip-text bg-gradient-to-r from-Primary to-orange text-transparent">
+            Marketer Settlements
+          </span>
+        </Title>
         <Button
           type="default"
-          icon={<RefreshCw size={16} />}
+          icon={<RefreshCw size={16} className="mr-1" />}
           onClick={fetchMarketers}
           loading={loading}
+          className="hover:bg-Primary/10 border-Primary hover:border-Primary text-Primary hover:text-Primary"
         >
           Refresh
         </Button>
       </div>
 
       <div className="gap-4 grid grid-cols-1 md:grid-cols-3 mb-6">
-        <div className="bg-white shadow-sm p-4 border border-gray-200 rounded-lg">
+        <div className="bg-gradient-to-br from-blue-50 to-Primary/5 shadow-md p-4 border border-blue-200 rounded-lg">
           <div className="flex items-center gap-3">
-            <div className="bg-blue-100 p-2 rounded-full">
-              <Users className="text-blue-600" size={20} />
+            <div className="bg-Primary/20 p-3 rounded-full text-Primary">
+              <Users size={24} />
             </div>
             <div>
-              <Text type="secondary">Total Marketers</Text>
-              <Title level={4} className="m-0">
+              <Text type="secondary" className="text-gray-600">
+                Total Marketers
+              </Text>
+              <Title level={3} className="m-0 text-Primary">
                 {marketers.length}
               </Title>
             </div>
           </div>
         </div>
 
-        <div className="bg-white shadow-sm p-4 border border-gray-200 rounded-lg">
+        <div className="bg-gradient-to-br from-green-50 to-Primary/5 shadow-md p-4 border border-green-200 rounded-lg">
           <div className="flex items-center gap-3">
-            <div className="bg-green-100 p-2 rounded-full">
-              <CheckCircle2 className="text-green-600" size={20} />
+            <div className="bg-green-100 p-3 rounded-full text-green-600">
+              <CheckCircle2 size={24} />
             </div>
             <div>
-              <Text type="secondary">Total Paid</Text>
-              <Title level={4} className="m-0">
+              <Text type="secondary" className="text-gray-600">
+                Total Paid
+              </Text>
+              <Title level={3} className="m-0 text-green-600">
                 {formatPrice(
                   marketers.reduce(
                     (acc, marketer) => acc + (marketer.earnings?.paid || 0),
@@ -341,14 +352,16 @@ const AdminSettlements = () => {
           </div>
         </div>
 
-        <div className="bg-white shadow-sm p-4 border border-gray-200 rounded-lg">
+        <div className="bg-gradient-to-br from-amber-50 to-orange/5 shadow-md p-4 border border-amber-200 rounded-lg">
           <div className="flex items-center gap-3">
-            <div className="bg-amber-100 p-2 rounded-full">
-              <CreditCard className="text-amber-600" size={20} />
+            <div className="bg-orange/20 p-3 rounded-full text-orange">
+              <CreditCard size={24} />
             </div>
             <div>
-              <Text type="secondary">Pending Payments</Text>
-              <Title level={4} className="m-0">
+              <Text type="secondary" className="text-gray-600">
+                Pending Payments
+              </Text>
+              <Title level={3} className="m-0 text-orange">
                 {formatPrice(
                   marketers.reduce(
                     (acc, marketer) => acc + (marketer.earnings?.unpaid || 0),
@@ -361,7 +374,7 @@ const AdminSettlements = () => {
         </div>
       </div>
 
-      <div className="bg-white shadow-sm border border-gray-200 rounded-lg">
+      <div className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden">
         <Table
           dataSource={marketers}
           columns={columns}
@@ -372,6 +385,8 @@ const AdminSettlements = () => {
             showSizeChanger: true,
             pageSizeOptions: ["10", "20", "50"],
           }}
+          rowClassName="hover:bg-Primary/5"
+          className="admin-settlements-table"
           locale={{
             emptyText: (
               <Empty
@@ -390,18 +405,18 @@ const AdminSettlements = () => {
             <Avatar
               style={{
                 backgroundColor: selectedMarketer?.verified
-                  ? "#21CA1B"
-                  : "#f56a00",
+                  ? "#236C13"
+                  : "#F8912D",
               }}
               icon={<User size={16} />}
             />
-            <span>
+            <span className="text-Primary">
               {selectedMarketer
                 ? `${selectedMarketer.firstName} ${selectedMarketer.lastName}`
                 : "Marketer Details"}
             </span>
             {selectedMarketer?.verified && (
-              <Tag color="success" className="ml-2">
+              <Tag color="green" className="ml-2">
                 Verified
               </Tag>
             )}
@@ -410,7 +425,11 @@ const AdminSettlements = () => {
         open={detailsModalVisible}
         onCancel={() => setDetailsModalVisible(false)}
         footer={[
-          <Button key="close" onClick={() => setDetailsModalVisible(false)}>
+          <Button
+            key="close"
+            onClick={() => setDetailsModalVisible(false)}
+            className="border-gray-300"
+          >
             Close
           </Button>,
           selectedMarketer &&
@@ -426,20 +445,24 @@ const AdminSettlements = () => {
                 onConfirm={() => handleMakePayment(selectedMarketer.id)}
                 okText="Yes, Confirm Payment"
                 cancelText="No"
+                okButtonProps={{
+                  className: "bg-Primary border-Primary hover:bg-Primary/90",
+                }}
               >
                 <Button
                   type="primary"
                   loading={processingPayment}
-                  className="bg-green-500 hover:bg-green-600"
+                  className="bg-green-600 hover:bg-green-700 border-green-600"
                 >
-                  Mark as Paid ($
-                  {(earningsDetails.unpaid.totalUnpaidEarnings || 0).toFixed(2)}
+                  Mark as Paid (
+                  {formatPrice(earningsDetails.unpaid.totalUnpaidEarnings || 0)}
                   )
                 </Button>
               </Popconfirm>
             ),
         ]}
         width={900}
+        className="marketer-details-modal"
       >
         {detailsLoading ? (
           <div className="flex justify-center items-center py-12">
@@ -450,10 +473,15 @@ const AdminSettlements = () => {
             {selectedMarketer && (
               <>
                 <Descriptions
-                  title="Marketer Information"
+                  title={
+                    <span className="text-Primary">Marketer Information</span>
+                  }
                   bordered
                   size="small"
                   column={{ xxl: 3, xl: 3, lg: 2, md: 2, sm: 1, xs: 1 }}
+                  labelStyle={{ backgroundColor: "rgba(35, 108, 19, 0.05)" }}
+                  contentStyle={{ backgroundColor: "white" }}
+                  className="marketer-description"
                 >
                   <Descriptions.Item label="Email">
                     {selectedMarketer.email}
@@ -488,28 +516,32 @@ const AdminSettlements = () => {
                 </Descriptions>
 
                 <div className="gap-4 grid grid-cols-1 md:grid-cols-2 mb-6">
-                  <div className="bg-white shadow-sm p-4 border border-gray-200 rounded-lg">
+                  <div className="bg-gradient-to-r from-green-50 to-Primary/5 shadow-md p-4 border border-green-200 rounded-lg">
                     <div className="flex items-center gap-3">
                       <div className="bg-green-100 p-2 rounded-full">
                         <CheckCircle className="text-green-600" size={20} />
                       </div>
                       <div>
-                        <Text type="secondary">Total Paid Earnings</Text>
-                        <Title level={4} className="m-0">
+                        <Text type="secondary" className="text-gray-600">
+                          Total Paid Earnings
+                        </Text>
+                        <Title level={3} className="m-0 text-green-600">
                           {formatPrice(earningsDetails.paid.totalPaidEarnings)}
                         </Title>
                       </div>
                     </div>
                   </div>
 
-                  <div className="bg-white shadow-sm p-4 border border-gray-200 rounded-lg">
+                  <div className="bg-gradient-to-r from-amber-50 to-orange/5 shadow-md p-4 border border-amber-200 rounded-lg">
                     <div className="flex items-center gap-3">
-                      <div className="bg-amber-100 p-2 rounded-full">
-                        <AlertOctagon className="text-amber-600" size={20} />
+                      <div className="bg-orange/20 p-2 rounded-full">
+                        <AlertOctagon className="text-orange" size={20} />
                       </div>
                       <div>
-                        <Text type="secondary">Pending Payments</Text>
-                        <Title level={4} className="m-0">
+                        <Text type="secondary" className="text-gray-600">
+                          Pending Payments
+                        </Text>
+                        <Title level={3} className="m-0 text-orange">
                           {formatPrice(
                             earningsDetails.unpaid.totalUnpaidEarnings
                           )}
@@ -519,10 +551,15 @@ const AdminSettlements = () => {
                   </div>
                 </div>
 
-                <Tabs activeKey={activeTab} onChange={setActiveTab}>
+                <Tabs
+                  activeKey={activeTab}
+                  onChange={setActiveTab}
+                  type="card"
+                  className="earnings-detail-tabs"
+                >
                   <TabPane
                     tab={
-                      <span>
+                      <span className="flex items-center gap-1">
                         <Badge status="success" />
                         Paid Earnings
                       </span>
@@ -538,6 +575,7 @@ const AdminSettlements = () => {
                         showSizeChanger: true,
                         pageSizeOptions: ["5", "10", "20"],
                       }}
+                      rowClassName="hover:bg-green-50"
                       locale={{
                         emptyText: (
                           <Empty
@@ -550,7 +588,7 @@ const AdminSettlements = () => {
                   </TabPane>
                   <TabPane
                     tab={
-                      <span>
+                      <span className="flex items-center gap-1">
                         <Badge status="warning" />
                         Unpaid Earnings
                       </span>
@@ -566,6 +604,7 @@ const AdminSettlements = () => {
                         showSizeChanger: true,
                         pageSizeOptions: ["5", "10", "20"],
                       }}
+                      rowClassName="hover:bg-amber-50"
                       locale={{
                         emptyText: (
                           <Empty
@@ -588,6 +627,45 @@ const AdminSettlements = () => {
         isVisible={processingPayment}
         message="Processing payment. Please wait..."
       />
+
+      {/* Custom styling for tables and tabs */}
+      <style jsx global>{`
+        .admin-settlements-table .ant-table-thead > tr > th {
+          background-color: rgba(35, 108, 19, 0.05);
+          color: #236c13;
+          font-weight: 500;
+        }
+
+        .earnings-detail-tabs .ant-tabs-tab.ant-tabs-tab-active {
+          background-color: #236c13;
+        }
+
+        .earnings-detail-tabs
+          .ant-tabs-tab.ant-tabs-tab-active
+          .ant-tabs-tab-btn {
+          color: white;
+        }
+
+        .earnings-detail-tabs .ant-tabs-tab:hover {
+          color: #236c13;
+        }
+
+        .earnings-detail-tabs .ant-tabs-ink-bar {
+          background-color: #236c13;
+        }
+
+        .marketer-description .ant-descriptions-item-label {
+          font-weight: 500;
+        }
+
+        .marketer-details-modal .ant-modal-header {
+          border-bottom: 1px solid rgba(35, 108, 19, 0.2);
+        }
+
+        .marketer-details-modal .ant-modal-footer {
+          border-top: 1px solid rgba(35, 108, 19, 0.2);
+        }
+      `}</style>
     </div>
   );
 };

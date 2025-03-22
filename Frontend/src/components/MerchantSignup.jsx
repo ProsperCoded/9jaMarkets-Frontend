@@ -1,6 +1,6 @@
-import React, { useContext, useState, useRef } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import logo from "../assets/Logo.svg";
-import { Eye, EyeOff, Check, X, HelpCircle } from "lucide-react";
+import { Eye, EyeOff, X, HelpCircle } from "lucide-react";
 import {
   MARKETS_DATA_CONTEXT,
   MESSAGE_API_CONTEXT,
@@ -55,7 +55,15 @@ const MerchantSignup = () => {
       country: "",
     },
   ]);
-  const modalRef = useRef(null);
+
+  // Extract referrer code from query params
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get("ref");
+    if (ref) {
+      setReferrerCode(ref);
+    }
+  }, []);
   const messageApi = useContext(MESSAGE_API_CONTEXT);
   const { setLoginOpen } = useContext(LOGIN_MODAL_CONTEXT);
 

@@ -31,6 +31,8 @@ import AdminMarkets from "./components/AdminMarkets";
 import AdminMalls from "./components/AdminMalls";
 import AdminMarketers from "./components/AdminMarketers";
 import AdminSettlements from "./components/AdminSettlements";
+import MarketerProfile from "./components/MarketerProfile";
+import MarketerReferrals from "./components/MarketerReferrals";
 
 import { ConfigProvider } from "antd";
 import InitializeApp from "./InitializeApp";
@@ -152,6 +154,13 @@ function App() {
                 <Route path="edit" element={<EditProfile />} />
                 <Route path="customers" element={<div>Customers</div>} />
                 <Route path="messages" element={<div>Vendors</div>} />
+
+                {/* New marketer routes */}
+                <Route path="marketer-profile" element={<MarketerProfile />} />
+                <Route
+                  path="marketer-referrals"
+                  element={<MarketerReferrals />}
+                />
               </Route>
 
               {/* Admin routes with Outlet */}

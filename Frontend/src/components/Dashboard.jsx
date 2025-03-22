@@ -10,6 +10,8 @@ import {
   LogOut,
   ChevronRight,
   X,
+  UserCheck,
+  DollarSign,
 } from "lucide-react";
 import {
   Link,
@@ -49,6 +51,9 @@ const Dashboard = () => {
 
   const name = userProfile.firstName || userProfile.brandName;
 
+  // Check if user is a marketer (role === "MARKETER")
+  const isMarketer = userProfile.role === "MARKETER";
+
   const menuItems =
     userProfile.userType === "merchant"
       ? [
@@ -79,6 +84,21 @@ const Dashboard = () => {
             icon: <MessageSquare className="w-5 h-5" />,
             label: "Vendors",
           },
+          // Add marketer menu items if user is a marketer
+          ...(isMarketer
+            ? [
+                {
+                  path: "/dashboard/marketer-profile",
+                  icon: <UserCheck className="w-5 h-5" />,
+                  label: "Marketer Profile",
+                },
+                {
+                  path: "/dashboard/marketer-referrals",
+                  icon: <DollarSign className="w-5 h-5" />,
+                  label: "Referrals & Earnings",
+                },
+              ]
+            : []),
         ];
 
   return (
