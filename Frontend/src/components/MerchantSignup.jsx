@@ -9,13 +9,13 @@ import {
 } from "../contexts";
 import { getMerchantProfileApi } from "../lib/api/serviceApi";
 import { loginMerchantApi, signupMerchantApi } from "../lib/api/authApi.js";
-import { storeAuth } from "../lib/util";
+import { replaceSpacesWithUnderscore, storeAuth } from "../lib/util";
 import Loading from "../componets-utils/Loading.jsx";
 import { LOGIN_MODAL_CONTEXT } from "../contexts";
 import { useNavigate } from "react-router-dom";
 import { isStrongPassword } from "../lib/util";
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "./ui/tabs";
-import { MERCHANT_CATEGORIES } from "@/config";
+import { PRODUCT_CATEGORIES } from "@/config";
 import { Combobox } from "./ui/Combobox";
 import { Badge } from "@/components/ui/badge";
 
@@ -131,7 +131,9 @@ const MerchantSignup = () => {
       phoneNumbers: [phone1, phone2],
       password,
       brandName,
-      merchantCategories: merchantCategory,
+      merchantCategories: merchantCategory.map((category) =>
+        replaceSpacesWithUnderscore(category)
+      ),
       // the backend only accepts marketName, whether mall or market
       marketName: marketName || mallName,
       addresses,
@@ -369,7 +371,7 @@ const MerchantSignup = () => {
                   {/* Simple multi-select checkboxes instead of the complex Popover */}
                   <div className="bg-white p-4 border rounded-md max-h-48 overflow-y-auto">
                     <div className="space-y-2">
-                      {MERCHANT_CATEGORIES.map((category) => (
+                      {PRODUCT_CATEGORIES.map((category) => (
                         <div key={category} className="flex items-center">
                           <input
                             type="checkbox"

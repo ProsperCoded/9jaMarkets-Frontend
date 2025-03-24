@@ -78,11 +78,17 @@ const Overview = () => {
 
       if (activeTab === "online-ads") {
         // Fetch active ads
-        const activeAdsData = await getAdsApi({}, messageApi.error);
+        const activeAdsData = await getAdsApi(
+          { merchant: userProfile.id },
+          messageApi.error
+        );
         setActiveAds(activeAdsData);
       } else if (activeTab === "all-ads") {
         // Fetch all ads
-        const allAdsData = await getAllAdsApi({}, messageApi.error);
+        const allAdsData = await getAllAdsApi(
+          { merchant: userProfile.id },
+          messageApi.error
+        );
         setAllAds(allAdsData);
       }
     } catch (error) {
