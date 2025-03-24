@@ -7,7 +7,7 @@
  */
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, Bookmark, ShieldCheck } from "lucide-react";
+import { Menu, X, Bookmark, ShieldCheck, Bell } from "lucide-react";
 import {
   BOOKMARK_CONTEXT,
   USER_PROFILE_CONTEXT,
@@ -15,6 +15,7 @@ import {
 } from "@/contexts";
 import logo from "../assets/Logo.svg";
 import { UserAvatar } from "../componets-utils/UserAvatar";
+import { Badge } from "antd";
 
 const Header2 = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -75,14 +76,12 @@ const Header2 = () => {
                   )}
                 </Link>
               )}
-              {userProfile && userProfile.role === "ADMIN" && (
-                <Link
-                  to="/admin"
-                  className="flex items-center gap-1.5 bg-P2/35 hover:bg-white px-3 py-1.5 rounded-full text-white hover:text-Primary transition-colors"
-                >
-                  <ShieldCheck className="w-5 h-5" />
-                  <span className="font-medium">Admin</span>
-                </Link>
+              {userProfile && (
+                <Badge count={3} size="small" offset={[-5, 5]}>
+                  <div className="hover:bg-P2/35 p-2 rounded-full cursor-pointer">
+                    <Bell className="w-5 h-5" />
+                  </div>
+                </Badge>
               )}
               <UserAvatar showName={true} auth={true} />
             </div>
@@ -103,13 +102,12 @@ const Header2 = () => {
                   )}
                 </Link>
               )}
-              {userProfile && userProfile.role === "ADMIN" && (
-                <Link
-                  to="/admin"
-                  className="flex items-center hover:bg-white p-2 rounded-full hover:text-Primary transition-colors"
-                >
-                  <ShieldCheck className="w-6 h-6" />
-                </Link>
+              {userProfile && (
+                <Badge count={3} size="small" offset={[-5, 5]}>
+                  <div className="hover:bg-P2/35 p-2 rounded-full cursor-pointer">
+                    <Bell className="w-5 h-5" />
+                  </div>
+                </Badge>
               )}
               <div className="flex items-center">
                 <UserAvatar showName={false} auth={true} />

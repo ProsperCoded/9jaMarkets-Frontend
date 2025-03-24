@@ -3015,13 +3015,13 @@ const MARKETS = {
     },
   ],
   Oyo: [
-    {
-      name: "Agbeni Market",
-      img: "./markets/oyo/agbeni.jpg",
-      address: "Ibadan",
-      description:
-        "A bustling wholesale market, known for provisions and household items.",
-    },
+    // {
+    //   name: "Agbeni Market",
+    //   img: "./markets/oyo/agbeni.jpg",
+    //   address: "Ibadan",
+    //   description:
+    //     "A bustling wholesale market, known for provisions and household items.",
+    // },
     {
       name: "Aleshinloye Market",
       img: "./markets/oyo/aleshinloye.jpg",

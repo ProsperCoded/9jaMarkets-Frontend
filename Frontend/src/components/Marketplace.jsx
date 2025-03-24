@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect, useMemo, useRef } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import { useErrorLogger } from "@/hooks";
 import { getMarketProducts } from "@/lib/api/marketApi";
 import {
@@ -7,14 +7,13 @@ import {
   MESSAGE_API_CONTEXT,
   USER_PROFILE_CONTEXT,
   BOOKMARK_CONTEXT,
+  MALLS_DATA_CONTEXT,
 } from "@/contexts";
 import LoadingPage from "@/componets-utils/LoadingPage";
 import NotFoundPage from "@/components/NotFoundPage";
 import {
   Search,
   SearchX,
-  Bookmark,
-  BookmarkCheck,
   HelpCircle,
   MapPin,
   Info,
@@ -70,11 +69,19 @@ const getAdBadge = (level) => {
 };
 
 const Marketplace = () => {
-  const { id: marketId } = useParams();
+  const { id } = useParams();
+  const location = useLocation();
   const [products, setProducts] = useState();
   const [searchQuery, setSearchQuery] = useState("");
   const { marketsData } = useContext(MARKETS_DATA_CONTEXT);
-  const market = marketsData.find((market) => market.id === marketId);
+  const { mallsData } = useContext(MALLS_DATA_CONTEXT);
+  
+  // Determine if we're viewing a market or mall
+  const isMall = location.pathname.includes('/malls/');
+  const venue = isMall 
+    ? mallsData.find((mall) => mall.id === id)
+    : marketsData.find((market) => market.id === id);
+
   const { userProfile } = useContext(USER_PROFILE_CONTEXT);
   const [bookmarkedProducts, setBookmarkedProducts] = useState(new Set());
   const [showDescription, setShowDescription] = useState(false);
@@ -86,13 +93,13 @@ const Marketplace = () => {
   const adViewRefs = useRef({});
   const errorLogger = useErrorLogger();
   const fetchProducts = async () => {
-    const marketProducts = await getMarketProducts(marketId, errorLogger);
-    if (!marketProducts) return;
+    const products = await getMarketProducts(id, errorLogger);
+    if (!products) return;
 
     // Enhance products with ad status
     const productsWithAdStatus = await getProductsWithAdsStatus(
-      marketProducts,
-      { market: marketId },
+      products,
+      { [isMall ? 'mall' : 'market']: id },
       errorLogger
     );
 
@@ -173,10 +180,10 @@ const Marketplace = () => {
 
     fetchProducts();
     loadBookmarks();
-  }, [marketId, userProfile]);
+  }, [id, userProfile]);
 
-  if (!market && marketsData.length > 0) return <NotFoundPage />;
-  if (!market) return <LoadingPage message={"Could not be found"} />;
+  if (!venue && (isMall ? mallsData.length > 0 : marketsData.length > 0)) return <NotFoundPage />;
+  if (!venue) return <LoadingPage message={"Could not be found"} />;
 
   return (
     <div className="bg-gray-50 pt-16 min-h-screen">
@@ -199,14 +206,14 @@ const Marketplace = () => {
       {/* Hero Section with "Not your market?" link */}
       <div className="relative w-full h-[200px] md:h-[200px]">
         <img
-          src={market.displayImage}
-          alt={market.name}
+          src={venue.displayImage}
+          alt={venue.name}
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/50"></div>
         <div className="relative flex flex-col justify-center items-center px-4 h-full text-white text-center">
           <h1 className="font-[400] text-3xl sm:text-4xl md:text-6xl lg:text-7xl uppercase leading-tight otto">
-            {market.name}
+            {venue.name}
           </h1>
         </div>
         <Link
@@ -214,7 +221,7 @@ const Marketplace = () => {
           className="right-2 bottom-2 absolute flex items-center gap-1 text-white hover:text-orange text-xs underline transition-colors"
         >
           <HelpCircle className="w-4 h-4" />
-          Not your market's picture?
+          Not your {isMall ? "mall's" : "market's"} picture?
         </Link>
       </div>
 
@@ -227,7 +234,7 @@ const Marketplace = () => {
               <div className="flex items-center gap-2">
                 <MapPin className="w-5 h-5 text-Primary" />
                 <span className="text-gray-600">
-                  {market.address}, {market.city}, {market.state} State
+                  {venue.address}, {venue.city}, {venue.state} State
                 </span>
               </div>
 
@@ -237,12 +244,12 @@ const Marketplace = () => {
                   className="flex items-center gap-2 hover:text-Primary underline transition-colors"
                 >
                   <Info className="w-5 h-5 text-Primary" />
-                  <span className="text-gray-600">About {market.name}</span>
+                  <span className="text-gray-600">About {venue.name}</span>
                 </button>
                 {showDescription && (
                   <div className="top-full right-0 z-30 absolute bg-white shadow-lg mt-2 p-4 rounded-lg w-80">
                     <p className="text-gray-600 text-sm">
-                      {market.description}
+                      {venue.description}
                     </p>
                   </div>
                 )}
@@ -251,13 +258,13 @@ const Marketplace = () => {
               <div className="flex items-center gap-2">
                 <Building2 className="w-5 h-5 text-Primary" />
                 <span className="text-gray-600">
-                  {market.isMall ? "Shopping Mall" : "Traditional Market"}
+                  {isMall ? "Shopping Mall" : "Traditional Market"}
                 </span>
               </div>
 
               <div className="flex items-center gap-2">
                 <MapPinned className="w-5 h-5 text-Primary" />
-                <span className="text-gray-600">{market.state}</span>
+                <span className="text-gray-600">{venue.state}</span>
               </div>
             </div>
           </div>
@@ -268,11 +275,11 @@ const Marketplace = () => {
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-Primary" />
                 <span className="text-gray-600 text-sm">
-                  {market.city}, {market.state}
+                  {venue.city}, {venue.state}
                 </span>
               </div>
               <span className="font-medium text-Primary text-sm">
-                {market.isMall ? "Shopping Mall" : "Traditional Market"}
+                {isMall ? "Shopping Mall" : "Traditional Market"}
               </span>
             </div>
 
@@ -291,11 +298,11 @@ const Marketplace = () => {
                   <h3 className="font-semibold text-gray-700 text-sm">
                     Address
                   </h3>
-                  <p className="text-gray-600 text-sm">{market.address}</p>
+                  <p className="text-gray-600 text-sm">{venue.address}</p>
                 </div>
                 <div className="space-y-2">
                   <h3 className="font-semibold text-gray-700 text-sm">About</h3>
-                  <p className="text-gray-600 text-sm">{market.description}</p>
+                  <p className="text-gray-600 text-sm">{venue.description}</p>
                 </div>
               </div>
             </details>

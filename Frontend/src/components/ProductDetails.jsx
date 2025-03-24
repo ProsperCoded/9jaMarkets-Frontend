@@ -194,7 +194,7 @@ const ProductDetails = () => {
 
         <div className="bg-white shadow-md p-6 rounded-lg">
           {/* Ad Status Banner (if product is advertised) */}
-          {adStatusInfo && (
+          {/* {adStatusInfo && (
             <div
               className={`mb-6 p-4 rounded-lg border ${adStatusInfo.borderColor} ${adStatusInfo.bgColor}`}
             >
@@ -222,7 +222,7 @@ const ProductDetails = () => {
                 </div>
               </div>
             </div>
-          )}
+          )} */}
 
           <div className="gap-8 grid grid-cols-1 lg:grid-cols-2">
             {/* Image Gallery */}
