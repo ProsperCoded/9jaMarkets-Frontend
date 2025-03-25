@@ -4,12 +4,12 @@ import {
   Trash2,
   AlertTriangle,
   Image as ImageIcon,
-  ChevronLeft,
-  ChevronRight,
   Search,
   X,
   Store,
   Building2,
+  LayoutGrid,
+  Table2,
 } from "lucide-react";
 import {
   Table,
@@ -32,11 +32,10 @@ import {
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
+  PaginationEllipsis,
 } from "@/components/ui/pagination";
 import { Card } from "@/components/ui/card";
 
@@ -58,7 +57,6 @@ const LocationsTable = ({
   const [filteredData, setFilteredData] = useState(data || []);
   const [viewMode, setViewMode] = useState("table"); // 'table' or 'cards'
 
-  // Update filtered data when search term or data changes
   useEffect(() => {
     if (searchTerm.trim() === "") {
       setFilteredData(data || []);
@@ -68,10 +66,9 @@ const LocationsTable = ({
       );
       setFilteredData(filtered);
     }
-    setCurrentPage(1); // Reset to first page on search
+    setCurrentPage(1);
   }, [searchTerm, data]);
 
-  // Calculate pagination
   const totalItems = filteredData.length;
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -101,7 +98,6 @@ const LocationsTable = ({
     setSearchTerm("");
   };
 
-  // Empty state component
   const EmptyState = () => (
     <div className="text-center py-12">
       {type === "market" ? (
@@ -118,7 +114,7 @@ const LocationsTable = ({
           : `Get started by creating a new ${type}`}
       </p>
       {!searchTerm && (
-        <Button onClick={onCreate} className="inline-flex items-center">
+        <Button onClick={onCreate} className="inline-flex text-white items-center">
           <Plus className="w-4 h-4 mr-2" />
           Create {type}
         </Button>
@@ -126,7 +122,6 @@ const LocationsTable = ({
     </div>
   );
 
-  // Card view component
   const CardView = () => (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {currentItems.map((item) => (
@@ -138,6 +133,9 @@ const LocationsTable = ({
               </h3>
               <p className="mt-1 text-xs text-gray-500 truncate">
                 {item.address}
+              </p>
+              <p className="mt-1 text-xs text-gray-500">
+                {item.city}, {item.state}
               </p>
             </div>
             {item.displayImage ? (
@@ -157,7 +155,7 @@ const LocationsTable = ({
               variant="destructive"
               size="sm"
               onClick={() => handleDeleteClick(item)}
-              className="text-xs"
+              className="text-xs bg-red-500 text-white hover:bg-red-600"
             >
               <Trash2 className="w-3 h-3 mr-1" />
               Delete
@@ -186,7 +184,7 @@ const LocationsTable = ({
             <Button
               variant="destructive"
               onClick={() => setDeleteAllConfirmOpen(true)}
-              className="flex-1 sm:flex-none"
+              className="flex-1 sm:flex-none bg-red-500 text-white hover:bg-red-600"
             >
               <Trash2 className="w-4 h-4 mr-2" />
               Delete All
@@ -217,18 +215,20 @@ const LocationsTable = ({
           <div className="flex items-center gap-2">
             <Button
               variant={viewMode === "table" ? "default" : "outline"}
-              size="sm"
+              size="icon"
               onClick={() => setViewMode("table")}
-              className="hidden sm:flex"
+              className="sm:flex"
             >
-              Table View
+              <Table2 className="h-4 w-4" />
+              <span className="sr-only">Table View</span>
             </Button>
             <Button
               variant={viewMode === "cards" ? "default" : "outline"}
-              size="sm"
+              size="icon"
               onClick={() => setViewMode("cards")}
             >
-              Card View
+              <LayoutGrid className="h-4 w-4" />
+              <span className="sr-only">Card View</span>
             </Button>
           </div>
         </div>
@@ -245,6 +245,7 @@ const LocationsTable = ({
                   <TableRow>
                     <TableHead>Name</TableHead>
                     <TableHead className="hidden sm:table-cell">Address</TableHead>
+                    <TableHead className="hidden sm:table-cell">City</TableHead>
                     <TableHead className="hidden sm:table-cell">State</TableHead>
                     <TableHead className="text-right">Actions</TableHead>
                   </TableRow>
@@ -272,6 +273,9 @@ const LocationsTable = ({
                         {item.address}
                       </TableCell>
                       <TableCell className="hidden sm:table-cell">
+                        {item.city}
+                      </TableCell>
+                      <TableCell className="hidden sm:table-cell">
                         {item.state}
                       </TableCell>
                       <TableCell className="text-right">
@@ -279,6 +283,7 @@ const LocationsTable = ({
                           variant="destructive"
                           size="sm"
                           onClick={() => handleDeleteClick(item)}
+                          className="bg-red-500 text-white hover:bg-red-600"
                         >
                           <Trash2 className="w-4 h-4" />
                           <span className="sr-only">Delete</span>
@@ -296,33 +301,28 @@ const LocationsTable = ({
           )}
 
           {totalPages > 1 && (
-            <div className="py-4 px-2">
+            <div className="py-4 px-2 flex justify-center">
               <Pagination>
                 <PaginationContent>
-                  <PaginationItem>
-                    <PaginationPrevious
-                      onClick={() => goToPage(currentPage - 1)}
-                      disabled={currentPage === 1}
-                    />
-                  </PaginationItem>
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                    (page) => (
-                      <PaginationItem key={page}>
-                        <PaginationLink
-                          onClick={() => goToPage(page)}
-                          isActive={currentPage === page}
-                        >
-                          {page}
-                        </PaginationLink>
-                      </PaginationItem>
-                    )
+                  <PaginationPrevious
+                    onClick={() => goToPage(currentPage - 1)}
+                    disabled={currentPage === 1}
+                  />
+                  {currentPage > 1 && (
+                    <PaginationLink onClick={() => goToPage(1)}>1</PaginationLink>
                   )}
-                  <PaginationItem>
-                    <PaginationNext
-                      onClick={() => goToPage(currentPage + 1)}
-                      disabled={currentPage === totalPages}
-                    />
-                  </PaginationItem>
+                  {currentPage > 2 && <PaginationEllipsis />}
+                  <PaginationLink isActive>{currentPage}</PaginationLink>
+                  {currentPage < totalPages - 1 && <PaginationEllipsis />}
+                  {currentPage < totalPages && (
+                    <PaginationLink onClick={() => goToPage(totalPages)}>
+                      {totalPages}
+                    </PaginationLink>
+                  )}
+                  <PaginationNext
+                    onClick={() => goToPage(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                  />
                 </PaginationContent>
               </Pagination>
             </div>
@@ -330,7 +330,6 @@ const LocationsTable = ({
         </div>
       )}
 
-      {/* Delete Confirmation Dialog */}
       <Dialog open={deleteConfirmOpen} onOpenChange={setDeleteConfirmOpen}>
         <DialogContent>
           <DialogHeader>
@@ -350,14 +349,13 @@ const LocationsTable = ({
             >
               Cancel
             </Button>
-            <Button variant="destructive" onClick={confirmDelete}>
+            <Button variant="destructive" onClick={confirmDelete} className="bg-red-500 text-white hover:bg-red-600">
               Delete
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
-      {/* Delete All Confirmation Dialog */}
       <Dialog open={deleteAllConfirmOpen} onOpenChange={setDeleteAllConfirmOpen}>
         <DialogContent>
           <DialogHeader>
@@ -377,7 +375,7 @@ const LocationsTable = ({
             >
               Cancel
             </Button>
-            <Button variant="destructive" onClick={confirmDeleteAll}>
+            <Button variant="destructive" onClick={confirmDeleteAll} className="bg-red-500 text-white hover:bg-red-600">
               Delete All
             </Button>
           </DialogFooter>
