@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Loader, Upload } from "lucide-react";
+import { ArrowLeft, Loader, Upload, ImagePlus, X } from "lucide-react";
 import {
   MESSAGE_API_CONTEXT,
   MARKETS_DATA_CONTEXT,
@@ -34,49 +34,20 @@ const LocationForm = ({ type, submitAction, returnPath }) => {
   const messageApi = useContext(MESSAGE_API_CONTEXT);
   const { marketsData, setMarketsData } = useContext(MARKETS_DATA_CONTEXT);
   const { mallsData, setMallsData } = useContext(MALLS_DATA_CONTEXT);
+  const fileInputRef = React.useRef(null);
 
   const isMall = type === "mall";
   const locationTypeName = isMall ? "Mall" : "Market";
 
-  const onFinish = async (values) => {
-    // If there's a file, add it to the values
-    if (fileList.length > 0) {
-      values.displayImage = fileList[0];
-    }
-
-    // For mall creation, set isMall to true
-    if (isMall) {
-      values.isMall = true;
-    }
-
-    setLoading(true);
-    try {
-      const createdLocation = await submitAction(values, messageApi.error);
-      if (createdLocation) {
-        // Add the new location to the appropriate context
-        if (isMall) {
-          setMallsData([...mallsData, createdLocation]);
-        } else {
-          setMarketsData([...marketsData, createdLocation]);
-        }
-        messageApi.success(`${locationTypeName} created successfully`);
-        navigate(returnPath);
-      }
-    } catch (error) {
-      messageApi.error(`Failed to create ${locationTypeName.toLowerCase()}`);
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const files = Array.from(e.dataTransfer.files);
+    handleFiles(files);
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (!file) {
-      setFileList([]);
-      setImagePreview(null);
-      return;
-    }
+  const handleFiles = (files) => {
+    const file = files[0]; // Only take the first file
+    if (!file) return;
 
     // Validate file type and size
     const isImage = file.type.startsWith("image/");
@@ -92,13 +63,55 @@ const LocationForm = ({ type, submitAction, returnPath }) => {
     }
 
     setFileList([file]);
-
-    // Generate preview for the image
     const reader = new FileReader();
     reader.onload = () => {
       setImagePreview(reader.result);
     };
     reader.readAsDataURL(file);
+  };
+
+  const handleUploadClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e) => {
+    if (e.target.files) {
+      handleFiles(Array.from(e.target.files));
+    }
+  };
+
+  const removeImage = () => {
+    setFileList([]);
+    setImagePreview(null);
+  };
+
+  const onFinish = async (values) => {
+    if (fileList.length > 0) {
+      values.displayImage = fileList[0];
+    }
+
+    if (isMall) {
+      values.isMall = true;
+    }
+
+    setLoading(true);
+    try {
+      const createdLocation = await submitAction(values, messageApi.error);
+      if (createdLocation) {
+        if (isMall) {
+          setMallsData([...mallsData, createdLocation]);
+        } else {
+          setMarketsData([...marketsData, createdLocation]);
+        }
+        messageApi.success(`${locationTypeName} created successfully`);
+        navigate(returnPath);
+      }
+    } catch (error) {
+      messageApi.error(`Failed to create ${locationTypeName.toLowerCase()}`);
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -166,18 +179,20 @@ const LocationForm = ({ type, submitAction, returnPath }) => {
                   <Label htmlFor="city">City</Label>
                   <Input
                     id="city"
-                    {...register("city")}
+                    {...register("city", { required: "City is required" })}
                     placeholder="e.g., Lagos"
-                    required
                   />
+                  {errors.city && (
+                    <p className="mt-1 text-red-500 text-sm">
+                      {errors.city.message}
+                    </p>
+                  )}
                 </div>
 
                 <div>
                   <Label htmlFor="state">State</Label>
                   <Select
-                    onValueChange={(value) => {
-                      setValue("state", value);
-                    }}
+                    onValueChange={(value) => setValue("state", value)}
                     required
                   >
                     <SelectTrigger>
@@ -191,6 +206,11 @@ const LocationForm = ({ type, submitAction, returnPath }) => {
                       ))}
                     </SelectContent>
                   </Select>
+                  {errors.state && (
+                    <p className="mt-1 text-red-500 text-sm">
+                      {errors.state.message}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -198,57 +218,81 @@ const LocationForm = ({ type, submitAction, returnPath }) => {
                 <Label htmlFor="description">Description</Label>
                 <Textarea
                   id="description"
-                  {...register("description")}
-                  rows={4}
-                  placeholder={`Provide a brief description of the ${
-                    isMall ? "mall" : "market"
+                  {...register("description", {
+                    required: "Description is required",
+                    minLength: {
+                      value: 50,
+                      message: "Description must be at least 50 characters",
+                    },
+                  })}
+                  placeholder={`Describe the ${locationTypeName.toLowerCase()} and what makes it unique...`}
+                  className={`min-h-[120px] ${
+                    errors.description ? "border-red-500" : ""
                   }`}
-                  required
                 />
+                {errors.description && (
+                  <p className="mt-1 text-red-500 text-sm">
+                    {errors.description.message}
+                  </p>
+                )}
               </div>
             </div>
 
             <div>
-              <div className="mb-4">
-                <Label htmlFor="displayImage">Display Image</Label>
-                <div className="flex justify-center mt-2 px-6 py-10 border-2 border-gray-300 border-dashed rounded-lg">
-                  <div className="text-center">
-                    <Upload className="mx-auto w-12 h-12 text-gray-400" />
-                    <div className="flex mt-4 text-gray-600 text-sm leading-6">
-                      <label
-                        htmlFor="file-upload"
-                        className="relative bg-white rounded-md font-semibold text-primary cursor-pointer"
-                      >
-                        <span>Upload an image</span>
-                        <input
-                          id="file-upload"
-                          name="file-upload"
-                          type="file"
-                          className="sr-only"
-                          onChange={handleImageChange}
-                          accept="image/*"
-                        />
-                      </label>
-                      <p className="pl-1">or drag and drop</p>
+              <div className="space-y-4">
+                <div>
+                  <Label>Display Image</Label>
+                  <p className="text-gray-500 text-sm">
+                    Add a representative image for your {locationTypeName.toLowerCase()}
+                  </p>
+                </div>
+
+                <div
+                  className={`border-2 border-dashed rounded-lg p-6 ${
+                    !imagePreview ? "border-gray-300" : "border-primary/20"
+                  }`}
+                  onDrop={handleDrop}
+                  onDragOver={(e) => e.preventDefault()}
+                >
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleFileChange}
+                    accept="image/png,image/jpeg,image/jpg"
+                    className="hidden"
+                  />
+
+                  {!imagePreview ? (
+                    <div className="text-center">
+                      <ImagePlus className="mx-auto w-12 h-12 text-gray-400" />
+                      <div className="flex justify-center items-center mt-4 text-gray-600 text-sm leading-6">
+                        <label className="relative bg-white rounded-md focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 font-semibold text-primary hover:text-primary/90 cursor-pointer focus-within:outline-none">
+                          <span onClick={handleUploadClick}>Upload image</span>
+                          <p className="pl-1">or drag and drop</p>
+                        </label>
+                      </div>
+                      <p className="text-gray-600 text-xs leading-5">
+                        PNG, JPG up to 5MB
+                      </p>
                     </div>
-                    <p className="text-gray-600 text-xs leading-5">
-                      PNG, JPG, GIF up to 5MB
-                    </p>
-                  </div>
+                  ) : (
+                    <div className="relative">
+                      <img
+                        src={imagePreview}
+                        alt="Preview"
+                        className="max-h-[300px] mx-auto rounded-lg object-cover"
+                      />
+                      <button
+                        type="button"
+                        onClick={removeImage}
+                        className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
-
-              {imagePreview && (
-                <div className="mt-4">
-                  <p className="mb-2 text-gray-500 text-sm">Image Preview:</p>
-                  <img
-                    src={imagePreview}
-                    alt={`${locationTypeName} preview`}
-                    className="border border-gray-200 rounded-lg max-w-full h-auto"
-                    style={{ maxHeight: "200px" }}
-                  />
-                </div>
-              )}
 
               <div className="bg-gray-50 mt-6 p-4 rounded-lg">
                 <h3 className="mb-2 font-medium text-lg">
@@ -289,20 +333,23 @@ const LocationForm = ({ type, submitAction, returnPath }) => {
             </div>
           </div>
 
-          <div className="flex justify-end mt-8">
+          <div className="flex justify-end space-x-4">
             <Button
+              type="button"
               variant="outline"
               onClick={() => navigate(returnPath)}
-              className="mr-4"
             >
               Cancel
             </Button>
-            <Button
-              type="submit"
-              className="bg-primary hover:bg-primary/90"
-              disabled={loading}
-            >
-              Create {locationTypeName}
+            <Button type="submit" disabled={loading}>
+              {loading ? (
+                <>
+                  <Loader className="w-4 h-4 mr-2 animate-spin" />
+                  Creating...
+                </>
+              ) : (
+                `Create ${locationTypeName}`
+              )}
             </Button>
           </div>
         </form>
