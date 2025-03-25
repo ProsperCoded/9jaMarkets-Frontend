@@ -72,7 +72,7 @@ function Header() {
           </nav>
         </div>
         <div className="hidden md:flex gap-2">
-          {userProfile && userProfile.role === "ADMIN" && (
+          {/* {userProfile && userProfile.role === "ADMIN" && (
             <Link
               to="/admin"
               className="flex items-center gap-1.5 bg-P2/35 hover:bg-white px-3 py-1.5 rounded-full text-white hover:text-Primary transition-colors"
@@ -80,7 +80,7 @@ function Header() {
               <ShieldCheck className="w-5 h-5" />
               <span className="font-medium">Admin</span>
             </Link>
-          )}
+          )} */}
           <UserAvatar showName={true} auth={true} />
         </div>
 
