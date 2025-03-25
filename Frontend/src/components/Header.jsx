@@ -72,7 +72,7 @@ function Header() {
           </nav>
         </div>
         <div className="hidden md:flex gap-2">
-          {userProfile && userProfile.role === "ADMIN" && (
+          {/* {userProfile && userProfile.role === "ADMIN" && (
             <Link
               to="/admin"
               className="flex items-center gap-1.5 bg-P2/35 hover:bg-white px-3 py-1.5 rounded-full text-white hover:text-Primary transition-colors"
@@ -80,7 +80,7 @@ function Header() {
               <ShieldCheck className="w-5 h-5" />
               <span className="font-medium">Admin</span>
             </Link>
-          )}
+          )} */}
           <UserAvatar showName={true} auth={true} />
         </div>
 
@@ -111,7 +111,7 @@ function Header() {
             className="fixed inset-0 bg-black/50 transition-opacity duration-300"
             onClick={toggleMenu}
           />
-          <div className="top-0 right-0 fixed grid grid-rows-[auto_1fr_auto] bg-black bg-opacity-20 backdrop-blur-md p-6 w-1/2 h-full overflow-y-auto text-white text-lg">
+          <div className="top-0 right-0 fixed grid grid-rows-[auto_1fr_auto] bg-black bg-opacity-20 backdrop-blur-md p-6 w-1/2 h-screen overflow-y-auto text-white text-lg">
             {/* Close Button */}
             <div className="flex justify-end">
               <button

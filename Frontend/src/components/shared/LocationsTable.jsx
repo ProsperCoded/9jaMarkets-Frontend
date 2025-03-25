@@ -4,10 +4,12 @@ import {
   Trash2,
   AlertTriangle,
   Image as ImageIcon,
-  ChevronLeft,
-  ChevronRight,
   Search,
   X,
+  Store,
+  Building2,
+  LayoutGrid,
+  Table2,
 } from "lucide-react";
 import {
   Table,
@@ -30,14 +32,14 @@ import {
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
+  PaginationEllipsis,
 } from "@/components/ui/pagination";
+import { Card } from "@/components/ui/card";
 
-const ITEMS_PER_PAGE = 20;
+const ITEMS_PER_PAGE = 10; // Reduced for better mobile view
 
 const LocationsTable = ({
   title,
@@ -53,8 +55,8 @@ const LocationsTable = ({
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState(data || []);
+  const [viewMode, setViewMode] = useState("table"); // 'table' or 'cards'
 
-  // Update filtered data when search term or data changes
   useEffect(() => {
     if (searchTerm.trim() === "") {
       setFilteredData(data || []);
@@ -64,10 +66,9 @@ const LocationsTable = ({
       );
       setFilteredData(filtered);
     }
-    setCurrentPage(1); // Reset to first page on search
+    setCurrentPage(1);
   }, [searchTerm, data]);
 
-  // Calculate pagination
   const totalItems = filteredData.length;
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -89,244 +90,258 @@ const LocationsTable = ({
     setDeleteAllConfirmOpen(false);
   };
 
-  // Handle page changes
   const goToPage = (page) => {
     setCurrentPage(Math.max(1, Math.min(page, totalPages)));
   };
 
-  // Clear search
   const handleClearSearch = () => {
     setSearchTerm("");
   };
 
-  // Generate pagination numbers
-  const getPaginationNumbers = () => {
-    const pages = [];
+  const EmptyState = () => (
+    <div className="text-center py-12">
+      {type === "market" ? (
+        <Store className="w-12 h-12 mx-auto text-gray-400 mb-4" />
+      ) : (
+        <Building2 className="w-12 h-12 mx-auto text-gray-400 mb-4" />
+      )}
+      <h3 className="text-lg font-medium text-gray-900 mb-2">
+        No {type}s found
+      </h3>
+      <p className="text-gray-500 mb-4">
+        {searchTerm
+          ? `No ${type}s match your search criteria`
+          : `Get started by creating a new ${type}`}
+      </p>
+      {!searchTerm && (
+        <Button onClick={onCreate} className="inline-flex text-white items-center">
+          <Plus className="w-4 h-4 mr-2" />
+          Create {type}
+        </Button>
+      )}
+    </div>
+  );
 
-    // Always show first page
-    pages.push(1);
-
-    // Calculate range around current page
-    let rangeStart = Math.max(2, currentPage - 1);
-    let rangeEnd = Math.min(totalPages - 1, currentPage + 1);
-
-    // Add ellipsis if there's a gap after page 1
-    if (rangeStart > 2) {
-      pages.push("ellipsis-start");
-    }
-
-    // Add pages in range
-    for (let i = rangeStart; i <= rangeEnd; i++) {
-      pages.push(i);
-    }
-
-    // Add ellipsis if there's a gap before last page
-    if (rangeEnd < totalPages - 1 && totalPages > 1) {
-      pages.push("ellipsis-end");
-    }
-
-    // Always show last page if it exists
-    if (totalPages > 1) {
-      pages.push(totalPages);
-    }
-
-    return pages;
-  };
+  const CardView = () => (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {currentItems.map((item) => (
+        <Card key={item.id} className="p-4 hover:shadow-lg transition-shadow">
+          <div className="flex items-start justify-between">
+            <div className="flex-1 min-w-0">
+              <h3 className="text-sm font-medium text-gray-900 truncate">
+                {item.name}
+              </h3>
+              <p className="mt-1 text-xs text-gray-500 truncate">
+                {item.address}
+              </p>
+              <p className="mt-1 text-xs text-gray-500">
+                {item.city}, {item.state}
+              </p>
+            </div>
+            {item.displayImage ? (
+              <img
+                src={item.displayImage}
+                alt={item.name}
+                className="w-12 h-12 rounded-lg object-cover"
+              />
+            ) : (
+              <div className="w-12 h-12 rounded-lg bg-gray-100 flex items-center justify-center">
+                <ImageIcon className="w-6 h-6 text-gray-400" />
+              </div>
+            )}
+          </div>
+          <div className="mt-4 flex justify-end">
+            <Button
+              variant="destructive"
+              size="sm"
+              onClick={() => handleDeleteClick(item)}
+              className="text-xs bg-red-500 text-white hover:bg-red-600"
+            >
+              <Trash2 className="w-3 h-3 mr-1" />
+              Delete
+            </Button>
+          </div>
+        </Card>
+      ))}
+    </div>
+  );
 
   return (
-    <div className="space-y-6 p-6">
-      <div className="flex md:flex-row flex-col md:justify-between md:items-center gap-4">
-        <h1 className="font-bold text-2xl">{title}</h1>
-        <div className="flex items-center space-x-2">
-          {onDeleteAll && (
+    <div className="space-y-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
+          <p className="text-gray-500 mt-1">
+            Manage your {type}s and their information
+          </p>
+        </div>
+        <div className="flex items-center gap-2 w-full sm:w-auto">
+          <Button onClick={onCreate} className="flex-1 sm:flex-none">
+            <Plus className="w-4 h-4 mr-2" />
+            Create {type}
+          </Button>
+          {data.length > 0 && (
             <Button
-              variant="outline"
-              className="border-red-200 text-red-500"
+              variant="destructive"
               onClick={() => setDeleteAllConfirmOpen(true)}
+              className="flex-1 sm:flex-none bg-red-500 text-white hover:bg-red-600"
             >
-              <Trash2 className="mr-2 w-4 h-4" />
+              <Trash2 className="w-4 h-4 mr-2" />
               Delete All
             </Button>
           )}
-          {onCreate && (
-            <Button onClick={onCreate}>
-              <Plus className="mr-2 w-4 h-4" />
-              Create {type === "mall" ? "Mall" : "Market"}
-            </Button>
-          )}
         </div>
       </div>
 
-      {/* Search input */}
-      <div className="relative">
-        <div className="flex items-center bg-white shadow-sm border rounded-lg overflow-hidden">
-          <div className="px-3 text-gray-400">
-            <Search className="w-5 h-5" />
+      {data.length > 0 && (
+        <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+          <div className="relative w-full sm:w-64">
+            <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-500" />
+            <Input
+              placeholder={`Search ${type}s...`}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-8 pr-8"
+            />
+            {searchTerm && (
+              <button
+                onClick={handleClearSearch}
+                className="absolute right-2 top-2.5"
+              >
+                <X className="h-4 w-4 text-gray-500" />
+              </button>
+            )}
           </div>
-          <Input
-            type="text"
-            placeholder={`Search ${
-              type === "mall" ? "malls" : "markets"
-            } by name...`}
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="flex-1 border-none focus-visible:ring-0 focus-visible:ring-offset-0"
-          />
-          {searchTerm && (
-            <button
-              onClick={handleClearSearch}
-              className="px-3 text-gray-400 hover:text-gray-600"
+          <div className="flex items-center gap-2">
+            <Button
+              variant={viewMode === "table" ? "default" : "outline"}
+              size="icon"
+              onClick={() => setViewMode("table")}
+              className="sm:flex"
             >
-              <X className="w-5 h-5" />
-            </button>
-          )}
-        </div>
-      </div>
-
-      {filteredData.length > 0 ? (
-        <>
-          <div className="border rounded-lg overflow-hidden">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Image</TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Address</TableHead>
-                  <TableHead>City</TableHead>
-                  <TableHead>State</TableHead>
-                  <TableHead>Created At</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {currentItems.map((item) => (
-                  <TableRow key={item.id}>
-                    <TableCell>
-                      {item.displayImage ? (
-                        <img
-                          src={item.displayImage}
-                          alt={item.name}
-                          className="rounded-md size-[5rem] object-cover"
-                        />
-                      ) : (
-                        <div className="flex justify-center items-center bg-gray-100 rounded-md w-12 h-12">
-                          <ImageIcon className="w-6 h-6 text-gray-400" />
-                        </div>
-                      )}
-                    </TableCell>
-                    <TableCell className="overflow-clip">
-                      <p className="font-semibold text-lg">{item.name}</p>
-                      <p className="max-w-[25vw] overflow-ellipsis overflow-hidden text-gray-800 text-nowrap">
-                        {item.description}
-                      </p>
-                    </TableCell>
-                    <TableCell>{item.address}</TableCell>
-                    <TableCell>{item.city || "—"}</TableCell>
-                    <TableCell>{item.state || "—"}</TableCell>
-                    <TableCell>
-                      {new Date(item.createdAt).toLocaleDateString()}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => handleDeleteClick(item)}
-                      >
-                        <Trash2 className="w-4 h-4 text-red-500" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+              <Table2 className="h-4 w-4" />
+              <span className="sr-only">Table View</span>
+            </Button>
+            <Button
+              variant={viewMode === "cards" ? "default" : "outline"}
+              size="icon"
+              onClick={() => setViewMode("cards")}
+            >
+              <LayoutGrid className="h-4 w-4" />
+              <span className="sr-only">Card View</span>
+            </Button>
           </div>
+        </div>
+      )}
 
-          {/* Pagination */}
+      {filteredData.length === 0 ? (
+        <EmptyState />
+      ) : (
+        <div className="bg-white rounded-lg border">
+          {viewMode === "table" ? (
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Name</TableHead>
+                    <TableHead className="hidden sm:table-cell">Address</TableHead>
+                    <TableHead className="hidden sm:table-cell">City</TableHead>
+                    <TableHead className="hidden sm:table-cell">State</TableHead>
+                    <TableHead className="text-right">Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {currentItems.map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell className="font-medium">
+                        <div className="flex items-center gap-2">
+                          {item.displayImage ? (
+                            <img
+                              src={item.displayImage}
+                              alt={item.name}
+                              className="w-8 h-8 rounded object-cover"
+                            />
+                          ) : (
+                            <div className="w-8 h-8 rounded bg-gray-100 flex items-center justify-center">
+                              <ImageIcon className="w-4 h-4 text-gray-400" />
+                            </div>
+                          )}
+                          <span className="truncate">{item.name}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="hidden sm:table-cell">
+                        {item.address}
+                      </TableCell>
+                      <TableCell className="hidden sm:table-cell">
+                        {item.city}
+                      </TableCell>
+                      <TableCell className="hidden sm:table-cell">
+                        {item.state}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => handleDeleteClick(item)}
+                          className="bg-red-500 text-white hover:bg-red-600"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                          <span className="sr-only">Delete</span>
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          ) : (
+            <div className="p-4">
+              <CardView />
+            </div>
+          )}
+
           {totalPages > 1 && (
-            <div className="flex justify-center mt-4">
+            <div className="py-4 px-2 flex justify-center">
               <Pagination>
                 <PaginationContent>
-                  <PaginationItem>
-                    <PaginationPrevious
-                      onClick={() => goToPage(currentPage - 1)}
-                      disabled={currentPage === 1}
-                      className={
-                        currentPage === 1
-                          ? "pointer-events-none opacity-50"
-                          : "cursor-pointer"
-                      }
-                    />
-                  </PaginationItem>
-
-                  {getPaginationNumbers().map((page, idx) => (
-                    <PaginationItem key={`page-${page}-${idx}`}>
-                      {page === "ellipsis-start" || page === "ellipsis-end" ? (
-                        <PaginationEllipsis />
-                      ) : (
-                        <PaginationLink
-                          isActive={page === currentPage}
-                          onClick={() => goToPage(page)}
-                          className="cursor-pointer"
-                        >
-                          {page}
-                        </PaginationLink>
-                      )}
-                    </PaginationItem>
-                  ))}
-
-                  <PaginationItem>
-                    <PaginationNext
-                      onClick={() => goToPage(currentPage + 1)}
-                      disabled={currentPage === totalPages}
-                      className={
-                        currentPage === totalPages
-                          ? "pointer-events-none opacity-50"
-                          : "cursor-pointer"
-                      }
-                    />
-                  </PaginationItem>
+                  <PaginationPrevious
+                    onClick={() => goToPage(currentPage - 1)}
+                    disabled={currentPage === 1}
+                  />
+                  {currentPage > 1 && (
+                    <PaginationLink onClick={() => goToPage(1)}>1</PaginationLink>
+                  )}
+                  {currentPage > 2 && <PaginationEllipsis />}
+                  <PaginationLink isActive>{currentPage}</PaginationLink>
+                  {currentPage < totalPages - 1 && <PaginationEllipsis />}
+                  {currentPage < totalPages && (
+                    <PaginationLink onClick={() => goToPage(totalPages)}>
+                      {totalPages}
+                    </PaginationLink>
+                  )}
+                  <PaginationNext
+                    onClick={() => goToPage(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                  />
                 </PaginationContent>
               </Pagination>
             </div>
           )}
-
-          <div className="text-gray-500 text-sm text-center">
-            Showing {startIndex + 1}-{endIndex} of {totalItems}{" "}
-            {type === "mall" ? "malls" : "markets"}
-            {searchTerm && " (filtered)"}
-          </div>
-        </>
-      ) : (
-        <div className="py-10 border rounded-lg text-center">
-          {searchTerm ? (
-            <div className="space-y-2">
-              <p className="text-gray-500">
-                No {type === "mall" ? "malls" : "markets"} found matching "
-                {searchTerm}".
-              </p>
-              <Button variant="outline" onClick={handleClearSearch} size="sm">
-                Clear Search
-              </Button>
-            </div>
-          ) : (
-            <p className="text-gray-500">
-              No {type === "mall" ? "malls" : "markets"} found. Click "Create{" "}
-              {type === "mall" ? "Mall" : "Market"}" to add one.
-            </p>
-          )}
         </div>
       )}
 
-      {/* Delete Confirmation Dialog */}
       <Dialog open={deleteConfirmOpen} onOpenChange={setDeleteConfirmOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Confirm Deletion</DialogTitle>
-            <DialogDescription>
-              Are you sure you want to delete "{selectedItem?.name}"? This
-              action cannot be undone.
-            </DialogDescription>
+            <DialogTitle className="flex items-center gap-2">
+              <AlertTriangle className="w-5 h-5 text-destructive" />
+              Confirm Deletion
+            </DialogTitle>
           </DialogHeader>
+          <DialogDescription>
+            Are you sure you want to delete {selectedItem?.name}? This action
+            cannot be undone.
+          </DialogDescription>
           <DialogFooter>
             <Button
               variant="outline"
@@ -334,30 +349,25 @@ const LocationsTable = ({
             >
               Cancel
             </Button>
-            <Button variant="destructive" onClick={confirmDelete}>
+            <Button variant="destructive" onClick={confirmDelete} className="bg-red-500 text-white hover:bg-red-600">
               Delete
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
-      {/* Delete All Confirmation Dialog */}
-      <Dialog
-        open={deleteAllConfirmOpen}
-        onOpenChange={setDeleteAllConfirmOpen}
-      >
+      <Dialog open={deleteAllConfirmOpen} onOpenChange={setDeleteAllConfirmOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle className="flex items-center">
-              <AlertTriangle className="mr-2 w-5 h-5 text-red-500" />
-              Confirm Delete All
+            <DialogTitle className="flex items-center gap-2">
+              <AlertTriangle className="w-5 h-5 text-destructive" />
+              Confirm Bulk Deletion
             </DialogTitle>
-            <DialogDescription>
-              Are you sure you want to delete ALL{" "}
-              {type === "mall" ? "malls" : "markets"}? This action CANNOT be
-              undone.
-            </DialogDescription>
           </DialogHeader>
+          <DialogDescription>
+            Are you sure you want to delete all {type}s? This action cannot be
+            undone.
+          </DialogDescription>
           <DialogFooter>
             <Button
               variant="outline"
@@ -365,7 +375,7 @@ const LocationsTable = ({
             >
               Cancel
             </Button>
-            <Button variant="destructive" onClick={confirmDeleteAll}>
+            <Button variant="destructive" onClick={confirmDeleteAll} className="bg-red-500 text-white hover:bg-red-600">
               Delete All
             </Button>
           </DialogFooter>

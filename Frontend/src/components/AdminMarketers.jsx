@@ -208,14 +208,14 @@ const AdminMarketers = () => {
         <TabsList className="mb-4">
           <TabsTrigger value="unverified" className="flex items-center gap-2">
             <ShieldAlert className="w-4 h-4" />
-            Pending Verification
+            <span className="hidden sm:inline">Pending Verification</span>
             <Badge className="bg-yellow-100 ml-1 text-yellow-800">
               {unverifiedCount}
             </Badge>
           </TabsTrigger>
           <TabsTrigger value="verified" className="flex items-center gap-2">
             <ShieldCheck className="w-4 h-4" />
-            Verified Marketers
+            <span className="hidden sm:inline">Verified Marketers</span>
             <Badge className="bg-green-100 ml-1 text-green-800">
               {verifiedCount}
             </Badge>
@@ -234,117 +234,119 @@ const AdminMarketers = () => {
                 No {tabValue} marketers found.
               </div>
             ) : (
-              <div className="bg-white border rounded-md overflow-hidden">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Marketer</TableHead>
-                      <TableHead>Username</TableHead>
-                      <TableHead>Contact</TableHead>
-                      <TableHead>Business Type</TableHead>
-                      <TableHead>ID Type</TableHead>
-                      <TableHead>Registered</TableHead>
-                      <TableHead className="text-right">Actions</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {filteredMarketers.map((marketer) => (
-                      <TableRow key={marketer.id}>
-                        <TableCell className="font-medium">
-                          {marketer.firstName} {marketer.lastName}
-                        </TableCell>
-                        <TableCell>{marketer.username}</TableCell>
-                        <TableCell>
-                          <div>{marketer.email}</div>
-                          <div className="text-gray-500 text-sm">
-                            {marketer.phoneNumber}
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          {marketer.BusinessType || "Not specified"}
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center gap-2">
-                            <div className="text-sm">
-                              {marketer.IdentityCredentialType}
+              <div className="bg-white border rounded-md overflow-x-auto">
+                <div className="min-w-[1000px]">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead className="min-w-[150px]">Marketer</TableHead>
+                        <TableHead className="min-w-[100px]">Username</TableHead>
+                        <TableHead className="min-w-[200px]">Contact</TableHead>
+                        <TableHead className="min-w-[120px]">Business Type</TableHead>
+                        <TableHead className="min-w-[120px]">ID Type</TableHead>
+                        <TableHead className="min-w-[120px]">Registered</TableHead>
+                        <TableHead className="text-right min-w-[120px]">Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {filteredMarketers.map((marketer) => (
+                        <TableRow key={marketer.id}>
+                          <TableCell className="font-medium">
+                            {marketer.firstName} {marketer.lastName}
+                          </TableCell>
+                          <TableCell>{marketer.username}</TableCell>
+                          <TableCell>
+                            <div>{marketer.email}</div>
+                            <div className="text-gray-500 text-sm">
+                              {marketer.phoneNumber}
                             </div>
-                            {marketer.IdentityCredentialImage && (
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="hover:bg-gray-100 rounded-full w-8 h-8"
-                                onClick={() =>
-                                  handleImageClick(
-                                    marketer.IdentityCredentialImage,
-                                    marketer
-                                  )
-                                }
-                              >
-                                <ImageIcon className="w-4 h-4 text-gray-600" />
-                              </Button>
-                            )}
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          {marketer.createdAt
-                            ? format(
-                                new Date(marketer.createdAt),
-                                "MMM d, yyyy"
-                              )
-                            : "N/A"}
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <div className="flex justify-end space-x-2">
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => handleViewMarketer(marketer.id)}
-                              disabled={processingId === marketer.id}
-                              title="View details"
-                            >
-                              {processingId === marketer.id ? (
-                                <Loader2 className="w-4 h-4 animate-spin" />
-                              ) : (
-                                <Eye className="w-4 h-4" />
+                          </TableCell>
+                          <TableCell>
+                            {marketer.BusinessType || "Not specified"}
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex items-center gap-2">
+                              <div className="text-sm">
+                                {marketer.IdentityCredentialType}
+                              </div>
+                              {marketer.IdentityCredentialImage && (
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="hover:bg-gray-100 rounded-full w-8 h-8"
+                                  onClick={() =>
+                                    handleImageClick(
+                                      marketer.IdentityCredentialImage,
+                                      marketer
+                                    )
+                                  }
+                                >
+                                  <ImageIcon className="w-4 h-4 text-gray-600" />
+                                </Button>
                               )}
-                            </Button>
-                            {!marketer.verified && (
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            {marketer.createdAt
+                              ? format(
+                                  new Date(marketer.createdAt),
+                                  "MMM d, yyyy"
+                                )
+                              : "N/A"}
+                          </TableCell>
+                          <TableCell className="text-right">
+                            <div className="flex justify-end space-x-2">
                               <Button
                                 variant="outline"
                                 size="sm"
-                                className="text-green-600 hover:text-green-700"
-                                onClick={() =>
-                                  handleVerifyMarketer(marketer.id)
-                                }
+                                onClick={() => handleViewMarketer(marketer.id)}
                                 disabled={processingId === marketer.id}
-                                title="Verify marketer"
+                                title="View details"
                               >
                                 {processingId === marketer.id ? (
                                   <Loader2 className="w-4 h-4 animate-spin" />
                                 ) : (
-                                  <Check className="w-4 h-4" />
+                                  <Eye className="w-4 h-4" />
                                 )}
                               </Button>
-                            )}
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              className="text-red-600 hover:text-red-700"
-                              onClick={() => {
-                                setSelectedMarketer(marketer);
-                                setDeleteDialogOpen(true);
-                              }}
-                              disabled={processingId === marketer.id}
-                              title="Delete marketer"
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </Button>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+                              {!marketer.verified && (
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="text-green-600 hover:text-green-700"
+                                  onClick={() =>
+                                    handleVerifyMarketer(marketer.id)
+                                  }
+                                  disabled={processingId === marketer.id}
+                                  title="Verify marketer"
+                                >
+                                  {processingId === marketer.id ? (
+                                    <Loader2 className="w-4 h-4 animate-spin" />
+                                  ) : (
+                                    <Check className="w-4 h-4" />
+                                  )}
+                                </Button>
+                              )}
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="text-red-600 hover:text-white hover:bg-red-600"
+                                onClick={() => {
+                                  setSelectedMarketer(marketer);
+                                  setDeleteDialogOpen(true);
+                                }}
+                                disabled={processingId === marketer.id}
+                                title="Delete marketer"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </Button>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
               </div>
             )}
           </TabsContent>

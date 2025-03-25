@@ -4,8 +4,7 @@ import {
   Building2,
   Users,
   PieChart,
-  Menu,
-  X,
+  ChevronRight,
   Wallet,
 } from "lucide-react";
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
@@ -95,9 +94,9 @@ const Admin = () => {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsMobileMenuOpen(true)}
-        className="lg:hidden top-20 left-0 fixed flex items-center bg-orange shadow-lg p-2 py-5 rounded-r-xl text-white transition-transform hover:translate-x-1 duration-300 ease-in-out transform"
+        className="lg:hidden top-1/3 left-0 fixed flex items-center bg-orange shadow-lg p-2 py-5 rounded-r-xl text-white transition-transform hover:translate-x-1 duration-300 ease-in-out transform"
       >
-        <Menu className="w-5 h-5" />
+        <ChevronRight className="w-5 h-5" />
       </button>
     </div>
   );

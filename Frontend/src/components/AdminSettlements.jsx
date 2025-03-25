@@ -296,12 +296,10 @@ const AdminSettlements = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <Title level={3} className="flex items-center gap-2 text-Primary">
-          <Wallet className="text-orange" size={24} />
-          <span className="bg-clip-text bg-gradient-to-r from-Primary to-orange text-transparent">
-            Marketer Settlements
-          </span>
+      <div className="flex flex-wrap justify-between items-center gap-4">
+        <Title level={3} className="flex items-center gap-2 text-Primary !m-0">
+          <Wallet className="text-Primary" size={24} />
+          <span>Marketer Settlements</span>
         </Title>
         <Button
           type="default"
@@ -314,33 +312,29 @@ const AdminSettlements = () => {
         </Button>
       </div>
 
-      <div className="gap-4 grid grid-cols-1 md:grid-cols-3 mb-6">
-        <div className="bg-gradient-to-br from-blue-50 to-Primary/5 shadow-md p-4 border border-blue-200 rounded-lg">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="bg-white shadow-md p-4 border border-gray-200 rounded-lg">
           <div className="flex items-center gap-3">
-            <div className="bg-Primary/20 p-3 rounded-full text-Primary">
-              <Users size={24} />
+            <div className="bg-Primary/10 p-3 rounded-full">
+              <Users size={24} className="text-Primary" />
             </div>
             <div>
-              <Text type="secondary" className="text-gray-600">
-                Total Marketers
-              </Text>
-              <Title level={3} className="m-0 text-Primary">
+              <Text type="secondary">Total Marketers</Text>
+              <Title level={3} className="!m-0 text-Primary">
                 {marketers.length}
               </Title>
             </div>
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-green-50 to-Primary/5 shadow-md p-4 border border-green-200 rounded-lg">
+        <div className="bg-white shadow-md p-4 border border-gray-200 rounded-lg">
           <div className="flex items-center gap-3">
-            <div className="bg-green-100 p-3 rounded-full text-green-600">
-              <CheckCircle2 size={24} />
+            <div className="bg-green-100 p-3 rounded-full">
+              <CheckCircle2 className="text-green-600" size={24} />
             </div>
             <div>
-              <Text type="secondary" className="text-gray-600">
-                Total Paid
-              </Text>
-              <Title level={3} className="m-0 text-green-600">
+              <Text type="secondary">Total Paid</Text>
+              <Title level={3} className="!m-0 text-green-600">
                 {formatPrice(
                   marketers.reduce(
                     (acc, marketer) => acc + (marketer.earnings?.paid || 0),
@@ -352,16 +346,14 @@ const AdminSettlements = () => {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-amber-50 to-orange/5 shadow-md p-4 border border-amber-200 rounded-lg">
+        <div className="bg-white shadow-md p-4 border border-gray-200 rounded-lg">
           <div className="flex items-center gap-3">
-            <div className="bg-orange/20 p-3 rounded-full text-orange">
-              <CreditCard size={24} />
+            <div className="bg-orange/10 p-3 rounded-full">
+              <CreditCard className="text-orange" size={24} />
             </div>
             <div>
-              <Text type="secondary" className="text-gray-600">
-                Pending Payments
-              </Text>
-              <Title level={3} className="m-0 text-orange">
+              <Text type="secondary">Pending Payments</Text>
+              <Title level={3} className="!m-0 text-orange">
                 {formatPrice(
                   marketers.reduce(
                     (acc, marketer) => acc + (marketer.earnings?.unpaid || 0),
@@ -375,27 +367,31 @@ const AdminSettlements = () => {
       </div>
 
       <div className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden">
-        <Table
-          dataSource={marketers}
-          columns={columns}
-          rowKey="id"
-          loading={loading}
-          pagination={{
-            defaultPageSize: 10,
-            showSizeChanger: true,
-            pageSizeOptions: ["10", "20", "50"],
-          }}
-          rowClassName="hover:bg-Primary/5"
-          className="admin-settlements-table"
-          locale={{
-            emptyText: (
-              <Empty
-                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                description="No marketers found"
-              />
-            ),
-          }}
-        />
+        <div className="w-full overflow-x-auto">
+          <Table
+            dataSource={marketers}
+            columns={columns}
+            rowKey="id"
+            loading={loading}
+            pagination={{
+              defaultPageSize: 10,
+              showSizeChanger: true,
+              pageSizeOptions: ["10", "20", "50"],
+              responsive: true,
+            }}
+            scroll={{ x: "max-content" }}
+            rowClassName="hover:bg-Primary/5"
+            className="admin-settlements-table"
+            locale={{
+              emptyText: (
+                <Empty
+                  image={Empty.PRESENTED_IMAGE_SIMPLE}
+                  description="No marketers found"
+                />
+              ),
+            }}
+          />
+        </div>
       </div>
 
       {/* Marketer Details Modal */}
@@ -406,7 +402,7 @@ const AdminSettlements = () => {
               style={{
                 backgroundColor: selectedMarketer?.verified
                   ? "#236C13"
-                  : "#F8912D",
+                  : "#f56a00",
               }}
               icon={<User size={16} />}
             />
@@ -416,7 +412,7 @@ const AdminSettlements = () => {
                 : "Marketer Details"}
             </span>
             {selectedMarketer?.verified && (
-              <Tag color="green" className="ml-2">
+              <Tag color="success" className="ml-2">
                 Verified
               </Tag>
             )}
@@ -515,33 +511,29 @@ const AdminSettlements = () => {
                   </Descriptions.Item>
                 </Descriptions>
 
-                <div className="gap-4 grid grid-cols-1 md:grid-cols-2 mb-6">
-                  <div className="bg-gradient-to-r from-green-50 to-Primary/5 shadow-md p-4 border border-green-200 rounded-lg">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="bg-white shadow-md p-4 border border-gray-200 rounded-lg">
                     <div className="flex items-center gap-3">
                       <div className="bg-green-100 p-2 rounded-full">
                         <CheckCircle className="text-green-600" size={20} />
                       </div>
                       <div>
-                        <Text type="secondary" className="text-gray-600">
-                          Total Paid Earnings
-                        </Text>
-                        <Title level={3} className="m-0 text-green-600">
+                        <Text type="secondary">Total Paid Earnings</Text>
+                        <Title level={3} className="!m-0 text-green-600">
                           {formatPrice(earningsDetails.paid.totalPaidEarnings)}
                         </Title>
                       </div>
                     </div>
                   </div>
 
-                  <div className="bg-gradient-to-r from-amber-50 to-orange/5 shadow-md p-4 border border-amber-200 rounded-lg">
+                  <div className="bg-white shadow-md p-4 border border-gray-200 rounded-lg">
                     <div className="flex items-center gap-3">
-                      <div className="bg-orange/20 p-2 rounded-full">
+                      <div className="bg-orange/10 p-2 rounded-full">
                         <AlertOctagon className="text-orange" size={20} />
                       </div>
                       <div>
-                        <Text type="secondary" className="text-gray-600">
-                          Pending Payments
-                        </Text>
-                        <Title level={3} className="m-0 text-orange">
+                        <Text type="secondary">Pending Payments</Text>
+                        <Title level={3} className="!m-0 text-orange">
                           {formatPrice(
                             earningsDetails.unpaid.totalUnpaidEarnings
                           )}
@@ -570,6 +562,7 @@ const AdminSettlements = () => {
                       dataSource={earningsDetails.paid.earnings}
                       columns={earnningsColumns}
                       rowKey="id"
+                      scroll={{ x: true }}
                       pagination={{
                         defaultPageSize: 5,
                         showSizeChanger: true,
@@ -599,6 +592,7 @@ const AdminSettlements = () => {
                       dataSource={earningsDetails.unpaid.earnings}
                       columns={earnningsColumns}
                       rowKey="id"
+                      scroll={{ x: true }}
                       pagination={{
                         defaultPageSize: 5,
                         showSizeChanger: true,
@@ -664,6 +658,13 @@ const AdminSettlements = () => {
 
         .marketer-details-modal .ant-modal-footer {
           border-top: 1px solid rgba(35, 108, 19, 0.2);
+        }
+
+        @media (max-width: 640px) {
+          .ant-descriptions-item-label,
+          .ant-descriptions-item-content {
+            padding: 8px !important;
+          }
         }
       `}</style>
     </div>

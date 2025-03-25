@@ -7,6 +7,9 @@ import {
   Store,
   Building2,
   BadgePercent,
+  Loader,
+  Package,
+  BadgeDollarSign,
 } from "lucide-react";
 import { getAllStatsApi } from "@/lib/api/statsApi";
 import {
@@ -14,6 +17,8 @@ import {
   MALLS_DATA_CONTEXT,
   MESSAGE_API_CONTEXT,
 } from "@/contexts";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState({
@@ -26,6 +31,7 @@ const AdminDashboard = () => {
     },
   });
   const [loading, setLoading] = useState(true);
+  const [chartPeriod, setChartPeriod] = useState("month");
   const { marketsData } = useContext(MARKETS_DATA_CONTEXT);
   const { mallsData } = useContext(MALLS_DATA_CONTEXT);
   const messageApi = useContext(MESSAGE_API_CONTEXT);
@@ -34,8 +40,6 @@ const AdminDashboard = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-
-        // Fetch all stats in parallel
         const statsData = await getAllStatsApi((error) =>
           messageApi.error(error || "Failed to fetch statistics")
         );
@@ -54,142 +58,178 @@ const AdminDashboard = () => {
     fetchData();
   }, [messageApi]);
 
-  // Prepare stats data with real values
   const statsData = [
     {
       title: "Total Customers",
-      value: loading
-        ? "Loading..."
-        : stats.totalCustomers?.toLocaleString() || "0",
+      value: loading ? "..." : stats.totalCustomers?.toLocaleString() || "0",
       icon: <Users className="w-7 h-7" />,
+      description: "Active users on the platform",
+      color: "bg-blue-500",
     },
     {
       title: "Total Merchants",
-      value: loading
-        ? "Loading..."
-        : stats.totalMerchants?.toLocaleString() || "0",
-      icon: <Users className="w-7 h-7" />,
+      value: loading ? "..." : stats.totalMerchants?.toLocaleString() || "0",
+      icon: <ShoppingBag className="w-7 h-7" />,
+      description: "Registered merchants",
+      color: "bg-green-500",
     },
     {
-      title: "Total Marketers(verified)",
-      value: loading
-        ? "Loading..."
-        : stats.totalMarketers?.toLocaleString() || "0",
-      icon: <Users className="w-7 h-7" />,
+      title: "Total Marketers",
+      value: loading ? "..." : stats.totalMarketers?.toLocaleString() || "0",
+      icon: <BadgePercent className="w-7 h-7" />,
+      description: "Verified marketers",
+      color: "bg-purple-500",
     },
     {
       title: "Total Markets",
-      value: loading
-        ? "Loading..."
-        : marketsData?.length?.toLocaleString() || "0",
+      value: loading ? "..." : marketsData?.length?.toLocaleString() || "0",
       icon: <Store className="w-7 h-7" />,
+      description: "Active markets",
+      color: "bg-orange",
     },
     {
       title: "Total Malls",
-      value: loading
-        ? "Loading..."
-        : mallsData?.length?.toLocaleString() || "0",
+      value: loading ? "..." : mallsData?.length?.toLocaleString() || "0",
       icon: <Building2 className="w-7 h-7" />,
+      description: "Active shopping malls",
+      color: "bg-pink-500",
     },
     {
-      title: "Revenue",
+      title: "Total Revenue",
       value: loading
-        ? "Loading..."
+        ? "..."
         : `₦${stats.revenue?.totalRevenue?.toLocaleString() || "0"}`,
+      icon: <DollarSign className="w-7 h-7" />,
+      description: "Platform revenue",
+      color: "bg-teal-500",
       subValues: [
         {
           label: "Monthly",
-          value: loading
-            ? "Loading..."
-            : `₦${stats.revenue?.monthRevenue?.toLocaleString() || "0"}`,
+          value: `₦${stats.revenue?.monthRevenue?.toLocaleString() || "0"}`,
         },
         {
           label: "Yearly",
-          value: loading
-            ? "Loading..."
-            : `₦${stats.revenue?.yearRevenue?.toLocaleString() || "0"}`,
+          value: `₦${stats.revenue?.yearRevenue?.toLocaleString() || "0"}`,
         },
       ],
-      icon: <DollarSign className="w-7 h-7" />,
     },
     {
       title: "Total Products",
-      value: loading
-        ? "Loading..."
-        : stats.totalProducts?.toLocaleString() || "0",
-      icon: <ShoppingBag className="w-7 h-7" />,
+      value: loading ? "..." : stats.totalProducts?.toLocaleString() || "0",
+      icon: <Package className="w-7 h-7" />,
+      description: "Products listed on platform",
+      color: "bg-Primary",
     },
     {
       title: "Total Ads",
-      value: loading ? "Loading..." : stats.totalAds?.toLocaleString() || "0",
-      icon: <BadgePercent className="w-7 h-7" />,
+      value: loading ? "..." : stats.totalAds?.toLocaleString() || "0",
+      icon: <BadgeDollarSign className="w-7 h-7" />,
+      description: "Active advertisements",
+      color: "bg-orange",
     },
   ];
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-96">
+        <Loader className="w-8 h-8 text-primary animate-spin" />
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="font-bold text-2xl">Admin Dashboard</h1>
-        <div className="flex items-center space-x-2">
-          <span className="text-gray-500 text-sm">
-            Last updated: {new Date().toLocaleString()}
-          </span>
-        </div>
+      <div>
+        <h2 className="text-2xl font-bold tracking-tight">Dashboard</h2>
+        <p className="text-muted-foreground">
+          Overview of your marketplace statistics
+        </p>
       </div>
 
-      {/* Stats Cards */}
-      <div className="gap-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {statsData.map((stat, index) => (
-          <div
-            key={index}
-            className="bg-white shadow-sm p-6 border border-gray-100 rounded-xl"
-          >
-            <div className="flex justify-between items-start">
-              <div>
-                <p className="text-gray-500 text-sm">{stat.title}</p>
-                <h3 className="mt-1 font-bold text-2xl">{stat.value}</h3>
-                {stat.subValues && (
-                  <div className="space-y-1 mt-2">
-                    {stat.subValues.map((subValue, i) => (
-                      <div key={i} className="flex items-center text-sm">
-                        <span className="mr-2 text-gray-500">
-                          {subValue.label}:
-                        </span>
-                        <span className="font-medium text-orange">
-                          {subValue.value}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                )}
+          <Card key={index} className="relative overflow-hidden">
+            <CardHeader className="pb-2">
+              <div className="flex justify-between items-start">
+                <CardTitle className="text-sm font-medium">
+                  {stat.title}
+                </CardTitle>
+                <div
+                  className={`${stat.color} p-2 rounded-lg text-white shadow-lg`}
+                >
+                  {stat.icon}
+                </div>
               </div>
-              <div className="bg-orange/10 p-3 rounded-lg text-orange">
-                {stat.icon}
-              </div>
-            </div>
-          </div>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{stat.value}</div>
+              <p className="text-xs text-muted-foreground mt-1">
+                {stat.description}
+              </p>
+              {stat.subValues && (
+                <div className="mt-4 space-y-2">
+                  {stat.subValues.map((subValue, idx) => (
+                    <div
+                      key={idx}
+                      className="flex justify-between items-center text-sm"
+                    >
+                      <span className="text-muted-foreground">
+                        {subValue.label}
+                      </span>
+                      <span className="font-medium">{subValue.value}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
         ))}
       </div>
 
       {/* Charts and Analytics */}
-      <div className="gap-6 grid grid-cols-1 lg:grid-cols-2">
-        {/* Chart Placeholder */}
-        <div className="bg-white shadow-sm p-6 border border-gray-100 rounded-xl">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="font-semibold text-lg">Revenue Overview</h2>
-            <select className="p-1 border rounded-md text-sm">
-              <option>This Month</option>
-              <option>Last Month</option>
-              <option>This Year</option>
-            </select>
-          </div>
-          <div className="flex justify-center items-center bg-gray-50 rounded-lg h-64">
-            <div className="text-center">
-              <BarChart3 className="mx-auto mb-2 w-12 h-12 text-gray-300" />
-              <p className="text-gray-500">Chart will be displayed here</p>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <div className="flex justify-between items-center">
+              <CardTitle>Revenue Overview</CardTitle>
+              <Select
+                value={chartPeriod}
+                onValueChange={setChartPeriod}
+              >
+                <SelectTrigger className="w-[140px]">
+                  <SelectValue placeholder="Select period" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="month">This Month</SelectItem>
+                  <SelectItem value="lastMonth">Last Month</SelectItem>
+                  <SelectItem value="year">This Year</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
-          </div>
-        </div>
+          </CardHeader>
+          <CardContent>
+            <div className="flex justify-center items-center bg-gray-50 rounded-lg h-64">
+              <div className="text-center">
+                <BarChart3 className="mx-auto mb-2 w-12 h-12 text-Primary opacity-20" />
+                <p className="text-muted-foreground">Revenue chart coming soon</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Recent Activity</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex justify-center items-center bg-gray-50 rounded-lg h-64">
+              <div className="text-center">
+                <BarChart3 className="mx-auto mb-2 w-12 h-12 text-orange opacity-20" />
+                <p className="text-muted-foreground">Activity chart coming soon</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

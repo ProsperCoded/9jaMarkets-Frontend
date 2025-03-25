@@ -61,14 +61,14 @@ const Header2 = () => {
 
           <div className="flex items-center space-x-4 md:space-x-6">
             {/* Desktop Icons */}
-            <div className="hidden md:flex space-x-4">
+            <div className="hidden md:flex items-center space-x-4">
               {userProfile && userProfile.userType === "customer" && (
                 <Link
                   to={userProfile ? "/bookmark" : "#"}
                   onClick={handleAuthClick}
-                  className="relative flex items-center bg-P2/35 p-2 rounded-full transition-colors"
+                  className="relative flex items-center p-2 hover:bg-P2/35 rounded-full transition-colors"
                 >
-                  <Bookmark className="w-6 h-6" />
+                  <Bookmark className="w-5 h-5 text-white" />
                   {bookmarkCount > 0 && (
                     <span className="-top-1 -right-1 absolute flex justify-center items-center bg-orange px-1 rounded-full min-w-[18px] h-[18px] text-white text-xs">
                       {bookmarkCount}
@@ -76,10 +76,10 @@ const Header2 = () => {
                   )}
                 </Link>
               )}
-              {userProfile && (
+              {userProfile && userProfile.role === "ADMIN" && (
                 <Badge count={3} size="small" offset={[-5, 5]}>
                   <div className="hover:bg-P2/35 p-2 rounded-full cursor-pointer">
-                    <Bell className="w-5 h-5" />
+                    <Bell className="w-5 h-5 text-white" />
                   </div>
                 </Badge>
               )}
@@ -87,25 +87,25 @@ const Header2 = () => {
             </div>
 
             {/* Mobile Avatar and Menu */}
-            <div className="md:hidden flex items-center gap-4">
+            <div className="md:hidden flex items-center space-x-6">
               {userProfile && userProfile.userType === "customer" && (
                 <Link
                   to={userProfile ? "/bookmark" : "#"}
                   onClick={handleAuthClick}
-                  className="relative flex items-center hover:bg-white p-2 rounded-full hover:text-Primary transition-colors"
+                  className="relative flex items-center p-2 hover:bg-white/10 rounded-full transition-colors"
                 >
-                  <Bookmark className="w-6 h-6" />
+                  <Bookmark className="w-5 h-5 text-white" />
                   {bookmarkCount > 0 && (
-                    <span className="top-1 right-1 absolute flex justify-center items-center bg-orange px-1 rounded-full min-w-[18px] h-[18px] text-white text-xs">
+                    <span className="-top-1 -right-1 absolute flex justify-center items-center bg-orange px-1 rounded-full min-w-[18px] h-[18px] text-white text-xs">
                       {bookmarkCount}
                     </span>
                   )}
                 </Link>
               )}
-              {userProfile && (
+              {userProfile && userProfile.role === "ADMIN" && (
                 <Badge count={3} size="small" offset={[-5, 5]}>
                   <div className="hover:bg-P2/35 p-2 rounded-full cursor-pointer">
-                    <Bell className="w-5 h-5" />
+                    <Bell className="w-5 h-5 text-white" />
                   </div>
                 </Badge>
               )}
