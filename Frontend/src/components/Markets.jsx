@@ -206,17 +206,18 @@ const MarketPage = () => {
                 {searchTerm && (
                   <button
                     onClick={() => setSearchTerm("")}
-                    className="top-1/2 right-10 absolute hover:bg-gray-100 p-1 rounded-full text-gray-400 hover:text-gray-600 transition-all -translate-y-1/2"
+                    className="top-1/2 right-2 absolute hover:bg-gray-100 p-1 rounded-full text-gray-400 hover:text-gray-600 transition-all -translate-y-1/2"
                     aria-label="Clear search"
                   >
                     <X size={16} />
                   </button>
                 )}
 
-                {/* State indicator on the right */}
+                {/* Not needed */}
+                {/* State indicator on the right
                 <div className="top-1/2 right-3 absolute bg-Primary/10 px-2 py-1 rounded-full font-medium text-Primary text-xs -translate-y-1/2">
                   {selectedState}
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

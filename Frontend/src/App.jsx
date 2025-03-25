@@ -129,6 +129,7 @@ function App() {
               <Route path="/markets" element={<MarketPage />} />
               <Route path="/markets/:id" element={<Marketplace />} />
               <Route path="/malls" element={<MallPage />} />
+              <Route path="/malls/:id" element={<Marketplace />} />
               <Route path="/merchant-signup" element={<MerchantSignup />} />
               <Route path="/billing" element={<BillingPage />} />
               <Route path="/forget-password" element={<ForgetPassword />} />

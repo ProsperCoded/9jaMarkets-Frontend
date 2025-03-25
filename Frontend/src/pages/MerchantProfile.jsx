@@ -107,12 +107,13 @@ const MerchantProfile = () => {
         <div className="bg-white shadow-md mb-8 p-4 sm:p-6 lg:p-8 rounded-2xl border border-gray-100 transform transition-all duration-300 hover:shadow-xl">
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-8">
             {/* Merchant Logo/Image */}
-            <div className="flex-shrink-0 rounded-2xl w-28 sm:w-32 lg:w-40 h-28 sm:h-32 lg:h-40 overflow-hidden border-4 border-Primary/10 shadow-md mx-auto sm:mx-0">
-              <img
+            <div className="flex-shrink-0 rounded-2xl w-28 sm:w-32 lg:w-40 h-28 sm:h-32 lg:h-40 overflow-hidden border-4 border-Primary/10 shadow-md mx-auto flex items-center justify-center">
+              {/* <img
                 src={merchant.logo || "/merchant.png"}
                 alt={merchant.brandName}
                 className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
-              />
+              /> */}
+              <Store className="w-16 h-16 text-Primary/30" />
             </div>
 
             {/* Merchant Info */}
@@ -142,7 +143,8 @@ const MerchantProfile = () => {
                   <Package className="w-4 h-4 sm:w-5 sm:h-5 text-Primary" />
                   <span className="font-medium">{products.length} Products</span>
                 </div>
-                <div className="flex items-center gap-2 bg-yellow-50 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full">
+                {/* TODO: Implement rating and merchant creation date */}
+                {/* <div className="flex items-center gap-2 bg-yellow-50 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full">
                   <Star fill="orange" className="w-4 h-4 sm:w-5 sm:h-5 text-orange" />
                   <span className="font-medium">4.5 Rating</span>
                 </div>
@@ -151,7 +153,7 @@ const MerchantProfile = () => {
                   <span className="font-medium">
                     Member since {new Date(merchant.createdAt).getFullYear()}
                   </span>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

@@ -3,29 +3,19 @@ import {
   Store,
   Building2,
   Users,
-  LogOut,
-  ChevronRight,
-  X,
   PieChart,
   Menu,
-  Bell,
+  X,
   Wallet,
 } from "lucide-react";
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
-import { Avatar, Badge } from "antd";
-import {
-  LOGOUT_MODAL_CONTEXT,
-  USER_PROFILE_CONTEXT,
-  MESSAGE_API_CONTEXT,
-} from "@/contexts";
+import { USER_PROFILE_CONTEXT, MESSAGE_API_CONTEXT } from "@/contexts";
 
 const Admin = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { setLogoutOpen } = useContext(LOGOUT_MODAL_CONTEXT);
   const { userProfile } = useContext(USER_PROFILE_CONTEXT);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
   const messageApi = useContext(MESSAGE_API_CONTEXT);
 
   // Admin navigation items
@@ -61,15 +51,11 @@ const Admin = () => {
     messageApi.error("You are not authorized to view this page");
     navigate("/");
   }
+
   return (
     <div className="flex bg-gray-50 min-h-screen">
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:block top-0 left-0 fixed bg-white px-4 pt-6 border-gray-200 border-r w-64 h-screen">
-        <div className="flex items-center mb-8 px-2">
-          <div className="font-bold text-orange text-2xl">
-            9ja<span className="text-green-600">Markets</span>
-          </div>
-        </div>
+      <aside className="hidden lg:block top-14 left-0 fixed bg-white px-4 pt-6 border-gray-200 border-r w-64 h-[calc(100vh-3.5rem)]">
         <SidebarContent
           location={location}
           menuItems={menuItems}
@@ -84,19 +70,8 @@ const Admin = () => {
             className="fixed inset-0 bg-black/50 transition-opacity duration-300 ease-in-out"
             onClick={() => setIsMobileMenuOpen(false)}
           />
-          <aside className="top-0 left-0 fixed bg-white shadow-lg w-64 h-screen transition-transform duration-300 ease-out transform">
+          <aside className="top-14 left-0 fixed bg-white shadow-lg w-64 h-[calc(100vh-3.5rem)] transition-transform duration-300 ease-out transform">
             <div className="px-4 py-6">
-              <div className="flex justify-between items-center mb-8">
-                <div className="font-bold text-orange text-2xl">
-                  9ja<span className="text-green-600">Markets</span>
-                </div>
-                <button
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="hover:bg-gray-100 p-2 rounded-lg transition-colors"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
               <SidebarContent
                 location={location}
                 menuItems={menuItems}
@@ -111,51 +86,7 @@ const Admin = () => {
       )}
 
       {/* Main Content */}
-      <main className="flex-1 lg:ml-64">
-        {/* Header bar */}
-        <header className="top-0 z-10 sticky bg-white border-gray-200 border-b">
-          <div className="flex justify-between items-center p-4">
-            <div className="flex items-center">
-              <button
-                onClick={() => setIsMobileMenuOpen(true)}
-                className="lg:hidden hover:bg-gray-100 mr-4 p-2 rounded-lg transition-colors"
-              >
-                <Menu className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="flex items-center space-x-4">
-              {/* Notifications */}
-              <Badge count={3} size="small" offset={[-5, 5]}>
-                <div className="hover:bg-gray-100 p-2 rounded-full cursor-pointer">
-                  <Bell className="w-5 h-5 text-gray-600" />
-                </div>
-              </Badge>
-
-              {/* Admin info */}
-              <div className="hidden md:flex items-center space-x-3">
-                <Avatar style={{ backgroundColor: "#F8912D" }} size="default">
-                  A
-                </Avatar>
-                <div>
-                  <p className="font-medium text-sm">Admin User</p>
-                  <p className="text-gray-500 text-xs">Administrator</p>
-                </div>
-              </div>
-
-              {/* Logout button */}
-              <button
-                onClick={() => setLogoutOpen(true)}
-                className="flex items-center space-x-1 bg-red-50 hover:bg-red-100 px-3 py-2 rounded-lg text-red-600 transition-colors"
-              >
-                <LogOut className="w-4 h-4" />
-                <span className="hidden md:inline">Logout</span>
-              </button>
-            </div>
-          </div>
-        </header>
-
-        {/* Content area */}
+      <main className="flex-1 lg:ml-64 pt-4">
         <div className="p-6">
           <Outlet />
         </div>
@@ -164,9 +95,9 @@ const Admin = () => {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsMobileMenuOpen(true)}
-        className="lg:hidden top-1/3 left-0 fixed flex items-center bg-orange shadow-lg p-2 py-5 rounded-r-xl text-white transition-transform hover:translate-x-1 duration-300 ease-in-out transform"
+        className="lg:hidden top-20 left-0 fixed flex items-center bg-orange shadow-lg p-2 py-5 rounded-r-xl text-white transition-transform hover:translate-x-1 duration-300 ease-in-out transform"
       >
-        <ChevronRight className="w-5 h-5" />
+        <Menu className="w-5 h-5" />
       </button>
     </div>
   );
