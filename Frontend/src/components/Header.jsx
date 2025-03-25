@@ -111,7 +111,7 @@ function Header() {
             className="fixed inset-0 bg-black/50 transition-opacity duration-300"
             onClick={toggleMenu}
           />
-          <div className="top-0 right-0 fixed grid grid-rows-[auto_1fr_auto] bg-black bg-opacity-20 backdrop-blur-md p-6 w-1/2 h-full overflow-y-auto text-white text-lg">
+          <div className="top-0 right-0 fixed grid grid-rows-[auto_1fr_auto] bg-black bg-opacity-20 backdrop-blur-md p-6 w-1/2 h-screen overflow-y-auto text-white text-lg">
             {/* Close Button */}
             <div className="flex justify-end">
               <button

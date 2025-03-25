@@ -76,7 +76,7 @@ const Header2 = () => {
                   )}
                 </Link>
               )}
-              {userProfile && (
+              {userProfile && userProfile.role === "ADMIN" && (
                 <Badge count={3} size="small" offset={[-5, 5]}>
                   <div className="hover:bg-P2/35 p-2 rounded-full cursor-pointer">
                     <Bell className="w-5 h-5 text-white" />
@@ -102,7 +102,7 @@ const Header2 = () => {
                   )}
                 </Link>
               )}
-              {userProfile && (
+              {userProfile && userProfile.role === "ADMIN" && (
                 <Badge count={3} size="small" offset={[-5, 5]}>
                   <div className="hover:bg-P2/35 p-2 rounded-full cursor-pointer">
                     <Bell className="w-5 h-5 text-white" />
