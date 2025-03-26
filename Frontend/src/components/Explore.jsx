@@ -258,10 +258,10 @@ function ExploreSection() {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-white py-12 lg:py-16 min-h-screen">
+    <div className="bg-white py-8 lg:py-12 min-h-screen">
       <div className="mx-auto px-4 max-w-6xl container">
         {/* Search Section */}
-        <div className="flex flex-col items-center space-y-6">
+        <div className="flex flex-col items-center mb-10">
           <div className="relative flex items-center w-full max-w-3xl">
             <input
               type="text"
@@ -275,51 +275,103 @@ function ExploreSection() {
               <span className="hidden md:inline ml-2">Search</span>
             </button>
           </div>
-        </div>
 
-        {/* Place Ad + Categories Section */}
-        <div className="mt-12">
-          {/* Mobile: Place Ad Button */}
-          <div className="md:hidden mb-6">
-            <button
-              onClick={() => navigate("/ad")}
-              className="flex justify-center items-center gap-3 bg-[#F8912D] hover:bg-[#F8912D]/90 shadow-lg p-4 rounded-xl w-full h-full text-white transition-all duration-200"
-            >
-              <FontAwesomeIcon icon={faPlus} className="text-xl" />
-              <span className="font-semibold">Place Your Ad</span>
-            </button>
-          </div>
-
-          <h2 className="mb-6 font-bold text-Primary text-xl md:text-2xl text-center">
-            Categories
-          </h2>
-
-          <div className="flex md:flex-row flex-col gap-4">
-            {/* Desktop: Place Ad Button */}
-            <div className="hidden md:block">
-              <button
-                onClick={() => navigate("/ad")}
-                className="group bg-orange hover:bg-orange/90 shadow-sm hover:shadow-md rounded-xl w-[200px] h-[200px] text-white transition-all duration-200"
-              >
-                <div className="flex flex-col justify-center items-center gap-3 p-4">
-                  <div className="flex justify-center items-center bg-white/20 rounded-full w-10 h-10 group-hover:scale-110 transition-transform duration-200">
-                    <FontAwesomeIcon icon={faPlus} className="text-xl" />
-                  </div>
-                  <div className="text-center">
-                    <div className="font-semibold">Place Your Ad</div>
-                    <p className="text-white/80 text-sm">Advertise here</p>
+          {/* Search Results */}
+          {searchQuery && (
+            <div className="w-full max-w-3xl mt-4 bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+              {/* Markets Results */}
+              {filteredMarkets.length > 0 && (
+                <div className="p-4">
+                  <h3 className="text-Primary font-semibold mb-3">Markets</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {filteredMarkets.map((market) => (
+                      <Link
+                        key={market.id}
+                        to={`/markets/${market.id}`}
+                        className="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors"
+                      >
+                        <div className="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+                          <img
+                            src={market.displayImage}
+                            alt={market.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div>
+                          <h4 className="font-medium text-gray-900">{market.name}</h4>
+                          <p className="text-sm text-gray-500">{market.state}</p>
+                        </div>
+                      </Link>
+                    ))}
                   </div>
                 </div>
-              </button>
-            </div>
+              )}
 
+              {/* Malls Results */}
+              {filteredMalls.length > 0 && (
+                <div className="p-4 border-t border-gray-100">
+                  <h3 className="text-Primary font-semibold mb-3">Malls</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {filteredMalls.map((mall) => (
+                      <Link
+                        key={mall.id}
+                        to={`/malls/${mall.id}`}
+                        className="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors"
+                      >
+                        <div className="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+                          <img
+                            src={mall.displayImage}
+                            alt={mall.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div>
+                          <h4 className="font-medium text-gray-900">{mall.name}</h4>
+                          <p className="text-sm text-gray-500">{mall.state}</p>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* No Results */}
+              {filteredMarkets.length === 0 && filteredMalls.length === 0 && (
+                <div className="p-8 text-center text-gray-500">
+                  <p>No markets or malls found matching your search.</p>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Categories Section */}
+        <div className="mb-16 md:mb-20">
+          <h2 className="mb-8 font-bold text-Primary text-xl md:text-2xl text-center">
+            Categories
+          </h2>
+          <div className="flex justify-center">
             {/* Categories Swiper */}
-            <div className="w-full md:max-w-[calc(100%-220px)]">
+            <div className="w-full">
               <Swiper
-                slidesPerView={columnNumber}
+                slidesPerView="auto"
                 spaceBetween={16}
                 pagination={{
                   clickable: true,
+                }}
+                breakpoints={{
+                  0: {
+                    slidesPerView: 2,
+                    spaceBetween: 12
+                  },
+                  640: {
+                    slidesPerView: 4,
+                    spaceBetween: 16
+                  },
+                  1024: {
+                    slidesPerView: 6,
+                    spaceBetween: 16
+                  }
                 }}
                 modules={[Pagination]}
                 className="custom-swiper-pagination pb-8"
@@ -331,7 +383,7 @@ function ExploreSection() {
                         name.toUpperCase()
                       )}`}
                     >
-                      <div className="group h-[200px] cursor-pointer">
+                      <div className="aspect-square">
                         <div className="relative rounded-xl h-full overflow-hidden">
                           <img
                             src={imageUrl}
@@ -339,18 +391,15 @@ function ExploreSection() {
                             className="w-full h-full object-cover"
                           />
                           <div className="group-hover:bg-black/60 absolute inset-0 bg-black/50 transition-colors duration-200" />
-                          <div className="absolute inset-0 flex flex-col justify-center items-center p-4 text-white">
+                          <div className="absolute inset-0 flex flex-col justify-center items-center p-3 text-white">
                             {React.createElement(categoryIcons[name], {
                               className:
                                 "w-6 h-6 mb-2 group-hover:scale-110 transition-transform duration-200",
                             })}
-                            <h3 className="font-medium text-sm text-center">
+                            <h3 className="font-medium text-xs md:text-sm text-center">
                               {name}
                             </h3>
                           </div>
-                          <h3 className="font-semibold text-white text-sm md:text-base text-center">
-                            {name}
-                          </h3>
                         </div>
                       </div>
                     </Link>
@@ -362,13 +411,12 @@ function ExploreSection() {
         </div>
 
         {/* Markets Section */}
-        <div className="mb-16">
+        <div className="mb-16 md:mb-20">
           <h2 className="mb-8 font-bold text-Primary text-xl md:text-2xl text-center">
             Featured Markets
           </h2>
-          <div className="relative mx-auto max-w-6xl">
+          <div className="relative mx-auto">
             <Swiper
-              // slidesPerView={columnNumber}
               spaceBetween={16}
               pagination={{
                 clickable: true,
@@ -378,28 +426,22 @@ function ExploreSection() {
                 nextEl: ".swiper-button-next-markets",
                 prevEl: ".swiper-button-prev-markets",
               }}
-              modules={[Pagination, Navigation]}
-              className="custom-swiper-pagination pb-10"
-              initialSlide={0}
-              watchSlidesProgress={true}
-              slidesPerGroup={1}
               breakpoints={{
-                320: {
+                0: {
                   slidesPerView: 2,
-                  slidesPerGroup: 1,
-                  spaceBetween: 12,
+                  spaceBetween: 12
                 },
                 768: {
                   slidesPerView: 3,
-                  slidesPerGroup: 1,
-                  spaceBetween: 16,
+                  spaceBetween: 16
                 },
                 1024: {
                   slidesPerView: 4,
-                  slidesPerGroup: 1,
-                  spaceBetween: 20,
-                },
+                  spaceBetween: 16
+                }
               }}
+              modules={[Pagination, Navigation]}
+              className="pb-10 relative"
             >
               {/* First Slide - Grid View */}
               {nestedMarkets.map((markets, index) => (
@@ -408,33 +450,32 @@ function ExploreSection() {
                     {markets.map((market) => (
                       <div
                         key={market.id || market.name}
-                        className="group relative bg-white shadow-lg hover:shadow-xl rounded-xl overflow-hidden hover:scale-105 transition-all duration-200"
+                        className="group relative bg-white shadow-sm hover:shadow-md rounded-xl overflow-hidden transition-all duration-200"
                       >
                         <Link to={`/markets/${market.id}`}>
                           <div className="relative">
                             <img
                               src={market.displayImage}
                               alt={market.name}
-                              className="w-full object-cover aspect-[4/3]"
+                              className="w-full object-cover aspect-video"
                               loading="lazy"
                             />
                             {/* State Badge - Absolute positioned */}
-                            <span className="top-3 right-3 absolute bg-white/90 shadow-sm px-3 py-1 rounded-full font-medium text-gray-700 text-sm">
+                            <span className="top-2 right-2 absolute bg-white/90 shadow-sm px-2 py-0.5 rounded-full font-medium text-gray-700 text-xs">
                               {market.state}
                             </span>
                             {/* Description Overlay on Hover */}
-                            <div className="absolute inset-0 flex justify-center items-center bg-black/70 opacity-0 group-hover:opacity-100 p-4 transition-opacity duration-200">
-                              <p className="text-white text-sm text-center line-clamp-4">
-                                {market.description ||
-                                  "No description available"}
+                            <div className="absolute inset-0 flex justify-center items-center bg-black/70 opacity-0 group-hover:opacity-100 p-3 transition-opacity duration-200">
+                              <p className="text-white text-xs text-center line-clamp-2">
+                                {market.description || "No description available"}
                               </p>
                             </div>
                           </div>
-                          <div className="p-4">
-                            <h3 className="font-bold text-gray-800 text-base md:text-lg">
+                          <div className="p-2">
+                            <h3 className="font-medium text-gray-800 text-xs md:text-sm">
                               {market.name}
                             </h3>
-                            <p className="text-gray-600 text-sm md:text-base">
+                            <p className="text-gray-600 text-xs truncate">
                               {market.address}
                             </p>
                           </div>
@@ -444,20 +485,19 @@ function ExploreSection() {
                   </div>
                 </SwiperSlide>
               ))}
+              {/* Navigation Arrows */}
+              <div className="swiper-button-prev-markets absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-orange hover:bg-orange/90 rounded-full w-8 h-8 flex items-center justify-center shadow-md cursor-pointer transition-colors">
+                <ChevronLeft className="w-5 h-5 text-white" />
+              </div>
+              <div className="swiper-button-next-markets absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-orange hover:bg-orange/90 rounded-full w-8 h-8 flex items-center justify-center shadow-md cursor-pointer transition-colors">
+                <ChevronRight className="w-5 h-5 text-white" />
+              </div>
             </Swiper>
-
-            {/* Custom Navigation Buttons - Fixed class names */}
-            <button className="top-1/2 -left-4 z-10 absolute flex justify-center items-center bg-white hover:bg-gray-50 shadow-md rounded-full w-10 h-10 -translate-y-1/2 cursor-pointer swiper-button-prev-markets transform">
-              <ChevronLeft className="w-5 h-5 text-gray-700" />
-            </button>
-            <button className="top-1/2 -right-4 z-10 absolute flex justify-center items-center bg-white hover:bg-gray-50 shadow-md rounded-full w-10 h-10 -translate-y-1/2 cursor-pointer swiper-button-next-markets transform">
-              <ChevronRight className="w-5 h-5 text-gray-700" />
-            </button>
           </div>
         </div>
 
         {/* Malls Section */}
-        <div>
+        <div className="mb-16 md:mb-20">
           <h2 className="mb-8 font-bold text-Primary text-xl md:text-2xl text-center">
             Featured Malls
           </h2>
@@ -472,28 +512,22 @@ function ExploreSection() {
                 nextEl: ".swiper-button-next-malls",
                 prevEl: ".swiper-button-prev-malls",
               }}
-              modules={[Pagination, Navigation]}
-              className="custom-swiper-pagination pb-10"
-              initialSlide={0}
-              watchSlidesProgress={true}
-              slidesPerGroup={1}
               breakpoints={{
-                320: {
+                0: {
                   slidesPerView: 2,
-                  slidesPerGroup: 1,
-                  spaceBetween: 12,
+                  spaceBetween: 12
                 },
                 768: {
                   slidesPerView: 3,
-                  slidesPerGroup: 1,
-                  spaceBetween: 16,
+                  spaceBetween: 16
                 },
                 1024: {
                   slidesPerView: 4,
-                  slidesPerGroup: 1,
-                  spaceBetween: 20,
-                },
+                  spaceBetween: 16
+                }
               }}
+              modules={[Pagination, Navigation]}
+              className="pb-10 relative"
             >
               {/* Using the same nested layout as markets */}
               {nestedMalls.map((malls, index) => (
@@ -502,32 +536,32 @@ function ExploreSection() {
                     {malls.map((mall) => (
                       <div
                         key={mall.id || mall.name}
-                        className="group relative bg-white shadow-lg hover:shadow-xl rounded-xl overflow-hidden hover:scale-105 transition-all duration-200"
+                        className="group relative bg-white shadow-sm hover:shadow-md rounded-xl overflow-hidden transition-all duration-200"
                       >
                         <Link to={`/malls/${mall.id}`}>
                           <div className="relative">
                             <img
                               src={mall.displayImage}
                               alt={mall.name}
-                              className="w-full object-cover aspect-[4/3]"
+                              className="w-full object-cover aspect-video"
                               loading="lazy"
                             />
                             {/* State Badge */}
-                            <span className="top-3 right-3 absolute bg-white/90 shadow-sm px-3 py-1 rounded-full font-medium text-gray-700 text-sm">
+                            <span className="top-2 right-2 absolute bg-white/90 shadow-sm px-2 py-0.5 rounded-full font-medium text-gray-700 text-xs">
                               {mall.state}
                             </span>
                             {/* Description Overlay on Hover */}
-                            <div className="absolute inset-0 flex justify-center items-center bg-black/70 opacity-0 group-hover:opacity-100 p-4 transition-opacity duration-200">
-                              <p className="text-white text-sm text-center line-clamp-4">
+                            <div className="absolute inset-0 flex justify-center items-center bg-black/70 opacity-0 group-hover:opacity-100 p-3 transition-opacity duration-200">
+                              <p className="text-white text-xs text-center line-clamp-2">
                                 {mall.description || "No description available"}
                               </p>
                             </div>
                           </div>
-                          <div className="p-4">
-                            <h3 className="font-bold text-gray-800 text-base md:text-lg">
+                          <div className="p-2">
+                            <h3 className="font-medium text-gray-800 text-xs md:text-sm">
                               {mall.name}
                             </h3>
-                            <p className="text-gray-600 text-sm md:text-base">
+                            <p className="text-gray-600 text-xs truncate">
                               {mall.address}
                             </p>
                           </div>
@@ -537,15 +571,14 @@ function ExploreSection() {
                   </div>
                 </SwiperSlide>
               ))}
+              {/* Navigation Arrows */}
+              <div className="swiper-button-prev-malls absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-orange hover:bg-orange/90 rounded-full w-8 h-8 flex items-center justify-center shadow-md cursor-pointer transition-colors">
+                <ChevronLeft className="w-5 h-5 text-white" />
+              </div>
+              <div className="swiper-button-next-malls absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-orange hover:bg-orange/90 rounded-full w-8 h-8 flex items-center justify-center shadow-md cursor-pointer transition-colors">
+                <ChevronRight className="w-5 h-5 text-white" />
+              </div>
             </Swiper>
-
-            {/* Navigation Buttons - Fixed class names */}
-            <button className="top-1/2 -left-4 z-10 absolute flex justify-center items-center bg-white hover:bg-gray-50 shadow-md rounded-full w-10 h-10 -translate-y-1/2 cursor-pointer swiper-button-prev-malls transform">
-              <ChevronLeft className="w-5 h-5 text-gray-700" />
-            </button>
-            <button className="top-1/2 -right-4 z-10 absolute flex justify-center items-center bg-white hover:bg-gray-50 shadow-md rounded-full w-10 h-10 -translate-y-1/2 cursor-pointer swiper-button-next-malls transform">
-              <ChevronRight className="w-5 h-5 text-gray-700" />
-            </button>
           </div>
         </div>
 
