@@ -265,7 +265,7 @@ function ExploreSection() {
           <div className="relative flex items-center w-full max-w-3xl">
             <input
               type="text"
-              placeholder="Search by state, market, or category..."
+              placeholder="Search a market or mall..."
               value={searchQuery}
               onChange={handleSearchChange}
               className="px-6 py-3 md:py-4 pr-[100px] border-2 border-Primary rounded-full focus:outline-none focus:ring-2 focus:ring-Primary/20 w-full text-sm md:text-base"
