@@ -58,11 +58,6 @@ const Dashboard = () => {
     userProfile.userType === "merchant"
       ? [
           {
-            path: "/dashboard/customers",
-            icon: <Users className="w-5 h-5" />,
-            label: "Customers",
-          },
-          {
             path: "/dashboard/overview",
             icon: <Home className="w-5 h-5" />,
             label: "Overview",
@@ -71,6 +66,11 @@ const Dashboard = () => {
             path: "/dashboard/products",
             icon: <Package className="w-5 h-5" />,
             label: "Products",
+          },
+          {
+            path: "/dashboard/customers",
+            icon: <Users className="w-5 h-5" />,
+            label: "Customers",
           },
         ]
       : [

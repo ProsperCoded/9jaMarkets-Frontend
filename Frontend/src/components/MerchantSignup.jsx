@@ -504,7 +504,7 @@ const MerchantSignup = () => {
                       </div>
                       <div>
                         <label className="block font-medium text-gray-700 text-sm">
-                          Zip Code
+                          Postal Code
                         </label>
                         <input
                           type="text"

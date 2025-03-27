@@ -287,12 +287,12 @@ const Overview = () => {
     return;
   }
   return (
-    <div className="space-y-4 mx-auto p-4 max-w-7xl">
-      <div className="mb-8">
-        <h1 className="font-bold text-gray-900 text-2xl sm:text-3xl">
+    <div className="space-y-4 mx-auto p-2 sm:p-4 max-w-7xl">
+      <div className="mb-4 sm:mb-8">
+        <h1 className="font-bold text-gray-900 text-xl sm:text-2xl md:text-3xl">
           Dashboard Overview
         </h1>
-        <p className="mt-2 text-gray-600 text-sm">
+        <p className="mt-1 sm:mt-2 text-gray-600 text-xs sm:text-sm">
           Monitor your ads performance and manage your advertising campaigns
         </p>
       </div>
@@ -303,7 +303,7 @@ const Overview = () => {
         onValueChange={setActiveTab}
         className="w-full"
       >
-        <TabsList className="grid grid-cols-2 mb-6 w-[400px]">
+        <TabsList className="grid w-full max-w-[400px] grid-cols-2 mb-4 sm:mb-6">
           <TabsTrigger value="online-ads">Online Ads</TabsTrigger>
           <TabsTrigger value="all-ads">All Ads</TabsTrigger>
         </TabsList>
@@ -313,80 +313,83 @@ const Overview = () => {
           {loading ? (
             <LoadingIndicator />
           ) : activeAds.length > 0 ? (
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               {/* Performance Summary Cards */}
-              <div className="gap-4 grid grid-cols-1 md:grid-cols-3">
+              <div className="gap-2 sm:gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
                 <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="flex items-center gap-2 text-lg">
+                  <CardHeader className="pb-2 space-y-0">
+                    <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
                       <Eye className="w-4 h-4 text-Primary" /> Ad Views
                     </CardTitle>
-                    <CardDescription>Total impressions</CardDescription>
+                    <CardDescription className="text-xs sm:text-sm">Total impressions</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="font-bold text-3xl">{totalViews}</div>
+                    <div className="font-bold text-2xl sm:text-3xl">{totalViews}</div>
                   </CardContent>
                 </Card>
 
                 <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="flex items-center gap-2 text-lg">
-                      <MousePointerClick className="w-4 h-4 text-Primary" /> Ad
-                      Clicks
+                  <CardHeader className="pb-2 space-y-0">
+                    <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                      <MousePointerClick className="w-4 h-4 text-Primary" /> Ad Clicks
                     </CardTitle>
-                    <CardDescription>Total interactions</CardDescription>
+                    <CardDescription className="text-xs sm:text-sm">Total interactions</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="font-bold text-3xl">{totalClicks}</div>
+                    <div className="font-bold text-2xl sm:text-3xl">{totalClicks}</div>
                   </CardContent>
                 </Card>
 
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="flex items-center gap-2 text-lg">
+                <Card className="sm:col-span-2 md:col-span-1">
+                  <CardHeader className="pb-2 space-y-0">
+                    <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
                       <BarChart4 className="w-4 h-4 text-Primary" /> CTR
                     </CardTitle>
-                    <CardDescription>Click-through rate</CardDescription>
+                    <CardDescription className="text-xs sm:text-sm">Click-through rate</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="font-bold text-3xl">
-                      {clickThroughRate}%
-                    </div>
+                    <div className="font-bold text-2xl sm:text-3xl">{clickThroughRate}%</div>
                   </CardContent>
                 </Card>
               </div>
 
               {/* Performance Charts */}
               <div className="gap-4 grid grid-cols-1 lg:grid-cols-2">
-                <Card className="h-80">
-                  <CardHeader>
-                    <CardTitle>Ad Performance by Level</CardTitle>
+                <Card className="h-[300px] sm:h-80">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-base sm:text-lg">Ad Performance by Level</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="h-60">
+                    <div className="h-[240px] sm:h-60">
                       <Bar data={levelPerformanceData} options={chartOptions} />
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card className="h-80">
-                  <CardHeader>
-                    <CardTitle>Views vs Clicks</CardTitle>
+                <Card className="h-[300px] sm:h-80">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-base sm:text-lg">Views vs Clicks</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="h-60">
-                      <Doughnut
-                        data={performanceChartData}
-                        options={doughnutOptions}
-                      />
+                    <div className="h-[240px] sm:h-60">
+                      <Doughnut data={performanceChartData} options={{
+                        ...doughnutOptions,
+                        plugins: {
+                          ...doughnutOptions.plugins,
+                          legend: {
+                            ...doughnutOptions.plugins.legend,
+                            position: window.innerWidth < 640 ? 'bottom' : 'right'
+                          }
+                        }
+                      }} />
                     </div>
                   </CardContent>
                 </Card>
               </div>
 
               {/* Active Ad Cards */}
-              <h2 className="font-semibold text-xl">Active Advertisements</h2>
-              <div className="gap-4 grid grid-cols-1 md:grid-cols-2">
+              <h2 className="font-semibold text-lg sm:text-xl">Active Advertisements</h2>
+              <div className="gap-2 sm:gap-4 grid grid-cols-1 md:grid-cols-2">
                 {activeAds.map((ad) => (
                   <Collapsible
                     key={ad.id}
@@ -394,26 +397,23 @@ const Overview = () => {
                     onOpenChange={() => toggleAdDetails(ad.id)}
                     className="bg-white shadow-sm border rounded-lg"
                   >
-                    <div className="p-4">
-                      <div className="flex justify-between items-start">
-                        <div className="flex items-start gap-4">
-                          <div className="rounded-md w-16 h-16 overflow-hidden">
+                    <div className="p-3 sm:p-4">
+                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 sm:gap-0">
+                        <div className="flex items-start gap-3 sm:gap-4">
+                          <div className="rounded-md w-12 h-12 sm:w-16 sm:h-16 overflow-hidden">
                             <img
-                              src={
-                                ad.product?.displayImage?.url ||
-                                "https://via.placeholder.com/150"
-                              }
+                              src={ad.product?.displayImage?.url || "https://via.placeholder.com/150"}
                               alt={ad.product?.name || "Product"}
                               className="w-full h-full object-cover"
                             />
                           </div>
                           <div>
-                            <h3 className="font-medium text-gray-900">
+                            <h3 className="font-medium text-gray-900 text-sm sm:text-base">
                               {ad.product?.name || "Unnamed Product"}
                             </h3>
-                            <div className="flex items-center gap-2 mt-1">
+                            <div className="flex flex-wrap items-center gap-2 mt-1">
                               <Badge className={getAdBadge(ad.level).classes}>
-                                <span className="flex items-center gap-1">
+                                <span className="flex items-center gap-1 text-xs">
                                   {getAdBadge(ad.level).icon}
                                   {getAdBadge(ad.level).label}
                                 </span>
@@ -425,96 +425,61 @@ const Overview = () => {
                             </div>
                           </div>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center justify-between sm:justify-end gap-2 mt-2 sm:mt-0">
                           <Button
                             variant="destructive"
                             size="sm"
+                            className="text-xs sm:text-sm"
                             onClick={() => stopAd(ad.id)}
                           >
-                            <Pause className="mr-1 w-4 h-4" /> Stop Ad
+                            <Pause className="mr-1 w-3 h-3 sm:w-4 sm:h-4" /> Stop Ad
                           </Button>
                           <CollapsibleTrigger asChild>
                             <Button variant="ghost" size="sm">
-                              {expandedCards[ad.id] ? (
-                                <ChevronUp />
-                              ) : (
-                                <ChevronDown />
-                              )}
+                              {expandedCards[ad.id] ? <ChevronUp /> : <ChevronDown />}
                             </Button>
                           </CollapsibleTrigger>
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-4 mt-3">
-                        <div className="flex items-center gap-1 text-sm">
-                          <Eye className="w-4 h-4 text-Primary" /> {ad.adViews}{" "}
-                          views
+                      <div className="flex flex-wrap items-center gap-3 sm:gap-4 mt-3">
+                        <div className="flex items-center gap-1 text-xs sm:text-sm">
+                          <Eye className="w-3 h-3 sm:w-4 sm:h-4 text-Primary" /> {ad.adViews} views
                         </div>
-                        <div className="flex items-center gap-1 text-sm">
-                          <MousePointerClick className="w-4 h-4 text-Primary" />{" "}
-                          {ad.adClicks} clicks
+                        <div className="flex items-center gap-1 text-xs sm:text-sm">
+                          <MousePointerClick className="w-3 h-3 sm:w-4 sm:h-4 text-Primary" /> {ad.adClicks} clicks
                         </div>
-                        <div className="flex items-center gap-1 text-sm">
-                          <Clock className="w-4 h-4 text-gray-500" />{" "}
-                          {ad.adViews > 0
-                            ? ((ad.adClicks / ad.adViews) * 100).toFixed(2)
-                            : "0"}
-                          % CTR
+                        <div className="flex items-center gap-1 text-xs sm:text-sm">
+                          <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500" /> {ad.adViews > 0 ? ((ad.adClicks / ad.adViews) * 100).toFixed(2) : "0"}% CTR
                         </div>
                       </div>
                     </div>
 
                     <CollapsibleContent>
                       <Separator />
-                      <div className="space-y-4 p-4">
+                      <div className="space-y-3 sm:space-y-4 p-3 sm:p-4">
                         <div>
-                          <h4 className="mb-1 font-medium text-sm">
-                            Performance
-                          </h4>
+                          <h4 className="mb-1 font-medium text-xs sm:text-sm">Performance</h4>
                           <div className="space-y-2">
                             <div>
                               <div className="flex justify-between mb-1 text-xs">
                                 <span>Views to Clicks Ratio</span>
-                                <span>
-                                  {ad.adViews > 0
-                                    ? (
-                                        (ad.adClicks / ad.adViews) *
-                                        100
-                                      ).toFixed(2)
-                                    : "0"}
-                                  %
-                                </span>
+                                <span>{ad.adViews > 0 ? ((ad.adClicks / ad.adViews) * 100).toFixed(2) : "0"}%</span>
                               </div>
-                              <Progress
-                                value={
-                                  ad.adViews > 0
-                                    ? (ad.adClicks / ad.adViews) * 100
-                                    : 0
-                                }
-                              />
+                              <Progress value={ad.adViews > 0 ? (ad.adClicks / ad.adViews) * 100 : 0} />
                             </div>
                           </div>
                         </div>
 
-                        <div className="gap-4 grid grid-cols-2">
+                        <div className="gap-3 sm:gap-4 grid grid-cols-1 sm:grid-cols-2">
                           <div>
-                            <h4 className="mb-1 font-medium text-sm">
-                              Product Details
-                            </h4>
-                            <p className="mb-1 text-gray-600 text-sm">
-                              {ad.product?.details || "No details available"}
-                            </p>
-                            <p className="font-medium text-sm">
-                              ₦{ad.product?.price?.toLocaleString() || "N/A"}
-                            </p>
-                            <p className="text-gray-500 text-xs">
-                              Stock: {ad.product?.stock || "N/A"}
-                            </p>
+                            <h4 className="mb-1 font-medium text-xs sm:text-sm">Product Details</h4>
+                            <p className="mb-1 text-gray-600 text-xs sm:text-sm">{ad.product?.details || "No details available"}</p>
+                            <p className="font-medium text-xs sm:text-sm">₦{ad.product?.price?.toLocaleString() || "N/A"}</p>
+                            <p className="text-gray-500 text-xs">Stock: {ad.product?.stock || "N/A"}</p>
                           </div>
                           <div>
-                            <h4 className="mb-1 font-medium text-sm">
-                              Ad Information
-                            </h4>
+                            <h4 className="mb-1 font-medium text-xs sm:text-sm">Ad Information</h4>
                             <div className="space-y-1 text-gray-600 text-xs">
                               <p>Created: {formatDate(ad.createdAt)}</p>
                               <p>Updated: {formatDate(ad.updatedAt)}</p>
@@ -529,18 +494,11 @@ const Overview = () => {
               </div>
             </div>
           ) : (
-            <div className="flex flex-col justify-center items-center bg-white shadow rounded-lg h-64">
-              <AlertCircle className="mb-4 w-12 h-12 text-Primary/50" />
-              <h3 className="font-medium text-gray-900 text-xl">
-                No Active Ads
-              </h3>
-              <p className="mt-2 text-gray-500">
-                You don't have any active advertisements at the moment
-              </p>
-              <Button
-                className="mt-4"
-                onClick={() => (window.location.href = "/dashboard/products")}
-              >
+            <div className="flex flex-col justify-center items-center bg-white shadow rounded-lg h-64 p-4 text-center">
+              <AlertCircle className="mb-3 sm:mb-4 w-10 h-10 sm:w-12 sm:h-12 text-Primary/50" />
+              <h3 className="font-medium text-gray-900 text-lg sm:text-xl">No Active Ads</h3>
+              <p className="mt-1 sm:mt-2 text-gray-500 text-sm">You don't have any active advertisements at the moment</p>
+              <Button className="mt-3 sm:mt-4 text-sm" onClick={() => (window.location.href = "/dashboard/products")}>
                 Create an Ad
               </Button>
             </div>

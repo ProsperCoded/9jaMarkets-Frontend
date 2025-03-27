@@ -128,16 +128,6 @@ const BillingPolicyPage = () => {
           <h2 className="text-2xl font-bold mb-4 text-Primary">
             Accepted Payment Methods
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Currently powered by Interswitch's secure payment gateway
-          </p>
-          <div className="mt-4">
-            <img 
-              src={InterswitchLogo} 
-              alt="Interswitch Logo" 
-              className="h-6 mx-auto"
-            />
-          </div>
         </div>
 
         {/* Payment Method Cards */}

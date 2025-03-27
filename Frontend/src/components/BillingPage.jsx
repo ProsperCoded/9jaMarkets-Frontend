@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import InterswitchLogo from "../assets/billing/InterswitchLogo.svg";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -18,9 +17,6 @@ import { useParams } from "react-router-dom";
 import { plans } from "@/config";
 import { useContext } from "react";
 import { USER_PROFILE_CONTEXT } from "@/contexts";
-const paymentMethods = [
-  { id: "card", name: "Pay with Interswitch", icon: InterswitchLogo },
-];
 
 export default function BillingPage() {
   const [selectedMethod, setSelectedMethod] = useState("card");

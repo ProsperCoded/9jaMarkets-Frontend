@@ -39,6 +39,7 @@
     "cmdk": "1.0.0",
     "date-fns": "^2.30.0",
     "form-data": "^4.0.1",
+    "framer-motion": "^12.6.2",
     "input-otp": "^1.4.1",
     "js-cookie": "^3.0.5",
     "lodash.debounce": "^4.0.8",
@@ -53,7 +54,7 @@
     "react-slick": "^0.30.2",
     "slick-carousel": "^1.8.1",
     "sonner": "^2.0.1",
-    "swiper": "^11.1.15",
+    "swiper": "^11.2.6",
     "tailwind-merge": "^2.5.5",
     "tailwind-scrollbar-hide": "^1.1.7",
     "tailwindcss-animate": "^1.0.7"
