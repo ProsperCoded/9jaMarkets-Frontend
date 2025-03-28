@@ -99,16 +99,6 @@ export default function MarketerPage() {
           <p className="mb-4 text-lg sm:text-xl">
             Turn Your Network into Cash!
           </p>
-          <div className="bg-white/20 mx-auto mb-8 p-4 rounded-lg max-w-2xl">
-            <p className="flex justify-center items-center text-sm">
-              <InfoIcon className="flex-shrink-0 mr-2 w-5 h-5" />
-              <span>
-                When applying, use an email you can/have created a 9jaMarket
-                account with, to track your application status and merchants
-                that signup with your code.
-              </span>
-            </p>
-          </div>
           <div className="flex justify-center gap-4">
             <MarketerSignupButton className="flex justify-center items-center bg-orange hover:bg-orange/90 shadow-lg hover:shadow-xl mt-6 px-6 py-3 rounded-full text-white transition-colors hover:-translate-y-1 duration-300 transform">
               Start Earning Now

@@ -25,7 +25,7 @@ const CopyrightPage = () => {
               Copyright Notice
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl">
-              © {new Date().getFullYear()} 9jaMarkets. All Rights Reserved.
+              {new Date().getFullYear()} 9jaMarkets. All Rights Reserved.
             </p>
           </div>
         </div>
@@ -87,15 +87,17 @@ const CopyrightPage = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Button 
-              variant="outline" 
-              className="hover:bg-Primary hover:text-white transition-all"
-              onClick={() => window.location.href = 'mailto:9ijamarkets@gmail.com'}
-            >
-              <Mail className="mr-2 h-4 w-4" />
-              9ijamarkets@gmail.com
-            </Button>
-            <p className="mt-2 text-sm text-gray-500">
+            <div className="space-y-2">
+              <a href="mailto:info@9jamarkets.com" className="flex items-center gap-2 text-Primary hover:underline">
+                <Mail className="h-4 w-4"/>
+                info@9jamarkets.com
+              </a>
+              <a href="mailto:support@9jamarkets.com" className="flex items-center gap-2 text-Primary hover:underline">
+                <Mail className="h-4 w-4"/>
+                support@9jamarkets.com
+              </a>
+            </div>
+            <p className="mt-4 text-sm text-gray-500">
               For immediate assistance, try our chat support in the bottom right corner.
             </p>
           </CardContent>

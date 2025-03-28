@@ -28,8 +28,6 @@ import {
   Lock,
   Building,
   Briefcase,
-  Wallet,
-  Landmark,
   FileUp,
   Handshake,
   InfoIcon,
@@ -224,16 +222,26 @@ export function MarketerSignupDialog({ open, onOpenChange }) {
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="font-bold text-Primary text-2xl">
-              Become a Marketer
+            <DialogTitle className="text-2xl font-bold text-center">
+              Marketer Application
             </DialogTitle>
-            <DialogDescription>
-              Join our marketing team and start earning by promoting products on
-              9jaMarkets.
+            <DialogDescription className="text-center">
+              Fill out the form below to become a 9jaMarkets marketer
             </DialogDescription>
           </DialogHeader>
 
-          <form onSubmit={handleSubmit} className="space-y-6 py-4">
+          {/* Add Info Alert here */}
+          <div className="bg-Primary/5 border border-Primary/10 p-4 rounded-lg mb-6">
+            <p className="flex items-start gap-2 text-sm text-gray-700">
+              <InfoIcon className="flex-shrink-0 mt-0.5 w-5 h-5 text-Primary" />
+              <span>
+                When applying, use an email you have created a 9jaMarket account with, 
+                to track your application status and merchants that signup with your code.
+              </span>
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-6">
             {/* Personal Information */}
             <div className="space-y-4">
               <h3 className="font-semibold text-gray-900 text-lg">
