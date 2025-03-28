@@ -109,7 +109,7 @@ export default function MerchantEmailVerification() {
               />
             </Form.Item>
             {loading && (
-              <CheckCircle className="absolute right-3 top-3 w-6 h-6 text-Primary animate-spin" />
+              <CheckCircle className="absolute right-3 top-3 w-6 h-6 text-Primary" />
             )}
           </div>
 
@@ -126,7 +126,12 @@ export default function MerchantEmailVerification() {
         </Form>
 
         <div className="mt-8 text-center">
-          <p className="mb-3 text-gray-600">Did not receive a code?</p>
+          <p className="mb-3 text-gray-600">
+            Did not receive a code?{" "}
+            <span className="text-Primary underline cursor-pointer">
+              Check your spam folder
+            </span>
+          </p>
           <Button
             type="link"
             onClick={handleResendCode}

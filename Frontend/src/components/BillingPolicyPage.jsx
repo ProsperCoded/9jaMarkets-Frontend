@@ -128,16 +128,6 @@ const BillingPolicyPage = () => {
           <h2 className="text-2xl font-bold mb-4 text-Primary">
             Accepted Payment Methods
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Currently powered by Interswitch's secure payment gateway
-          </p>
-          <div className="mt-4">
-            <img 
-              src={InterswitchLogo} 
-              alt="Interswitch Logo" 
-              className="h-6 mx-auto"
-            />
-          </div>
         </div>
 
         {/* Payment Method Cards */}
@@ -211,31 +201,33 @@ const BillingPolicyPage = () => {
 
         {/* Contact Section */}
         <Card className="mt-12 border-orange">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
               <BadgeHelp className="h-5 w-5 text-orange"/>
               Billing Support
-            </CardTitle>
-            <CardDescription>
+              </CardTitle>
+              <CardDescription>
               For billing inquiries and payment-related issues
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button 
-              variant="outline" 
-              className="hover:bg-orange hover:text-white transition-all"
-              onClick={() => window.location.href = 'mailto:9ijamarkets@gmail.com'}
-            >
-              <Mail className="mr-2 h-4 w-4" />
-              9ijamarkets@gmail.com
-            </Button>
-            <p className="mt-2 text-sm text-gray-500">
-              For immediate assistance, try our chat support in the bottom right corner.
-            </p>
-          </CardContent>
-        </Card>
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                <a href="mailto:support@9jamarkets.com" className="flex items-center gap-2 text-Primary hover:underline">
+                  <Mail className="h-4 w-4"/>
+                  support@9jamarkets.com
+                </a>
+                <a href="mailto:customers@9jamarkets.com" className="flex items-center gap-2 text-Primary hover:underline">
+                  <Mail className="h-4 w-4"/>
+                  customers@9jamarkets.com
+                </a>
+              </div>
+              <p className="mt-4 text-sm text-gray-500">
+                Our support team is available 24/7 to assist you with any billing concerns.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
       </div>
-    </div>
   );
 };
 

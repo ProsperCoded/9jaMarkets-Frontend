@@ -95,7 +95,7 @@ const FAQ = () => {
     security: [
       {
         question: "How do I report a fraudulent seller or scam?",
-        answer: "Click the Report User button on their profile or email report@9jaMarkets.com with details."
+        answer: "Click the Report User button on their profile or email support@9jamarkets.com with details."
       },
       {
         question: "Can I delete my account?",
@@ -159,8 +159,8 @@ const FAQ = () => {
           </p>
           <p className="text-gray-700">
             Contact our support team at{' '}
-            <a href="mailto:9ijamarkets@gmail.com" className="text-Primary hover:underline">
-              9ijamarkets@gmail.com
+            <a href="mailto:support@9jamarkets.com" className="text-Primary hover:underline">
+              support@9jamarkets.com
             </a>
             {' '}or try our live chat support in the bottom right corner.
           </p>

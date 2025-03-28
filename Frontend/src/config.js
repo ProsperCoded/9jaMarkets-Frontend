@@ -83,6 +83,7 @@ export const SUPPORTED_BANKS = [
   "Wema Bank",
   "Zenith Bank",
 ];
+
 export const FEATURED_MALLS_NAMES = [
   "Ikeja City Mall",
   "Jabi Lake Mall",
@@ -93,6 +94,7 @@ export const FEATURED_MALLS_NAMES = [
   "Legacy Mall Benin",
   "Manga Plaza Mall",
 ];
+
 export const plans = {
   free: {
     id: "free",

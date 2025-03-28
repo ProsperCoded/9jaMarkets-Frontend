@@ -26,7 +26,7 @@ const InvestPage = () => {
               Join us in building Africa&apos;s most innovative digital marketplace
             </p>
             <a 
-              href="mailto:invest@9jamarket.com"
+              href="mailto:info@9jamarkets.com"
               className="inline-flex items-center gap-2 bg-orange hover:bg-orange/90 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all transform hover:-translate-y-1"
             >
               Connect With Our Team
@@ -96,11 +96,11 @@ const InvestPage = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 
-              href="mailto:invest@9jamarket.com"
+              href="mailto:info@9jamarkets.com"
               className="inline-flex items-center justify-center gap-2 bg-Primary hover:bg-Primary/90 text-white px-6 py-3 rounded-full transition-all"
             >
-              <Mail className="w-5 h-5" />
-              Email Investment Team
+              <Mail className="w-5 h-5"/>
+              info@9jamarkets.com
             </a>
             <Link
               to="/contact"

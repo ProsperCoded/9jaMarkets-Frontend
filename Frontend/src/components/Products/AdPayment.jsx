@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import InterswitchLogo from "../../assets/billing/InterswitchLogo.svg";
 import { Button } from "../ui/button";
 import {
   Card,
@@ -26,9 +25,10 @@ import {
 } from "@/lib/api/adApi";
 import Paystack from "@paystack/inline-js";
 import { LoadingOverlay } from "../ui/LoadingOverlay";
+import { CreditCard } from "lucide-react";
 
 const paymentMethods = [
-  { id: "card", name: "Pay with Paystack", icon: InterswitchLogo },
+  { id: "card", name: "Pay with Paystack", icon: <CreditCard /> },
 ];
 
 export default function BillingPage() {
@@ -185,18 +185,13 @@ export default function BillingPage() {
                 onValueChange={setSelectedMethod}
                 className="gap-4 grid"
               >
-                {paymentMethods.map((method) => {
-                  return (
-                    <Label
-                      key={method.id}
-                      className="flex items-center [&:has(:checked)]:bg-Primary/10 p-3 md:p-4 border [&:has(:checked)]:border-Primary hover:border-Primary rounded-lg transition-all cursor-pointer"
-                    >
-                      <RadioGroupItem value={method.id} className="mr-4" />
-                      <img className="mr-3 w-16" src={method.icon} />
-                      {method.name}
-                    </Label>
-                  );
-                })}
+                <Label
+                  className="flex items-center [&:has(:checked)]:bg-Primary/10 p-3 md:p-4 border [&:has(:checked)]:border-Primary hover:border-Primary rounded-lg transition-all cursor-pointer"
+                >
+                  <RadioGroupItem value="card" className="mr-4" />
+                  <CreditCard className="mr-3 w-5 h-5" />
+                  Pay with Paystack
+                </Label>
               </RadioGroup>
 
               <Separator />
@@ -249,7 +244,7 @@ export default function BillingPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-4">
-                  <div className="flex items-center gap-3">
+                  <div className="flex gap-3">
                     <div className="relative rounded-md w-16 h-16 overflow-hidden shrink-0">
                       <img
                         src={productData?.displayImage.url}
@@ -257,9 +252,11 @@ export default function BillingPage() {
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    <div>
-                      <h4 className="font-medium">{productData?.name}</h4>
-                      <p className="max-w-[200px] text-muted-foreground text-sm truncate">
+                    <div className="min-w-0 flex-1">
+                      <h4 className="font-medium text-sm md:text-base truncate">
+                        {productData?.name}
+                      </h4>
+                      <p className="text-muted-foreground text-xs md:text-sm line-clamp-2">
                         {productData?.details}
                       </p>
                     </div>

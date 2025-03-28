@@ -62,8 +62,8 @@ const SafetyTips = () => {
           <p className="text-gray-700">
             If you notice fraudulent listings or users violating our policies, report them 
             immediately to our support team at{' '}
-            <a href="mailto:9ijamarkets@gmail.com" className="text-Primary hover:underline">
-              9ijamarkets@gmail.com
+            <a href="mailto:support@9jamarkets.com" className="text-Primary hover:underline">
+              support@9jamarkets.com
             </a>
             {' '}or use our live chat support for immediate assistance.
           </p>

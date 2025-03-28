@@ -130,11 +130,11 @@ const PrivacyPage = () => {
             {timeline.map((item, index) => (
               <div key={index} className="flex gap-4">
                 <div className="w-24 pt-2">
-                  <span className="text-orange font-bold">{item.year}</span>
+                  <span className="text-Primary font-bold">{item.year}</span>
                 </div>
                 <div className="flex-1 relative pb-8">
                   <div className="absolute top-2 -left-3 h-full w-0.5 bg-gray-200" />
-                  <div className="absolute -left-3.5 top-2 h-2 w-2 rounded-full bg-orange" />
+                  <div className="absolute -left-3.5 top-2 h-2 w-2 rounded-full bg-Primary" />
                   <div className="bg-white p-4 rounded-lg shadow-md">
                     <h3 className="font-semibold mb-1">{item.title}</h3>
                     <p className="text-gray-600 text-sm">{item.description}</p>
@@ -146,32 +146,35 @@ const PrivacyPage = () => {
         </div> */}
 
         {/* Contact Section */}
-        <Card className="mt-12 border-orange">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Mail className="h-5 w-5 text-orange"/>
-              Contact Us
-            </CardTitle>
-            <CardDescription>
-              For privacy concerns or data-related requests
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button 
-              variant="outline" 
-              className="hover:bg-orange hover:text-white transition-all"
-              onClick={() => window.location.href = 'mailto:9ijamarkets@gmail.com'}
-            >
-              <Mail className="mr-2 h-4 w-4" />
-              9ijamarkets@gmail.com
-            </Button>
-            <p className="mt-2 text-sm text-gray-500">
-              You can also use our live chat support for immediate assistance.
-            </p>
-          </CardContent>
-        </Card>
+        <Card className="mt-12 border-Primary">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Mail className="h-5 w-5 text-Primary"/>
+                Contact Us
+              </CardTitle>
+              <CardDescription>
+                For privacy-related inquiries or concerns
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                <a href="mailto:info@9jamarkets.com" className="flex items-center gap-2 text-Primary hover:underline">
+                  <Mail className="h-4 w-4"/>
+                  info@9jamarkets.com
+                </a>
+                <a href="mailto:support@9jamarkets.com" className="flex items-center gap-2 text-Primary hover:underline">
+                  <Mail className="h-4 w-4"/>
+                  support@9jamarkets.com
+                </a>
+                <a href="mailto:customers@9jamarkets.com" className="flex items-center gap-2 text-Primary hover:underline">
+                  <Mail className="h-4 w-4"/>
+                  customers@9jamarkets.com
+                </a>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
-    </div>
   );
 };
 

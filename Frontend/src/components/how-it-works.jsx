@@ -1,8 +1,22 @@
 import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { Search, UserCircle2, Bookmark, Store, Image as ImageIcon, MessageCircle } from "lucide-react";
+import { 
+  Search, 
+  UserCircle2, 
+  Bookmark, 
+  Store, 
+  Image as ImageIcon, 
+  MessageCircle,
+  ShoppingBag,
+  BadgeCheck,
+  Zap,
+  Star,
+  Award,
+  ArrowRight
+} from "lucide-react";
 import heroImage from "../assets/Hero.jpg";
 import { LOGIN_MODAL_CONTEXT, SIGNUP_MODAL_CONTEXT } from "../contexts";
+import { Rocket } from "lucide-react";
 
 const HowItWorksPage = () => {
   // State for testimonial carousel
@@ -161,6 +175,92 @@ const HowItWorksPage = () => {
               className="inline-flex items-center px-8 py-3 bg-Primary hover:bg-Primary/90 text-white rounded-full transition-colors"
             >
               Sign Up as a Merchant
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Process Section */}
+      <div className="py-16 bg-gradient-to-b from-white to-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-center mb-16">Our Advertising Process</h2>
+          
+          <div className="relative">
+            {/* Connection Line */}
+            <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-orange via-Primary to-orange transform -translate-y-1/2" />
+            
+            {/* Process Steps */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
+              {/* Step 1: Create Product */}
+              <div className="bg-white p-6 rounded-xl shadow-sm relative">
+                <div className="w-14 h-14 bg-orange/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <ShoppingBag className="w-7 h-7 text-orange" />
+                </div>
+                <h3 className="text-xl font-semibold text-center mb-3">Create Product</h3>
+                <p className="text-gray-600 text-center text-sm">
+                  Add your product with high-quality images, detailed descriptions, and pricing.
+                </p>
+                <div className="hidden lg:flex absolute -right-4 top-1/2 transform -translate-y-1/2 z-10">
+                  <ArrowRight className="w-8 h-8 text-Primary" />
+                </div>
+              </div>
+
+              {/* Step 2: Choose Plan */}
+              <div className="bg-white p-6 rounded-xl shadow-sm relative">
+                <div className="w-14 h-14 bg-Primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <BadgeCheck className="w-7 h-7 text-Primary" />
+                </div>
+                <h3 className="text-xl font-semibold text-center mb-3">Select Ad Plan</h3>
+                <div className="flex justify-center gap-2 mb-3">
+                  <Zap className="w-5 h-5 text-gray-500" title="Free" />
+                  <Star className="w-5 h-5 text-orange" title="Standard" />
+                  <Rocket className="w-5 h-5 text-blue-500" title="Boost" />
+                  <Award className="w-5 h-5 text-purple-500" title="Premium" />
+                </div>
+                <p className="text-gray-600 text-center text-sm">
+                  Choose from our tiered ad plans for different levels of visibility.
+                </p>
+                <div className="hidden lg:flex absolute -right-4 top-1/2 transform -translate-y-1/2 z-10">
+                  <ArrowRight className="w-8 h-8 text-Primary" />
+                </div>
+              </div>
+
+              {/* Step 3: Payment */}
+              <div className="bg-white p-6 rounded-xl shadow-sm relative">
+                <div className="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <div className="text-green-600 font-bold text-xl">₦</div>
+                </div>
+                <h3 className="text-xl font-semibold text-center mb-3">Secure Payment</h3>
+                <p className="text-gray-600 text-center text-sm">
+                  Complete your payment securely through our trusted payment gateway.
+                </p>
+                <div className="hidden lg:flex absolute -right-4 top-1/2 transform -translate-y-1/2 z-10">
+                  <ArrowRight className="w-8 h-8 text-Primary" />
+                </div>
+              </div>
+
+              {/* Step 4: Go Live */}
+              <div className="bg-white p-6 rounded-xl shadow-sm">
+                <div className="w-14 h-14 bg-orange/10 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+                  <div className="w-4 h-4 bg-orange rounded-full" />
+                </div>
+                <h3 className="text-xl font-semibold text-center mb-3">Go Live</h3>
+                <p className="text-gray-600 text-center text-sm">
+                  Your product goes live with enhanced visibility based on your chosen plan.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Call to Action */}
+          <div className="text-center mt-12">
+            <p className="text-gray-600 mb-4">Ready to showcase your products?</p>
+            <Link to="/merchant-signup">
+              <button
+                className="inline-flex items-center px-8 py-3 bg-Primary hover:bg-Primary/90 text-white rounded-full transition-colors"
+              >
+                Start Selling Today
+              </button>
             </Link>
           </div>
         </div>

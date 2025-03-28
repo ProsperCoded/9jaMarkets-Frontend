@@ -33,6 +33,8 @@ import AdminMarketers from "./components/AdminMarketers";
 import AdminSettlements from "./components/AdminSettlements";
 import MarketerProfile from "./components/MarketerProfile";
 import MarketerReferrals from "./components/MarketerReferrals";
+import Customers from "./components/Customers";
+import Messages from "./components/Messages";
 
 import { ConfigProvider } from "antd";
 import InitializeApp from "./InitializeApp";
@@ -153,8 +155,8 @@ function App() {
                   <Route path="ad-payment" element={<AdPayment />} />
                 </Route>
                 <Route path="edit" element={<EditProfile />} />
-                <Route path="customers" element={<div>Customers</div>} />
-                <Route path="messages" element={<div>Vendors</div>} />
+                <Route path="customers" element={<Customers />} />
+                <Route path="messages" element={<Messages />} />
 
                 {/* New marketer routes */}
                 <Route path="marketer-profile" element={<MarketerProfile />} />

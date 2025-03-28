@@ -178,13 +178,14 @@ export default function EditProfile() {
               >
                 Security
               </button>
-              <button
-                onClick={() => scrollToSection(addressesRef)}
-                className="hover:bg-Primary/5 px-4 py-2 rounded-md w-full text-gray-700 hover:text-Primary text-left transition-colors"
-              >
-                Addresses
-              </button>
-
+              {isMerchant && (
+                <button
+                  onClick={() => scrollToSection(addressesRef)}
+                  className="hover:bg-Primary/5 px-4 py-2 rounded-md w-full text-gray-700 hover:text-Primary text-left transition-colors"
+                >
+                  Business Address
+                </button>
+              )}
               {/* Logout button remains the same */}
               <div className="mt-auto">
                 <button
@@ -268,22 +269,24 @@ export default function EditProfile() {
                     }
                   />
                 </div>
-                <div className="gap-4 grid grid-cols-2">
-                  {!isMerchant && (
+                {!isMerchant && (
+                  <div className="gap-4 grid grid-cols-2">
                     <ProfileField
                       label="Date of Birth"
                       value={profile.dateOfBirth || ""}
                       onUpdate={(value) => handleUpdate("dateOfBirth", value)}
                       type="date"
                     />
-                  )}
-                </div>
-                <div>
-                  <MarketSelect
-                    id={profile.marketId}
-                    onUpdate={(value) => handleUpdate("marketName", value)}
-                  />
-                </div>
+                  </div>
+                )}
+                {isMerchant && (
+                  <div>
+                    <MarketSelect
+                      id={profile.marketId}
+                      onUpdate={(value) => handleUpdate("marketName", value)}
+                    />
+                  </div>
+                )}
               </div>
             </div>
 
@@ -327,42 +330,44 @@ export default function EditProfile() {
             </div>
 
             {/* Addresses Card */}
-            <div
-              ref={addressesRef}
-              className="bg-white shadow-sm rounded-lg overflow-hidden"
-            >
-              <div className="flex justify-between items-center bg-gray-50 px-6 py-4 border-gray-200 border-b">
-                <div>
-                  <h2 className="font-medium text-gray-900 text-lg">
-                    Addresses
-                  </h2>
-                  <p className="mt-1 text-gray-600 text-sm">
-                    Manage your delivery addresses
-                  </p>
+            {isMerchant && (
+              <div
+                ref={addressesRef}
+                className="bg-white shadow-sm rounded-lg overflow-hidden"
+              >
+                <div className="flex justify-between items-center bg-gray-50 px-6 py-4 border-gray-200 border-b">
+                  <div>
+                    <h2 className="font-medium text-gray-900 text-lg">
+                      Business Address
+                    </h2>
+                    <p className="mt-1 text-gray-600 text-sm">
+                      Manage your business location
+                    </p>
+                  </div>
+                  {(!profile.addresses || profile.addresses.length < 2) && (
+                    <Button
+                      onClick={handleAddAddress}
+                      className="bg-Primary hover:bg-Primary/90 text-white"
+                    >
+                      <Plus className="mr-2 w-4 h-4" />
+                      Add Address
+                    </Button>
+                  )}
                 </div>
-                {(!profile.addresses || profile.addresses.length < 2) && (
-                  <Button
-                    onClick={handleAddAddress}
-                    className="bg-Primary hover:bg-Primary/90 text-white"
-                  >
-                    <Plus className="mr-2 w-4 h-4" />
-                    Add Address
-                  </Button>
-                )}
+                <div className="space-y-6 p-6">
+                  {profile.addresses?.map((address, index) => (
+                    <AddressForm
+                      key={index}
+                      address={address}
+                      onUpdate={(updatedAddress) =>
+                        handleUpdateAddress(index, updatedAddress)
+                      }
+                      onDelete={() => handleDeleteAddress(index)}
+                    />
+                  ))}
+                </div>
               </div>
-              <div className="space-y-6 p-6">
-                {profile.addresses?.map((address, index) => (
-                  <AddressForm
-                    key={index}
-                    address={address}
-                    onUpdate={(updatedAddress) =>
-                      handleUpdateAddress(index, updatedAddress)
-                    }
-                    onDelete={() => handleDeleteAddress(index)}
-                  />
-                ))}
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

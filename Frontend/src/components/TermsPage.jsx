@@ -99,7 +99,7 @@ const TermsPage = () => {
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-12">
+      <div className="container max-w-3xl mx-auto px-4 py-12">
         <Alert className="mb-8 border-Primary/20 bg-Primary/5">
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>Important Notice</AlertTitle>
