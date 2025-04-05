@@ -25,3 +25,6 @@ dist-ssr
 
 9ja-app.rest
 /temp
+.vite
+/node_modules
+*.excalidraw
